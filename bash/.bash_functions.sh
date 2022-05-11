@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 # some useful functions and aliases
-
+md(){
+  pandoc $1 | lynx -stdin
+}
 clock(){
     # display a fancy clock using figlet
 
