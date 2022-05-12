@@ -9,6 +9,12 @@ else
     mv ~/.bashrc ~/.bashrc.back
 fi
 
+if [! -f ~/.bash_functions.sh]; then
+    touch ~/.bash_functions.sh
+else
+    mv ~/.bash_functions.sh ~/.bash_functions.sh.back
+fi
+
 if [! -d ~/.config ]; then
     mkdir ~/.config
 fi
@@ -83,14 +89,13 @@ nvim +qa
 # install starship
 curl -fsSL https://starship.rs/install.sh | bash
 
-# move
-
-
 # create symlinks
-ln -s ~/dotfiles/.bashrc ~/.bashrc
-ln -s ~/dotfiles/.bash_aliases ~/.bash_aliases
+ln -s ~/dotfiles/bash/.bashrc ~/.bashrc
+ln -s ~/dotfiles/bash/.bash_aliases ~/.bash_aliases
+ln -s ~/dotfiles/bash/.bash_functions.sh ~/.bash_functions.sh
 ln -s ~/dotfiles/vim/spell/ ~/.SpaceVim.d/spell/
 ln -s ~/dotfiles/vim/autoload/Myspacevim.vim ~/.SpaceVim/autoload/Myspacevim.vim
 ln -s ~/dotfiles/vim/colors/PaperColor.vim ~/.SpaceVim/colors/PaperColor.vim
 ln -s ~/dotfiles/vim/colors/TempusWarp.vim ~/.SpaceVim/colors/TempusWarp.vim
 ln -s ~/dotfiles/vim/init.toml ~/.SpaceVim.d/init.toml
+ln -s ~/dotfiles/starship.toml ~/.config/starship.toml
