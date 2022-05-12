@@ -11,6 +11,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 alias tree='tree -CF'
 alias config='/usr/bin/git --git-dir=/home/tj/.cfg/ --work-tree=/home/tj'
+alias sl=ls
 # some more ls aliases
 alias ll='ls -lF'
 alias la='ls -A'
