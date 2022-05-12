@@ -1,0 +1,11 @@
+add_newline = false
+"$schema" = 'https://starship.rs/config-schema.json'
+[character]
+  success_symbol = "[❯](bold bright-green)"
+  format = "$sudo$symbol$shell "
+  error_symbol = "[✗](red bold)"
+  vicmd_symbol="[❮](bold green)"
+[python]
+  symbol="🐍"
+
+
