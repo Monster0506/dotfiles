@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 
-# A simple setup script to simlink all of my dotfiles.
+# A simple setup script to install and symlink all of my dotfiles.
 
 # Check if bashrc exists.
 if [! -f ~/.bashrc ]; then
