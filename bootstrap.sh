@@ -2,6 +2,9 @@
 
 # A simple setup script to install and symlink all of my dotfiles.
 
+#Make sure repo is up-to-date
+git pull origin master
+
 # Check if bashrc exists.
 if [! -f ~/.bashrc ]; then
     touch ~/.bashrc
