@@ -22,7 +22,7 @@ function! PythonStuff() abort
   nnoremap <leader>d /def
   noremap <leader>c /class
   au FileType python syn keyword pythonDecorator True None False self
-  set foldmethod=indent<cr>
+  set foldmethod=indent
 endfunc
 
 
