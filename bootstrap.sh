@@ -2,6 +2,12 @@
 
 # A simple setup script to install and symlink all of my dotfiles.
 
+if [ ! "$1"="-n"  ]; then
+  sudo apt install neovim -y
+  sudo apt update
+  sudo apt ugrade -y
+fi
+
 # Check if bashrc exists.
 if [! -f ~/.bashrc ]; then
     touch ~/.bashrc
@@ -80,10 +86,6 @@ mv starship/starship.toml ~/dotfiles/starship.toml
 
 
 # install neovim, spacevim, starship
-sudo apt install neovim -y
-sudo apt update
-sudo apt upgrade -y
-# install spacevim
 curl -sLf https://spacevim.org/install.sh | bash
 nvim +qa
 # install starship
