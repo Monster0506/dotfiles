@@ -1,19 +1,19 @@
 #! /usr/bin/env bash
 # some useful functions and aliases
 md(){
-  pandoc -t plain "${1:-README.md}" | lynx -stdin
+    pandoc -t plain "${1:-README.md}" | lynx -stdin
 }
 clock(){
     # display a fancy clock using figlet
-
+    
     # get the current time
     time=$(date +"%r")
     # create the clock with a border around it
     figlet -f big -w 80 -c "$time"
-
+    
 }
 me(){
-echo -e "
+    echo -e "
 
 $red███╗░░░███╗░█████╗░███╗░░██╗░██████╗████████╗███████╗██████╗░░█████╗░███████╗░█████╗░░█████╗░
 ████╗░████║██╔══██╗████╗░██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔═══╝░
@@ -21,24 +21,24 @@ $coldblue██╔████╔██║██║░░██║██╔█�
 ██║╚██╔╝██║██║░░██║██║╚████║░╚═══██╗░░░██║░░░██╔══╝░░██╔══██╗██║░░██║╚════██╗██║░░██║██╔══██╗
 $smoothgreen██║░╚═╝░██║╚█████╔╝██║░╚███║██████╔╝░░░██║░░░███████╗██║░░██║╚█████╔╝██████╔╝╚█████╔╝╚█████╔╝
 ╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝░╚════╝░╚═════╝░░╚════╝░░╚════╝░
-"
-
+    "
+    
 }
 whatTime(){
-	Year=`date +%Y`
-	Month=`date +%m`
-	Day=`date +%d`
-	Hour=`date +%H`
-	Minute=`date +%M`
-	Second=`date +%S`
-# echo `date`
-figlet -f big -w 80 -c "$Day-$Month-$Year"
-clock
+    Year=`date +%Y`
+    Month=`date +%m`
+    Day=`date +%d`
+    Hour=`date +%H`
+    Minute=`date +%M`
+    Second=`date +%S`
+    # echo `date`
+    figlet -f big -w 80 -c "$Day-$Month-$Year"
+    clock
 }
 function up()
 {
     for i in `seq 1 $1`;
-     do
+    do
         cd ../
     done;
 }
@@ -48,7 +48,7 @@ randomname() {
         BASE="${FILE%.*}"
         EXT="${FILE#$BASE}"
         EXT="${EXT#.}"  # correctly deal with names without extensions
-
+        
         # retry arbitrarily many times on (unlikely) collision
         while true; do
             NEW_BASE="$RANDOM$RANDOM$RANDOM"  # 32767^3 (ish) possibilities
@@ -57,7 +57,7 @@ randomname() {
             else
                 NEW_FILE="$NEW_BASE"
             fi
-
+            
             # only write out if there's not already a file with that name
             # (otherwise, try again)
             if [ ! -f "$NEW_FILE" ]; then
@@ -97,44 +97,44 @@ resetpythonvenv() {
 # Bash Function To Extract File Archives Of Various Types
 
 extract (){
- if [ -z "$1" ]; then
-    # display usage if no parameters given
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
- else
-    for n in "$@"
-    do
-      if [ -f "$n" ] ; then
-          case "${n%,}" in
-            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) 
-                         tar xvf "$n"       ;;
-            *.lzma)      unlzma ./"$n"      ;;
-            *.bz2)       bunzip2 ./"$n"     ;;
-            *.cbr|*.rar) unrar x -ad ./"$n" ;;
-            *.gz)        gunzip ./"$n"      ;;
-            *.cbz|*.epub|*.zip) unzip ./"$n"       ;;
-            *.z)         uncompress ./"$n"  ;;
-            *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
-                         7z x ./"$n"        ;;
-            *.xz)        unxz ./"$n"        ;;
-            *.exe)       cabextract ./"$n"  ;;
-            *.cpio)      cpio -id < ./"$n"  ;;
-            *.cba|*.ace) unace x ./"$n"      ;;
-            *.zpaq)      zpaq x ./"$n"      ;;
-            *.arc)       arc e ./"$n"       ;;
-            *.cso)       ciso 0 ./"$n" ./"$n.iso" && \
-                              extract $n.iso && \rm -f $n ;;
-            *)
-                         echo "extract: '$n' - unknown archive method"
-                         return 1
-                         ;;
-          esac
-      else
-          echo "'$n' - file does not exist"
-          return 1
-      fi
-    done
-fi
+    if [ -z "$1" ]; then
+        # display usage if no parameters given
+        echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+        echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+    else
+        for n in "$@"
+        do
+            if [ -f "$n" ] ; then
+                case "${n%,}" in
+                    *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
+                    tar xvf "$n"       ;;
+                    *.lzma)      unlzma ./"$n"      ;;
+                    *.bz2)       bunzip2 ./"$n"     ;;
+                    *.cbr|*.rar) unrar x -ad ./"$n" ;;
+                    *.gz)        gunzip ./"$n"      ;;
+                    *.cbz|*.epub|*.zip) unzip ./"$n"       ;;
+                    *.z)         uncompress ./"$n"  ;;
+                    *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+                    7z x ./"$n"        ;;
+                    *.xz)        unxz ./"$n"        ;;
+                    *.exe)       cabextract ./"$n"  ;;
+                    *.cpio)      cpio -id < ./"$n"  ;;
+                    *.cba|*.ace) unace x ./"$n"      ;;
+                    *.zpaq)      zpaq x ./"$n"      ;;
+                    *.arc)       arc e ./"$n"       ;;
+                    *.cso)       ciso 0 ./"$n" ./"$n.iso" && \
+                    extract $n.iso && \rm -f $n ;;
+                    *)
+                        echo "extract: '$n' - unknown archive method"
+                        return 1
+                    ;;
+                esac
+            else
+                echo "'$n' - file does not exist"
+                return 1
+            fi
+        done
+    fi
 }
 marco(){
     case $1 in
@@ -198,23 +198,75 @@ zipExt(){
 }
 
 findInFiles(){
-  case "$1" in 
-    "-h" | "--help")
-      echo "findInFiles [filePath] [string]"
-      echo "    --help -h: print this help"
-      ;;
-    *)
-      if [ -z "$1" ]; then
-        echo "You must have 2 paramaters."
-        echo "see -h or --help for options"
-      else 
-        if [ -z "$2" ]; then 
-          echo "You must include the second paramater."
-          echo "see -h or --help for options"
-        else
-          grep -rnw "$1" -e "$2"
-        fi
-      fi
-    ;;
-esac
+    case "$1" in
+        "-h" | "--help")
+            echo "findInFiles [filePath] [string]"
+            echo "    --help -h: print this help"
+        ;;
+        *)
+            if [ -z "$1" ]; then
+                echo "You must have 2 paramaters."
+                echo "see -h or --help for options"
+            else
+                if [ -z "$2" ]; then
+                    echo "You must include the second paramater."
+                    echo "see -h or --help for options"
+                else
+                    grep -rnw "$1" -e "$2"
+                fi
+            fi
+        ;;
+    esac
 }
+
+weather(){
+    
+    case "$1" in
+        "-h" | "--help")
+            echo "weather [city]"
+            echo "    --help  -h:  print this help"
+            echo "    --pager -p: pipe the output to a pager"
+            echo "    --color -c: colorize the output"
+        ;;
+        *)
+            if [ -z "$1" ]; then
+                echo "You must have a city name."
+                echo "see -h or --help for options"
+            else
+                case "$2" in
+                    "-c" | "--color")
+                        eval "curl http://wttr.in/$1" | lolcat
+                    ;;
+                    *)
+                        eval "curl http://wttr.in/$1" | less
+                    ;;
+                esac
+            fi
+    esac
+}
+
+cht(){
+    case "$1" in
+        "-h" | "--help")
+            echo "cht [string]"
+            echo "    --help -h: print this help"
+        ;;
+        *)
+            if [ -z "$1" ]; then
+                echo "You must have a string to search for."
+                echo "see -h or --help for options"
+            else
+                case "$2" in
+                "-c" | "--color")
+                curl -s "https://cht.sh/$1" | lolcat
+                ;;
+                *)
+                curl -s "https://cht.sh/$1"
+                ;;
+                esac
+
+            fi
+        ;;
+    esac
+}
+
