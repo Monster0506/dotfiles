@@ -1,5 +1,5 @@
 #! /usr/bin/bash
-check if running as sudo
+# check if running as sudo
 if [ ! "$EUID" -ne 0 ]; then
     echo "Please do not run as root"
     echo "If superuser is required, you will be prompted."
