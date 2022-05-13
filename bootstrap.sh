@@ -1,11 +1,16 @@
 #! /usr/bin/bash
-
-# A simple setup script to install and symlink all of my dotfiles.
-
-if [ ! "$1"="-n"  ]; then
-  sudo apt install neovim -y
-  sudo apt update
-  sudo apt ugrade -y
+check if running as sudo
+if [ ! "$EUID" -ne 0 ]; then
+    echo "Please do not run as root"
+    echo "If superuser is required, you will be prompted."
+    exit
+fi
+# Install neovim and fzf
+if [ ! "$1"="-y"  ]; then
+  sudo -i apt install neovim -y
+  sudo -i apt install fzf -y
+  sudo -i apt update
+  sudo -i apt ugrade -y
 fi
 
 # Check if bashrc exists.
