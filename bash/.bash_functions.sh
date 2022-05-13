@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # some useful functions and aliases
 md(){
-    pandoc -t plain "${1:-README.md}" | lynx -stdin
+    pandoc "${1:-README.md}" | lynx -stdin
 }
 clock(){
     # display a fancy clock using figlet

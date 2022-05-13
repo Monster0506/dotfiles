@@ -7,10 +7,10 @@ if [ ! "$EUID" -ne 0 ]; then
 fi
 # Install neovim and fzf
 if [ ! "$1"="-y"  ]; then
-  sudo -i apt install neovim -y
-  sudo -i apt install fzf -y
-  sudo -i apt update
-  sudo -i apt ugrade -y
+    sudo -i apt install neovim -y
+    sudo -i apt install fzf -y
+    sudo -i apt update
+    sudo -i apt ugrade -y
 fi
 
 #Make sure repo is up-to-date
@@ -68,8 +68,6 @@ else
 fi
 
 
-
-
 # Create dotfiles directory, or if it exists, prompt user for install location
 if [ ! -d $HOME/dotfiles/ ]; then
     mkdir $HOME/dotfiles/
@@ -78,11 +76,14 @@ else
     read abc
     if [ $abc = y ]; then
         echo "Overwriting dotfiles directory."
-        rm $HOME/dotfiles/
+        rm $HOME/dotfiles/ -rf
         mkdir $HOME/dotfiles
     else
         echo "Where would you like to install? "
         read bcd
+        if [ $bcd = "abort" ]; then
+            return 1
+        fi
         mkdir $HOME/$bcd
     fi
 fi
@@ -95,22 +96,17 @@ mv starship/starship.toml $HOME/dotfiles/starship.toml
 
 # install neovim, spacevim, starship
 curl -sLf https://spacevim.org/install.sh | bash
-nvim +qa
+# test if nvim is installed
+if test -f /usr/bin/nvim; then
+    nvim +qa
+else
+    vim +qa
+fi
 # install starship
 curl -fsSL https://starship.rs/install.sh | bash
 
+
 # create symlinks
-<<<<<<< HEAD
-ln -s ~/dotfiles/bash/.bashrc ~/.bashrc
-ln -s ~/dotfiles/bash/.bash_aliases ~/.bash_aliases
-ln -s ~/dotfiles/bash/.bash_functions.sh ~/.bash_functions.sh
-ln -s ~/dotfiles/vim/spell/ ~/.SpaceVim.d/spell/
-ln -s ~/dotfiles/vim/autoload/Myspacevim.vim ~/.SpaceVim/autoload/Myspacevim.vim
-ln -s ~/dotfiles/vim/colors/PaperColor.vim ~/.SpaceVim/colors/PaperColor.vim
-ln -s ~/dotfiles/vim/colors/TempusWarp.vim ~/.SpaceVim/colors/TempusWarp.vim
-ln -s ~/dotfiles/vim/init.toml ~/.SpaceVim.d/init.toml
-ln -s ~/dotfiles/starship.toml ~/.config/starship.toml
-=======
 ln -s $HOME/dotfiles/bash/.bashrc $HOME/.bashrc
 ln -s $HOME/dotfiles/bash/.bash_aliases $HOME/.bash_aliases
 ln -s $HOME/dotfiles/bash/.bash_functions.sh $HOME/.bash_functions.sh
@@ -121,6 +117,3 @@ ln -s $HOME/dotfiles/vim/colors/TempusWarp.vim $HOME/.SpaceVim/colors/TempusWarp
 ln -s $HOME/dotfiles/vim/init.toml $HOME/.SpaceVim.d/init.toml
 ln -s $HOME/dotfiles/starship.toml $HOME/.config/starship.toml
 
-
-
->>>>>>> b0a39f5481eb35812dd6f709c12df754ff2d550d
