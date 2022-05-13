@@ -13,81 +13,84 @@ if [ ! "$1"="-y"  ]; then
   sudo -i apt ugrade -y
 fi
 
+#Make sure repo is up-to-date
+git pull origin master
+
 # Check if bashrc exists.
-if [! -f ~/.bashrc ]; then
-    touch ~/.bashrc
+if [! -f $HOME/.bashrc ]; then
+    touch $HOME/.bashrc
 else
-    mv ~/.bashrc ~/.bashrc.back
+    mv $HOME/.bashrc $HOME/.bashrc.back
 fi
 
-if [! -f ~/.bash_functions.sh]; then
-    touch ~/.bash_functions.sh
+if [! -f $HOME/.bash_functions.sh]; then
+    touch $HOME/.bash_functions.sh
 else
-    mv ~/.bash_functions.sh ~/.bash_functions.sh.back
+    mv $HOME/.bash_functions.sh $HOME/.bash_functions.sh.back
 fi
 
-if [! -d ~/.config ]; then
-    mkdir ~/.config
+if [! -d $HOME/.config ]; then
+    mkdir $HOME/.config
 fi
 
-if [! -f ~/.config/starship.toml ]; then
-    touch ~/.config/starship.toml
+if [! -f $HOME/.config/starship.toml ]; then
+    touch $HOME/.config/starship.toml
 else
-    mv ~/.config/starship.toml ~/.config/starship.toml.back
+    mv $HOME/.config/starship.toml $HOME/.config/starship.toml.back
 fi
 
 # Check if bash_aliases exists.
-if [! -f ~/.bash_aliases ]; then
-    touch ~/.bash_aliases
+if [! -f $HOME/.bash_aliases ]; then
+    touch $HOME/.bash_aliases
 else
-    mv ~/.bash_aliases ~/.bash_aliases.back
+    mv $HOME/.bash_aliases $HOME/.bash_aliases.back
 fi
 
 # Check if space vim dir exists.
-if [! -d ~/.SpaceVim ]; then
-    mkdir ~/.SpaceVim
+if [! -d $HOME/.SpaceVim ]; then
+    mkdir $HOME/.SpaceVim
 else
-    mv ~/.SpaceVim ~/.SpaceVim.back/
+    mv $HOME/.SpaceVim $HOME/.SpaceVim.back/
 fi
 
 # Check if space vim.d dir exists.
-if [! -d ~/.SpaceVim.d ]; then
-    mkdir ~/.SpaceVim.d
+if [! -d $HOME/.SpaceVim.d ]; then
+    mkdir $HOME/.SpaceVim.d
 else
-    mv ~/.SpaceVim.d ~/.SpaceVim.d.back/
+    mv $HOME/.SpaceVim.d $HOME/.SpaceVim.d.back/
 fi
 
 # Check if vim dir exists.
-if [! -d ~/.vim/ ]; then
-    mkdir ~/.vim/
+if [! -d $HOME/.vim/ ]; then
+    mkdir $HOME/.vim/
 else
-    mv ~/.vim/ ~/.vim.back/
+    mv $HOME/.vim/ $HOME/.vim.back/
 fi
 
 
 
 
 # Create dotfiles directory, or if it exists, prompt user for install location
-if [ ! -d ~/dotfiles/ ]; then
-    mkdir ~/dotfiles/
+if [ ! -d $HOME/dotfiles/ ]; then
+    mkdir $HOME/dotfiles/
 else
-    echo "~/dotfiles/ directory exists. Would you like to overwrite it?(yN) "
+    echo "$HOME/dotfiles/ directory exists. Would you like to overwrite it?(yN) "
     read abc
     if [ $abc = y ]; then
         echo "Overwriting dotfiles directory."
-        rm ~/dotfiles/
-        mkdir ~/dotfiles
+        rm $HOME/dotfiles/
+        mkdir $HOME/dotfiles
     else
         echo "Where would you like to install? "
         read bcd
-        mkdir ~/$bcd
+        mkdir $HOME/$bcd
     fi
 fi
 
 # move dotfiles to dotfiles directory
-mv vim/ ~/dotfiles/vim/
-mv bash ~/dotfiles/bash/
-mv starship/starship.toml ~/dotfiles/starship.toml
+mv vim/ $HOME/dotfiles/vim/
+mv bash $HOME/dotfiles/bash/
+mv starship/starship.toml $HOME/dotfiles/starship.toml
 
 
 # install neovim, spacevim, starship
@@ -97,6 +100,7 @@ nvim +qa
 curl -fsSL https://starship.rs/install.sh | bash
 
 # create symlinks
+<<<<<<< HEAD
 ln -s ~/dotfiles/bash/.bashrc ~/.bashrc
 ln -s ~/dotfiles/bash/.bash_aliases ~/.bash_aliases
 ln -s ~/dotfiles/bash/.bash_functions.sh ~/.bash_functions.sh
@@ -106,3 +110,17 @@ ln -s ~/dotfiles/vim/colors/PaperColor.vim ~/.SpaceVim/colors/PaperColor.vim
 ln -s ~/dotfiles/vim/colors/TempusWarp.vim ~/.SpaceVim/colors/TempusWarp.vim
 ln -s ~/dotfiles/vim/init.toml ~/.SpaceVim.d/init.toml
 ln -s ~/dotfiles/starship.toml ~/.config/starship.toml
+=======
+ln -s $HOME/dotfiles/bash/.bashrc $HOME/.bashrc
+ln -s $HOME/dotfiles/bash/.bash_aliases $HOME/.bash_aliases
+ln -s $HOME/dotfiles/bash/.bash_functions.sh $HOME/.bash_functions.sh
+ln -s $HOME/dotfiles/vim/spell/ $HOME/.SpaceVim.d/spell/
+ln -s $HOME/dotfiles/vim/autoload/Myspacevim.vim $HOME/.SpaceVim/autoload/Myspacevim.vim
+ln -s $HOME/dotfiles/vim/colors/PaperColor.vim $HOME/.SpaceVim/colors/PaperColor.vim
+ln -s $HOME/dotfiles/vim/colors/TempusWarp.vim $HOME/.SpaceVim/colors/TempusWarp.vim
+ln -s $HOME/dotfiles/vim/init.toml $HOME/.SpaceVim.d/init.toml
+ln -s $HOME/dotfiles/starship.toml $HOME/.config/starship.toml
+
+
+
+>>>>>>> b0a39f5481eb35812dd6f709c12df754ff2d550d
