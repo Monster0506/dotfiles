@@ -94,6 +94,7 @@ mv bash $HOME/dotfiles/bash/
 mv starship/starship.toml $HOME/dotfiles/starship.toml
 
 
+
 # install neovim, spacevim, starship
 curl -sLf https://spacevim.org/install.sh | bash
 # test if nvim is installed
@@ -114,6 +115,8 @@ ln -s $HOME/dotfiles/vim/spell/ $HOME/.SpaceVim.d/spell/
 ln -s $HOME/dotfiles/vim/autoload/Myspacevim.vim $HOME/.SpaceVim/autoload/Myspacevim.vim
 ln -s $HOME/dotfiles/vim/colors/PaperColor.vim $HOME/.SpaceVim/colors/PaperColor.vim
 ln -s $HOME/dotfiles/vim/colors/TempusWarp.vim $HOME/.SpaceVim/colors/TempusWarp.vim
+ln -s $HOME/dotfiles/vim/colors/solarized.vim $HOME/.SpaceVim/colors/solarized.vim
+ln -s $HOME/dotfiles/vim/syntax/json.vim $HOME/.vim/syntax/json.vim
 ln -s $HOME/dotfiles/vim/init.toml $HOME/.SpaceVim.d/init.toml
 ln -s $HOME/dotfiles/starship.toml $HOME/.config/starship.toml
 
