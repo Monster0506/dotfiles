@@ -22,4 +22,14 @@ alias cd..="cd .."
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias vim=nvim
 alias cls=clear
+alias open=xdg-open
+
+# shamelessly stolen from mathiasbeynens-dotfiles
+alias sudo='sudo '
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
 
