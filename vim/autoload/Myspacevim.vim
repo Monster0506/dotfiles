@@ -53,5 +53,15 @@ function! Mappings() abort
   nnoremap gg ggzz
   vnoremap <leader>y "+y
   nnoremap + <C-a>
+  " https://gist.github.com/AndrewRadev/1171559
+  onoremap an :<c-u>call <SID>NextTextObject('a')<cr>
+  xnoremap an :<c-u>call <SID>NextTextObject('a')<cr>
+  onoremap in :<c-u>call <SID>NextTextObject('i')<cr>
+  xnoremap in :<c-u>call <SID>NextTextObject('i')<cr>
 endfunc
 
+function! s:NextTextObject(motion)
+  echo
+  let c = nr2char(getchar())
+  exe "normal! f".c."v".a:motion.c
+endfunction
