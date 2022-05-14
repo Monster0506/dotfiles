@@ -38,5 +38,5 @@ repo = 'tpope/vim-surround'
 repo = 'nathanaelkane/vim-indent-guides'
 repo = 'ap/vim-css-color'
 repo = 'foosoft/vim-argwrap'
-
+repo = 'SirVer/ultisnips'
 

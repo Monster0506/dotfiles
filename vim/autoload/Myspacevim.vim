@@ -2,6 +2,7 @@ function! Myspacevim#before() abort
   autocmd BufWritePost * silent Neoformat
   call Mappings()
   set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx,*.mcmeta
+  set nocompatible
   filetype on
   filetype plugin on
   set nobackup
