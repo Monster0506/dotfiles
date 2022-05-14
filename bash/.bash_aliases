@@ -23,4 +23,3 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias vim=nvim
 alias cls=clear
 
-

@@ -23,8 +23,14 @@ often add it to my dotfiles for later usage.
 As a shell, I use bash with the [starship](https://starship.rs) prompt, and,
 as such, there is a starship configuration file there. I don't often change those settings.
 
-I use vim as an editor for text and code, and use [spaceVim](https://spacevim.org) for
-a vim configuration. My personal changes are in the bootstrap function in that folder.
+I use ViM as an editor for text and code, and use [Space ViM](https://spacevim.org) for
+a ViM configuration. My personal changes are in the bootstrap function in that folder.
 
+### ViM Plugins
 
+- [ViM Polyglot](https://github.com/sheerun/vim-polyglot)
+- [ViM Surround](https://github.com/tpope/vim-surround)
+- [ViM Indent Guides](https://github.com/nathanaelkane/vim-indent-guides)
+- [ViM Css Color](https://github.com/ap/vim-css-color)
+- [ViM Argwrap](https://github.com/foosoft/vim-argwrap)
 

@@ -1,6 +1,6 @@
 # VIM
 
-I am a user of [Space Vim](https://spacevim.org/), which is a community-driven Vim distribution, and, as such, is built around a `init.toml` file, commonly located at `~/.SpaceVim.d/init.toml`.
+I am a user of [Space ViM](https://spacevim.org/), which is a community-driven Vim distribution, and, as such, is built around a `init.toml` file, commonly located at `~/.SpaceVim.d/init.toml`.
 
 This file automatically installs "plugins", or Vim extensibility services, as well as controls specific [layers](https://spacevim.org/layers/) or collections of related packages that work together to provide a heightened user experience. 
 

@@ -20,7 +20,6 @@ export smoothgreen="\033[0;38;5;42m"
 export morered="\033[0;38;5;50m"
 
 set -o vi
-set editing-mode vi
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
