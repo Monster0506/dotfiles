@@ -19,6 +19,7 @@ function! PythonStuff() abort
   inoremap $r return
   inoremap $i import
   inoremap $p print
+  
   inoremap $f # --- <esc>a
   nnoremap <leader>d /def
   noremap <leader>c /class

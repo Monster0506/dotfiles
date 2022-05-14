@@ -122,6 +122,12 @@ done
 for file in $HOME/dotfiles/vim/snippets/*; do
   ln -s $file $HOME/.SpaceVim/snippets/$file
 done
+for file in $HOME/dotfiles/vim/after/ftplugin; do
+  ln -s $file $HOME/.vim/after/ftplugin/$file
+done
+for file in $HOME/dotfiles/vim/ftdetect; do
+  ln -s $file $HOME/.vim/ftdetect/$file
+done
 ln -s $HOME/dotfiles/vim/init.toml $HOME/.SpaceVim.d/init.toml
 ln -s $HOME/dotfiles/starship.toml $HOME/.config/starship.toml
 ln -s $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
