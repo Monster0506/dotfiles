@@ -79,44 +79,50 @@ else
         rm $HOME/dotfiles/ -rf
         mkdir $HOME/dotfiles
     else
-        echo "Where would you like to install? "
-        read bcd
-        if [ $bcd = "abort" ]; then
             return 1
-        fi
-        mkdir $HOME/$bcd
+
     fi
 fi
 
 # move dotfiles to dotfiles directory
-mv vim/ $HOME/dotfiles/vim/
-mv bash $HOME/dotfiles/bash/
-mv starship/starship.toml $HOME/dotfiles/starship.toml
+for $file in `pwd`/*; do
+  mv $file $HOME/dotfiles/$file
+done
 
 
 
 # install neovim, spacevim, starship
 curl -sLf https://spacevim.org/install.sh | bash
+curl -fsSL https://starship.rs/install.sh | bash
 # test if nvim is installed
 if test -f /usr/bin/nvim; then
     nvim +qa
 else
     vim +qa
 fi
-# install starship
-curl -fsSL https://starship.rs/install.sh | bash
+
 
 
 # create symlinks
-ln -s $HOME/dotfiles/bash/.bashrc $HOME/.bashrc
-ln -s $HOME/dotfiles/bash/.bash_aliases $HOME/.bash_aliases
-ln -s $HOME/dotfiles/bash/.bash_functions.sh $HOME/.bash_functions.sh
-ln -s $HOME/dotfiles/vim/spell/ $HOME/.SpaceVim.d/spell/
-ln -s $HOME/dotfiles/vim/autoload/Myspacevim.vim $HOME/.SpaceVim/autoload/Myspacevim.vim
-ln -s $HOME/dotfiles/vim/colors/PaperColor.vim $HOME/.SpaceVim/colors/PaperColor.vim
-ln -s $HOME/dotfiles/vim/colors/TempusWarp.vim $HOME/.SpaceVim/colors/TempusWarp.vim
-ln -s $HOME/dotfiles/vim/colors/solarized.vim $HOME/.SpaceVim/colors/solarized.vim
-ln -s $HOME/dotfiles/vim/syntax/json.vim $HOME/.vim/syntax/json.vim
+for file in $HOME/dotfiles/bash/*; do
+  ln -s $file $HOME/$file
+done
+for file in $HOME/dotfiles/vim/spell/*; do
+  ln -s $file $HOME/.SpaceVim.d/spell/$file
+done
+for file in $HOME/dotfiles/vim/autoload/*; do
+  ln -s $file $HOME/.SpaceVim/autoload/$file
+done
+for file in $HOME/dotfiles/vim/colors/*; do
+  ln -s $file $HOME/.SpaceVim/colors/$file
+done
+for file in $HOME/dotfiles/vim/syntax/*; do
+  ln -s $file $HOME/.SpaceVim/syntax/$file
+done
+for file in $HOME/dotfiles/vim/snippets/*; do
+  ln -s $file $HOME/.SpaceVim/snippets/$file
+done
 ln -s $HOME/dotfiles/vim/init.toml $HOME/.SpaceVim.d/init.toml
 ln -s $HOME/dotfiles/starship.toml $HOME/.config/starship.toml
+ln -s $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
 
