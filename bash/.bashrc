@@ -133,7 +133,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
+if [ -f ~/.xprofile ]; then
+  source ~/.xprofile
+fi
 
 # Evaluations
 eval "$(starship init bash)"
