@@ -102,14 +102,13 @@ else
 fi
 
 
-
+mkdir $HOME/.SpaceVim/after/ftplugin -p
+mkdir $HOME/.SpaceVim/ftdetect/ -p
 # create symlinks
 for file in $HOME/dotfiles/bash/*; do
   ln -s $file $HOME/$file
 done
-for file in $HOME/dotfiles/vim/spell/*; do
-  ln -s $file $HOME/.SpaceVim.d/spell/$file
-done
+ln -s $HOME/dotfiles/vim/spell $HOME/.SpaceVim.d/spell
 for file in $HOME/dotfiles/vim/autoload/*; do
   ln -s $file $HOME/.SpaceVim/autoload/$file
 done
@@ -119,9 +118,7 @@ done
 for file in $HOME/dotfiles/vim/syntax/*; do
   ln -s $file $HOME/.SpaceVim/syntax/$file
 done
-for file in $HOME/dotfiles/vim/snippets/*; do
-  ln -s $file $HOME/.SpaceVim/snippets/$file
-done
+ln -s $HOME/dotfiles/vim/snippets $HOME/.SpaceVim/snippets
 for file in $HOME/dotfiles/vim/after/ftplugin; do
   ln -s $file $HOME/.vim/after/ftplugin/$file
 done
