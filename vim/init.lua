@@ -1,11 +1,12 @@
-#!                              
+#!/usr/bin/env lua
+
 HOME = os.getenv("HOME")
 local Plug = vim.fn['plug#']
 vim.call('plug#begin')
         Plug 'preservim/nerdtree' 
         Plug 'morhetz/gruvbox'
-        Plug 'easymotion/vim-easymotion'
-        Plug 'sbdchd/neoformat'
+        Plug 'easymotion/vim-easymotion' 
+        Plug 'sbdchd/neoformat' 
         Plug 'ryanoasis/vim-devicons'
         Plug 'preservim/nerdcommenter'
         Plug 'tpope/vim-repeat'
@@ -18,9 +19,14 @@ vim.call('plug#begin')
         Plug 'sheerun/vim-polyglot'
         Plug 'vim-syntastic/syntastic'
         Plug 'neovim/nvim-lspconfig'
-        Plug 'SirVer/ultisnips'
+        --Plug 'SirVer/ultisnips'
         Plug 'Honza/vim-snippets'
+        --Plug 'jayli/vim-easycomplete'
+        --Plug 'ycm-core/YouCompleteMe'
+        Plug 'github/copilot.vim'
+        --Plug 'Shougo/deoplete.nvim'
         --Plug 'williamboman/nvim-lsp-installer'
+        Plug ('neoclide/coc.nvim', {branch='release'})
 
 vim.call('plug#end')
 --print(HOME)
@@ -47,27 +53,8 @@ vim.api.nvim_set_keymap(
         ":NERDTreeToggle<cr>",
         { noremap = true, silent=true }
 )
-vim.api.nvim_set_keymap(
-        "n",
-        "K",
-        ":call ShowDocumentation()<CR>",
-        { noremap = true, silent=true }
-        )
 vim.cmd([[
-function! ShowDocumentation()
-        if CocAction('hasProvider', 'hover')
-        call CocActionAsync('doHover')
-        else
-        call feedkeys('K', 'in')
-        endif
-        endfunction
-        " bad 
-        nnoremap <Space>cl <Plug>NERDCommenterToggle 
-        nnoremap <C-_> <Plug>NERDCommenterToggle 
-        inoremap <C-_> <Plug>NERDCommenterToggle 
-        vnoremap <C-_> <Plug>NERDCommenterToggle 
-        command! -nargs=0 Prettier :CocCommand prettier.forceFormatDocument
-        " autocmd CursorHold * silent call CocActionAsync('highlight')
+
 
 ]])
 vim.api.nvim_set_keymap(
@@ -80,10 +67,6 @@ vim.api.nvim_set_keymap(
 
 
 
-vim.g.UltiSnipsEditSplit="vertical"
-vim.g.UltiSnipsExpandTrigger = '<tab>'
-vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
-vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'
 vim.g.airline_right_alt_sep = ''
 vim.g.airline_right_sep = ''
 vim.g.airline_left_alt_sep= ''
@@ -91,17 +74,45 @@ vim.g.airline_left_sep = ''
 
 
 
--- vim.NERDTreeWinPos="right"
+ --vim.NERDTreeWinPos="right"
 --require("nvim-lsp-installer").setup {}
 local lspconfig = require('lspconfig')
 
--- Automatically start coq
 -- Keybindings I am too lazy to put in the proper format. {{{
 vim.cmd([[
 
 nnoremap <silent> <C-t> :NERDTreeToggle<CR>
-" --nnoremap gd <Plug>(coc-definition)
-" --nnoremap <F2> <Plug>(coc-rename)
+let NERDTreeWinPos = "right"  
+augroup fmt
+  autocmd!
+  autocmd BufWritePre *.py undojoin | Neoformat
+augroup END
+nnoremap gd <Plug>(coc-definition)
+nnoremap <F2> <Plug>(coc-rename)
+nnoremap <silent> K :call show_documentation()<CR>
+
+inoremap <silent><expr> <TAB>pumvisible() ? "\<C-n>" :Check_back_space() ? "\<TAB>" :coc#refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! Check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+function! Show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 noremap (<CR> (<CR>)<Esc>O
 inoremap (;    (<CR>);<Esc>O
 inoremap (,    (<CR>),<Esc>O
@@ -153,4 +164,3 @@ endfunction
 -- }}}
 -- }}}
 vim.g.UltiSnipsEditSplit="vertical"
-vim.g['deoplete#enable_at_startup'] = 1
