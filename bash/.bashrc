@@ -139,5 +139,4 @@ fi
 
 # Evaluations
 eval "$(starship init bash)"
-eval "$(thefuck --alias)"
 
