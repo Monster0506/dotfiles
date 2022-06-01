@@ -62,14 +62,12 @@ main(){
     echo "Installing to $INSTALLDIR. Press any key to continue (or ^C | CTRL+C to abort )..."
     read p 
 
-# dry-run stuff
-if [ ! $1="-n" ]; then
-    syslink
-fi
-echo "Running final setup steps...."
-gh auth login
-gh auth setup-git
-nvim +PlugInstall +qa
+	syslink
+	echo "Running final setup steps...."
+	gh auth login
+  fnm install 16.15.0
+	gh auth setup-git
+	nvim +PlugInstall +qa
 }
 
 
