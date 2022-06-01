@@ -21,9 +21,9 @@ installWgetRequired() {
     sudo apt install $SCRIPT_DIR/nvim-linux64.deb
     rm -rf $SCRIPT_DIR/nvim-linux64.deb
 
-    wget https://github.com/cli/cli/releases/download/v2.11.3/gh_2.11.3_linux_386.deb --output-document=$SCRIPT_DIR/gh.2.11.3_linux_386.deb
-    sudo apt install $SCRIPT_DIR/gh.2.11.3_linux_386.deb
-
+    wget https://github.com/cli/cli/releases/download/v2.11.3/gh_2.11.3_linux_amd64.deb --output-file=$SCRIPT_DIR/gh.2.11.3_linux_amd64.deb
+    sudo apt install $SCRIPT_DIR/gh_2.11.3_linux_amd64.deb
+    rm -rf $SCRIPT_DIR/gh_2.11.3_linux_amd64.deb
 
 }
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
@@ -107,15 +107,15 @@ sudo apt install fzf python3 python3-pip vim vim-gtk3 pandoc lynx libnotify-bin 
 
 
 # Move dotfiles to INSTALLDIR and syslink
-echo "Installing to $INSTALLDIR. Press any key to continue..."
+echo "Installing to $INSTALLDIR. Press any key to continue (or ^C | CTRL+C to abort )..."
 read p 
-
 
 DIR0=$SCRIPT_DIR/bash
 DIR1=$SCRIPT_DIR/vim
 DIR2=$SCRIPT_DIR/i3
 DIR3=$SCRIPT_DIR/starship
-
+# dry-run stuff
+if [ ! $1="-n" ]; then
 for filename in $(ls -A $DIR0); do 
     echo $filename
     cp $DIR0/$filename $INSTALLDIR/$filename -r
@@ -143,11 +143,10 @@ for filename in $(ls -A $DIR3); do
     ln -s $INSTALLDIR/$filename $HOME/.config/
 done
 echo "DONE WITH BASH DIR ($DIR3)"
+fi
 
 echo "Running final setup steps...."
 gh auth login
 gh auth setup-git
 nvim +PlugInstall +qa
-
-
 
