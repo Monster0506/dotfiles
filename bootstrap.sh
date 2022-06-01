@@ -28,7 +28,49 @@ installWgetRequired() {
 }
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 echo $SCRIPT_DIR
+main(){
+    checkFolders
+    doDirectory
+    # Install starship
+    curl -fsSL https://starship.rs/install.sh | bash
+    # Install node through fnm
+    curl -fsSL https://fnm.vercel.app/install | bash
+    # remove this bashrc, as the repo holds this line.
+    rm $HOME/.bashrc
 
+    # Install vim-plug for neovim
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+
+
+
+
+    # Install stuff that requires wget
+    testWget
+    if [ ! $WGET ]; then
+        installWgetRequired
+    else
+        sudo apt install wget -y && installWgetRequired
+
+    fi
+
+    # install other useful stuff
+    sudo apt install fzf python3 python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 xcape -y
+
+
+    # Move dotfiles to INSTALLDIR and syslink
+    echo "Installing to $INSTALLDIR. Press any key to continue (or ^C | CTRL+C to abort )..."
+    read p 
+
+# dry-run stuff
+if [ ! $1="-n" ]; then
+    syslink
+fi
+echo "Running final setup steps...."
+gh auth login
+gh auth setup-git
+nvim +PlugInstall +qa
+}
 
 
 #Make sure repo is up-to-date
@@ -37,8 +79,8 @@ echo $SCRIPT_DIR
 # Check if bashrc exists.
 
 
-# dry run with no folders made
-
+# make sure all folders exist if necessary.
+checkFolders(){
 if [ ! -d $HOME/.config ]; then
     mkdir $HOME/.config
 fi
@@ -53,7 +95,8 @@ fi
 if [ ! -d $HOME/.fonts/ ]; then
     mdkir $HOME/.fonts
 fi
-
+}
+doDirectory(){
 # Create dotfiles directory, or if it exists, prompt user for install location
 if [ ! -d $HOME/.cfg/ ]; then
     mkdir $HOME/.cfg/
@@ -78,44 +121,13 @@ else
         fi
     fi
 fi 
+}
 
-# Install starship
-curl -fsSL https://starship.rs/install.sh | bash
-# Install node through fnm
-curl -fsSL https://fnm.vercel.app/install | bash
-# remove this bashrc, as the repo holds this line.
-rm $HOME/.bashrc
-
-# Install vim-plug for neovim
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-
-
-
-
-# Install stuff that requires wget
-testWget
-if [ ! $WGET ]; then
-    installWgetRequired
-else
-    sudo apt install wget -y && installWgetRequired
-
-fi
-
-# install other useful stuff
-sudo apt install fzf python3 python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 xcape -y
-
-
-# Move dotfiles to INSTALLDIR and syslink
-echo "Installing to $INSTALLDIR. Press any key to continue (or ^C | CTRL+C to abort )..."
-read p 
-
+syslink(){
 DIR0=$SCRIPT_DIR/bash
 DIR1=$SCRIPT_DIR/vim
 DIR2=$SCRIPT_DIR/i3
 DIR3=$SCRIPT_DIR/starship
-# dry-run stuff
-if [ ! $1="-n" ]; then
 for filename in $(ls -A $DIR0); do 
     echo $filename
     cp $DIR0/$filename $INSTALLDIR/$filename -r
@@ -143,10 +155,6 @@ for filename in $(ls -A $DIR3); do
     ln -s $INSTALLDIR/$filename $HOME/.config/
 done
 echo "DONE WITH BASH DIR ($DIR3)"
-fi
+}
 
-echo "Running final setup steps...."
-gh auth login
-gh auth setup-git
-nvim +PlugInstall +qa
-
+main
