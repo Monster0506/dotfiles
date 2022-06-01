@@ -21,6 +21,10 @@ installWgetRequired() {
     sudo apt install $SCRIPT_DIR/nvim-linux64.deb
     rm -rf $SCRIPT_DIR/nvim-linux64.deb
 
+    wget https://github.com/cli/cli/releases/download/v2.11.3/gh_2.11.3_linux_386.deb --output-document=$SCRIPT_DIR/gh.2.11.3_linux_386.deb
+    sudo apt install $SCRIPT_DIR/gh.2.11.3_linux_386.deb
+
+
 }
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 echo $SCRIPT_DIR
@@ -139,3 +143,11 @@ for filename in $(ls -A $DIR3); do
     ln -s $INSTALLDIR/$filename $HOME/.config/
 done
 echo "DONE WITH BASH DIR ($DIR3)"
+
+echo "Running final setup steps...."
+gh auth login
+gh auth setup-git
+nvim +PlugInstall +qa
+
+
+
