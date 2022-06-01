@@ -14,15 +14,16 @@ else
 fi
 }
 installWgetRequired() {
-    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf && mv Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf $HOME/.fonts/
+    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf --output-document=$SCRIPT_DIR/'Fira Code Regular Nerd Font Complete.ttf'&& mv $SCRIPT_DIR/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf $HOME/.fonts/ 
 
     # install neovim 
-    wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
-    sudo apt install ./nvim-linux64.deb
-    
-    # 
+    wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb --output-document=$SCRIPT_DIR/nvim-linux64.deb
+    sudo apt install $SCRIPT_DIR/nvim-linux64.deb
+    rm -rf $SCRIPT_DIR/nvim-linux64.deb
 
 }
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
+echo $SCRIPT_DIR
 
 
 
@@ -33,13 +34,6 @@ installWgetRequired() {
 
 
 # dry run with no folders made
-if [ -f $HOME/.bashrc ]; then
-    mv $HOME/.bashrc $HOME/.bashrc.back
-fi
-
-if [ -f $HOME/.bash_functions.sh ]; then
-    mv $HOME/.bash_functions.sh $HOME/.bash_functions.sh.back
-fi
 
 if [ ! -d $HOME/.config ]; then
     mkdir $HOME/.config
@@ -80,16 +74,20 @@ else
         fi
     fi
 fi 
+
+# Install starship
 curl -fsSL https://starship.rs/install.sh | bash
 # Install node through fnm
 curl -fsSL https://fnm.vercel.app/install | bash
+# remove this bashrc, as the repo holds this line.
+rm $HOME/.bashrc
+
 # Install vim-plug for neovim
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 
 
 
-# Install starship
 
 # Install stuff that requires wget
 testWget
@@ -104,7 +102,25 @@ fi
 sudo apt install fzf python3 python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 xcape -y
 
 
-
-
 # Move dotfiles to INSTALLDIR and syslink
+echo "Installing to $INSTALLDIR. Press any key to continue..."
+read p 
 
+
+DIR1=$SCRIPT_DIR/bash
+DIR2=$SCRIPT_DIR/vim
+DIR3=$SCRIPT_DIR/i3
+DIR4=$SCRIPT_DIR/starship
+
+for filename in $(ls -A $DIR1); do 
+    echo $filename
+    cp $DIR1/$filename $INSTALLDIR/$filename -r
+    ln -s $INSTALLDIR/$filename ~/$filename
+done
+echo "DONE WITH BASH DIR ($DIR1)"
+
+for filename in $(ls -A $DIR2); do
+    echo $filename
+    cp $DIR2/$filename $INSTALLDIR/$filename -r
+    ln -s $INSTALLDIR/$filename $HOME/.config/nvim/
+done
