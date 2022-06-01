@@ -51,7 +51,7 @@ main(){
     fi
 
     # install other useful stuff
-    sudo apt install fzf python3 mplayer python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 xcape -y
+    sudo apt install rofi fzf figlet python3 mplayer python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 xcape -y
 
 
     # Move dotfiles to INSTALLDIR and syslink
@@ -65,6 +65,7 @@ main(){
     gh auth setup-git
     nvim +PlugInstall +qa
     source $HOME/.bashrc
+    export PATH:$HOME/.local/bin:$PATH
 
 }
 
