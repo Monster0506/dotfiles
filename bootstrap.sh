@@ -1,9 +1,10 @@
 #!/bin/bash
 # check if running as sudo
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 if [[ $EUID -eq 0 ]]; then
     echo "Please do not run as root"
     echo "If superuser is required, you will be prompted."
-    exit
+    exit 
 fi
 testWget(){
 if ! command -v wget &> /dev/null; then
@@ -26,24 +27,19 @@ installWgetRequired() {
     rm -rf $SCRIPT_DIR/gh_2.11.3_linux_amd64.deb
 
 }
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
-echo $SCRIPT_DIR
 main(){
+    git pull origin master
     checkFolders
     doDirectory
     # Install starship
     curl -fsSL https://starship.rs/install.sh | bash
     # Install node through fnm
     curl -fsSL https://fnm.vercel.app/install | bash
-    # remove this bashrc, as the repo holds this line.
+    # remove this bashrc, as the repo holds the line that it writes
     rm $HOME/.bashrc
 
     # Install vim-plug for neovim
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-
-
-
 
     # Install stuff that requires wget
     testWget
@@ -62,21 +58,15 @@ main(){
     echo "Installing to $INSTALLDIR. Press any key to continue (or ^C | CTRL+C to abort )..."
     read p 
 
-	syslink
-	echo "Running final setup steps...."
-	gh auth login
-  fnm install 16.15.0
-	gh auth setup-git
-	nvim +PlugInstall +qa
-  source $HOME/.bashrc
+    syslink
+    echo "Running final setup steps...."
+    gh auth login
+    fnm install 16.15.0
+    gh auth setup-git
+    nvim +PlugInstall +qa
+    source $HOME/.bashrc
 
 }
-
-
-#Make sure repo is up-to-date
-#git pull origin master
-
-# Check if bashrc exists.
 
 
 # make sure all folders exist if necessary.
@@ -122,39 +112,48 @@ else
     fi
 fi 
 }
-
+symlink dotfiles to $INSTALLDIR
 syslink(){
 DIR0=$SCRIPT_DIR/bash
 DIR1=$SCRIPT_DIR/vim
 DIR2=$SCRIPT_DIR/i3
 DIR3=$SCRIPT_DIR/starship
+DIR4=$SCRIPT_DIR/i3status
+
+
 for filename in $(ls -A $DIR0); do 
-    echo $filename
     cp $DIR0/$filename $INSTALLDIR/$filename -r
     ln -s $INSTALLDIR/$filename ~
 done
+
 echo "DONE WITH BASH DIR ($DIR0)"
 
 for filename in $(ls -A $DIR1); do
-    echo $filename
     cp $DIR1/$filename $INSTALLDIR/$filename -r
     ln -s $INSTALLDIR/$filename $HOME/.config/nvim/
 done
+
 echo "DONE WITH BASH DIR ($DIR1)"
 
 for filename in $(ls -A $DIR2); do
-    echo $filename
     cp $DIR2/$filename $INSTALLDIR/$filename -r
     ln -s $INSTALLDIR/$filename $HOME/.config/i3/
 done
+
 echo "DONE WITH BASH DIR ($DIR2)"
 
 for filename in $(ls -A $DIR3); do
-    echo $filename
     cp $DIR3/$filename $INSTALLDIR/$filename -r
     ln -s $INSTALLDIR/$filename $HOME/.config/
 done
-echo "DONE WITH BASH DIR ($DIR3)"
-}
 
+echo "DONE WITH BASH DIR ($DIR3)"
+
+for filename in $(ls -A $DIR4); do
+    cp $DIR4/$filename $INSTALLDIR/$filename -r
+    ln -s $INSTALLDIR/$filename $HOME/.config/
+done
+
+echo "DONE WITH BASH DIR ($DIR4)"
+}
 main
