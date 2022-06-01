@@ -68,6 +68,8 @@ main(){
   fnm install 16.15.0
 	gh auth setup-git
 	nvim +PlugInstall +qa
+  source $HOME/.bashrc
+
 }
 
 
