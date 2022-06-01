@@ -5,127 +5,83 @@ if [ ! "$EUID" -ne 0 ]; then
     echo "If superuser is required, you will be prompted."
     exit
 fi
-# Install neovim and fzf
-if [ ! "$1"="-y"  ]; then
-    sudo -i apt install neovim -y
-    sudo -i apt install fzf -y
-    sudo -i apt update
-    sudo -i apt ugrade -y
+testWget(){
+if [ ! command -v wget &> /dev/null ]; then
+    echo "wget is not installed. This will be installed later."
+    WGET=false
 fi
+}
+function installWgetRequired() {
+    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf && mv Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf $HOME/.fonts/
+}
+
+
 
 #Make sure repo is up-to-date
 git pull origin master
 
 # Check if bashrc exists.
-if [! -f $HOME/.bashrc ]; then
-    touch $HOME/.bashrc
-else
+if [ -f $HOME/.bashrc ]; then
     mv $HOME/.bashrc $HOME/.bashrc.back
 fi
 
-if [! -f $HOME/.bash_functions.sh]; then
-    touch $HOME/.bash_functions.sh
-else
+if [ -f $HOME/.bash_functions.sh]; then
     mv $HOME/.bash_functions.sh $HOME/.bash_functions.sh.back
 fi
 
-if [! -d $HOME/.config ]; then
+if [ ! -d $HOME/.config ]; then
     mkdir $HOME/.config
 fi
 
-if [! -f $HOME/.config/starship.toml ]; then
-    touch $HOME/.config/starship.toml
-else
-    mv $HOME/.config/starship.toml $HOME/.config/starship.toml.back
+if [ ! -d $HOME/.config/nvim ]; then
+    mkdir $HOME/.config/nvim
 fi
 
-# Check if bash_aliases exists.
-if [! -f $HOME/.bash_aliases ]; then
-    touch $HOME/.bash_aliases
-else
-    mv $HOME/.bash_aliases $HOME/.bash_aliases.back
+if [ ! -d $HOME/.config/i3 ]; then
+    mkdir $HOME/.config/i3
 fi
 
-# Check if space vim dir exists.
-if [! -d $HOME/.SpaceVim ]; then
-    mkdir $HOME/.SpaceVim
-else
-    mv $HOME/.SpaceVim $HOME/.SpaceVim.back/
-fi
-
-# Check if space vim.d dir exists.
-if [! -d $HOME/.SpaceVim.d ]; then
-    mkdir $HOME/.SpaceVim.d
-else
-    mv $HOME/.SpaceVim.d $HOME/.SpaceVim.d.back/
-fi
-
-# Check if vim dir exists.
-if [! -d $HOME/.vim/ ]; then
-    mkdir $HOME/.vim/
-else
-    mv $HOME/.vim/ $HOME/.vim.back/
+if [ ! -d $HOME/.fonts/ ]; then
+    mdkir $HOME/.fonts
 fi
 
 
 # Create dotfiles directory, or if it exists, prompt user for install location
-if [ ! -d $HOME/dotfiles/ ]; then
-    mkdir $HOME/dotfiles/
+if [ ! -d $HOME/.cfg/ ]; then
+    mkdir $HOME/.cfg/
+    INSTALLDIR=$HOME/.cfg/
 else
-    echo "$HOME/dotfiles/ directory exists. Would you like to overwrite it?(yN) "
+    echo "$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN) "
     read abc
     if [ $abc = y ]; then
-        echo "Overwriting dotfiles directory."
-        rm $HOME/dotfiles/ -rf
-        mkdir $HOME/dotfiles
+        echo "Overwriting .cfg directory."
+        rm $HOME/.cfg/ -rf
+        mkdir $HOME/.cfg
+        INSTALLDIR=$HOME/.cfg/
     else
-            return 1
-
+        echo "Where would you like to install?"
+        read INSTALLDIR
+        if [ ! -d $INSTALLDIR ]; then
+            mkdir $INSTALLDIR
+        fi
     fi
 fi
 
-# move dotfiles to dotfiles directory
-for $file in `pwd`/*; do
-  mv $file $HOME/dotfiles/$file
-done
+echo 
 
 
 
-# install neovim, spacevim, starship
-curl -sLf https://spacevim.org/install.sh | bash
+# Install starship
 curl -fsSL https://starship.rs/install.sh | bash
-# test if nvim is installed
-if test -f /usr/bin/nvim; then
-    nvim +qa
-else
-    vim +qa
-fi
+# Install node through fnm
+curl -fsSL https://fnm.vercel.app/install | bash
 
 
-mkdir $HOME/.SpaceVim/after/ftplugin -p
-mkdir $HOME/.SpaceVim/ftdetect/ -p
-# create symlinks
-for file in $HOME/dotfiles/bash/*; do
-  ln -s $file $HOME/$file
-done
-ln -s $HOME/dotfiles/vim/spell $HOME/.SpaceVim.d/spell
-for file in $HOME/dotfiles/vim/autoload/*; do
-  ln -s $file $HOME/.SpaceVim/autoload/$file
-done
-for file in $HOME/dotfiles/vim/colors/*; do
-  ln -s $file $HOME/.SpaceVim/colors/$file
-done
-for file in $HOME/dotfiles/vim/syntax/*; do
-  ln -s $file $HOME/.SpaceVim/syntax/$file
-done
-ln -s $HOME/dotfiles/vim/snippets $HOME/.SpaceVim/snippets
-for file in $HOME/dotfiles/vim/after/ftplugin; do
-  ln -s $file $HOME/.vim/after/ftplugin/$file
-done
-for file in $HOME/dotfiles/vim/ftdetect; do
-  ln -s $file $HOME/.vim/ftdetect/$file
-done
-ln -s $HOME/dotfiles/vim/init.toml $HOME/.SpaceVim.d/init.toml
-ln -s $HOME/dotfiles/starship.toml $HOME/.config/starship.toml
-ln -s $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
+# Install stuff that requires wget
+testWget()
 
+
+
+
+
+# Move dotfiles to INSTALLDIR and syslink
