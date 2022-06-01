@@ -107,20 +107,35 @@ echo "Installing to $INSTALLDIR. Press any key to continue..."
 read p 
 
 
-DIR1=$SCRIPT_DIR/bash
-DIR2=$SCRIPT_DIR/vim
-DIR3=$SCRIPT_DIR/i3
-DIR4=$SCRIPT_DIR/starship
+DIR0=$SCRIPT_DIR/bash
+DIR1=$SCRIPT_DIR/vim
+DIR2=$SCRIPT_DIR/i3
+DIR3=$SCRIPT_DIR/starship
 
-for filename in $(ls -A $DIR1); do 
+for filename in $(ls -A $DIR0); do 
+    echo $filename
+    cp $DIR0/$filename $INSTALLDIR/$filename -r
+    ln -s $INSTALLDIR/$filename ~
+done
+echo "DONE WITH BASH DIR ($DIR0)"
+
+for filename in $(ls -A $DIR1); do
     echo $filename
     cp $DIR1/$filename $INSTALLDIR/$filename -r
-    ln -s $INSTALLDIR/$filename ~/$filename
+    ln -s $INSTALLDIR/$filename $HOME/.config/nvim/
 done
 echo "DONE WITH BASH DIR ($DIR1)"
 
 for filename in $(ls -A $DIR2); do
     echo $filename
     cp $DIR2/$filename $INSTALLDIR/$filename -r
-    ln -s $INSTALLDIR/$filename $HOME/.config/nvim/
+    ln -s $INSTALLDIR/$filename $HOME/.config/i3/
 done
+echo "DONE WITH BASH DIR ($DIR2)"
+
+for filename in $(ls -A $DIR3); do
+    echo $filename
+    cp $DIR3/$filename $INSTALLDIR/$filename -r
+    ln -s $INSTALLDIR/$filename $HOME/.config/
+done
+echo "DONE WITH BASH DIR ($DIR3)"
