@@ -126,6 +126,9 @@ if [ -d /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
 
+if [ -d $HOME/.git-completion.bash ]; then
+    source $HOME/.git-completion.bash
+fi
 
 
 if [ -f ~/.xprofile ]; then
@@ -134,7 +137,6 @@ fi
 
 # Evaluations
 eval "$(starship init bash)"
-
 
 # fnm
 export PATH=/home/tj/.fnm:$PATH
