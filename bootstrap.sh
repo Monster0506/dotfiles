@@ -1,6 +1,7 @@
 #!/bin/bash
 # check if running as sudo
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
+
 if [[ $EUID -eq 0 ]]; then
     echo "Please do not run as root"
     echo "If superuser is required, you will be prompted."
@@ -65,7 +66,7 @@ main(){
     gh auth setup-git
     nvim +PlugInstall +qa
     source $HOME/.bashrc
-    export PATH:$HOME/.local/bin:$PATH
+    export PATH=$HOME/.local/bin:$PATH
 
 }
 
@@ -75,16 +76,17 @@ checkFolders(){
 if [ ! -d $HOME/.config ]; then
     mkdir $HOME/.config
 fi
-
 if [ ! -d $HOME/.config/nvim ]; then
     mkdir $HOME/.config/nvim 
 fi
 if [ ! -d $HOME/.config/i3 ]; then
     mkdir $HOME/.config/i3
 fi
-
+if [ ! -d $HOME/.config/i3setup ]; then
+    mkdir $HOME/.config/i3setup
+fi
 if [ ! -d $HOME/.fonts/ ]; then
-    mdkir $HOME/.fonts
+    mkdir $HOME/.fonts
 fi
 }
 doDirectory(){
@@ -113,7 +115,7 @@ else
     fi
 fi 
 }
-symlink dotfiles to $INSTALLDIR
+# symlink dotfiles to $INSTALLDIR
 syslink(){
 DIR0=$SCRIPT_DIR/bash
 DIR1=$SCRIPT_DIR/vim

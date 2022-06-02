@@ -122,9 +122,9 @@ shopt -s autocd
 shopt -s dotglob
 shopt -s nocaseglob
 # don't use the shell's built-in history mechanism
-
-
-
+if [ -d /etc/bash_completion ]; then
+    source /etc/bash_completion
+fi
 
 
 
