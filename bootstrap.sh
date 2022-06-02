@@ -23,9 +23,9 @@ installWgetRequired() {
     sudo apt install $SCRIPT_DIR/nvim-linux64.deb
     rm -rf $SCRIPT_DIR/nvim-linux64.deb
 
-    wget https://github.com/cli/cli/releases/download/v2.11.3/gh_2.11.3_linux_amd64.deb --output-file=$SCRIPT_DIR/gh.2.11.3_linux_amd64.deb
-    sudo apt install $SCRIPT_DIR/gh_2.11.3_linux_amd64.deb
-    rm -rf $SCRIPT_DIR/gh_2.11.3_linux_amd64.deb
+    #wget https://github.com/cli/cli/releases/download/v2.11.3/gh_2.11.3_linux_amd64.deb --output-file=$SCRIPT_DIR/gh.2.11.3_linux_amd64.deb
+    #sudo apt install $SCRIPT_DIR/gh.2.11.3_linux_amd64.deb
+    #rm -rf $SCRIPT_DIR/gh_2.11.3_linux_amd64.deb
 
 }
 main(){
@@ -52,7 +52,8 @@ main(){
     fi
 
     # install other useful stuff
-    sudo apt install rofi fzf figlet python3 mplayer python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 xcape -y
+    sudo apt install rofi fzf figlet python3 mplayer python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 flake8 pylint xcape -y
+    pip3 install pynvim black
 
 # install git completion
 curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
@@ -83,8 +84,8 @@ fi
 if [ ! -d $HOME/.config/i3 ]; then
     mkdir $HOME/.config/i3
 fi
-if [ ! -d $HOME/.config/i3setup ]; then
-    mkdir $HOME/.config/i3setup
+if [ ! -d $HOME/.config/i3status ]; then
+    mkdir $HOME/.config/i3status
 fi
 if [ ! -d $HOME/.fonts/ ]; then
     mkdir $HOME/.fonts
@@ -115,14 +116,17 @@ else
         fi
     fi
 fi 
+
+mkdir $INSTALLDIR/i3
+
 }
 # symlink dotfiles to $INSTALLDIR
 syslink(){
-DIR0=$SCRIPT_DIR/bash
-DIR1=$SCRIPT_DIR/vim
-DIR2=$SCRIPT_DIR/i3
-DIR3=$SCRIPT_DIR/starship
-DIR4=$SCRIPT_DIR/i3status
+DIR0=$SCRIPT_DIR/bash/
+DIR1=$SCRIPT_DIR/vim/
+ITEM1=$SCRIPT_DIR/i3/config
+DIR2=$SCRIPT_DIR/starship/
+DIR3=$SCRIPT_DIR/i3status/
 
 
 for filename in $(ls -A $DIR0); do 
@@ -137,27 +141,25 @@ for filename in $(ls -A $DIR1); do
     ln -s $INSTALLDIR/$filename $HOME/.config/nvim/
 done
 
-echo "DONE WITH BASH DIR ($DIR1)"
+echo "DONE WITH DIR ($DIR1)"
+
+    cp $ITEM1 $INSTALLDIR/i3 -r
+    ln -s $INSTALLDIR/i3/config $HOME/.config/i3/config
+
+echo "DONE WITH ITEM ($ITEM1)"
 
 for filename in $(ls -A $DIR2); do
     cp $DIR2/$filename $INSTALLDIR/$filename -r
-    ln -s $INSTALLDIR/$filename $HOME/.config/i3/
+    ln -s $INSTALLDIR/$filename $HOME/.config/
 done
 
-echo "DONE WITH BASH DIR ($DIR2)"
+echo "DONE WITH DIR ($DIR2)"
 
 for filename in $(ls -A $DIR3); do
     cp $DIR3/$filename $INSTALLDIR/$filename -r
-    ln -s $INSTALLDIR/$filename $HOME/.config/
+    ln -s $INSTALLDIR/$filename $HOME/.config/i3status/
 done
 
-echo "DONE WITH BASH DIR ($DIR3)"
-
-for filename in $(ls -A $DIR4); do
-    cp $DIR4/$filename $INSTALLDIR/$filename -r
-    ln -s $INSTALLDIR/$filename $HOME/.config/
-done
-
-echo "DONE WITH BASH DIR ($DIR4)"
+echo "DONE WITH DIR ($DIR3)"
 }
 main
