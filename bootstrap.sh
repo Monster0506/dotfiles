@@ -54,7 +54,8 @@ main(){
     # install other useful stuff
     sudo apt install rofi fzf figlet python3 mplayer python3-pip vim vim-gtk3 pandoc lynx libnotify-bin i3 xcape -y
 
-
+# install git completion
+curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
     # Move dotfiles to INSTALLDIR and syslink
     echo "Installing to $INSTALLDIR. Press any key to continue (or ^C | CTRL+C to abort )..."
     read p 
