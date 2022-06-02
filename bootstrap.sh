@@ -27,6 +27,13 @@ installWgetRequired() {
     #sudo apt install $SCRIPT_DIR/gh.2.11.3_linux_amd64.deb
     #rm -rf $SCRIPT_DIR/gh_2.11.3_linux_amd64.deb
 
+    wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US&_gl=1*1socw60*_ga*MTg1Mjg3NTI0Ny4xNjU0MTM3MDM3*_ga_MQ7767QQQW*MTY1NDEzNzAzNy4xLjEuMTY1NDEzNzM2MS4w' -O $SCRIPT_DIR/firefox-101.tar.bz2
+    tar xjf $SCRIPT_DIR/firefox-*.tar.bz2
+    sudo mv $SCRIPT_DIR/firefox /opt
+    sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
+    sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
+    
+
 }
 main(){
     git pull origin master
