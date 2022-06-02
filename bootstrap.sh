@@ -32,6 +32,7 @@ installWgetRequired() {
     sudo mv $SCRIPT_DIR/firefox /opt
     sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
     sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
+    rm -rf firefox-*.tar.bz2
     
 
 }
