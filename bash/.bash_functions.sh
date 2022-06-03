@@ -1,5 +1,17 @@
 #! /usr/bin/env bash
 # some useful functions and aliases
+
+gplusplus() {
+    if [ -z "$1" ]; then
+        echo "Usage: g++ <file>"
+        return
+    fi
+ # strip extention and save it
+    local file=${1%.*}
+
+    g++ -o $file $1 && ./$file
+}
+
 md(){
     pandoc "${1:-README.md}" | lynx -stdin
 }
