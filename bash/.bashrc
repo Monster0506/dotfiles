@@ -126,7 +126,9 @@ if [ -d /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
 
-
+if [ -f ~/.git-completion.bash ]; then
+    . ~/.git-completion.bash
+fi
 
 if [ -f ~/.xprofile ]; then
   source ~/.xprofile
