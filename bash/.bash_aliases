@@ -23,6 +23,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias vim=nvim
 alias cls=clear
 alias open=xdg-open
+alias g++=gplusplus
 
 # shamelessly stolen from mathiasbeynens-dotfiles
 alias sudo='sudo '
