@@ -83,6 +83,9 @@ curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-com
 
 # make sure all folders exist if necessary.
 checkFolders(){
+if [ ! -d $HOME/.Trash ]; then
+    mkdir $HOME/.Trash
+fi
 if [ ! -d $HOME/.config ]; then
     mkdir $HOME/.config
 fi
