@@ -41,9 +41,11 @@ main(){
     checkFolders
     doDirectory
     # Install starship
-    curl -fsSL https://starship.rs/install.sh | bash
+    curl -fsSL https://starship.rs/install.sh | sh
     # Install node through fnm
     curl -fsSL https://fnm.vercel.app/install | bash
+    # Install rust
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     # remove this bashrc, as the repo holds the line that it writes
     rm $HOME/.bashrc
 
@@ -60,7 +62,7 @@ main(){
     fi
 
     # install other useful stuff
-    sudo apt install rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx libnotify-bin i3 flake8 pylint xcape -y
+    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx libnotify-bin i3 flake8 pylint xcape -y
     pip3 install pynvim black
 
 # install git completion
