@@ -122,8 +122,8 @@ shopt -s autocd
 shopt -s dotglob
 shopt -s nocaseglob
 # don't use the shell's built-in history mechanism
-if [ -d /etc/bash_completion ]; then
-    source /etc/bash_completion
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
 fi
 
 if [ -f ~/.git-completion.bash ]; then
@@ -134,11 +134,15 @@ if [ -f ~/.xprofile ]; then
   source ~/.xprofile
 fi
 
+
+
+
 # Evaluations
 eval "$(starship init bash)"
+
+
 
 
 # fnm
 export PATH=/home/tj/.fnm:$PATH
 eval "`fnm env`"
-
