@@ -21,6 +21,7 @@ vim.call('plug#begin')
         Plug 'neovim/nvim-lspconfig'
         --Plug 'SirVer/ultisnips'
         Plug 'Honza/vim-snippets'
+        Plug 'rust-lang/rust.vim'
         --Plug 'jayli/vim-easycomplete'
         --Plug 'ycm-core/YouCompleteMe'
         Plug 'github/copilot.vim'
@@ -85,7 +86,7 @@ nnoremap <silent> <C-t> :NERDTreeToggle<CR>
 let NERDTreeWinPos = "right"  
 augroup fmt
   autocmd!
-  autocmd BufWritePre *.py undojoin | Neoformat
+  autocmd BufWritePre * undojoin | Neoformat
 augroup END
 nnoremap gd <Plug>(coc-definition)
 nnoremap <F2> <Plug>(coc-rename)
