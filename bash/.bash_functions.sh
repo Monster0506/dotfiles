@@ -225,10 +225,15 @@ polo() {
         if [ -z "$MARCODIR" ]; then
             echo "polo: no marco directory set"
         else
-            for i in "${MARCODIR[@]}"; do
-                echo -n "$i "
-            done
-            echo -e "\n"
+            if [ -z $2 ]; then
+                echo -n "polo: "
+                for i in "${MARCODIR[@]}"; do
+                    echo -n "$i "
+                done
+                echo -e "\n"
+            else
+                echo "polo: ${MARCODIR[$2 - 1]}"
+            fi
         fi
         ;;
     *)
@@ -236,16 +241,16 @@ polo() {
             # if no arguments are provided, move to the first value of MARCODIR
             cd "${MARCODIR[0]}"
         else
-            if [ $1 -lt 100 ]; then
-                cd "${MARCODIR[$1 - 1]}"
+            if [ -d "$1" ]; then
+                cd "$1"
             else
-                if [ -d "$1" ]; then
-                    cd "$1"
+                if [ $1 -lt 100 ]; then
+                    cd "${MARCODIR[$1 - 1]}"
                 else
-                    echo "polo: $1 is not a directory"
+                    echo "polo: '$1' - directory does not exist"
                 fi
-
             fi
+
         fi
         ;;
     esac
