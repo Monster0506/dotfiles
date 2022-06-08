@@ -6,6 +6,7 @@ if [[ $EUID -eq 0 ]]; then
     echo "Please do not run as root"
     echo "If superuser is required, you will be prompted."
     exit
+
 fi
 testWget() {
     if ! command -v wget &>/dev/null; then
@@ -20,7 +21,12 @@ installWgetRequired() {
         echo "Installing wget"
         sudo apt-get install wget
     fi
-    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf --output-document=$SCRIPT_DIR/'Fira Code Regular Nerd Font Complete.ttf' && mv $SCRIPT_DIR/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf $HOME/.fonts/
+    #install nerd fonts
+    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf --output-document=$SCRIPT_DIR/'Fira Code Regular Nerd Font Complete.ttf' && mv $SCRIPT_DIR/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf $HOME/.local/share/fonts/
+
+    #install go
+    wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz -o $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
+    tar -C /usr/local -xzf $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
 
     # install neovim
     wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb --output-document=$SCRIPT_DIR/nvim-linux64.deb
@@ -57,7 +63,7 @@ main() {
     installWgetRequired
 
     # install other useful stuff
-    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx libnotify-bin i3 flake8 pylint xcape -y
+    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format cmake libnotify-bin i3 flake8 pylint xcape c
 
     pip3 install pynvim black
 
@@ -74,12 +80,12 @@ main() {
     syslink
     echo "Running final setup steps...."
     source $HOME/.bashrc
+    fc-cache -fv
     gh auth login
     gh auth setup-git
     fnm install 16.15.0
     nvim +PlugInstall +qa
     nvim +"CocInstall coc-pyright coc-snippets coc-sh coc-marketplace coc-json coc-lua coc-rust-analyzer coc-texlab"
-    export PATH=$HOME/.local/bin:$PATH
 
 }
 
@@ -100,8 +106,14 @@ checkFolders() {
     if [ ! -d $HOME/.config/i3status ]; then
         mkdir $HOME/.config/i3status
     fi
-    if [ ! -d $HOME/.fonts/ ]; then
-        mkdir $HOME/.fonts
+    if [ ! -d $HOME/.local/ ]; then
+        mkdir $HOME/.local/
+    fi
+    if [ ! -d $HOME/.local/share ]; then
+        mkdir $HOME/.local/share
+    fi
+    if [ ! -d $HOME/.local/share/fonts/ ]; then
+        mkdir $HOME/.local/share/fonts
     fi
     if [ ! -d $HOME/.config/coc/ ]; then
         mkdir $HOME/.config/coc/
