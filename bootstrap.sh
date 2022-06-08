@@ -132,6 +132,7 @@ doDirectory() {
     fi
 
     mkdir $INSTALLDIR/i3
+    mkdir $INSTALLDIR/coc
 
 }
 # symlink dotfiles to $INSTALLDIR
@@ -177,8 +178,8 @@ syslink() {
     echo "DONE WITH DIR ($DIR3)"
 
     for filename in $(ls -A $DIR4); do
-        cp $DIR4/$filename $INSTALLDIR/$filename -r
-        ln -s $INSTALLDIR/$filename $HOME/.config/coc/
+        cp $DIR4/$filename $INSTALLDIR/coc/$filename -r
+        ln -s $INSTALLDIR/coc/$filename $HOME/.config/coc/
     done
 }
 main
