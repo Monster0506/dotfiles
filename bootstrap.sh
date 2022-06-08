@@ -27,13 +27,12 @@ installWgetRequired() {
     sudo apt install $SCRIPT_DIR/nvim-linux64.deb
     rm -rf $SCRIPT_DIR/nvim-linux64.deb
 
-
     wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US&_gl=1*1socw60*_ga*MTg1Mjg3NTI0Ny4xNjU0MTM3MDM3*_ga_MQ7767QQQW*MTY1NDEzNzAzNy4xLjEuMTY1NDEzNzM2MS4w' -O $SCRIPT_DIR/firefox-101.tar.bz2
     tar xjf $SCRIPT_DIR/firefox-*.tar.bz2
     sudo mv $SCRIPT_DIR/firefox /opt
     sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
     sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
-    rm -rf firefox-*.tar.bz2
+    rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
 
 }
 
@@ -63,18 +62,23 @@ main() {
     pip3 install pynvim black
 
     # install git completion
-    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
+    https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+    sudo apt update
+    sudo apt install gh
     # Move dotfiles to INSTALLDIR and syslink
     echo "Installing to $INSTALLDIR. "
 
     syslink
     echo "Running final setup steps...."
+    source $HOME/.bashrc
     gh auth login
-    fnm install 16.15.0
     gh auth setup-git
+    fnm install 16.15.0
     nvim +PlugInstall +qa
     nvim +"CocInstall coc-pyright coc-snippets coc-sh coc-marketplace coc-json coc-lua coc-rust-analyzer coc-texlab"
-    source $HOME/.bashrc
     export PATH=$HOME/.local/bin:$PATH
 
 }
@@ -144,7 +148,7 @@ syslink() {
 
     for filename in $(ls -A $DIR0); do
         cp $DIR0/$filename $INSTALLDIR/$filename -r
-        ln -s $INSTALLDIR/$filename ~
+        ln -s $INSTALLDIR/$filename $HOME
     done
 
     echo "DONE WITH BASH DIR ($DIR0)"
