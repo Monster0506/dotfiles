@@ -22,7 +22,7 @@ installWgetRequired() {
         sudo apt-get install wget
     fi
     #install nerd fonts
-    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf --output-document=$SCRIPT_DIR/'Fira Code Regular Nerd Font Complete.ttf' && mv $SCRIPT_DIR/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf $HOME/.local/share/fonts/
+    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.otf --output-document=$SCRIPT_DIR/'Fira Code Regular Nerd Font Complete.otf' && mv $SCRIPT_DIR/Fira\ Code\ Regular\ Nerd\ Font\ Complete.otf $HOME/.local/share/fonts/
 
     #install go
     wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz -o $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
@@ -63,7 +63,7 @@ main() {
     installWgetRequired
 
     # install other useful stuff
-    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format cmake libnotify-bin i3 flake8 pylint xcape c
+    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format cmake libnotify-bin i3 flake8 pylint xcape -y
 
     pip3 install pynvim black
 
