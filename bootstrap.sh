@@ -101,6 +101,9 @@ checkFolders() {
     if [ ! -d $HOME/.fonts/ ]; then
         mkdir $HOME/.fonts
     fi
+    if [ ! -d $HOME/.config/coc/ ]; then
+        mkdir $HOME/.config/coc/
+    fi
 }
 doDirectory() {
     # Create dotfiles directory, or if it exists, prompt user for install location
@@ -138,6 +141,7 @@ syslink() {
     ITEM1=$SCRIPT_DIR/i3/config
     DIR2=$SCRIPT_DIR/starship/
     DIR3=$SCRIPT_DIR/i3status/
+    DIR4=$SCRIPT_DIR/coc/
 
     for filename in $(ls -A $DIR0); do
         cp $DIR0/$filename $INSTALLDIR/$filename -r
@@ -171,5 +175,10 @@ syslink() {
     done
 
     echo "DONE WITH DIR ($DIR3)"
+
+    for filename in $(ls -A $DIR4); do
+        cp $DIR4/$filename $INSTALLDIR/$filename -r
+        ln -s $INSTALLDIR/$filename $HOME/.config/coc/
+    done
 }
 main
