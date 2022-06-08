@@ -148,7 +148,7 @@ extract() {
     fi
 }
 marco() {
-    # check if the variable $MARCODIR exists
+    #check if the variable $MARCODIR exists
     if [ -z "$MARCODIR" ]; then
         # if it doesn't, set it to an empty list
         MARCODIR=()
@@ -411,4 +411,21 @@ targz() {
     )
 
     echo "${tmpFile}.gz ($((zippedSize / 1000)) kB) created successfully."
+}
+
+how() {
+    echo "Whereis:"
+    whereis "$1" | cut -d ":" -f 2
+    echo "Type: "
+    type "$1"
+    echo "Which: "
+    which "$1"
+    echo "Path: "
+    #search through each folder in the path variable to find "$1"
+    for folder in $(echo $PATH | tr ":" "\n"); do
+        for filename in $folder/*; do
+            echo $filename | grep "$1"
+        done
+    done
+
 }
