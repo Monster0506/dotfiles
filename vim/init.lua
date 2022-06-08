@@ -90,7 +90,7 @@ augroup fmt
 augroup END
 nnoremap gd <Plug>(coc-definition)
 nnoremap <F2> <Plug>(coc-rename)
-nnoremap <silent> K :call show_documentation()<CR>
+nnoremap <silent> K :call Show_documentation()<CR>
 
 inoremap <silent><expr> <TAB>pumvisible() ? "\<C-n>" :Check_back_space() ? "\<TAB>" :coc#refresh()
 
