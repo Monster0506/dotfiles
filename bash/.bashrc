@@ -146,3 +146,4 @@ eval "$(starship init bash)"
 # fnm
 export PATH=/home/tj/.fnm:$PATH
 eval "`fnm env`"
+. "$HOME/.cargo/env"
