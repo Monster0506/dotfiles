@@ -76,6 +76,7 @@ main() {
     fnm install 16.15.0
     gh auth setup-git
     nvim +PlugInstall +qa
+    nvim +"CocInstall coc-pyright coc-snippets coc-sh coc-marketplace coc-json coc-lua coc-rust-analyzer coc-texlab" +qa
     source $HOME/.bashrc
     export PATH=$HOME/.local/bin:$PATH
 
