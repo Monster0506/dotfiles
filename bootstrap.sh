@@ -79,6 +79,7 @@ main() {
 
     syslink
     echo "Running final setup steps...."
+    go install -v mvdan.cc/sh/cmd/shfmt
     source $HOME/.bashrc
     fc-cache -fv
     gh auth login
