@@ -8,44 +8,14 @@ if [[ $EUID -eq 0 ]]; then
     exit
 
 fi
-testWget() {
-    if ! command -v wget &>/dev/null; then
-        echo "wget is not installed. This will be installed later."
-        WGET=false
-    else
-        WGET=true
+
+
+
+installCurlRequired(){
+    if ! command -v curl >/dev/null 2>&1; then
+        echo "curl is not installed. Installing now"
+        sudo apt install curl -y
     fi
-}
-installWgetRequired() {
-    if [ ! $WGET ]; then
-        echo "Installing wget"
-        sudo apt-get install wget
-    fi
-    #install nerd fonts
-    wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.otf --output-document=$SCRIPT_DIR/'Fira Code Regular Nerd Font Complete.otf' && mv $SCRIPT_DIR/Fira\ Code\ Regular\ Nerd\ Font\ Complete.otf $HOME/.local/share/fonts/
-
-    #install go
-    wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz -o $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
-    tar -C /usr/local -xzf $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
-
-    # install neovim
-    wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb --output-document=$SCRIPT_DIR/nvim-linux64.deb
-    sudo apt install $SCRIPT_DIR/nvim-linux64.deb
-    rm -rf $SCRIPT_DIR/nvim-linux64.deb
-
-    wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US&_gl=1*1socw60*_ga*MTg1Mjg3NTI0Ny4xNjU0MTM3MDM3*_ga_MQ7767QQQW*MTY1NDEzNzAzNy4xLjEuMTY1NDEzNzM2MS4w' -O $SCRIPT_DIR/firefox-101.tar.bz2
-    tar xjf $SCRIPT_DIR/firefox-*.tar.bz2
-    sudo mv $SCRIPT_DIR/firefox /opt
-    sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
-    sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
-    rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
-
-}
-
-main() {
-    git pull origin master
-    checkFolders
-    doDirectory
     # Install starship
     curl -fsSL https://starship.rs/install.sh | sh
     # Install node through fnm
@@ -57,16 +27,6 @@ main() {
 
     # Install vim-plug for neovim
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-    # Install stuff that requires wget
-    testWget
-    installWgetRequired
-
-    # install other useful stuff
-    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format cmake libnotify-bin i3 flake8 pylint xcape -y
-
-    pip3 install pynvim black
-
     # install git completion
     curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
     https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
@@ -74,11 +34,22 @@ main() {
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
     sudo apt update
     sudo apt install gh
-    # Move dotfiles to INSTALLDIR and syslink
-    echo "Installing to $INSTALLDIR. "
 
-    syslink
+    curl -fsSl https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf -o $HOME/.local/share/fonts/Fira\ Code\ Regular\ Nerd\ Font\ Complete.otf
+
+}
+
+installAptStuff(){
+    # install other useful stuff
+    sudo apt-add-repository contrib
+    sudo apt-add-repository non-free
+
+    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format fonts-firacode cmake libnotify-bin i3 flake8 pylint xcape -y
+
+}
+installExtraStuff(){
     echo "Running final setup steps...."
+    pip3 install pynvim black
     go install -v mvdan.cc/sh/cmd/shfmt
     source $HOME/.bashrc
     fc-cache -fv
@@ -86,8 +57,24 @@ main() {
     gh auth setup-git
     fnm install 16.15.0
     nvim +PlugInstall +qa
+    nvim +Copilot
     nvim +"CocInstall coc-pyright coc-snippets coc-sh coc-marketplace coc-json coc-lua coc-rust-analyzer coc-texlab"
 
+}
+
+main() {
+    git pull origin master
+    checkFolders
+    doDirectory
+    # Install stuff that requires wget
+    installWgetRequired
+    installCurlRequired
+    installAptStuff
+
+    # Move dotfiles to INSTALLDIR and syslink
+    echo "Installing to $INSTALLDIR. "
+    syslink
+    installExtraStuff
 }
 
 # make sure all folders exist if necessary.
@@ -113,7 +100,7 @@ checkFolders() {
     if [ ! -d $HOME/.local/share ]; then
         mkdir $HOME/.local/share
     fi
-    if [ ! -d $HOME/.local/share/fonts/ ]; then
+    if [ ! -d $HOME/.local/share/fonts ]; then
         mkdir $HOME/.local/share/fonts
     fi
     if [ ! -d $HOME/.config/coc/ ]; then
@@ -197,4 +184,28 @@ syslink() {
         ln -s $INSTALLDIR/coc/$filename $HOME/.config/coc/
     done
 }
+
+
+installWgetRequired() {
+    sudo apt-get install wget -y
+    #install go
+    wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz -o $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
+    tar -C /usr/local -xzf $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
+
+    # install neovim
+    wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb --output-document=$SCRIPT_DIR/nvim-linux64.deb
+    sudo apt install $SCRIPT_DIR/nvim-linux64.deb
+    rm -rf $SCRIPT_DIR/nvim-linux64.deb
+
+    wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US&_gl=1*1socw60*_ga*MTg1Mjg3NTI0Ny4xNjU0MTM3MDM3*_ga_MQ7767QQQW*MTY1NDEzNzAzNy4xLjEuMTY1NDEzNzM2MS4w' -O $SCRIPT_DIR/firefox-101.tar.bz2
+    tar xjf $SCRIPT_DIR/firefox-*.tar.bz2
+    sudo mv $SCRIPT_DIR/firefox /opt
+    sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
+    sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
+    rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
+
+}
+
+
+
 main
