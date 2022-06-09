@@ -47,6 +47,7 @@ installCurlRequired(){
 
 installAptStuff(){
     # install other useful stuff
+    sudo apt remove firefox-esr -y
     sudo apt-add-repository contrib
     sudo apt-add-repository non-free
 
