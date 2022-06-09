@@ -29,12 +29,18 @@ installCurlRequired(){
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     # install git completion
     curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
-    https://go.dev/dl/go1.18.3.linux-amd64.tar.gz
+    # install go
+    curl https://go.dev/dl/go1.18.3.linux-amd64.tar.gz -o $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
+    tar -C /usr/local -xzf $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
+    rm -rf $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
+
+    # install gh cli
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
     sudo apt update
     sudo apt install gh
-
+    # Install nerd font
+    
     curl -fsSl https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf -o $HOME/.local/share/fonts/Fira\ Code\ Regular\ Nerd\ Font\ Complete.otf
 
 }
@@ -48,10 +54,11 @@ installAptStuff(){
 
 }
 installExtraStuff(){
+
+    source $HOME/.bashrc
     echo "Running final setup steps...."
     pip3 install pynvim black
     go install -v mvdan.cc/sh/cmd/shfmt
-    source $HOME/.bashrc
     fc-cache -fv
     gh auth login
     gh auth setup-git
