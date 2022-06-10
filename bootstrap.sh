@@ -129,13 +129,26 @@ installExtraStuff() {
     echo "Running final setup steps...."
     pip3 install pynvim black
     fc-cache -fv
-    gh auth login
-    gh auth setup-git
+    configureGit
     nvim +PlugInstall +qa
     nvim +Copilot
     if command -v node >/dev/null 2>&1; then
         nvim +"CocInstall coc-pyright coc-snippets coc-sh coc-marketplace coc-json coc-lua coc-rust-analyzer coc-texlab"
     fi
+
+}
+
+configureGit() {
+    gh auth login
+    gh auth setup-git
+    echo "enter git username"
+    read GIT_USERNAME
+    echo "enter git email"
+    read GIT_EMAIL
+    git config --global user.name "$GIT_USERNAME"
+    git config --global user.email "$GIT_EMAIL"
+    git config --global core.editor "nvim"
+    git config --global core.excludesfile $HOME/.gitignore_global
 
 }
 
@@ -207,7 +220,7 @@ doDirectory() {
 }
 # symlink dotfiles to $INSTALLDIR
 syslink() {
-    DIR0=$SCRIPT_DIR/bash/
+    DIR0=$SCRIPT_DIR/home/
     DIR1=$SCRIPT_DIR/vim/
     ITEM1=$SCRIPT_DIR/i3/config
     DIR2=$SCRIPT_DIR/starship/
