@@ -9,18 +9,53 @@ if [[ $EUID -eq 0 ]]; then
     exit
 
 fi
+fixPath() {
+    export PATH=""
 
+    if [ -d $HOME/.local/bin/ ]; then
+        export PATH=$PATH:$HOME/.local/bin/
+    fi
 
+    if [ -d $HOME/.cargo/bin/ ]; then
+        export PATH=$PATH:$HOME/.cargo/bin/
+    fi
 
-installCurlRequired(){
+    if [ -d usr/local/bin/ ]; then
+        export PATH=$PATH:usr/local/bin/
+    fi
+
+    if [ -d /usr/bin/ ]; then
+        export PATH=$PATH:/usr/bin/
+    fi
+
+    if [ -d /bin/ ]; then
+        export PATH=$PATH:/bin/
+    fi
+
+    if [ -d /usr/local/games ]; then
+        export PATH=$PATH:/usr/local/games/
+    fi
+
+    if [ -d /usr/games ]; then
+        export PATH=$PATH:/usr/games/
+    fi
+
+    if [ -d /usr/local/go/bin ]; then
+        export PATH=$PATH:/usr/local/go/bin
+    fi
+
+}
+
+installCurlRequired() {
     if ! command -v curl >/dev/null 2>&1; then
         echo "curl is not installed. Installing now"
         sudo apt install curl -y
     fi
     # Install starship
     curl -fsSL https://starship.rs/install.sh | sh
-    # Install node through fnm
-    curl -fsSL https://fnm.vercel.app/install | bash
+    # install nodejs
+    curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+    sudo apt-get install -y nodejs yarn
     # Install rust
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     # remove this bashrc, as the repo holds the line that it writes
@@ -31,45 +66,74 @@ installCurlRequired(){
     # install git completion
     curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
     # install go
-    curl https://go.dev/dl/go1.18.3.linux-amd64.tar.gz -o $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
-   sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
-    rm -rf $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
-
+    installGoStuff
     # install gh cli
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
     sudo apt update
     sudo apt install gh
-    
+
 }
 
-installAptStuff(){
+installAptStuff() {
     # install other useful stuff
     sudo apt remove firefox-esr -y
     sudo apt-add-repository contrib
     sudo apt-add-repository non-free
 
-    sudo apt install ccls rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format fonts-firacode cmake libnotify-bin i3 flake8 pylint xcape -y
+    sudo apt install ccls build-essential rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format fonts-firacode cmake libnotify-bin i3 flake8 pylint xcape -y
 
 }
-installExtraStuff(){
 
+installGoStuff() {
+    TEMP_DIR=$(mktemp -d)
+    GOVERSION="1.18.3"
+
+    OS="linux"
+    ARCH="$(uname -m)"
+    case "$ARCH" in
+    "x86_64")
+        ARCH=amd64
+        ;;
+    "aarch64")
+        ARCH=arm64
+        ;;
+    "armv6" | "armv7l")
+        ARCH=armv6l
+        ;;
+    "armv8")
+        ARCH=arm64
+        ;;
+    .*386.*)
+        ARCH=386
+        ;;
+    esac
+
+    PACKAGE="go${GOVERSION}.${OS}-${ARCH}.tar.gz"
+    URL="https://dl.google.com/go/${PACKAGE}"
+    curl -L "$URL" -o "$TEMP_DIR/$PACKAGE"
+    if [ -d /usr/local/go ]; then
+        sudo rm -rf /usr/local/go
+    fi
+    sudo tar -C /usr/local -xzf "$TEMP_DIR/$PACKAGE"
+    sudo rm -rf "$TEMP_DIR"
+    fixPath
+    go install -v mvdan.cc/sh/cmd/shfmt@latest
+
+}
+
+installExtraStuff() {
+    fixPath
     source $HOME/.bashrc
-    
+
     echo "Running final setup steps...."
     pip3 install pynvim black
-    go install -v mvdan.cc/sh/cmd/shfmt
     fc-cache -fv
     gh auth login
     gh auth setup-git
-    eval "$(fnm env)"
-    fnm install 16
-    eval "$(fnm env)"
-    # test if node command is found
-        nvim +PlugInstall +qa
-        nvim +Copilot
+    nvim +PlugInstall +qa
+    nvim +Copilot
     if command -v node >/dev/null 2>&1; then
-
         nvim +"CocInstall coc-pyright coc-snippets coc-sh coc-marketplace coc-json coc-lua coc-rust-analyzer coc-texlab"
     fi
 
@@ -189,7 +253,6 @@ syslink() {
     done
 }
 
-
 installWgetRequired() {
     sudo apt-get install wget -y
     #install go
@@ -209,7 +272,5 @@ installWgetRequired() {
     rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
 
 }
-
-
 
 main
