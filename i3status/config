@@ -12,7 +12,7 @@ order += "cpu_temperature 0"
 order += "volume master"
 order += "battery 1"
 order += "tztime local"
-order += "disk /home"
+order += "disk /"
 
 load {
         format = "<span background='#f59335'>  %5min Load </span>"
@@ -27,7 +27,7 @@ disk "/"{
         format = "<span background='#fec7cd'>  %free Free </span>"
 }
 
-disk "/home"{
+disk "/"{
         format = "<span background='#a1d569'> 﫭 %free Free </span>"
 }
 
