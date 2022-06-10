@@ -271,9 +271,6 @@ syslink() {
 
 installWgetRequired() {
     sudo apt-get install wget -y
-    #install go
-    wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz -o $SCRIPT_DIR/go1.18.3.linux-amd64.tar.gz
-    tar -C /usr/local -xzvf $SCRIPT_DIR/go*linux-amd64.tar.gz
 
     # install neovim
     wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb --output-document=$SCRIPT_DIR/nvim-linux64.deb
