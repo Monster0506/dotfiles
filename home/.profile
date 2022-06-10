@@ -1,31 +1,31 @@
 if [ -d $HOME/.local/bin/ ]; then
-    export PATH=$PATH:$HOME/.local/bin/
+    export PATH=$HOME/.local/bin/$PATH:
 fi
 
 if [ -d $HOME/.cargo/bin/ ]; then
-    export PATH=$PATH:$HOME/.cargo/bin/
+    export PATH=$HOME/.cargo/bin/:$PATH
 fi
 
 if [ -d usr/local/bin/ ]; then
-    export PATH=$PATH:usr/local/bin/
+    export PATH=usr/local/bin/:$PATH
 fi
 
 if [ -d /usr/bin/ ]; then
-    export PATH=$PATH:/usr/bin/
+    export PATH=/usr/bin/:$PATH
 fi
 
 if [ -d /bin/ ]; then
-    export PATH=$PATH:/bin/
+    export PATH=/bin/:$PATH
 fi
 
 if [ -d /usr/local/games ]; then
-    export PATH=$PATH:/usr/local/games/
+    export PATH=/usr/local/games/:$PATH
 fi
 
 if [ -d /usr/games ]; then
-    export PATH=$PATH:/usr/games/
+    export PATH=/usr/games/:$PATH
 fi
 
 if [ -d /usr/local/go/bin ]; then
-    export PATH=$PATH:/usr/local/go/bin
+    export PATH=/usr/local/go/bin:$PATH
 fi
