@@ -165,6 +165,9 @@ main() {
     echo "Installing to $INSTALLDIR. "
     syslink
     installExtraStuff
+    echo "All items installed. Fixing path, just to be sure"
+    fixPath
+    echo "Done."
 }
 
 # make sure all folders exist if necessary.
