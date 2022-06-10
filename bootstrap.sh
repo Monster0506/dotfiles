@@ -123,13 +123,17 @@ installGoStuff() {
 }
 
 installExtraStuff() {
-    fixPath
-    source $HOME/.bashrc
 
     echo "Running final setup steps...."
+    fixPath
     pip3 install pynvim black
     fc-cache -fv
     configureGit
+    configureVim
+
+}
+
+configureVim() {
     nvim +PlugInstall +qa
     nvim +Copilot
     if command -v node >/dev/null 2>&1; then
