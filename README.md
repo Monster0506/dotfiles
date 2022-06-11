@@ -12,32 +12,12 @@ a new installation.
 However, for ease of configuration, it does move current setup
 files into \*.back, as not to overwrite them. 
 
-To use, run `bash bootstrap.sh` in the directory in which you cloned 
+To use, run `./bootstrap.sh` in the directory in which you cloned 
 or downloaded this repository.
 
+## Follow-up Steps
 
-### Follow-Up Steps
-Yes, these could be in a bootstrap, but I am too lazy to do that.
-
-- Install starship
-    - `curl -sS https://starship.rs/install.sh | sh` 
-- Install Python [(latest version)](https://www.python.org/ftp/python/3.10.4/Python-3.10.4.tgz)
-- Install Node
-    - `curl -fsSL https://fnm.vercel.app/install | bash`
-    - `fnm install [Version Number (16.15.0)]`
- - `sudo apt install vim neovim vim-gtk3 fzf i3 -y`
- - Install ruby from [here](https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.2.tar.gz)
- - Install vim-plug
-     - `sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'` 
- - Install COC extentions via coc-marketplace
-     - coc-pyright
-     - coc-snippets
-     - coc-lua
- - Install useful python tools
-     - `python3 -m pip install setuptools`
-     - `pip3 install black`
-     - `sudo apt install flake8 pylint -y`
+Make sure to source ~/.bashrc (`. ~/.bashrc`)
 
 ## Contents
 
