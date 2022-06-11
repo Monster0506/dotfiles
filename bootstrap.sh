@@ -235,15 +235,15 @@ syslink() {
     DIR4=$SCRIPT_DIR/coc/
 
     for filename in $(ls -A $DIR0); do
-        cp $DIR0/$filename $INSTALLDIR/$filename -r
-        ln -s $INSTALLDIR/$filename $HOME
+        cp $DIR0/$filename $INSTALLDIR/home/$filename -r
+        ln -s $INSTALLDIR/home/$filename $HOME
     done
 
     echo "DONE WITH BASH DIR ($DIR0)"
 
     for filename in $(ls -A $DIR1); do
-        cp $DIR1/$filename $INSTALLDIR/$filename -r
-        ln -s $INSTALLDIR/$filename $HOME/.config/nvim/
+        cp $DIR1/$filename $INSTALLDIR/vim/$filename -r
+        ln -s $INSTALLDIR/vim/$filename $HOME/.config/nvim/
     done
 
     echo "DONE WITH DIR ($DIR1)"
@@ -254,15 +254,15 @@ syslink() {
     echo "DONE WITH ITEM ($ITEM1)"
 
     for filename in $(ls -A $DIR2); do
-        cp $DIR2/$filename $INSTALLDIR/$filename -r
-        ln -s $INSTALLDIR/$filename $HOME/.config/
+        cp $DIR2/$filename $INSTALLDIR/starship/$filename -r
+        ln -s $INSTALLDIR/starship/$filename $HOME/.config/
     done
 
     echo "DONE WITH DIR ($DIR2)"
 
     for filename in $(ls -A $DIR3); do
-        cp $DIR3/$filename $INSTALLDIR/$filename -r
-        ln -s $INSTALLDIR/$filename $HOME/.config/i3status/
+        cp $DIR3/$filename $INSTALLDIR/i3status/$filename -r
+        ln -s $INSTALLDIR/i3status/$filename $HOME/.config/i3status/
     done
 
     echo "DONE WITH DIR ($DIR3)"
