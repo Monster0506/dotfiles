@@ -199,7 +199,7 @@ doDirectory() {
     # Create dotfiles directory, or if it exists, prompt user for install location
     if [ ! -d $HOME/.cfg/ ]; then
         mkdir $HOME/.cfg/
-        INSTALLDIR=$HOME/.cfg/
+        export INSTALLDIR=$HOME/.cfg/
     else
         echo "$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN) "
         read abc
@@ -207,16 +207,16 @@ doDirectory() {
             echo "Overwriting .cfg directory."
             rm $HOME/.cfg/ -rf
             mkdir $HOME/.cfg
-            INSTALLDIR=$HOME/.cfg/
+            export INSTALLDIR=$HOME/.cfg/
         else
             echo "Where would you like to install?"
             read INSTALLDIR1
             if [ ! -d $HOME/$INSTALLDIR1 ]; then
                 echo "making $INSTALLDIR1 in $HOME"
-                INSTALLDIR=$HOME/$INSTALLDIR1
+                export INSTALLDIR=$HOME/$INSTALLDIR1
                 mkdir $INSTALLDIR
             else
-                INSTALLDIR=$HOME/$INSTALLDIR1
+                export INSTALLDIR=$HOME/$INSTALLDIR1
             fi
         fi
     fi
