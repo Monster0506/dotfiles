@@ -6,6 +6,9 @@ if [ -d $HOME/.cargo/bin/ ]; then
     export PATH=$HOME/.cargo/bin/:$PATH
 fi
 
+. "$HOME/.cargo/env"
+
+
 if [ -d usr/local/bin/ ]; then
     export PATH=usr/local/bin/:$PATH
 fi
@@ -28,4 +31,18 @@ fi
 
 if [ -d /usr/local/go/bin ]; then
     export PATH=/usr/local/go/bin:$PATH
+fi
+
+
+if [ -n "$bash_version" ]; then
+    # include .bashrc if it exists
+    if [ -f "$home/.bashrc" ]; then
+	. "$home/.bashrc"
+    fi
+fi
+if [ -n "$bash_version" ]; then
+    # include .bashrc if it exists
+    if [ -f "$home/.bashrc" ]; then
+	. "$home/.bashrc"
+    fi
 fi
