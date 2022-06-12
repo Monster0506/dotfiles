@@ -231,6 +231,9 @@ doDirectory() {
 }
 # symlink dotfiles to $INSTALLDIR
 syslink() {
+    if [ -f $HOME/.profile ]; then
+        rm $HOME/.profile
+    fi
     DIR0=$SCRIPT_DIR/home/
     DIR1=$SCRIPT_DIR/vim/
     ITEM1=$SCRIPT_DIR/i3/config
