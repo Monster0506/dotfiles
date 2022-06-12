@@ -224,7 +224,7 @@ doDirectory() {
     mkdir $INSTALLDIR/i3
     mkdir $INSTALLDIR/coc
     mkdir $INSTALLDIR/home
-    mkdir $INSTALLDIR/i3setup
+    mkdir $INSTALLDIR/i3status
     mkdir $INSTALLDIR/vim
     mkdir $INSTALLDIR/starship
 
