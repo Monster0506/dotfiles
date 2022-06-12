@@ -223,6 +223,10 @@ doDirectory() {
 
     mkdir $INSTALLDIR/i3
     mkdir $INSTALLDIR/coc
+    mkdir $INSTALLDIR/home
+    mkdir $INSTALLDIR/i3setup
+    mkdir $INSTALLDIR/vim
+    mkdir $INSTALLDIR/starship
 
 }
 # symlink dotfiles to $INSTALLDIR
@@ -289,5 +293,3 @@ installWgetRequired() {
     rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
 
 }
-
-main
