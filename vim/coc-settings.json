@@ -1,14 +1,1 @@
-{
-"languageserver": {
-  "ccls": {
-    "command": "ccls",
-    "filetypes": ["c","h" , "cc", "cpp", "c++", "objc", "objcpp"],
-    "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
-    "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        }
-      }
-  }
-}
-}
+/home/tj/.cfg//vim/coc-settings.json
