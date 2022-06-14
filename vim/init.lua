@@ -4,6 +4,7 @@ HOME = os.getenv("HOME")
 local Plug = vim.fn['plug#']
 vim.call('plug#begin')
         Plug 'preservim/nerdtree' 
+        Plug 'mattn/webapi-vim'
         Plug 'morhetz/gruvbox'
         Plug 'easymotion/vim-easymotion' 
         Plug 'sbdchd/neoformat' 
@@ -19,14 +20,9 @@ vim.call('plug#begin')
         Plug 'sheerun/vim-polyglot'
         Plug 'vim-syntastic/syntastic'
         Plug 'neovim/nvim-lspconfig'
-        --Plug 'SirVer/ultisnips'
         Plug 'Honza/vim-snippets'
         Plug 'rust-lang/rust.vim'
-        --Plug 'jayli/vim-easycomplete'
-        --Plug 'ycm-core/YouCompleteMe'
         Plug 'github/copilot.vim'
-        --Plug 'Shougo/deoplete.nvim'
-        --Plug 'williamboman/nvim-lsp-installer'
         Plug ('neoclide/coc.nvim', {branch='release'})
 
 vim.call('plug#end')
@@ -40,6 +36,7 @@ vim.opt.undodir="~/.vim/undodir"
 vim.opt.expandtab=true
 vim.opt.backspace="indent,eol,start"
 vim.opt.ignorecase=true
+
 vim.opt.backup=false
 vim.opt.swapfile=false
 vim.opt.ignorecase=true
@@ -65,8 +62,12 @@ vim.api.nvim_set_keymap(
         { noremap = true }
 )
 
-
-
+vim.api.nvim_set_keymap(
+        "n",
+        "<C-LeftMouse>",
+        "<LeftMouse>:call Show_documentation()<CR>",
+        { noremap = true, silent = true }
+	)
 
 vim.g.airline_right_alt_sep = ''
 vim.g.airline_right_sep = ''
