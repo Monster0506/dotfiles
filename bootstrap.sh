@@ -9,6 +9,18 @@ if [[ $EUID -eq 0 ]]; then
     exit
 
 fi
+# check if apt is installed
+if ! [ -x "$(command -v apt)" ]; then
+    echo "apt is not installed. Aborting now"
+    exit
+fi
+
+# check if sudo is installed.
+if ! [ -x "$(command -v sudo)" ]; then
+    echo "sudo is not installed. Aborting now"
+    exit
+fi
+
 fixPath() {
     export PATH=""
 
@@ -81,7 +93,7 @@ installAptStuff() {
     sudo apt-add-repository contrib
     sudo apt-add-repository non-free
 
-    sudo apt install ccls build-essential rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format fonts-firacode cmake libnotify-bin i3 flake8 pylint xcape -y
+    sudo apt install  gitk ccls build-essential rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format fonts-firacode cmake libnotify-bin i3 flake8 pylint xcape -y
 
 }
 
