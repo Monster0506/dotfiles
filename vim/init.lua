@@ -149,7 +149,6 @@ command! WQ :wq
 command! Wq :wq
 command! Q :q
 command! Noh :noh
-command! nog :noh
 command! Nog :noh
 " }}}
 
