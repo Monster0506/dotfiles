@@ -87,7 +87,7 @@ nnoremap <silent> <C-t> :NERDTreeToggle<CR>
 let NERDTreeWinPos = "right"  
 augroup fmt
   autocmd!
-  autocmd BufWritePre * silent undojoin | silent Neoformat
+  autocmd BufWritePre * silent Neoformat
 augroup END
 nnoremap gd <Plug>(coc-definition)
 nnoremap <F2> <Plug>(coc-rename)
