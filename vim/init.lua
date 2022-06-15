@@ -124,6 +124,14 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <P
 autocmd CursorHold * silent call CocActionAsync('highlight')
 noremap (<CR> (<CR>)<Esc>O
 inoremap (;    (<CR>);<Esc>O
