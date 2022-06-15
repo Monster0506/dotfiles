@@ -187,6 +187,7 @@ marco() {
         else
             if [ "$2" -lt 1000 ]; then
                 MARCODIR[$2 - 1]="$(pwd)"
+                echo "${MARCODIR[$2 - 1]}"
             else
                 echo "must be between 1 and 1000"
             fi
@@ -197,12 +198,15 @@ marco() {
         if [ -z "$1" ]; then
             # if no arguments are provided, set the first value of MARCODIR to `pwd`
             MARCODIR[0]=$(pwd)
+            echo "marco: ${MARCODIR[0]}"
         else
             if [ -d "$1" ]; then
                 MARCODIR[0]=$1
+                echo "marco: ${MARCODIR[0]}"
             else
                 if [ $1 -lt 1000 ]; then
                     MARCODIR[$1 - 1]=$(pwd)
+                    echo "marco: ${MARCODIR[$1 - 1]}"
                 else
                     echo "must be between 1 and 1000"
                 fi
