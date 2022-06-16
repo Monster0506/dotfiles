@@ -132,7 +132,7 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <P
 autocmd CursorHold * silent call CocActionAsync('highlight')
 noremap (<CR> (<CR>)<Esc>O
-inoremap (;    (<CR>);<Esc>O
+inoremap (;    (<CR>);<Esc>O 
 inoremap (,    (<CR>),<Esc>O
 inoremap {<CR> {<CR>}<Esc>O
 inoremap {;    {<CR>};<Esc>O
@@ -166,6 +166,9 @@ command! Wq :wq
 command! Q :q
 command! Noh :noh
 command! Nog :noh
+
+
+
 " }}}
 
 " NEXT OBJECT MAPPING {{{
@@ -191,4 +194,18 @@ endif
         ]])
 -- }}}
 -- }}}
-vim.g.UltiSnipsEditSplit="vertical"
+
+vim.api.nvim_set_keymap(
+  "i",
+  "<CR>",
+  "<Plug>(coc-snippets-expand)",
+  {
+    [""] = {
+      ["<Plug>(coc-snippets-expand)"] = true,
+    },
+  },
+  {
+    noremap = true,
+    silent = true,
+  }
+)
