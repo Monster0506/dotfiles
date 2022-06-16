@@ -200,11 +200,6 @@ vim.api.nvim_set_keymap(
   "<CR>",
   "<Plug>(coc-snippets-expand)",
   {
-    [""] = {
-      ["<Plug>(coc-snippets-expand)"] = true,
-    },
-  },
-  {
     noremap = true,
     silent = true,
   }
