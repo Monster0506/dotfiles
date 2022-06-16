@@ -8,7 +8,6 @@ gplusplus() {
     fi
     # strip extention and save it
     local file=${1%.*}
-
     \g++ -o $file $1 && ./$file
 }
 
@@ -243,7 +242,12 @@ polo() {
     *)
         if [ -z "$1" ]; then
             # if no arguments are provided, move to the first value of MARCODIR
-            cd "${MARCODIR[0]}"
+            # check if I am inside MARCODIR[0]
+            if [ $(pwd) == "${MARCODIR[0]}" ]; then
+                cd "${MARCODIR[1]}"
+            else
+                cd "${MARCODIR[0]}"
+            fi
         else
             if [ -d "$1" ]; then
                 cd "$1"
