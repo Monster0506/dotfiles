@@ -8,6 +8,9 @@ fi
 
 . "$HOME/.cargo/env"
 
+if [ -d $HOME/.local/bin ]; then
+    export PATH=$HOME/.local/bin:$PATH
+fi
 
 if [ -d usr/local/bin/ ]; then
     export PATH=usr/local/bin/:$PATH
