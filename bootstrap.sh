@@ -142,15 +142,32 @@ installExtraStuff() {
     fc-cache -fv
     configureGit
     configureVim
+    configureNpm
+    configureRust
 
+}
+
+configureRust(){
+    rustup component add rustfmt
+    rustup component add rust-src
+    curl -L https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+    chmod +x ~/.local/bin/rust-analyzer
+    
+
+}
+configureNpm(){
+    fixPath
+    if command -v npm >/dev/null 2>&1; then
+        sudo npm install -g neovim
+        sudo npm install -g typescript typescript-language-server
+        sudo npm install -g pyright
+        sudo npm install -g lua-fmt
+    fi
 }
 
 configureVim() {
     nvim +PlugInstall +qa
     nvim +Copilot
-    if command -v node >/dev/null 2>&1; then
-        nvim +"CocInstall coc-pyright coc-snippets coc-sh coc-marketplace coc-json coc-lua coc-rust-analyzer coc-texlab"
-    fi
 
 }
 
@@ -205,6 +222,10 @@ checkFolders() {
     fi
     if [ ! -d $HOME/.config/coc/ ]; then
         mkdir $HOME/.config/coc/
+    fi
+
+    if [ ! -d $HOME/.local/bin ]; then
+        mkdir $HOME/.local/bin
     fi
 }
 doDirectory() {

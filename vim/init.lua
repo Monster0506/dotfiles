@@ -26,6 +26,7 @@ Plug "hrsh7th/cmp-path"
 Plug "hrsh7th/cmp-cmdline"
 Plug "hrsh7th/nvim-cmp"
 Plug "Honza/vim-snippets"
+Plug "hrsh7th/cmp-nvim-lsp-signature-help"
 -- For ultisnips users.
 Plug "SirVer/ultisnips"
 Plug "quangnguyen30192/cmp-nvim-ultisnips"
@@ -33,7 +34,6 @@ Plug "quangnguyen30192/cmp-nvim-ultisnips"
 Plug "nvim-treesitter/nvim-treesitter"
 Plug "rust-lang/rust.vim"
 Plug "github/copilot.vim"
---Plug ('neoclide/coc.nvim', {branch='release'})
 
 vim.call("plug#end")
 --print(HOME)
@@ -61,13 +61,6 @@ vim.cmd([[
 
 ]])
 vim.api.nvim_set_keymap("n", "<c-_>", "<plug>NERDCommenterToggle", {noremap = true})
-
---vim.api.nvim_set_keymap(
---"n",
---"<C-LeftMouse>",
---"<LeftMouse>:call Show_documentation()<CR>",
---{noremap = true, silent = true}
---)
 
 vim.g.airline_right_alt_sep = ""
 vim.g.airline_right_sep = ""
@@ -172,7 +165,8 @@ cmp.setup(
             {
                 {name = "nvim_lsp"},
                 {name = "ultisnips"},
-                {name = "buffer"}
+                {name = "buffer"},
+                {name = "nvim_lsp_signature_help"}
             }
         )
     }
@@ -222,14 +216,66 @@ cmp.setup.cmdline(
 
 -- Setup lspconfig.
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require "lspconfig".rust_analyzer.setup {
-    capabilities = capabilities
-}
-require "lspconfig".pyright.setup {
-    capabilities = capabilities
-}
+local opts = {noremap = true, silent = true}
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
-require "lspconfig".tsserver.setup {
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = {noremap = true, silent = true, buffer = bufnr}
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "<C-LeftMouse>", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set(
+        "n",
+        "<leader>wl",
+        function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end,
+        bufopts
+    )
+    vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+    vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, bufopts)
+end
+
+local lsp_flags = {
+    -- This is the default in Nvim 0.7+
+    debounce_text_changes = 50
+}
+require("lspconfig")["pyright"].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
     capabilities = capabilities
+}
+require("lspconfig")["tsserver"].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities
+}
+require("lspconfig")["rust_analyzer"].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    -- Server-specific settings...
+    settings = {
+        ["rust-analyzer"] = {
+            capabilities = capabilities
+        }
+    }
 }
