@@ -11,6 +11,7 @@ Plug "ryanoasis/vim-devicons"
 Plug "preservim/nerdcommenter"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
+Plug "neovim/nvim-lsp"
 Plug "mg979/vim-visual-multi"
 Plug "mattn/emmet-vim"
 Plug "ap/vim-css-color"
@@ -248,8 +249,7 @@ local on_attach = function(client, bufnr)
     )
     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
     vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, bufopts)
 end
@@ -263,11 +263,7 @@ require("lspconfig")["pyright"].setup {
     flags = lsp_flags,
     capabilities = capabilities
 }
-require("lspconfig")["tsserver"].setup {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities
-}
+require("lspconfig")["tsserver"].setup {}
 require("lspconfig")["rust_analyzer"].setup {
     on_attach = on_attach,
     flags = lsp_flags,
