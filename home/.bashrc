@@ -1,6 +1,8 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+export PATH=""
+source ~/.profile
 
 export black="\033[0;38;5;0m"
 export red="\033[0;38;5;1m"
@@ -136,3 +138,4 @@ fi
 eval "$(starship init bash)"
 
 . "$HOME/.cargo/env"
+
