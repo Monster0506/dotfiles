@@ -32,8 +32,8 @@ fixPath() {
         export PATH=$PATH:$HOME/.cargo/bin/
     fi
 
-    if [ -d usr/local/bin/ ]; then
-        export PATH=$PATH:usr/local/bin/
+    if [ -d /usr/local/bin/ ]; then
+        export PATH=$PATH:/usr/local/bin/
     fi
 
     if [ -d /usr/bin/ ]; then
@@ -162,6 +162,7 @@ configureNpm(){
         sudo npm install -g typescript typescript-language-server
         sudo npm install -g pyright
         sudo npm install -g lua-fmt
+        sudo npm install -g bash-language-server
     fi
 }
 
@@ -312,7 +313,6 @@ syslink() {
         ln -s $INSTALLDIR/coc/$filename $HOME/.config/coc/
     done
 }
-
 installWgetRequired() {
     sudo apt-get install wget -y
 
@@ -329,4 +329,3 @@ installWgetRequired() {
     rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
 
 }
-main
