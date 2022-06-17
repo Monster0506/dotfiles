@@ -31,7 +31,6 @@ Plug "hrsh7th/cmp-nvim-lsp-signature-help"
 Plug "SirVer/ultisnips"
 Plug "quangnguyen30192/cmp-nvim-ultisnips"
 
-Plug "nvim-treesitter/nvim-treesitter"
 Plug "rust-lang/rust.vim"
 Plug "github/copilot.vim"
 
