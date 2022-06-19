@@ -312,7 +312,7 @@ weather() {
                 eval "curl http://wttr.in/$1" | lolcat
                 ;;
             *)
-                eval "curl http://wttr.in/$1" | less
+                eval "curl http://wttr.in/$1"
                 ;;
             esac
         fi
