@@ -2,21 +2,10 @@
 HOME = os.getenv("HOME")
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
-Plug "preservim/nerdtree"
-Plug "mattn/webapi-vim"
-Plug "morhetz/gruvbox"
-Plug "easymotion/vim-easymotion"
-Plug "sbdchd/neoformat"
-Plug "ryanoasis/vim-devicons"
-Plug "preservim/nerdcommenter"
-Plug "tpope/vim-repeat"
-Plug "tpope/vim-surround"
+
+-- language plugins
+Plug "rust-lang/rust.vim"
 Plug "neovim/nvim-lsp"
-Plug "mg979/vim-visual-multi"
-Plug "mattn/emmet-vim"
-Plug "ap/vim-css-color"
-Plug "vim-airline/vim-airline"
-Plug "kien/ctrlp.vim"
 Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
 Plug "hrsh7th/nvim-cmp"
@@ -26,15 +15,28 @@ Plug "hrsh7th/cmp-buffer"
 Plug "hrsh7th/cmp-path"
 Plug "hrsh7th/cmp-cmdline"
 Plug "hrsh7th/nvim-cmp"
-Plug "Honza/vim-snippets"
 Plug "hrsh7th/cmp-nvim-lsp-signature-help"
--- For ultisnips users.
+Plug "sbdchd/neoformat"
+Plug "mattn/emmet-vim"
+Plug "ap/vim-css-color"
+Plug "preservim/nerdcommenter"
+
+-- Utility plugins
+Plug "preservim/nerdtree"
+Plug "mattn/webapi-vim"
+Plug "github/copilot.vim"
+Plug "easymotion/vim-easymotion"
+Plug "tpope/vim-repeat"
+Plug "tpope/vim-surround"
+Plug "mg979/vim-visual-multi"
+Plug "morhetz/gruvbox"
+Plug "vim-airline/vim-airline"
+Plug "kien/ctrlp.vim"
+
+-- For ultisnips.
+Plug "Honza/vim-snippets"
 Plug "SirVer/ultisnips"
 Plug "quangnguyen30192/cmp-nvim-ultisnips"
-
-Plug "rust-lang/rust.vim"
-Plug "github/copilot.vim"
-
 vim.call("plug#end")
 --print(HOME)
 vim.opt.background = "dark"
@@ -56,10 +58,6 @@ vim.opt.foldmethod = "marker"
 vim.colorsheme = "gruvbox"
 vim.cmd([[colorscheme gruvbox]])
 vim.api.nvim_set_keymap("n", "<C-t>", ":NERDTreeToggle<cr>", {noremap = true, silent = true})
-vim.cmd([[
-
-
-]])
 vim.api.nvim_set_keymap("n", "<c-_>", "<plug>NERDCommenterToggle", {noremap = true})
 
 vim.g.airline_right_alt_sep = ""
@@ -71,7 +69,7 @@ vim.g.airline_left_sep = ""
 --require("nvim-lsp-installer").setup {}
 local lspconfig = require("lspconfig")
 
--- Keybindings I am too lazy to put in the proper format. {{{
+-- Keybindings I am too lazy to put in the proper format.
 vim.cmd(
     [[
 
@@ -109,7 +107,6 @@ nnoremap M Mzz
 nnoremap L Lzz
 vnoremap <leader>y "+y
 nnoremap + <C-a>
-" Fix typos {{{
 command! W :w
 command! WQ :wq
 command! Wq :wq
@@ -119,7 +116,7 @@ command! Nog :noh
 
 
 
-" }}}
+" 
 
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
@@ -137,13 +134,12 @@ endfunction
         ]]
 )
 -- }}}
--- }}}
+-- nvim-completions
 local cmp = require "cmp"
 
 cmp.setup(
     {
         snippet = {
-            -- REQUIRED - you must specify a snippet engine
             expand = function(args)
                 vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
             end
@@ -158,7 +154,7 @@ cmp.setup(
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(),
-                ["<CR>"] = cmp.mapping.confirm({select = true}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ["<CR>"] = cmp.mapping.confirm({select = true})
             }
         ),
         sources = cmp.config.sources(
