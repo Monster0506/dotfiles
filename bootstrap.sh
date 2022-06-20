@@ -329,3 +329,4 @@ installWgetRequired() {
     rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
 
 }
+main
