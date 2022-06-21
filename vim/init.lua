@@ -3,18 +3,9 @@ HOME = os.getenv("HOME")
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
 
--- language plugins
-
-Plug "neovim/nvim-lsp"
-Plug "sheerun/vim-polyglot"
-Plug "simrat39/rust-tools.nvim"
-Plug "rust-lang/rust.vim"
-
-Plug "vim-syntastic/syntastic"
+-- Completion
 Plug "onsails/lspkind.nvim"
 Plug "hrsh7th/nvim-cmp"
-Plug "neovim/nvim-lspconfig"
-
 Plug "hrsh7th/cmp-emoji"
 Plug "nvim-lua/plenary.nvim"
 Plug "hrsh7th/cmp-nvim-lsp"
@@ -26,6 +17,19 @@ Plug "hrsh7th/cmp-cmdline"
 Plug "hrsh7th/nvim-cmp"
 Plug "hrsh7th/cmp-nvim-lsp-document-symbol"
 Plug "hrsh7th/cmp-nvim-lsp-signature-help"
+-- For ultisnips.
+Plug "Honza/vim-snippets"
+Plug "SirVer/ultisnips"
+Plug "quangnguyen30192/cmp-nvim-ultisnips"
+
+-- language plugins
+Plug "neovim/nvim-lsp"
+Plug "sheerun/vim-polyglot"
+Plug "simrat39/rust-tools.nvim"
+Plug "rust-lang/rust.vim"
+
+Plug "vim-syntastic/syntastic"
+Plug "neovim/nvim-lspconfig"
 Plug "sbdchd/neoformat"
 Plug "mattn/emmet-vim"
 Plug "ap/vim-css-color"
@@ -43,10 +47,6 @@ Plug "morhetz/gruvbox"
 Plug "vim-airline/vim-airline"
 Plug "kien/ctrlp.vim"
 
--- For ultisnips.
-Plug "Honza/vim-snippets"
-Plug "SirVer/ultisnips"
-Plug "quangnguyen30192/cmp-nvim-ultisnips"
 vim.call("plug#end")
 --print(HOME)
 vim.opt.background = "dark"
