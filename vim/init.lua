@@ -4,9 +4,14 @@ local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
 
 -- language plugins
-Plug "rust-lang/rust.vim"
+
 Plug "neovim/nvim-lsp"
 Plug "sheerun/vim-polyglot"
+Plug "simrat39/rust-tools.nvim"
+-- Debugging for rust-tools
+Plug "nvim-lua/plenary.nvim"
+Plug "mfussenegger/nvim-dap"
+Plug "rust-lang/rust.vim"
 Plug "vim-syntastic/syntastic"
 Plug "hrsh7th/nvim-cmp"
 Plug "neovim/nvim-lspconfig"
@@ -260,17 +265,6 @@ require("lspconfig")["pyright"].setup {
     capabilities = capabilities
 }
 require("lspconfig")["tsserver"].setup {}
-require("lspconfig")["rust_analyzer"].setup {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    -- Server-specific settings...
-    settings = {
-        ["rust-analyzer"] = {
-            capabilities = capabilities
-        }
-    }
-}
-
 require("lspconfig").bashls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
@@ -281,4 +275,32 @@ require("lspconfig").ccls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities
+}
+local extension_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+require "rust-tools".setup(
+    {
+        dap = {
+            adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path)
+        },
+        tools = {hover_actions = {auto_focus = true}}
+    }
+)
+
+vim.cmd(
+    [[
+autocmd FileType rust silent nmap <leader>f :RustFmt<CR>
+autocmd FileType rust silent nmap K :RustHoverActions<CR>
+autocmd FileType rust silent nmap <C-LeftMouse> :RustHoverActions<CR>
+autocmd FileType rust silent nmap <space>ca :RustCodeAction<CR>
+]]
+)
+require("lspconfig")["rust_analyzer"].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    -- Server-specific settings...
+    settings = {
+        ["rust-analyzer"] = {}
+    }
 }
