@@ -8,18 +8,21 @@ vim.call("plug#begin")
 Plug "neovim/nvim-lsp"
 Plug "sheerun/vim-polyglot"
 Plug "simrat39/rust-tools.nvim"
--- Debugging for rust-tools
-Plug "nvim-lua/plenary.nvim"
-Plug "mfussenegger/nvim-dap"
 Plug "rust-lang/rust.vim"
+
 Plug "vim-syntastic/syntastic"
 Plug "hrsh7th/nvim-cmp"
 Plug "neovim/nvim-lspconfig"
+
+Plug "nvim-lua/plenary.nvim"
 Plug "hrsh7th/cmp-nvim-lsp"
+Plug "Saecki/crates.nvim"
+Plug "hrsh7th/cmp-calc"
 Plug "hrsh7th/cmp-buffer"
 Plug "hrsh7th/cmp-path"
 Plug "hrsh7th/cmp-cmdline"
 Plug "hrsh7th/nvim-cmp"
+Plug "hrsh7th/cmp-nvim-lsp-document-symbol"
 Plug "hrsh7th/cmp-nvim-lsp-signature-help"
 Plug "sbdchd/neoformat"
 Plug "mattn/emmet-vim"
@@ -165,8 +168,10 @@ cmp.setup(
         sources = cmp.config.sources(
             {
                 {name = "nvim_lsp"},
+                {name = "calc"},
                 {name = "ultisnips"},
                 {name = "buffer"},
+                {name = "crates"},
                 {name = "nvim_lsp_signature_help"}
             }
         )
@@ -189,13 +194,17 @@ cmp.setup.filetype(
 )
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(
+require "cmp".setup.cmdline(
     "/",
     {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-            {name = "buffer"}
-        }
+        sources = cmp.config.sources(
+            {
+                {name = "nvim_lsp_document_symbol"}
+            },
+            {
+                {name = "buffer"}
+            }
+        )
     }
 )
 
@@ -206,9 +215,8 @@ cmp.setup.cmdline(
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources(
             {
-                {name = "path"}
-            },
-            {
+                {name = "path"},
+                {name = "calc"},
                 {name = "cmdline"}
             }
         )
@@ -234,7 +242,6 @@ local on_attach = function(client, bufnr)
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "<C-LeftMouse>", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
@@ -276,26 +283,7 @@ require("lspconfig").ccls.setup {
     flags = lsp_flags,
     capabilities = capabilities
 }
-local extension_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
-local codelldb_path = extension_path .. "adapter/codelldb"
-local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-require "rust-tools".setup(
-    {
-        dap = {
-            adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path)
-        },
-        tools = {hover_actions = {auto_focus = true}}
-    }
-)
 
-vim.cmd(
-    [[
-autocmd FileType rust silent nmap <leader>f :RustFmt<CR>
-autocmd FileType rust silent nmap K :RustHoverActions<CR>
-autocmd FileType rust silent nmap <C-LeftMouse> :RustHoverActions<CR>
-autocmd FileType rust silent nmap <space>ca :RustCodeAction<CR>
-]]
-)
 require("lspconfig")["rust_analyzer"].setup {
     on_attach = on_attach,
     flags = lsp_flags,
@@ -304,3 +292,17 @@ require("lspconfig")["rust_analyzer"].setup {
         ["rust-analyzer"] = {}
     }
 }
+require("crates").setup()
+vim.api.nvim_set_keymap("n", "K", ":lua show_documentation()<CR>", {noremap = true, silent = true})
+function show_documentation()
+    local filetype = vim.bo.filetype
+    if vim.tbl_contains({"vim", "help"}, filetype) then
+        vim.cmd("h " .. vim.fn.expand("<cword>"))
+    elseif vim.tbl_contains({"man"}, filetype) then
+        vim.cmd("Man " .. vim.fn.expand("<cword>"))
+    elseif vim.fn.expand("%:t") == "Cargo.toml" then
+        require("crates").show_popup()
+    else
+        vim.lsp.buf.hover()
+    end
+end
