@@ -315,6 +315,9 @@ end
 
 require("cmp").setup(
     {
+        view = {
+            entries = {name = "custom", selection_order = "near_cursor"}
+        },
         window = {
             completion = {
                 winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
