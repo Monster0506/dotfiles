@@ -168,7 +168,6 @@ configureNpm(){
 
 configureVim() {
     nvim +PlugInstall +qa
-    nvim +Copilot
 
 }
 

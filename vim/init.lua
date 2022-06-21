@@ -5,7 +5,6 @@ vim.call("plug#begin")
 
 -- Completion
 Plug "onsails/lspkind.nvim"
-Plug "f3fora/cmp-spell"
 Plug "hrsh7th/nvim-cmp"
 Plug "hrsh7th/cmp-emoji"
 Plug "nvim-lua/plenary.nvim"
@@ -39,7 +38,6 @@ Plug "preservim/nerdcommenter"
 -- Utility plugins
 Plug "preservim/nerdtree"
 Plug "mattn/webapi-vim"
-Plug "github/copilot.vim"
 Plug "easymotion/vim-easymotion"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
@@ -52,8 +50,6 @@ vim.call("plug#end")
 --print(HOME)
 vim.opt.background = "dark"
 
-vim.opt.spell = true
-vim.opt.spelllang = {"en_us"}
 vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.mouse = "a"
@@ -182,7 +178,6 @@ cmp.setup(
                 {name = "buffer"},
                 {name = "crates"},
                 {name = "nvim_lsp_signature_help"},
-                {name = "spell"},
                 {name = "emoji"}
             }
         )
