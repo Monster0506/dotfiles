@@ -11,9 +11,11 @@ Plug "simrat39/rust-tools.nvim"
 Plug "rust-lang/rust.vim"
 
 Plug "vim-syntastic/syntastic"
+Plug "onsails/lspkind.nvim"
 Plug "hrsh7th/nvim-cmp"
 Plug "neovim/nvim-lspconfig"
 
+Plug "hrsh7th/cmp-emoji"
 Plug "nvim-lua/plenary.nvim"
 Plug "hrsh7th/cmp-nvim-lsp"
 Plug "Saecki/crates.nvim"
@@ -165,6 +167,9 @@ cmp.setup(
                 ["<CR>"] = cmp.mapping.confirm({select = true})
             }
         ),
+        view = {
+            entries = {name = "custom", selection_order = "near_cursor"}
+        },
         sources = cmp.config.sources(
             {
                 {name = "nvim_lsp"},
@@ -172,7 +177,8 @@ cmp.setup(
                 {name = "ultisnips"},
                 {name = "buffer"},
                 {name = "crates"},
-                {name = "nvim_lsp_signature_help"}
+                {name = "nvim_lsp_signature_help"},
+                {name = "emoji"}
             }
         )
     }
@@ -227,8 +233,8 @@ cmp.setup.cmdline(
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local opts = {noremap = true, silent = true}
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]g", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
@@ -306,3 +312,26 @@ function show_documentation()
         vim.lsp.buf.hover()
     end
 end
+
+require("cmp").setup(
+    {
+        window = {
+            completion = {
+                winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                col_offset = -3,
+                side_padding = 0
+            }
+        },
+        formatting = {
+            fields = {"kind", "abbr", "menu"},
+            format = function(entry, vim_item)
+                local kind = require("lspkind").cmp_format({mode = "symbol_text", maxwidth = 50})(entry, vim_item)
+                local strings = vim.split(kind.kind, "%s", {trimempty = true})
+                kind.kind = " " .. strings[1] .. " "
+                kind.menu = "    (" .. strings[2] .. ")"
+
+                return kind
+            end
+        }
+    }
+)
