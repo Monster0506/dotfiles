@@ -1,3 +1,4 @@
 plugins
 SpaceVim
 Autocomplete
+nnoremap
