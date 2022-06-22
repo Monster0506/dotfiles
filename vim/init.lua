@@ -29,12 +29,12 @@ Plug "neovim/nvim-lsp"
 Plug "sheerun/vim-polyglot"
 Plug "simrat39/rust-tools.nvim"
 Plug "rust-lang/rust.vim"
-
 Plug "vim-syntastic/syntastic"
 Plug "neovim/nvim-lspconfig"
 Plug "sbdchd/neoformat"
 Plug "mattn/emmet-vim"
 Plug "nvim-treesitter/nvim-treesitter"
+Plug "RRethy/nvim-treesitter-textsubjects"
 Plug "ap/vim-css-color"
 Plug "preservim/nerdcommenter"
 
@@ -42,6 +42,7 @@ Plug "preservim/nerdcommenter"
 Plug "jiangmiao/auto-pairs"
 Plug "romainl/vim-cool"
 Plug "kyazdani42/nvim-web-devicons"
+Plug "romgrk/barbar.nvim"
 Plug "matze/vim-move"
 Plug "ellisonleao/glow.nvim"
 Plug "folke/trouble.nvim"
@@ -117,7 +118,6 @@ nnoremap <Space>%       :%s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap p pzz
 nnoremap P Pzz
 nnoremap <C-a> ggVG
-vnoremap <C-a> ggVG
 nnoremap <CR> <CR>zz
 nnoremap j gjzz
 nnoremap k gkzz
@@ -129,6 +129,21 @@ nnoremap M Mzz
 nnoremap L Lzz
 nnoremap N Nzz
 nnoremap n nzz
+vnoremap p pzz
+vnoremap P Pzz
+vnoremap <C-a> ggVG
+vnoremap <CR> <CR>zz
+vnoremap j gjzz
+vnoremap k gkzz
+vnoremap Y y$
+vnoremap G Gzz
+vnoremap gg ggzz
+vnoremap H Hzz
+vnoremap M Mzz
+vnoremap L Lzz
+vnoremap N Nzz
+vnoremap n nzz
+vnoremap <C-a> ggVG
 vnoremap <leader>y "+y
 nnoremap + <C-a>
 command! W :w
@@ -383,5 +398,16 @@ require "nvim-treesitter.configs".setup {
     },
     highlight = {
         enable = true
+    }
+}
+require("nvim-treesitter.configs").setup {
+    textsubjects = {
+        enable = true,
+        prev_selection = ",", -- (Optional) keymap to select the previous selection
+        keymaps = {
+            ["."] = "textsubjects-smart",
+            [";"] = "textsubjects-container-outer",
+            ["i;"] = "textsubjects-container-inner"
+        }
     }
 }
