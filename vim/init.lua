@@ -34,6 +34,7 @@ Plug "vim-syntastic/syntastic"
 Plug "neovim/nvim-lspconfig"
 Plug "sbdchd/neoformat"
 Plug "mattn/emmet-vim"
+Plug "nvim-treesitter/nvim-treesitter"
 Plug "ap/vim-css-color"
 Plug "preservim/nerdcommenter"
 
@@ -54,6 +55,7 @@ Plug "ryanoasis/vim-devicons"
 Plug "tpope/vim-surround"
 Plug "mg979/vim-visual-multi"
 Plug "axieax/urlview.nvim"
+Plug "sjl/badwolf"
 Plug "morhetz/gruvbox"
 Plug "vim-airline/vim-airline"
 Plug "kien/ctrlp.vim"
@@ -77,8 +79,8 @@ vim.opt.ignorecase = true
 vim.opt.wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx"
 vim.opt.colorcolumn = "80"
 vim.opt.foldmethod = "marker"
-vim.colorsheme = "gruvbox"
-vim.cmd([[colorscheme gruvbox]])
+
+vim.cmd([[colorscheme badwolf]])
 vim.api.nvim_set_keymap("n", "<c-_>", "<plug>NERDCommenterToggle", {noremap = true})
 
 vim.g.airline_right_alt_sep = ""
@@ -125,6 +127,8 @@ nnoremap gg ggzz
 nnoremap H Hzz
 nnoremap M Mzz
 nnoremap L Lzz
+nnoremap N Nzz
+nnoremap n nzz
 vnoremap <leader>y "+y
 nnoremap + <C-a>
 command! W :w
@@ -365,7 +369,19 @@ telescope.setup {
     }
 }
 
-vim.cmd([[
-
-
-]])
+require "nvim-treesitter.configs".setup {
+    ensure_installed = {
+        "rust",
+        "lua",
+        "cpp",
+        "bash",
+        "javascript",
+        "tsx",
+        "toml",
+        "css",
+        "json"
+    },
+    highlight = {
+        enable = true
+    }
+}
