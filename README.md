@@ -9,15 +9,12 @@ Please do not install these files without understanding what they do or
 what they are intended for. These files are mainly intended for setting up
 a new installation. 
 
-However, for ease of configuration, it does move current setup
-files into \*.back, as not to overwrite them. 
-
 To use, run `./bootstrap.sh` in the directory in which you cloned 
 or downloaded this repository.
 
 ## Follow-up Steps
 
-Make sure to source ~/.bashrc (`. ~/.bashrc`)
+Make sure to source ~/.bashrc `. ~/.bashrc`
 
 ## Contents
 
@@ -32,19 +29,52 @@ as such, there is a starship configuration file there. I don't often change thos
 
 May be out-dated
 
- - [preservim/nerdtree](https://preservim/nerdtree)
- - [morhetz/gruvbox](https://github.com/morhetz/gruvbox)
- - [neoclide/coc.nvim](https://github.com/neoclide/coc.nvim)
- - [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
- - [sbdchd/neoformat](https://github.com/sbdchd/neoformat)
- - [ryanoasis/vim-devicons](https://github.com/ryanoasis/vim-devicons)
- - [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter)
- - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
- - [tpope/vim-surround](https://github.com/tpope/vim-surround)
- - [mg979/vim-visual-multi](https://github.com/mg979/vim-visual-multi)
- - [mattn/emmet-vim](https://github.com/mattn/emmet-vim)
- - [ap/vim-css-color](https://github.com/ap/vim-css-color)
- - [vim-airline/vim-airline](https://github.com/vim-airline/vim-airline)
- - [kien/ctrlp.vim](https://github.com/kien/ctrlp.vim)
- - [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot)
- - [vim-syntastic/syntastic](https://github.com/vim-syntastic/syntastic)
+## Completion
+- [onsails/lspkind.nvim](https://github.com/onsails/lspkind.nvim)
+- [matze/vim-move](https://github.com/matze/vim-move)
+- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+- [hrsh7th/cmp-emoji](https://github.com/hrsh7th/cmp-emoji)
+- [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+- [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)
+- [Saecki/crates.nvim](https://github.com/Saecki/crates.nvim)
+- [hrsh7th/cmp-calc](https://github.com/hrsh7th/cmp-calc)
+- [stevearc/dressing.nvim](https://github.com/stevearc/dressing.nvim)
+- [hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer)
+- [hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path)
+- [hrsh7th/cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline)
+- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+- [thaerkh/vim-indentguides](https://github.com/thaerkh/vim-indentguides)
+- [hrsh7th/cmp-nvim-lsp-document-symbol](https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol)
+- [hrsh7th/cmp-nvim-lsp-signature-help](https://github.com/hrsh7th/cmp-nvim-lsp-signature-help)
+### For ultisnips
+- [Honza/vim-snippets](https://github.com/Honza/vim-snippets)
+- [SirVer/ultisnips](https://github.com/SirVer/ultisnips)
+- [quangnguyen30192/cmp-nvim-ultisnips](https://github.com/quangnguyen30192/cmp-nvim-ultisnips)
+## language plugins
+- [neovim/nvim-lsp](https://github.com/neovim/nvim-lsp)
+- [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot)
+- [simrat39/rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
+- [rust-lang/rust.vim](https://github.com/rust-lang/rust.vim)
+- [vim-syntastic/syntastic](https://github.com/vim-syntastic/syntastic)
+- [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+- [sbdchd/neoformat](https://github.com/sbdchd/neoformat)
+- [mattn/emmet-vim](https://github.com/mattn/emmet-vim)
+- [ap/vim-css-color](https://github.com/ap/vim-css-color)
+- [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter)
+## Utility/Visual plugins
+- [jiangmiao/auto-pairs](https://github.com/jiangmiao/auto-pairs)
+- [kyazdani42/nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
+- [folke/trouble.nvim](https://github.com/folke/trouble.nvim)
+- [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+- [preservim/nerdtree](https://github.com/preservim/nerdtree)
+- [sudormrfbin/cheatsheet.nvim](https://github.com/sudormrfbin/cheatsheet.nvim)
+- [mattn/webapi-vim](https://github.com/mattn/webapi-vim)
+- [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
+- [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
+- [ryanoasis/vim-devicons](https://github.com/ryanoasis/vim-devicons)
+- [tpope/vim-surround](https://github.com/tpope/vim-surround)
+- [mg979/vim-visual-multi](https://github.com/mg979/vim-visual-multi)
+- [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
+- [morhetz/gruvbox](https://github.com/morhetz/gruvbox)
+- [vim-airline/vim-airline](https://github.com/vim-airline/vim-airline)
+- [kien/ctrlp.vim](https://github.com/kien/ctrlp.vim)
