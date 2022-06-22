@@ -171,10 +171,30 @@ function! NextTextObject(motion)
   let c = nr2char(getchar())
   exe "normal! f".c."v".a:motion.c
 endfunction
-
+" }}}
         ]]
 )
--- }}}
+--
+-- MKDIR: https://stackoverflow.com/a/4294176
+--
+
+vim.cmd(
+    [[
+function! MkNonExDir(file, buf)
+    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+        let dir=fnamemodify(a:file, ':h')
+        if !isdirectory(dir)
+            call mkdir(dir, 'p')
+        endif
+    endif
+endfunction
+augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+
+]]
+)
 -- nvim-completions
 local cmp = require "cmp"
 
