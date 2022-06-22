@@ -11,6 +11,7 @@ Plug "nvim-lua/plenary.nvim"
 Plug "hrsh7th/cmp-nvim-lsp"
 Plug "Saecki/crates.nvim"
 Plug "hrsh7th/cmp-calc"
+Plug "stevearc/dressing.nvim"
 Plug "hrsh7th/cmp-buffer"
 Plug "hrsh7th/cmp-path"
 Plug "hrsh7th/cmp-cmdline"
@@ -36,7 +37,10 @@ Plug "ap/vim-css-color"
 Plug "preservim/nerdcommenter"
 
 -- Utility plugins
+Plug "jiangmiao/auto-pairs"
+Plug "nvim-telescope/telescope.nvim"
 Plug "preservim/nerdtree"
+Plug "sudormrfbin/cheatsheet.nvim"
 Plug "mattn/webapi-vim"
 Plug "easymotion/vim-easymotion"
 Plug "tpope/vim-repeat"
@@ -67,7 +71,6 @@ vim.opt.colorcolumn = "80"
 vim.opt.foldmethod = "marker"
 vim.colorsheme = "gruvbox"
 vim.cmd([[colorscheme gruvbox]])
-vim.api.nvim_set_keymap("n", "<C-t>", ":NERDTreeToggle<cr>", {noremap = true, silent = true})
 vim.api.nvim_set_keymap("n", "<c-_>", "<plug>NERDCommenterToggle", {noremap = true})
 
 vim.g.airline_right_alt_sep = ""
@@ -75,7 +78,6 @@ vim.g.airline_right_sep = ""
 vim.g.airline_left_alt_sep = ""
 vim.g.airline_left_sep = ""
 
---vim.NERDTreeWinPos="right"
 --require("nvim-lsp-installer").setup {}
 local lspconfig = require("lspconfig")
 
@@ -83,12 +85,12 @@ local lspconfig = require("lspconfig")
 vim.cmd(
     [[
 
-nnoremap <silent> <C-t> :NERDTreeToggle<CR>
-let NERDTreeWinPos = "right"  
 augroup fmt
   autocmd!
   autocmd BufWritePre * silent Neoformat
 augroup END
+
+
 noremap (<CR> (<CR>)<Esc>O
 inoremap (;    (<CR>);<Esc>O 
 inoremap (,    (<CR>),<Esc>O
@@ -123,10 +125,12 @@ command! Wq :wq
 command! Q :q
 command! Noh :noh
 command! Nog :noh
+nnoremap <silent><C-t> :NERDTreeToggle<CR>
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd VimEnter * NERDTree | wincmd p
+let NERDTreeWinPos="right"
 
-
-
-" 
 
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
