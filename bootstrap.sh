@@ -229,9 +229,6 @@ checkFolders() {
     if [ ! -d $HOME/.config/i3status ]; then
         mkdir $HOME/.config/i3status
     fi
-    if [ ! -d $HOME/.config/coc/ ]; then
-        mkdir $HOME/.config/coc/
-    fi
 
     if [ ! -d $HOME/.local/bin ]; then
         mkdir $HOME/.local/bin
@@ -264,7 +261,6 @@ doDirectory() {
     fi
 
     mkdir $INSTALLDIR/i3
-    mkdir $INSTALLDIR/coc
     mkdir $INSTALLDIR/home
     mkdir $INSTALLDIR/i3status
     mkdir $INSTALLDIR/vim
@@ -281,7 +277,6 @@ syslink() {
     ITEM1=$SCRIPT_DIR/i3/config
     DIR2=$SCRIPT_DIR/starship/
     DIR3=$SCRIPT_DIR/i3status/
-    DIR4=$SCRIPT_DIR/coc/
 
     for filename in $(ls -A $DIR0); do
         cp $DIR0/$filename $INSTALLDIR/home/$filename -r
@@ -316,10 +311,6 @@ syslink() {
 
     echo "DONE WITH DIR ($DIR3)"
 
-    for filename in $(ls -A $DIR4); do
-        cp $DIR4/$filename $INSTALLDIR/coc/$filename -r
-        ln -s $INSTALLDIR/coc/$filename $HOME/.config/coc/
-    done
 }
 installWgetRequired() {
     sudo apt-get install wget -y
