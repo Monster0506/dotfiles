@@ -6,3 +6,4 @@ gh repo clone Utils
 cd ..
 gh repo clone Rust
 
+gh repo clone timelog
