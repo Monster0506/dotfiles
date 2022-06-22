@@ -5,6 +5,7 @@ vim.call("plug#begin")
 
 -- Completion
 Plug "onsails/lspkind.nvim"
+Plug "matze/vim-move"
 Plug "hrsh7th/nvim-cmp"
 Plug "hrsh7th/cmp-emoji"
 Plug "nvim-lua/plenary.nvim"
@@ -16,6 +17,7 @@ Plug "hrsh7th/cmp-buffer"
 Plug "hrsh7th/cmp-path"
 Plug "hrsh7th/cmp-cmdline"
 Plug "hrsh7th/nvim-cmp"
+Plug "thaerkh/vim-indentguides"
 Plug "hrsh7th/cmp-nvim-lsp-document-symbol"
 Plug "hrsh7th/cmp-nvim-lsp-signature-help"
 -- For ultisnips.
@@ -38,14 +40,18 @@ Plug "preservim/nerdcommenter"
 
 -- Utility plugins
 Plug "jiangmiao/auto-pairs"
+Plug "kyazdani42/nvim-web-devicons"
+Plug "folke/trouble.nvim"
 Plug "nvim-telescope/telescope.nvim"
 Plug "preservim/nerdtree"
 Plug "sudormrfbin/cheatsheet.nvim"
 Plug "mattn/webapi-vim"
 Plug "easymotion/vim-easymotion"
 Plug "tpope/vim-repeat"
+Plug "ryanoasis/vim-devicons"
 Plug "tpope/vim-surround"
 Plug "mg979/vim-visual-multi"
+Plug "axieax/urlview.nvim"
 Plug "morhetz/gruvbox"
 Plug "vim-airline/vim-airline"
 Plug "kien/ctrlp.vim"
@@ -342,3 +348,17 @@ require("cmp").setup(
         }
     }
 )
+
+local actions = require("telescope.actions")
+local trouble = require("trouble.providers.telescope")
+
+local telescope = require("telescope")
+
+telescope.setup {
+    defaults = {
+        mappings = {
+            i = {["<leader><c-t>"] = trouble.open_with_trouble},
+            n = {["<leader><c-t>"] = trouble.open_with_trouble}
+        }
+    }
+}
