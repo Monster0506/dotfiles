@@ -5,7 +5,6 @@ vim.call("plug#begin")
 
 -- Completion
 Plug "onsails/lspkind.nvim"
-Plug "matze/vim-move"
 Plug "hrsh7th/nvim-cmp"
 Plug "hrsh7th/cmp-emoji"
 Plug "nvim-lua/plenary.nvim"
@@ -40,7 +39,10 @@ Plug "preservim/nerdcommenter"
 
 -- Utility plugins
 Plug "jiangmiao/auto-pairs"
+Plug "romainl/vim-cool"
 Plug "kyazdani42/nvim-web-devicons"
+Plug "matze/vim-move"
+Plug "ellisonleao/glow.nvim"
 Plug "folke/trouble.nvim"
 Plug "nvim-telescope/telescope.nvim"
 Plug "preservim/nerdtree"
@@ -362,3 +364,8 @@ telescope.setup {
         }
     }
 }
+
+vim.cmd([[
+
+
+]])
