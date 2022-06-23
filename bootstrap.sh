@@ -86,7 +86,7 @@ installCurlRequired() {
     sudo apt install gh
 
 }
-installSqlStuff(){
+installSqlStuff() {
     sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     sudo apt-get update
@@ -138,6 +138,7 @@ installGoStuff() {
     sudo rm -rf "$TEMP_DIR"
     fixPath
     go install -v mvdan.cc/sh/cmd/shfmt@latest
+    ln -s $HOME/go/bin/shfmt $HOME/.local/bin/
 
 }
 
@@ -155,16 +156,16 @@ installExtraStuff() {
 
 }
 
-configureRust(){
+configureRust() {
     rustup component add rustfmt
     rustup default nightly
     rustup component add rust-src
-    curl -L https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+    curl -L https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer
     chmod +x ~/.local/bin/rust-analyzer
-    
 
 }
-configureNpm(){
+
+configureNpm() {
     fixPath
     if command -v npm >/dev/null 2>&1; then
         sudo npm install -g neovim
