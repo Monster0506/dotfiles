@@ -154,15 +154,12 @@ marco() {
     # check if $MARCODIR is a list
     case $1 in
     "-h" | "--help")
-        echo "marco [num] [-n <num>] [directory] [-h --help] [-w [num]] "
-        echo "    If no directory is specified, the current directory is used as the initial item."
-        echo "    -h --help    Show this help message and exit"
-        echo "    [num]        Sets the current directory to the specified number"
-        echo "    -w [num]     Show the list of marco directories, or the <num>th directory"
-        echo "    -n <num>     Set the current directory to the <num>th item in the list"
-        echo "    directory    set the initial item to the specified directory"
-        echo "    -w [number]: Print the current marco directories, or the [number]th item"
-        echo "    --help -h: print this help"
+        echo "marco [OPTION] [[NUM] <DIR>] "
+        echo "    If no directory is specified, the current directory appended to the list of items"
+        echo "    -h --help        Show this help message and exit"
+        echo "    -w [NUM]         Show the list of marco directories, or the <NUM>Th directory"
+        echo "    -n <NUM>         Set the current directory to the <NUM>Th item in the list"
+        echo "    -d [NUM | DIR]   Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
         ;;
 
     "-w")
@@ -218,7 +215,7 @@ marco() {
         if [ -z "$2" ]; then
             echo "no argument given. use -h for help"
         else
-            if [ "$2" -lt 1000 ]; then
+            if [[ "$2" =~ $NUMBERRE ]]; then
                 MARCODIR[$2 - 1]="$(pwd)"
                 echo "${MARCODIR[$2 - 1]}"
             else
@@ -236,9 +233,17 @@ marco() {
                 MARCODIR+=("$1")
                 echo "marco: $1"
             else
-                if [ $1 -lt 1000 ]; then
-                    MARCODIR[$1 - 1]=$(pwd)
-                    echo "marco: ${MARCODIR[$1 - 1]}"
+                if [[ "$1" =~ $NUMBERRE ]]; then
+                    if [ -z "$2" ]; then
+                        MARCODIR[$1 - 1]=$(pwd)
+                        echo "marco: ${MARCODIR[$1 - 1]}"
+                    else
+                        if [ -d "$2" ]; then
+                            MARCODIR[$1 - 1]="$2"
+                        else
+                            echo "$2 is not a directory"
+                        fi
+                    fi
                 else
                     echo "must be between 1 and 1000"
                 fi
@@ -251,26 +256,17 @@ marco() {
 polo() {
     case $1 in
     "-h" | "--help")
-        echo "polo [num] [directory] [-h --help] [-w [num]] "
+        echo "polo [OPTION []] [NUM | DIR]"
         echo "    -h --help    Show this help message and exit"
-        echo "    [num]        cd to the specified number"
-        echo "    -w [num]     Show the list of marco directories, or the <num>th directory"
+        echo "    -w [NUM]     Show the list of marco directories, or the <num>th directory"
+        echo "    -d [NUM | DIR]   Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
 
         ;;
     "-w")
-        if [ -z "$MARCODIR" ]; then
-            echo "polo: no marco directory set"
-        else
-            if [ -z $2 ]; then
-                echo "$MARCODIR" | wc -l
-                echo "Directories:"
-                for ((i = 1; i <= ${#MARCODIR[@]}; i++)); do
-                    echo " $i: ${MARCODIR[$i - 1]}"
-                done
-            else
-                echo "polo: ${MARCODIR[$2 - 1]}"
-            fi
-        fi
+        marco -w
+        ;;
+    "-d")
+        marco -d "$2"
         ;;
     *)
         if [ -z "$1" ]; then
@@ -290,7 +286,7 @@ polo() {
                 cd "$1"
                 echo "$1"
             else
-                if [ $1 -lt 100 ]; then
+                if [[ "$1" =~ $NUMBERRE ]]; then
                     cd "${MARCODIR[$1 - 1]}"
                     echo "${MARCODIR[$1 - 1]}"
                 else
@@ -300,6 +296,7 @@ polo() {
 
         fi
         ;;
+
     esac
 }
 
