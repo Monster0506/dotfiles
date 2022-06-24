@@ -156,10 +156,10 @@ marco() {
     "-h" | "--help")
         echo "marco [OPTION] [[NUM] <DIR>] "
         echo "    If no directory is specified, the current directory appended to the list of items"
-        echo "    -h --help        Show this help message and exit"
-        echo "    -w [NUM]         Show the list of marco directories, or the <NUM>Th directory"
-        echo "    -n <NUM>         Set the current directory to the <NUM>Th item in the list"
-        echo "    -d [NUM | DIR]   Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
+        echo "    -h --help           Show this help message and exit"
+        echo "    -w [NUM]            Show the list of marco directories, or the <NUM>Th directory"
+        echo "    -n <NUM>            Set the current directory to the <NUM>Th item in the list"
+        echo "    -d [NUM | DIR]      Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
         ;;
 
     "-w")
@@ -256,10 +256,11 @@ marco() {
 polo() {
     case $1 in
     "-h" | "--help")
-        echo "polo [OPTION []] [NUM | DIR]"
-        echo "    -h --help    Show this help message and exit"
-        echo "    -w [NUM]     Show the list of marco directories, or the <num>th directory"
-        echo "    -d [NUM | DIR]   Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
+        echo "polo [OPTION] [NUM | DIR [b | back]] "
+        echo "    -h --help           Show this help message and exit"
+        echo "    -w [NUM]            Show the list of marco directories, or the <num>th directory"
+        echo "    -d [NUM | DIR]      Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
+        echo "    back | b            Move back a directory"
 
         ;;
     "-w")
@@ -268,17 +269,24 @@ polo() {
     "-d")
         marco -d "$2"
         ;;
+    "b" | "back")
+        cd ../
+        ;;
     *)
         if [ -z "$1" ]; then
             # if no arguments are provided, move to the first value of MARCODIR
             # check if I am inside MARCODIR[0]
-            if [ $(pwd) == "${MARCODIR[0]}" ]; then
-                cd "${MARCODIR[1]}"
-                echo "${MARCODIR[1]}"
+            if [ -z $MARCODIR ]; then
+                polo $HOME
             else
-                cd "${MARCODIR[0]}"
-                echo "${MARCODIR[0]}"
+                if [ $(pwd) == "${MARCODIR[0]}" ]; then
+                    cd "${MARCODIR[1]}"
+                    echo "${MARCODIR[1]}"
+                else
+                    cd "${MARCODIR[0]}"
+                    echo "${MARCODIR[0]}"
 
+                fi
             fi
         else
             if [ -d "$1" ]; then
