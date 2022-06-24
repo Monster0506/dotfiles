@@ -178,7 +178,6 @@ configureNpm() {
 
 configureVim() {
 	nvim +PlugInstall +qa
-	wget https://raw.githubusercontent.com/kien/ctrlp.vim/extensions/autoload/ctrlp/sample.vim -O /home/tj/.local/share/nvim/plugged/ctrlp.vim/autoload/ctrlp/sample.vim
 
 }
 

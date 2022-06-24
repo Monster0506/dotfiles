@@ -61,7 +61,6 @@ Plug "sjl/badwolf"
 Plug "morhetz/gruvbox"
 Plug "vim-airline/vim-airline"
 Plug "ctrlpvim/ctrlp.vim"
-Plug "tacahiroy/ctrlp-funky"
 
 vim.call("plug#end")
 --print(HOME)
@@ -83,9 +82,7 @@ vim.opt.wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx"
 vim.opt.colorcolumn = "80"
 vim.opt.foldmethod = "marker"
 
-vim.cmd([[colorscheme badwolf
-let g:ctrlp_extensions = ['sample', 'funky']
-]])
+vim.cmd([[colorscheme badwolf]])
 vim.api.nvim_set_keymap("n", "<c-_>", "<plug>NERDCommenterToggle", {noremap = true})
 
 vim.g.airline_right_alt_sep = ""
@@ -100,7 +97,6 @@ local lspconfig = require("lspconfig")
 -- Keybindings I am too lazy to put in the proper format.
 vim.cmd(
     [[
-
 augroup fmt
   autocmd!
   autocmd BufWritePre * silent Neoformat
