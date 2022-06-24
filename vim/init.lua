@@ -1,5 +1,8 @@
 #!/usr/bin/env lua
 HOME = os.getenv("HOME")
+--print(HOME)
+
+-- Plugins {{{
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
 
@@ -38,16 +41,18 @@ Plug "RRethy/nvim-treesitter-textsubjects"
 Plug "ap/vim-css-color"
 Plug "preservim/nerdcommenter"
 
--- Utility plugins
-Plug "airblade/vim-gitgutter"
+--!  Utility plugins
+Plug "lewis6991/gitsigns.nvim"
+-- No longer using vim-gitgutter
+-- Plug "airblade/vim-gitgutter"
 Plug "jiangmiao/auto-pairs"
+Plug("wfxr/minimap.vim", {["do"] = ":!cargo install --locked code-minimap"})
 Plug "romainl/vim-cool"
 Plug "kyazdani42/nvim-web-devicons"
 Plug "romgrk/barbar.nvim"
 Plug "matze/vim-move"
 Plug "ellisonleao/glow.nvim"
 Plug "folke/trouble.nvim"
-Plug "nvim-telescope/telescope.nvim"
 Plug "preservim/nerdtree"
 Plug "sudormrfbin/cheatsheet.nvim"
 Plug "mattn/webapi-vim"
@@ -55,54 +60,78 @@ Plug "easymotion/vim-easymotion"
 Plug "tpope/vim-repeat"
 Plug "ryanoasis/vim-devicons"
 Plug "tpope/vim-surround"
-Plug "mg979/vim-visual-multi"
 Plug "axieax/urlview.nvim"
 Plug "sjl/badwolf"
 Plug "morhetz/gruvbox"
 Plug "vim-airline/vim-airline"
 Plug "ctrlpvim/ctrlp.vim"
+-- Telescope Plugins
+Plug "nvim-telescope/telescope.nvim"
+Plug "fhill2/telescope-ultisnips.nvim"
 
 vim.call("plug#end")
---print(HOME)
-vim.opt.background = "dark"
+-- }}}
 
-vim.opt.relativenumber = true
-vim.opt.number = true
-vim.opt.mouse = "a"
-vim.opt.smartcase = true
-vim.opt.undodir = "~/.vim/undodir"
-vim.opt.expandtab = true
-vim.opt.backspace = "indent,eol,start"
-vim.opt.ignorecase = true
+--- local variables {{{
+actions = require("telescope.actions")
+trouble = require("trouble.providers.telescope")
+telescope = require("telescope")
+lspconfig = require("lspconfig")
+cmp = require "cmp"
+tsconfig = require("nvim-treesitter.configs")
+capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+opts = {noremap = true, silent = true}
+crates = require("crates")
+keymap = vim.api.nvim_set_keymap
+--- }}}
 
-vim.opt.backup = false
-vim.opt.swapfile = false
-vim.opt.ignorecase = true
-vim.opt.wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx"
-vim.opt.colorcolumn = "80"
-vim.opt.foldmethod = "marker"
+-- vim.opts {{{
+local vimopts = {
+    background = "dark",
+    relativenumber = true,
+    number = true,
+    smartcase = true,
+    mouse = "a",
+    ignorecase = true,
+    undodir = "~/.vim/undodir",
+    expandtab = true,
+    backup = false,
+    swapfile = false,
+    wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx",
+    colorcolumn = "80",
+    foldmethod = "marker"
+}
+-- set vim options
+for k, v in pairs(vimopts) do
+    vim.opt[k] = v
+end
 
-vim.cmd([[colorscheme badwolf]])
-vim.api.nvim_set_keymap("n", "<c-_>", "<plug>NERDCommenterToggle", {noremap = true})
+-- }}}
 
-vim.g.airline_right_alt_sep = ""
-vim.g.airline_right_sep = ""
-vim.g.airline_left_alt_sep = ""
-vim.g.airline_left_sep = ""
-vim.g.NERDSpaceDelims = 1
+-- vim.gs (global variables) {{{
+local vimg = {
+    airline_right_alt_sep = "",
+    NERDSpaceDelims = 1,
+    airline_left_sep = "",
+    airline_left_alt_sep = "",
+    airline_right_sep = ""
+}
 
---require("nvim-lsp-installer").setup {}
-local lspconfig = require("lspconfig")
+for k, v in pairs(vimg) do
+    vim.g[k] = v
+    -- print(k, v)
+end
 
--- Keybindings I am too lazy to put in the proper format.
+-- }}}
+
+-- vim settings and keybindings {{{
 vim.cmd(
     [[
+colorscheme badwolf
 augroup fmt
   autocmd!
   autocmd BufWritePre * silent Neoformat
 augroup END
-
-
 noremap (<CR> (<CR>)<Esc>O
 inoremap (;    (<CR>);<Esc>O 
 inoremap (,    (<CR>),<Esc>O
@@ -158,6 +187,19 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 autocmd VimEnter * NERDTree | wincmd p
 let NERDTreeWinPos="right"
+" MKDIR: https://stackoverflow.com/a/4294176
+function! MkNonExDir(file, buf)
+    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+        let dir=fnamemodify(a:file, ':h')
+        if !isdirectory(dir)
+            call mkdir(dir, 'p')
+        endif
+    endif
+endfunction
+augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
 
 
 " NEXT OBJECT MAPPING {{{
@@ -175,29 +217,21 @@ endfunction
 " }}}
         ]]
 )
---
--- MKDIR: https://stackoverflow.com/a/4294176
---
+-- }}}
 
-vim.cmd(
-    [[
-function! MkNonExDir(file, buf)
-    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-        let dir=fnamemodify(a:file, ':h')
-        if !isdirectory(dir)
-            call mkdir(dir, 'p')
-        endif
-    endif
-endfunction
-augroup BWCCreateDir
-    autocmd!
-    autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
-augroup END
+-- keybindings {{{
 
-]]
-)
--- nvim-completions
-local cmp = require "cmp"
+-- window resizing {{{
+keymap("n", "<C-Up>", "<cmd>resize +2<CR>", opts)
+keymap("n", "<C-Down>", "<cmd>resize -2<CR>", opts)
+keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", opts)
+keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
+
+-- }}}
+
+--- }}}
+
+-- nvim-completion settings {{{
 
 cmp.setup(
     {
@@ -252,7 +286,7 @@ cmp.setup.filetype(
 )
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-require "cmp".setup.cmdline(
+cmp.setup.cmdline(
     "/",
     {
         sources = cmp.config.sources(
@@ -277,15 +311,34 @@ cmp.setup.cmdline(
         )
     }
 )
+cmp.setup(
+    {
+        view = {
+            entries = {name = "custom", selection_order = "near_cursor"}
+        },
+        window = {
+            completion = {
+                winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                col_offset = -3,
+                side_padding = 0
+            }
+        },
+        formatting = {
+            fields = {"kind", "abbr", "menu"},
+            format = function(entry, vim_item)
+                local kind = require("lspkind").cmp_format({mode = "symbol_text", maxwidth = 50})(entry, vim_item)
+                local strings = vim.split(kind.kind, "%s", {trimempty = true})
+                kind.kind = " " .. strings[1] .. " "
+                kind.menu = "    (" .. strings[2] .. ")"
 
--- Setup lspconfig.
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local opts = {noremap = true, silent = true}
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]g", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+                return kind
+            end
+        }
+    }
+)
+-- }}}
 
+-- Language server settings {{{
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -321,25 +374,25 @@ local lsp_flags = {
     -- This is the default in Nvim 0.7+
     debounce_text_changes = 50
 }
-require("lspconfig")["pyright"].setup {
+lspconfig["pyright"].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities
 }
-require("lspconfig")["tsserver"].setup {}
-require("lspconfig").bashls.setup {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities
-}
-
-require("lspconfig").ccls.setup {
+lspconfig["tsserver"].setup {}
+lspconfig.bashls.setup {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities
 }
 
-require("lspconfig")["rust_analyzer"].setup {
+lspconfig.ccls.setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities
+}
+
+lspconfig["rust_analyzer"].setup {
     on_attach = on_attach,
     flags = lsp_flags,
     -- Server-specific settings...
@@ -347,8 +400,8 @@ require("lspconfig")["rust_analyzer"].setup {
         ["rust-analyzer"] = {}
     }
 }
-require("crates").setup()
-vim.api.nvim_set_keymap("n", "K", ":lua show_documentation()<CR>", {noremap = true, silent = true})
+crates.setup()
+keymap("n", "K", ":lua show_documentation()<CR>", opts)
 function show_documentation()
     local filetype = vim.bo.filetype
     if vim.tbl_contains({"vim", "help"}, filetype) then
@@ -356,42 +409,16 @@ function show_documentation()
     elseif vim.tbl_contains({"man"}, filetype) then
         vim.cmd("Man " .. vim.fn.expand("<cword>"))
     elseif vim.fn.expand("%:t") == "Cargo.toml" then
-        require("crates").show_popup()
+        crates.show_popup()
     else
         vim.lsp.buf.hover()
     end
 end
 
-require("cmp").setup(
-    {
-        view = {
-            entries = {name = "custom", selection_order = "near_cursor"}
-        },
-        window = {
-            completion = {
-                winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-                col_offset = -3,
-                side_padding = 0
-            }
-        },
-        formatting = {
-            fields = {"kind", "abbr", "menu"},
-            format = function(entry, vim_item)
-                local kind = require("lspkind").cmp_format({mode = "symbol_text", maxwidth = 50})(entry, vim_item)
-                local strings = vim.split(kind.kind, "%s", {trimempty = true})
-                kind.kind = " " .. strings[1] .. " "
-                kind.menu = "    (" .. strings[2] .. ")"
+-- }}}
 
-                return kind
-            end
-        }
-    }
-)
-
-local actions = require("telescope.actions")
-local trouble = require("trouble.providers.telescope")
-
-local telescope = require("telescope")
+-- Telescope settings {{{
+telescope.load_extension("ultisnips")
 
 telescope.setup {
     defaults = {
@@ -402,15 +429,17 @@ telescope.setup {
     }
 }
 
-require "nvim-treesitter.configs".setup {
+tsconfig.setup {
     ensure_installed = {
         "rust",
         "lua",
         "cpp",
         "bash",
         "javascript",
+        "typescript",
         "tsx",
         "toml",
+        "python",
         "css",
         "json"
     },
@@ -424,7 +453,7 @@ require "nvim-treesitter.configs".setup {
         enable = true
     }
 }
-require("nvim-treesitter.configs").setup {
+tsconfig.setup {
     textsubjects = {
         enable = true,
         prev_selection = ",", -- (Optional) keymap to select the previous selection
@@ -435,9 +464,14 @@ require("nvim-treesitter.configs").setup {
         }
     }
 }
+-- }}}
 
+-- Misc {{{
 require("null-ls").setup(
     {
         debug = true
     }
 )
+
+require("gitsigns").setup()
+-- }}}
