@@ -60,7 +60,8 @@ Plug "axieax/urlview.nvim"
 Plug "sjl/badwolf"
 Plug "morhetz/gruvbox"
 Plug "vim-airline/vim-airline"
-Plug "kien/ctrlp.vim"
+Plug "ctrlpvim/ctrlp.vim"
+Plug "tacahiroy/ctrlp-funky"
 
 vim.call("plug#end")
 --print(HOME)
@@ -82,13 +83,16 @@ vim.opt.wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx"
 vim.opt.colorcolumn = "80"
 vim.opt.foldmethod = "marker"
 
-vim.cmd([[colorscheme badwolf]])
+vim.cmd([[colorscheme badwolf
+let g:ctrlp_extensions = ['sample', 'funky']
+]])
 vim.api.nvim_set_keymap("n", "<c-_>", "<plug>NERDCommenterToggle", {noremap = true})
 
 vim.g.airline_right_alt_sep = ""
 vim.g.airline_right_sep = ""
 vim.g.airline_left_alt_sep = ""
 vim.g.airline_left_sep = ""
+vim.g.NERDSpaceDelims = 1
 
 --require("nvim-lsp-installer").setup {}
 local lspconfig = require("lspconfig")
