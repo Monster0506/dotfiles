@@ -434,3 +434,9 @@ require("nvim-treesitter.configs").setup {
         }
     }
 }
+
+require("null-ls").setup(
+    {
+        debug = true
+    }
+)
