@@ -39,6 +39,7 @@ Plug "ap/vim-css-color"
 Plug "preservim/nerdcommenter"
 
 -- Utility plugins
+Plug "airblade/vim-gitgutter"
 Plug "jiangmiao/auto-pairs"
 Plug "romainl/vim-cool"
 Plug "kyazdani42/nvim-web-devicons"
