@@ -100,7 +100,7 @@ installAptStuff() {
 	sudo apt-add-repository contrib
 	sudo apt-add-repository non-free
 
-	sudo apt install ripgrep gitk ccls build-essential rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format fonts-firacode cmake libnotify-bin i3 flake8 pylint xcape -y
+	sudo apt install xsel ripgrep gitk ccls build-essential rofi bash-completion fzf figlet python3 mplayer python3-pip vim vim-gtk3 libboost-all-dev pandoc lynx clang-format fonts-firacode cmake libnotify-bin i3 flake8 pylint xcape -y
 
 }
 
