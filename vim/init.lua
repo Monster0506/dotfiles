@@ -3,7 +3,7 @@ HOME = os.getenv("HOME")
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
 
--- Completion
+-- Completions
 Plug "onsails/lspkind.nvim"
 Plug "hrsh7th/nvim-cmp"
 Plug "hrsh7th/cmp-emoji"
@@ -17,8 +17,8 @@ Plug "hrsh7th/cmp-path"
 Plug "hrsh7th/cmp-cmdline"
 Plug "hrsh7th/nvim-cmp"
 Plug "thaerkh/vim-indentguides"
-Plug "hrsh7th/cmp-nvim-lsp-document-symbol"
 Plug "hrsh7th/cmp-nvim-lsp-signature-help"
+Plug "jose-elias-alvarez/null-ls.nvim"
 -- For ultisnips.
 Plug "Honza/vim-snippets"
 Plug "SirVer/ultisnips"
@@ -255,9 +255,6 @@ require "cmp".setup.cmdline(
     "/",
     {
         sources = cmp.config.sources(
-            {
-                {name = "nvim_lsp_document_symbol"}
-            },
             {
                 {name = "buffer"}
             }

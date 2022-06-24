@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
 # some useful functions and aliases
 
+export NUMBERRE='^[0-9]+$'
 gplusplus() {
     if [ -z "$1" ]; then
         echo "Usage: g++ <file>"
@@ -25,9 +26,7 @@ clock() {
 }
 me() {
     echo -e "
-
-$red███╗░░░███╗░█████╗░███╗░░██╗░██████╗████████╗███████╗██████╗░░█████╗░███████╗░█████╗░░█████╗░
-████╗░████║██╔══██╗████╗░██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔═══╝░
+$red███╗░░░███╗░█████╗░███╗░░██╗░██████╗████████╗███████╗██████╗░░█████╗░███████╗░█████╗░░█████╗░ ████╗░████║██╔══██╗████╗░██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔═══╝░
 $coldblue██╔████╔██║██║░░██║██╔██╗██║╚█████╗░░░░██║░░░█████╗░░██████╔╝██║░░██║██████╗░██║░░██║██████╗░
 ██║╚██╔╝██║██║░░██║██║╚████║░╚═══██╗░░░██║░░░██╔══╝░░██╔══██╗██║░░██║╚════██╗██║░░██║██╔══██╗
 $smoothgreen██║░╚═╝░██║╚█████╔╝██║░╚███║██████╔╝░░░██║░░░███████╗██║░░██║╚█████╔╝██████╔╝╚█████╔╝╚█████╔╝
@@ -165,21 +164,56 @@ marco() {
         echo "    -w [number]: Print the current marco directories, or the [number]th item"
         echo "    --help -h: print this help"
         ;;
+
     "-w")
         if [ -z "$MARCODIR" ]; then
             echo "marco: no marco directory set"
         else
             if [ -z $2 ]; then
-                echo -n "marco: "
-                for i in "${MARCODIR[@]}"; do
-                    echo -n "$i "
+                echo "$MARCODIR" | wc -l
+                echo "Directories:"
+                for ((i = 1; i <= ${#MARCODIR[@]}; i++)); do
+                    echo " $i: ${MARCODIR[$i - 1]}"
                 done
-                echo -e "\n"
             else
                 echo "marco: ${MARCODIR[$2 - 1]}"
             fi
         fi
+
         ;;
+
+        # THIS SHOULD BE FIXED
+        # NEED TO DO WHEN NO NUMBER IS PROVIDED,INSTEAD A FILEPATH
+    "-d")
+
+        if [ -z $2 ]; then
+            MARCODIR=()
+        else
+            if [[ "$2" =~ $NUMBERRE ]]; then
+                for i in "${MARCODIR[@]}"; do
+                    if [[ $i == ${MARCODIR[$2 - 1]} ]]; then
+                        echo "Unsetting ${MARCODIR[$2 - 1]}"
+                        unset 'MARCODIR[$2 - 1]'
+                    fi
+                done
+                #HERE
+            else
+                for i in "${!MARCODIR[@]}"; do
+                    if [[ $2 == ${MARCODIR[$i]} ]]; then
+                        unset 'MARCODIR[$i]'
+                    fi
+                done
+
+            fi
+        fi
+        # remove whitespace
+        for i in "${!MARCODIR[@]}"; do
+            new_array+=("${MARCODIR[i]}")
+        done
+        MARCODIR=("${new_array[@]}")
+        unset new_array
+        ;;
+
     "-n")
         if [ -z "$2" ]; then
             echo "no argument given. use -h for help"
@@ -195,13 +229,12 @@ marco() {
     *)
 
         if [ -z "$1" ]; then
-            # if no arguments are provided, set the first value of MARCODIR to `pwd`
-            MARCODIR[0]=$(pwd)
-            echo "marco: ${MARCODIR[0]}"
+            MARCODIR+=($(pwd))
+            echo $(pwd)
         else
             if [ -d "$1" ]; then
-                MARCODIR[0]=$1
-                echo "marco: ${MARCODIR[0]}"
+                MARCODIR+=("$1")
+                echo "marco: $1"
             else
                 if [ $1 -lt 1000 ]; then
                     MARCODIR[$1 - 1]=$(pwd)
@@ -229,11 +262,11 @@ polo() {
             echo "polo: no marco directory set"
         else
             if [ -z $2 ]; then
-                echo -n "polo: "
-                for i in "${MARCODIR[@]}"; do
-                    echo -n "$i "
+                echo "$MARCODIR" | wc -l
+                echo "Directories:"
+                for ((i = 1; i <= ${#MARCODIR[@]}; i++)); do
+                    echo " $i: ${MARCODIR[$i - 1]}"
                 done
-                echo -e "\n"
             else
                 echo "polo: ${MARCODIR[$2 - 1]}"
             fi
@@ -245,15 +278,21 @@ polo() {
             # check if I am inside MARCODIR[0]
             if [ $(pwd) == "${MARCODIR[0]}" ]; then
                 cd "${MARCODIR[1]}"
+                echo "${MARCODIR[1]}"
             else
                 cd "${MARCODIR[0]}"
+                echo "${MARCODIR[0]}"
+
             fi
         else
             if [ -d "$1" ]; then
+                MARCODIR+=("$1")
                 cd "$1"
+                echo "$1"
             else
                 if [ $1 -lt 100 ]; then
                     cd "${MARCODIR[$1 - 1]}"
+                    echo "${MARCODIR[$1 - 1]}"
                 else
                     echo "polo: '$1' - directory does not exist"
                 fi
