@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 # some useful functions and aliases
 
-export NUMBERRE='^[0-9]+$'
 gplusplus() {
     if [ -z "$1" ]; then
         echo "Usage: g++ <file>"
