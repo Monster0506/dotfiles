@@ -52,6 +52,7 @@ Plug "morhetz/gruvbox"
 Plug "vim-airline/vim-airline"
 Plug "ctrlpvim/ctrlp.vim"
 Plug "sirVer/Ultisnips"
+Plug "rust-lang/rust.vim"
 -- Telescope Plugins
 Plug "fannheyward/telescope-coc.nvim"
 Plug "BurntSushi/ripgrep"

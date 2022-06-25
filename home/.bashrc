@@ -210,3 +210,4 @@ elif type compctl &>/dev/null; then
     compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+source $(rustc --print sysroot)/etc/bash_completion.d/cargo
