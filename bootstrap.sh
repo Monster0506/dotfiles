@@ -149,8 +149,8 @@ installExtraStuff() {
 	pip3 install pynvim black
 	fc-cache -fv
 	configureGit
-	configureVim
 	configureNpm
+	configureVim
 	configureRust
 	installSqlStuff
 
@@ -178,6 +178,7 @@ configureNpm() {
 
 configureVim() {
 	nvim +PlugInstall +qa
+	nvim +"CocInstall coc-rust-analyzer coc-sh coc-lua"
 
 }
 
