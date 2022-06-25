@@ -53,6 +53,9 @@ Plug "vim-airline/vim-airline"
 Plug "ctrlpvim/ctrlp.vim"
 Plug "sirVer/Ultisnips"
 -- Telescope Plugins
+Plug "fannheyward/telescope-coc.nvim"
+Plug "BurntSushi/ripgrep"
+Plug "nvim-telescope/telescope.nvim"
 
 vim.call("plug#end")
 -- }}}
@@ -383,3 +386,6 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " }}}
 ]]
 )
+-- Telescope settings {{{
+require("telescope").load_extension("coc")
+-- }}}
