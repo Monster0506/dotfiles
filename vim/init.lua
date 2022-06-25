@@ -34,6 +34,7 @@ Plug "nvim-lua/plenary.nvim"
 Plug "jiangmiao/auto-pairs"
 Plug "honza/vim-snippets"
 Plug "romainl/vim-cool"
+Plug "Saecki/crates.nvim"
 Plug "kyazdani42/nvim-web-devicons"
 Plug "romgrk/barbar.nvim"
 Plug "matze/vim-move"
@@ -55,6 +56,7 @@ Plug "sirVer/Ultisnips"
 Plug "rust-lang/rust.vim"
 -- Telescope Plugins
 Plug "fannheyward/telescope-coc.nvim"
+Plug "nvim-telescope/telescope-symbols.nvim"
 Plug "BurntSushi/ripgrep"
 Plug "nvim-telescope/telescope.nvim"
 
@@ -69,7 +71,7 @@ vim.call("plug#end")
 --local cmp = require "cmp"
 local tsconfig = require("nvim-treesitter.configs")
 -- local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
---local crates = require("crates")
+require("crates").setup {}
 local keymap = vim.api.nvim_set_keymap
 --local lspkind = require("lspkind")
 local opts = {noremap = true, silent = true}
@@ -310,7 +312,14 @@ function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
-    call feedkeys('K', 'in')
+    if (index(['vim', 'help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+
+    elseif (index(['man'], &filetype) >= 0)
+    execute 'Man '.expand('<cword>')
+    elseif (expand('%:t') == 'Cargo.toml')
+    lua require('crates').show_popup()
+    endif
   endif
 endfunction
 
@@ -352,7 +361,6 @@ omap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
 omap af <Plug>(coc-funcobj-a)
 xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
