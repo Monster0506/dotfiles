@@ -7,7 +7,6 @@ if [[ $EUID -eq 0 ]]; then
 	echo "Please do not run as root"
 	echo "If superuser is required, you will be prompted."
 	exit
-
 fi
 # check if apt is installed
 if ! [ -x "$(command -v apt)" ]; then
@@ -178,7 +177,7 @@ configureNpm() {
 
 configureVim() {
 	nvim +PlugInstall +qa
-	nvim +"CocInstall coc-words coc-rust-analyzer coc-sh coc-lua coc-emoji coc-pyright coc-ultisnips coc-json"
+	nvim +"CocInstall coc-words coc-rust-analyzer coc-sh coc-lua coc-emoji coc-pyright coc-ultisnips coc-json coc-tsserver"
 
 }
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env lua
 HOME = os.getenv("HOME")
-vim.cmd([[let g:ale_disable_lsp = 1]])
+vim.g.ale_disable_lsp = 1
+vim.g.ale_sign_warning = ""
 
 --print(HOME)
 -- Plugins {{{
@@ -9,15 +10,16 @@ vim.call("plug#begin")
 
 -- Completions
 -- Plug("ycm-core/YouCompleteMe", {["do"] = "python3 install.py --all"})
-Plug("neoclide/coc.nvim", {["branch"] = "release"})
+-- Plug("neoclide/coc.nvim", {["branch"] = "release"})
 Plug "dense-analysis/ale"
-
+Plug("neoclide/coc.nvim", {["branch"] = "release"})
 -- language plugins
 
 Plug "sheerun/vim-polyglot"
 Plug "thaerkh/vim-indentguides"
 -- Plug "simrat39/rust-tools.nvim"
 -- Plug "rust-lang/rust.vim"
+--
 Plug "vim-syntastic/syntastic"
 Plug "sbdchd/neoformat"
 Plug "mattn/emmet-vim"
@@ -26,7 +28,7 @@ Plug "RRethy/nvim-treesitter-textsubjects"
 Plug "ap/vim-css-color"
 Plug "preservim/nerdcommenter"
 
---!  Utility plugins
+-- Utility plugins
 Plug "lewis6991/gitsigns.nvim"
 Plug "nvim-lua/plenary.nvim"
 -- No longer using vim-gitgutter
@@ -38,7 +40,6 @@ Plug "Saecki/crates.nvim"
 Plug "kyazdani42/nvim-web-devicons"
 Plug "romgrk/barbar.nvim"
 Plug "matze/vim-move"
-Plug "ellisonleao/glow.nvim"
 Plug "folke/trouble.nvim"
 Plug "preservim/nerdtree"
 Plug "sudormrfbin/cheatsheet.nvim"
@@ -50,7 +51,9 @@ Plug "tpope/vim-surround"
 Plug "axieax/urlview.nvim"
 Plug "sjl/badwolf"
 Plug "morhetz/gruvbox"
+Plug "sainnhe/edge"
 Plug "vim-airline/vim-airline"
+Plug "ellisonleao/glow.nvim"
 Plug "ctrlpvim/ctrlp.vim"
 Plug "sirVer/Ultisnips"
 Plug "rust-lang/rust.vim"
@@ -78,6 +81,7 @@ local opts = {noremap = true, silent = true}
 --- }}}
 
 -- vim.opts {{{
+vim.cmd([[set termguicolors]])
 local vimopts = {
     background = "dark",
     relativenumber = true,
@@ -119,8 +123,8 @@ end
 -- vim settings and keybindings {{{
 vim.cmd(
     [[
-
-colorscheme badwolf
+let g:edge_style = 'neon'
+colorscheme edge
 augroup fmt
   autocmd!
   autocmd BufWritePre * silent Neoformat
@@ -239,10 +243,12 @@ require("gitsigns").setup()
 -- }}}
 vim.cmd(
     [[
+    " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
 
-" Coc Settings {{{
-
-    set hidden
+" TextEdit might fail if hidden is not set.
+set hidden
 
 " Some servers have issues with backup files, see #649.
 set nobackup
@@ -282,7 +288,6 @@ function! CheckBackspace() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-  
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
 else
@@ -305,23 +310,6 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    if (index(['vim', 'help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-
-    elseif (index(['man'], &filetype) >= 0)
-    execute 'Man '.expand('<cword>')
-    elseif (expand('%:t') == 'Cargo.toml')
-    lua require('crates').show_popup()
-    endif
-  endif
-endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -361,6 +349,7 @@ omap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
 omap af <Plug>(coc-funcobj-a)
 xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
@@ -392,8 +381,41 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-" }}}
-]]
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+function! ShowDocumentation()
+if CocAction('hasProvider', 'hover')
+call CocActionAsync('doHover')
+else
+if (index(['vim', 'help'], &filetype) >= 0)
+execute 'h '.expand('<cword>')
+elseif (index(['man'], &filetype) >= 0)
+execute 'Man '.expand('<cword>')
+elseif (expand('%:t') == 'Cargo.toml')
+lua require('crates').show_popup()
+endif
+endif
+endfunction
+  ]]
 )
 -- Telescope settings {{{
 require("telescope").load_extension("coc")
