@@ -113,7 +113,6 @@ vim.call("plug#end")
 -- }}}
 
 -- Local variables {{{
-local tsconfig = require("nvim-treesitter.configs")
 local keymap = vim.api.nvim_set_keymap
 local opts = {noremap = true, silent = true}
 -- }}}
@@ -138,7 +137,8 @@ local vimopts = {
     swapfile = false,
     wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx",
     colorcolumn = "80",
-    foldmethod = "marker"
+    foldmethod = "marker",
+    concealcursor = "nc"
 }
 -- set vim options
 for k, v in pairs(vimopts) do
@@ -167,7 +167,7 @@ augroup CURSORLINE | autocmd!
 augroup end
 " }}}
 " Mkdir on edit folder/file {{{
-" https://stackoverflow.com/a/4294176 
+" https://stackoverflow.com/a/4294176
 function! MkNonExDir(file, buf)
     if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
         let dir=fnamemodify(a:file, ':h')
