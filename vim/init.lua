@@ -86,7 +86,7 @@ Plug "rust-lang/rust.vim"
 Plug "Saecki/crates.nvim"
 -- }}}
 -- Markdown {{{
-Plug "axieax/urlview.nvim"
+Plug "ellisonleao/glow.nvim"
 -- }}}
 -- }}}
 -- Other Dependencies Plugins {{{
@@ -98,10 +98,12 @@ Plug "easymotion/vim-easymotion"
 Plug "matze/vim-move"
 -- }}}
 -- FZF Plugins {{{
-Plug "ctrlpvim/ctrlp.vim"
+Plug "junegunn/fzf.vim"
+Plug "junegunn/fzf"
 -- }}}
 -- Other Utility Plugins {{{
 Plug "jiangmiao/auto-pairs"
+Plug "axieax/urlview.nvim"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
 Plug "romainl/vim-cool"
@@ -161,61 +163,6 @@ augroup CURSORLINE | autocmd!
     autocmd InsertEnter * set nocursorline | autocmd InsertLeave * set cursorline
 augroup end
 
-noremap (<CR> (<CR>)<Esc>O
-inoremap (;    (<CR>);<Esc>O 
-inoremap (,    (<CR>),<Esc>O
-inoremap {<CR> {<CR>}<Esc>O
-inoremap {;    {<CR>};<Esc>O
-inoremap {,    {<CR>},<Esc>O
-inoremap [<CR> [<CR>]<Esc>O
-inoremap [;    [<CR>];<Esc>O
-inoremap [,    [<CR>],<Esc>O
-inoremap :check: ✓
-map <leader>ss :setlocal spell!<CR>
-nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
-nnoremap <Space>%       :%s/\<<C-r>=expand("<cword>")<CR>\>/
-nnoremap p pzz
-nnoremap P Pzz
-nnoremap <C-a> ggVG
-nnoremap <CR> <CR>zz
-nnoremap j gjzz
-nnoremap k gkzz
-nnoremap Y y$
-nnoremap G Gzz
-nnoremap gg ggzz
-nnoremap H Hzz
-nnoremap M Mzz
-nnoremap L Lzz
-nnoremap N Nzz
-nnoremap n nzz
-vnoremap p pzz
-vnoremap P Pzz
-vnoremap <C-a> ggVG
-vnoremap <CR> <CR>zz
-vnoremap j gjzz
-vnoremap k gkzz
-vnoremap Y y$
-vnoremap G Gzz
-vnoremap gg ggzz
-vnoremap H Hzz
-vnoremap M Mzz
-vnoremap L Lzz
-vnoremap N Nzz
-vnoremap n nzz
-vnoremap <C-a> ggVG
-vnoremap <leader>y "+y
-nnoremap + <C-a>
-command! W :w
-command! WQ :wq
-command! Wq :wq
-command! Q :q
-command! Noh :noh
-command! Nog :noh
-nnoremap <silent><C-t> :NERDTreeToggle<CR>
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-autocmd VimEnter * NERDTree | wincmd p
-let NERDTreeWinPos="right"
 " MKDIR: https://stackoverflow.com/a/4294176
 function! MkNonExDir(file, buf)
     if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
@@ -229,6 +176,26 @@ augroup BWCCreateDir
     autocmd!
     autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
+
+nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
+vnoremap <C-a> ggVG
+vnoremap <leader>y "+y
+nnoremap + <C-a>
+command! W :w
+command! WQ :wq
+command! Wq :wq
+command! Q :q
+command! Noh :noh
+command! Nog :noh
+
+
+" NerdTree Stuff {{{
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd VimEnter * NERDTree | wincmd p
+let NERDTreeWinPos="right"
+" }}}
 
 
 " NEXT OBJECT MAPPING {{{
@@ -249,7 +216,6 @@ endfunction
 -- }}}
 
 -- keybindings {{{
-
 -- window resizing {{{
 keymap("n", "<C-Up>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-Down>", "<cmd>resize -2<CR>", opts)
@@ -257,18 +223,35 @@ keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
 keymap("n", "<M-Right>", "<cmd>tabnext<CR>", opts)
 keymap("n", "<M-Left>", "<cmd>tabprevious<CR>", opts)
-
 -- }}}
-
---- }}}
-
--- nvim-completion settings {{{
-
--- Setup lspconfig.
-
+-- FZF {{{
+keymap("n", "<C-p>", "<cmd>Files<CR>", opts)
+keymap("n", "<leader><C-p>", "<cmd>Commands<CR>", opts)
 -- }}}
-
--- Language server settings {{{
+-- Bracket expansion {{{
+keymap("i", "(<CR>", "(<CR>)<Esc>O", opts)
+keymap("i", "(;", "(<CR>);<Esc>O", opts)
+keymap("i", "(,", "(<CR>),<Esc>O", opts)
+keymap("i", "{<CR>", "{<CR>}<Esc>O", opts)
+keymap("i", "{;", "{<CR>};<Esc>O", opts)
+keymap("i", "{,", "{<CR>},<Esc>O", opts)
+keymap("i", "[<CR>", "[<CR>]<Esc>O", opts)
+keymap("i", "[;", "[<CR>];<Esc>O", opts)
+keymap("i", "[,", "[<CR>],<Esc>O", opts)
+keymap("i", ":check:", "✓", opts)
+-- }}}
+-- Other Mappings {{{
+keymap("v", "<C-a>", "ggVG", opts)
+keymap("v", "<leader>y", '"+y', opts)
+keymap("n", "<C-t>", "<cmd>NERDTreeToggle<CR>", opts)
+-- }}}
+-- Center Text on the Screen {{{
+local remapList = {"p", "P", "<CR>", "j", "k", "gg", "H", "M", "L", "n", "N", "%"}
+for k in pairs(remapList) do
+    keymap("n", remapList[k], remapList[k] .. "zz", opts)
+    keymap("v", remapList[k], remapList[k] .. "zz", opts)
+end
+-- }}}
 -- }}}
 
 -- Coc Settings {{{
@@ -317,8 +300,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " }}}
 " CheckBackspace Function {{{
 function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1 return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 " }}}
 
@@ -436,7 +418,7 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-
+" Formattings {{{
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
@@ -444,7 +426,6 @@ augroup mygroup
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
-
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocActionAsync('format')
 
@@ -453,11 +434,14 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+" }}}
 
-" Add (Neo)Vim's native statusline support.
+
+" Add (Neo)Vim's native statusline support. {{{
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" }}}
 
   ]]
 )
