@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 HOME = os.getenv("HOME")
---print(HOME)
+
 -- vim.gs (global variables) {{{
 local vimg = {
     airline_right_alt_sep = "",
@@ -9,12 +9,11 @@ local vimg = {
     airline_left_alt_sep = "",
     airline_right_sep = "",
     rainbow_active = 1,
-    NERDTreeHighlightFoldersFullName = 1,
-    DevIconsEnableFoldersOpenClose = 1,
-    DevIconsEnableFolderExtensionPatternMatching = 1,
-    webdevicons_conceal_nerdtree_brackets = 0,
     ale_disable_lsp = 1,
-    ale_sign_warning = ""
+    ale_sign_warning = "",
+    edge_style = "neon",
+    NERDTreeDirArrowExpandable = " ",
+    NERDTreeDirArrowCollapsible = " "
 }
 
 for k, v in pairs(vimg) do
@@ -23,82 +22,103 @@ for k, v in pairs(vimg) do
 end
 
 -- }}}
+
 -- Plugins {{{
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
-
--- Completions
--- Plug("ycm-core/YouCompleteMe", {["do"] = "python3 install.py --all"})
--- Plug("neoclide/coc.nvim", {["branch"] = "release"})
-Plug "dense-analysis/ale"
-Plug("neoclide/coc.nvim", {["branch"] = "release"})
--- language plugins
-
-Plug "sheerun/vim-polyglot"
-Plug "thaerkh/vim-indentguides"
--- Plug "simrat39/rust-tools.nvim"
--- Plug "rust-lang/rust.vim"
-
-Plug "vim-syntastic/syntastic"
-Plug "sbdchd/neoformat"
-Plug "mattn/emmet-vim"
-Plug "nvim-treesitter/nvim-treesitter"
-Plug "RRethy/nvim-treesitter-textsubjects"
-Plug "ap/vim-css-color"
-Plug "preservim/nerdcommenter"
-
--- Utility plugins
-Plug "lewis6991/gitsigns.nvim"
-Plug "nvim-lua/plenary.nvim"
--- No longer using vim-gitgutter
--- Plug "airblade/vim-gitgutter"
-Plug "jiangmiao/auto-pairs"
-Plug "honza/vim-snippets"
-Plug "romainl/vim-cool"
-Plug "Saecki/crates.nvim"
-Plug "luochen1990/rainbow"
-Plug "kyazdani42/nvim-web-devicons"
-Plug "romgrk/barbar.nvim"
-Plug "matze/vim-move"
-Plug "folke/trouble.nvim"
-Plug "preservim/nerdtree"
-Plug "tiagofumo/vim-nerdtree-syntax-highlight"
-Plug "sudormrfbin/cheatsheet.nvim"
-Plug "mattn/webapi-vim"
-Plug "easymotion/vim-easymotion"
-Plug "tpope/vim-repeat"
-Plug "stevearc/dressing.nvim"
-Plug "ryanoasis/vim-devicons"
-Plug "tpope/vim-surround"
-Plug "axieax/urlview.nvim"
-Plug "sjl/badwolf"
-Plug "morhetz/gruvbox"
-Plug "sainnhe/edge"
-Plug "vim-airline/vim-airline"
-Plug "ellisonleao/glow.nvim"
-Plug "ctrlpvim/ctrlp.vim"
-Plug "sirVer/Ultisnips"
-Plug "rust-lang/rust.vim"
--- Telescope Plugins
+-- Telescope Plugins {{{
 Plug "fannheyward/telescope-coc.nvim"
 Plug "nvim-telescope/telescope-symbols.nvim"
 Plug "BurntSushi/ripgrep"
+Plug "sudormrfbin/cheatsheet.nvim"
 Plug "nvim-telescope/telescope.nvim"
+-- }}}
+-- Completion Plugins {{{
+Plug("neoclide/coc.nvim", {["branch"] = "release"})
+-- }}}
+-- Language Server Plugins {{{
+Plug "dense-analysis/ale"
+-- }}}
+-- Snippet Plugins {{{
+Plug "honza/vim-snippets"
+Plug "sirVer/Ultisnips"
+-- }}}
+-- General Language Plugins {{{
+-- Treesitter Plugins {{{
+Plug "nvim-treesitter/nvim-treesitter"
+Plug "RRethy/nvim-treesitter-textsubjects"
+-- }}}
+Plug "sheerun/vim-polyglot"
+Plug "vim-syntastic/syntastic"
+Plug "sbdchd/neoformat"
+Plug "preservim/nerdcommenter"
+Plug "luochen1990/rainbow"
+-- }}}
+-- Colorschemes and Appearance Plugins {{{
+-- NerdTree Plugins {{{
+Plug "preservim/nerdtree"
+Plug "tiagofumo/vim-nerdtree-syntax-highlight"
+-- }}}
+-- Devicon Plugins {{{
+Plug "kyazdani42/nvim-web-devicons"
+Plug "ryanoasis/vim-devicons"
+-- }}}
+-- Colorschemes {{{
+Plug "sjl/badwolf"
+Plug "morhetz/gruvbox"
+Plug "sainnhe/edge"
+-- }}}
+-- Statusline/bar {{{
+Plug "vim-airline/vim-airline"
+Plug "romgrk/barbar.nvim"
+-- }}}
+Plug "lewis6991/gitsigns.nvim"
+Plug "thaerkh/vim-indentguides"
+Plug "stevearc/dressing.nvim"
+-- }}}
+-- Specific Language Plugins {{{
+-- HTML/CSS {{{
+Plug "mattn/emmet-vim"
+Plug "ap/vim-css-color"
+-- }}}
+-- Rust {{{
+Plug "rust-lang/rust.vim"
+Plug "Saecki/crates.nvim"
+-- }}}
+-- Markdown {{{
+Plug "axieax/urlview.nvim"
+-- }}}
+-- }}}
+-- Other Dependencies Plugins {{{
+Plug "mattn/webapi-vim"
+Plug "nvim-lua/plenary.nvim"
+-- }}}
+-- Movement Plugins {{{
+Plug "easymotion/vim-easymotion"
+Plug "matze/vim-move"
+-- }}}
+-- FZF Plugins {{{
+Plug "ctrlpvim/ctrlp.vim"
+-- }}}
+-- Other Utility Plugins {{{
+Plug "jiangmiao/auto-pairs"
+Plug "tpope/vim-repeat"
+Plug "tpope/vim-surround"
+Plug "romainl/vim-cool"
+-- }}}
 
 vim.call("plug#end")
 -- }}}
---- local variables {{{
---local actions = require("telescope.actions")
---local trouble = require("trouble.providers.telescope")
---local telescope = require("telescope")
---local lspconfig = require("lspconfig")
---local cmp = require "cmp"
+
+-- Local variables {{{
 local tsconfig = require("nvim-treesitter.configs")
--- local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-require("crates").setup {}
 local keymap = vim.api.nvim_set_keymap
---local lspkind = require("lspkind")
 local opts = {noremap = true, silent = true}
+-- }}}
+
+-- Setup Functions {{{
+require("crates").setup {}
+require("gitsigns").setup()
 --- }}}
 
 -- vim.opts {{{
@@ -128,7 +148,6 @@ end
 -- vim settings and keybindings {{{
 vim.cmd(
     [[
-let g:edge_style = 'neon'
 colorscheme edge
 augroup fmt
   autocmd!
@@ -136,6 +155,8 @@ augroup fmt
 augroup END
 
 augroup CURSORLINE | autocmd!
+    autocmd!
+    autocmd VimEnter * set cursorline | autocmd VimLeave * set nocursorline
     autocmd WinEnter * set cursorline | autocmd WinLeave * set nocursorline
     autocmd InsertEnter * set nocursorline | autocmd InsertLeave * set cursorline
 augroup end
@@ -234,6 +255,8 @@ keymap("n", "<C-Up>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-Down>", "<cmd>resize -2<CR>", opts)
 keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
+keymap("n", "<M-Right>", "<cmd>tabnext<CR>", opts)
+keymap("n", "<M-Left>", "<cmd>tabprevious<CR>", opts)
 
 -- }}}
 
@@ -248,14 +271,11 @@ keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
 -- Language server settings {{{
 -- }}}
 
--- Misc {{{
-
-require("gitsigns").setup()
--- }}}
+-- Coc Settings {{{
 vim.cmd(
     [[
-    
-    " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" Basic settings {{{
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
 
@@ -284,8 +304,9 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
-
-" Use tab for trigger completion with characters ahead and navigate.
+" }}}
+" Completion triggers {{{
+" Use tab for trigger completion with characters ahead and navigate. {{{
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
@@ -293,68 +314,56 @@ inoremap <silent><expr> <TAB>
       \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+" }}}
+" CheckBackspace Function {{{
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+" }}}
 
-" Use <c-space> to trigger completion.
+" Use <c-space> to trigger completion. {{{
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
+" }}}
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
+" Make <CR> auto-select the first completion item and notify coc.nvim to {{{
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" }}}
+" }}}
+" Key bindings {{{
+" Use `[g` and `]g` to navigate diagnostics {{{
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
+" }}}
+" Use K to show documentation in preview window. {{{
+nnoremap <silent> K :call ShowDocumentation()<CR>
+" }}}
+" GoTo code navigation. {{{
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Applying codeAction to the selected region.
+" }}}
+" Applying codeAction to the selected region. {{{
 " Example: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current buffer.
+" }}}
+" Remap keys for applying codeAction to the current buffer. {{{
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Run the Code Lens action on the current line.
+" }}}
+" Run the Code Lens action on the current line. {{{
 nmap <leader>cl  <Plug>(coc-codelens-action)
-
-" Map function and class text objects
+" }}}
+" Map function and class text objects {{{
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
 xmap if <Plug>(coc-funcobj-i)
 omap if <Plug>(coc-funcobj-i)
@@ -364,8 +373,8 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
+" }}}
+" Remap <C-f> and <C-b> for scroll float windows/popups. {{{
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
@@ -374,27 +383,19 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
   vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 endif
-
-" Use CTRL-S for selections ranges.
+" }}}
+" Use CTRL-S for selections ranges. {{{
 " Requires 'textDocument/selectionRange' support of language server.
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Mappings for CoCList
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+" }}}
+" Formatting selected code. {{{
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+" }}}
+" Mappings for CoCList {{{
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
@@ -411,9 +412,10 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocumentation()<CR>
+" Open yank list
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+" }}}
+" Show Documentation Function {{{
 function! ShowDocumentation()
 if CocAction('hasProvider', 'hover')
 call CocActionAsync('doHover')
@@ -427,8 +429,41 @@ lua require('crates').show_popup()
 endif
 endif
 endfunction
+" }}}
+
+" }}}
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
   ]]
 )
+
+--- }}}
+
 -- Telescope settings {{{
 require("telescope").load_extension("coc")
 -- }}}
