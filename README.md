@@ -30,6 +30,7 @@ as such, there is a starship configuration file there. I don't often change thos
 - [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep)
 - [sudormrfbin/cheatsheet.nvim](https://github.com/sudormrfbin/cheatsheet.nvim)
 - [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+- [p00f/nvim-ts-rainbow](https://github.com/p00f/nvim-ts-rainbow)
 ## Completion Plugins 
 - [neoclide/coc.nvim](https://github.com/neoclide/coc.nvim)
 ## Language Server Plugins 
@@ -42,7 +43,6 @@ as such, there is a starship configuration file there. I don't often change thos
 - [vim-syntastic/syntastic](https://github.com/vim-syntastic/syntastic)
 - [sbdchd/neoformat](https://github.com/sbdchd/neoformat)
 - [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter)
-- [luochen1990/rainbow](https://github.com/luochen1990/rainbow)
 ### Treesitter Plugins
 - [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 - [RRethy/nvim-treesitter-textsubjects](https://github.com/RRethy/nvim-treesitter-textsubjects)

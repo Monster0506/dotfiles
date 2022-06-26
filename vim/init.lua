@@ -9,7 +9,7 @@ local vimg = {
     airline_left_sep = "",
     airline_left_alt_sep = "",
     airline_right_sep = "",
-    rainbow_active = 1,
+    -- rainbow_active = 1,
     ale_disable_lsp = 1,
     ale_sign_warning = "",
     edge_style = "neon",
@@ -32,6 +32,7 @@ Plug "fannheyward/telescope-coc.nvim"
 Plug "nvim-telescope/telescope-symbols.nvim"
 Plug "BurntSushi/ripgrep"
 Plug "sudormrfbin/cheatsheet.nvim"
+Plug "p00f/nvim-ts-rainbow"
 Plug "nvim-telescope/telescope.nvim"
 -- }}}
 -- Completion Plugins {{{
@@ -53,7 +54,7 @@ Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
 Plug "sbdchd/neoformat"
 Plug "preservim/nerdcommenter"
-Plug "luochen1990/rainbow"
+-- Plug "luochen1990/rainbow"
 -- }}}
 -- Colorschemes and Appearance Plugins {{{
 -- NerdTree Plugins {{{
@@ -461,4 +462,19 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 -- Telescope settings {{{
 require("telescope").load_extension("coc")
+-- }}}
+
+-- Treesitter Settings {{{
+require("nvim-treesitter.configs").setup {
+    highlight = {},
+    -- ...
+    rainbow = {
+        enable = true,
+        -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+        max_file_lines = nil -- Do not enable for files with more than n lines, int
+        -- colors = {}, -- table of hex strings
+        -- termcolors = {} -- table of colour name strings
+    }
+}
 -- }}}
