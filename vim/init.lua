@@ -1,4 +1,4 @@
-#:!/usr/bin/env lua
+#!/usr/bin/env lua
 HOME = os.getenv("HOME")
 
 -- vim.gs (global variables) {{{
@@ -417,10 +417,9 @@ endfunction
 " }}}
 
 " }}}
-
-" Highlight the symbol and its references when holding the cursor.
+" Highlight the symbol and its references when holding the cursor. {{{
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
+" }}}
 " Formattings {{{
 augroup mygroup
   autocmd!
@@ -438,14 +437,11 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 " }}}
-
-
 " Add (Neo)Vim's native statusline support. {{{
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " }}}
-
   ]]
 )
 
