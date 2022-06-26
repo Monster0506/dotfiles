@@ -1,9 +1,28 @@
 #!/usr/bin/env lua
 HOME = os.getenv("HOME")
-vim.g.ale_disable_lsp = 1
-vim.g.ale_sign_warning = ""
-
 --print(HOME)
+-- vim.gs (global variables) {{{
+local vimg = {
+    airline_right_alt_sep = "",
+    NERDSpaceDelims = 1,
+    airline_left_sep = "",
+    airline_left_alt_sep = "",
+    airline_right_sep = "",
+    rainbow_active = 1,
+    NERDTreeHighlightFoldersFullName = 1,
+    DevIconsEnableFoldersOpenClose = 1,
+    DevIconsEnableFolderExtensionPatternMatching = 1,
+    webdevicons_conceal_nerdtree_brackets = 0,
+    ale_disable_lsp = 1,
+    ale_sign_warning = ""
+}
+
+for k, v in pairs(vimg) do
+    vim.g[k] = v
+    -- print(k, v)
+end
+
+-- }}}
 -- Plugins {{{
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
@@ -19,7 +38,7 @@ Plug "sheerun/vim-polyglot"
 Plug "thaerkh/vim-indentguides"
 -- Plug "simrat39/rust-tools.nvim"
 -- Plug "rust-lang/rust.vim"
---
+
 Plug "vim-syntastic/syntastic"
 Plug "sbdchd/neoformat"
 Plug "mattn/emmet-vim"
@@ -37,15 +56,18 @@ Plug "jiangmiao/auto-pairs"
 Plug "honza/vim-snippets"
 Plug "romainl/vim-cool"
 Plug "Saecki/crates.nvim"
+Plug "luochen1990/rainbow"
 Plug "kyazdani42/nvim-web-devicons"
 Plug "romgrk/barbar.nvim"
 Plug "matze/vim-move"
 Plug "folke/trouble.nvim"
 Plug "preservim/nerdtree"
+Plug "tiagofumo/vim-nerdtree-syntax-highlight"
 Plug "sudormrfbin/cheatsheet.nvim"
 Plug "mattn/webapi-vim"
 Plug "easymotion/vim-easymotion"
 Plug "tpope/vim-repeat"
+Plug "stevearc/dressing.nvim"
 Plug "ryanoasis/vim-devicons"
 Plug "tpope/vim-surround"
 Plug "axieax/urlview.nvim"
@@ -65,7 +87,6 @@ Plug "nvim-telescope/telescope.nvim"
 
 vim.call("plug#end")
 -- }}}
-
 --- local variables {{{
 --local actions = require("telescope.actions")
 --local trouble = require("trouble.providers.telescope")
@@ -104,22 +125,6 @@ end
 
 -- }}}
 
--- vim.gs (global variables) {{{
-local vimg = {
-    airline_right_alt_sep = "",
-    NERDSpaceDelims = 1,
-    airline_left_sep = "",
-    airline_left_alt_sep = "",
-    airline_right_sep = ""
-}
-
-for k, v in pairs(vimg) do
-    vim.g[k] = v
-    -- print(k, v)
-end
-
--- }}}
-
 -- vim settings and keybindings {{{
 vim.cmd(
     [[
@@ -129,6 +134,12 @@ augroup fmt
   autocmd!
   autocmd BufWritePre * silent Neoformat
 augroup END
+
+augroup CURSORLINE | autocmd!
+    autocmd WinEnter * set cursorline | autocmd WinLeave * set nocursorline
+    autocmd InsertEnter * set nocursorline | autocmd InsertLeave * set cursorline
+augroup end
+
 noremap (<CR> (<CR>)<Esc>O
 inoremap (;    (<CR>);<Esc>O 
 inoremap (,    (<CR>),<Esc>O
@@ -243,6 +254,7 @@ require("gitsigns").setup()
 -- }}}
 vim.cmd(
     [[
+    
     " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
