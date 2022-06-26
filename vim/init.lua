@@ -1,5 +1,6 @@
 #!/usr/bin/env lua
 HOME = os.getenv("HOME")
+-- print(HOME)
 
 -- vim.gs (global variables) {{{
 local vimg = {
@@ -137,7 +138,7 @@ local vimopts = {
     swapfile = false,
     wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx",
     colorcolumn = "80",
-    foldmethod = "marker",
+    foldmethod = "syntax",
     concealcursor = "nc"
 }
 -- set vim options
@@ -152,6 +153,14 @@ vim.cmd(
     [[
 colorscheme edge
 " AutoGroups {{{
+
+augroup FOLDER
+    autocmd!
+    autocmd BufRead /home/*/.config/nvim/init.lua set foldmethod=marker
+    autocmd BufWrite /home/*/.config/nvim/init.lua set foldmethod=marker
+augroup END
+
+
 " Format on save {{{
 augroup fmt
   autocmd!
@@ -421,6 +430,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " }}}
 " Formattings {{{
+" Format autogroup filetypes {{{
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
@@ -428,14 +438,16 @@ augroup mygroup
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
-" Add `:Format` command to format current buffer.
+" }}}
+" Add `:Format` command to format current buffer. {{{
 command! -nargs=0 Format :call CocActionAsync('format')
-
-" Add `:Fold` command to fold current buffer.
+" }}}
+" Add `:Fold` command to fold current buffer.  {{{
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
+" }}}
+" Add `:OR` command for organize imports of the current buffer. {{{
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+" }}}
 " }}}
 " Add (Neo)Vim's native statusline support. {{{
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
