@@ -1,4 +1,4 @@
-#!/usr/bin/env lua
+#:!/usr/bin/env lua
 HOME = os.getenv("HOME")
 
 -- vim.gs (global variables) {{{
@@ -151,19 +151,23 @@ end
 vim.cmd(
     [[
 colorscheme edge
+" AutoGroups {{{
+" Format on save {{{
 augroup fmt
   autocmd!
   autocmd BufWritePre * silent Neoformat
 augroup END
-
+" }}}
+" Highlight line when not inserting {{{
 augroup CURSORLINE | autocmd!
     autocmd!
     autocmd VimEnter * set cursorline | autocmd VimLeave * set nocursorline
     autocmd WinEnter * set cursorline | autocmd WinLeave * set nocursorline
     autocmd InsertEnter * set nocursorline | autocmd InsertLeave * set cursorline
 augroup end
-
-" MKDIR: https://stackoverflow.com/a/4294176
+" }}}
+" Mkdir on edit folder/file {{{
+" https://stackoverflow.com/a/4294176 
 function! MkNonExDir(file, buf)
     if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
         let dir=fnamemodify(a:file, ':h')
@@ -176,12 +180,10 @@ augroup BWCCreateDir
     autocmd!
     autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
-
+" }}}
+" }}}
 nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
-vnoremap <C-a> ggVG
-vnoremap <leader>y "+y
-nnoremap + <C-a>
 command! W :w
 command! WQ :wq
 command! Wq :wq
@@ -238,10 +240,11 @@ keymap("i", "{,", "{<CR>},<Esc>O", opts)
 keymap("i", "[<CR>", "[<CR>]<Esc>O", opts)
 keymap("i", "[;", "[<CR>];<Esc>O", opts)
 keymap("i", "[,", "[<CR>],<Esc>O", opts)
-keymap("i", ":check:", "✓", opts)
 -- }}}
 -- Other Mappings {{{
-keymap("v", "<C-a>", "ggVG", opts)
+keymap("n", "<C-a>", "ggVG", opts)
+keymap("i", ":check:", "✓", opts)
+keymap("n", "+", "<C-a>", opts)
 keymap("v", "<leader>y", '"+y', opts)
 keymap("n", "<C-t>", "<cmd>NERDTreeToggle<CR>", opts)
 -- }}}
