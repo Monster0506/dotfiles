@@ -50,9 +50,7 @@ as such, there is a starship configuration file there. I don't often change thos
 - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 - [thaerkh/vim-indentguides](https://github.com/thaerkh/vim-indentguides)
 - [stevearc/dressing.nvim](https://github.com/stevearc/dressing.nvim)
-### NerdTree Plugins 
-- [preservim/nerdtree](https://github.com/preservim/nerdtree)
-- [tiagofumo/vim-nerdtree-syntax-highlight](https://github.com/tiagofumo/vim-nerdtree-syntax-highlight)
+- [kyazdani42/nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua)
 ### Devicon Plugins 
 - [kyazdani42/nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons)
 - [ryanoasis/vim-devicons](https://github.com/ryanoasis/vim-devicons)

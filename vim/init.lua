@@ -12,9 +12,7 @@ local vimg = {
     -- rainbow_active = 1,
     ale_disable_lsp = 1,
     ale_sign_warning = "",
-    edge_style = "neon",
-    NERDTreeDirArrowExpandable = " ",
-    NERDTreeDirArrowCollapsible = " "
+    edge_style = "neon"
 }
 
 for k, v in pairs(vimg) do
@@ -34,6 +32,7 @@ Plug "BurntSushi/ripgrep"
 Plug "sudormrfbin/cheatsheet.nvim"
 Plug "p00f/nvim-ts-rainbow"
 Plug "nvim-telescope/telescope.nvim"
+Plug "folke/todo-comments.nvim"
 -- }}}
 -- Completion Plugins {{{
 Plug("neoclide/coc.nvim", {["branch"] = "release"})
@@ -57,10 +56,6 @@ Plug "preservim/nerdcommenter"
 -- Plug "luochen1990/rainbow"
 -- }}}
 -- Colorschemes and Appearance Plugins {{{
--- NerdTree Plugins {{{
-Plug "preservim/nerdtree"
-Plug "tiagofumo/vim-nerdtree-syntax-highlight"
--- }}}
 -- Devicon Plugins {{{
 Plug "kyazdani42/nvim-web-devicons"
 Plug "ryanoasis/vim-devicons"
@@ -69,6 +64,7 @@ Plug "ryanoasis/vim-devicons"
 Plug "sjl/badwolf"
 Plug "morhetz/gruvbox"
 Plug "sainnhe/edge"
+Plug "folke/lsp-colors.nvim"
 -- }}}
 -- Statusline/bar {{{
 Plug "vim-airline/vim-airline"
@@ -107,6 +103,7 @@ Plug "junegunn/fzf"
 Plug "jiangmiao/auto-pairs"
 Plug "axieax/urlview.nvim"
 Plug "tpope/vim-repeat"
+Plug "kyazdani42/nvim-tree.lua"
 Plug "tpope/vim-surround"
 Plug "romainl/vim-cool"
 -- }}}
@@ -122,6 +119,13 @@ local opts = {noremap = true, silent = true}
 -- Setup Functions {{{
 require("crates").setup {}
 require("gitsigns").setup()
+require("nvim-tree").setup(
+    {
+        view = {
+            side = "right"
+        }
+    }
+)
 --- }}}
 
 -- vim.opts {{{
@@ -132,6 +136,7 @@ local vimopts = {
     number = true,
     smartcase = true,
     mouse = "a",
+    guifont = "FiraCode Nerd Font:h15",
     ignorecase = true,
     undodir = "~/.vim/undodir",
     expandtab = true,
@@ -140,13 +145,14 @@ local vimopts = {
     wildignore = "*.docx,*.pdf,*.exe,*.mcmeta,*.xlsx",
     colorcolumn = "80",
     foldmethod = "syntax",
-    concealcursor = "nc"
+    concealcursor = "nc",
+    list = true
 }
 -- set vim options
 for k, v in pairs(vimopts) do
     vim.opt[k] = v
 end
-
+vim.opt.listchars:append("eol:↴")
 -- }}}
 
 -- vim settings and keybindings {{{
@@ -158,6 +164,7 @@ colorscheme edge
 augroup FOLDER
     autocmd!
     autocmd BufRead /home/*/.config/nvim/init.lua set foldmethod=marker
+    autocmd SourceCmd /home/*/.config/nvim/init.lua set foldmethod=marker
     autocmd BufWrite /home/*/.config/nvim/init.lua set foldmethod=marker
 augroup END
 
@@ -201,12 +208,10 @@ command! Q :q
 command! Noh :noh
 command! Nog :noh
 
+set guicursor+=r:hor25
+
 
 " NerdTree Stuff {{{
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-autocmd VimEnter * NERDTree | wincmd p
-let NERDTreeWinPos="right"
 " }}}
 
 
@@ -256,7 +261,7 @@ keymap("n", "<C-a>", "ggVG", opts)
 keymap("i", ":check:", "✓", opts)
 keymap("n", "+", "<C-a>", opts)
 keymap("v", "<leader>y", '"+y', opts)
-keymap("n", "<C-t>", "<cmd>NERDTreeToggle<CR>", opts)
+keymap("n", "<C-t>", "<cmd>NvimTreeToggle<CR>", opts)
 -- }}}
 -- Center Text on the Screen {{{
 local remapList = {"p", "P", "<CR>", "j", "k", "gg", "H", "M", "L", "n", "N", "%"}
@@ -462,16 +467,17 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 -- Telescope settings {{{
 require("telescope").load_extension("coc")
+-- require("telescope").load_extension("todo-comments")
+require("todo-comments").setup {}
 -- }}}
 
 -- Treesitter Settings {{{
 require("nvim-treesitter.configs").setup {
-    highlight = {},
-    -- ...
     rainbow = {
         enable = true,
         extended_mode = true,
         max_file_lines = 999
     }
 }
+
 -- }}}
