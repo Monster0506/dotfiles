@@ -81,6 +81,7 @@ as such, there is a starship configuration file there. I don't often change thos
 - [junegunn/fzf](https://github.com/junegunn/fzf)
 ## Other Utility Plugins 
 - [jiangmiao/auto-pairs](https://github.com/jiangmiao/auto-pairs)
+- [antoinemadec/FixCursorHold.nvim](https://github.com/antoinemadec/FixCursorHold.nvim)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 - [tpope/vim-surround](https://github.com/tpope/vim-surround)

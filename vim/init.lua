@@ -1,4 +1,4 @@
-#!/usr/bin/env lua
+#!/usr/bn/env lua
 HOME = os.getenv("HOME")
 -- print(HOME)
 
@@ -101,6 +101,7 @@ Plug "junegunn/fzf"
 -- }}}
 -- Other Utility Plugins {{{
 Plug "jiangmiao/auto-pairs"
+Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
 Plug "tpope/vim-repeat"
 Plug "kyazdani42/nvim-tree.lua"
@@ -138,7 +139,6 @@ local vimopts = {
     mouse = "a",
     guifont = "FiraCode Nerd Font:h15",
     ignorecase = true,
-    undodir = "~/.vim/undodir",
     expandtab = true,
     backup = false,
     swapfile = false,
@@ -300,10 +300,10 @@ set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
+" Recently vim can merge signcolumn and number column into one
+set signcolumn=number
 else
-  set signcolumn=yes
+set signcolumn=yes
 endif
 " }}}
 " Completion triggers {{{
@@ -311,22 +311,22 @@ endif
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ CheckBackspace() ? "\<TAB>" :
-      \ coc#refresh()
+  \ pumvisible() ? "\<C-n>" :
+  \ CheckBackspace() ? "\<TAB>" :
+  \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " }}}
 " CheckBackspace Function {{{
 function! CheckBackspace() abort
-  let col = col('.') - 1 return !col || getline('.')[col - 1]  =~# '\s'
+let col = col('.') - 1 return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 " }}}
 
 " Use <c-space> to trigger completion. {{{
 if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <c-space> coc#refresh()
 else
-  inoremap <silent><expr> <c-@> coc#refresh()
+inoremap <silent><expr> <c-@> coc#refresh()
 endif
 " }}}
 
@@ -391,16 +391,7 @@ xmap <silent> <C-s> <Plug>(coc-range-select)
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 " }}}
-" Formatting selected code. {{{
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-" }}}
-" Mappings for CoCList {{{
-" Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
+" Mappings for CoCList {{{ " Show all diagnostics. nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr> " Manage extensions. nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr> " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
@@ -435,9 +426,7 @@ endfunction
 " Highlight the symbol and its references when holding the cursor. {{{
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " }}}
-" Formattings {{{
-" Format autogroup filetypes {{{
-augroup mygroup
+" Formattings {{{ " Format autogroup filetypes {{{ augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
@@ -476,7 +465,14 @@ require("nvim-treesitter.configs").setup {
     rainbow = {
         enable = true,
         extended_mode = true,
-        max_file_lines = 999
+        max_file_lines = nil
+    }
+}
+require "nvim-treesitter.configs".setup {
+    ensure_installed = {"c", "lua", "rust", "python", "cpp", "typescript", "javascript"},
+    highlight = {
+        -- `false` will disable the whole extension
+        enable = true
     }
 }
 
