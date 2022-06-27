@@ -264,11 +264,15 @@ keymap("v", "<leader>y", '"+y', opts)
 keymap("n", "<C-t>", "<cmd>NvimTreeToggle<CR>", opts)
 -- }}}
 -- Center Text on the Screen {{{
-local remapList = {"p", "P", "<CR>", "j", "k", "gg", "H", "M", "L", "n", "N", "%"}
+local remapList = {"p", "P", "<CR>", "gg", "H", "M", "L", "n", "N", "%"}
 for k in pairs(remapList) do
     keymap("n", remapList[k], remapList[k] .. "zz", opts)
     keymap("v", remapList[k], remapList[k] .. "zz", opts)
 end
+keymap("n", "j", "gjzz", opts)
+keymap("v", "j", "gjzz", opts)
+keymap("n", "k", "gkzz", opts)
+keymap("v", "k", "gkzz", opts)
 -- }}}
 -- }}}
 
