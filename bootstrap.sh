@@ -177,7 +177,7 @@ configureNpm() {
 
 configureVim() {
 	nvim +PlugInstall +qa
-	nvim +"CocInstall coc-word coc-fzf-preview coc-rust-analyzer coc-sh coc-lua coc-pyright coc-ultisnips coc-json coc-tsserver coc-yank coc-pydocstring"
+	nvim +"CocInstall coc-tabnine coc-word coc-fzf-preview coc-rust-analyzer coc-sh coc-lua coc-pyright coc-ultisnips coc-json coc-tsserver coc-yank coc-pydocstring"
 
 }
 
