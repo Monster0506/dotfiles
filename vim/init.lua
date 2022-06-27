@@ -469,7 +469,7 @@ require("nvim-treesitter.configs").setup {
     }
 }
 require "nvim-treesitter.configs".setup {
-    ensure_installed = {"c", "lua", "rust", "python", "cpp", "typescript", "javascript"},
+    ensure_installed = {"c", "lua", "rust", "python", "cpp", "typescript", "javascript", "bash"},
     highlight = {
         -- `false` will disable the whole extension
         enable = true
