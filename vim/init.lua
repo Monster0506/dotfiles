@@ -9,6 +9,7 @@ local vimg = {
     airline_left_sep = "",
     airline_left_alt_sep = "",
     airline_right_sep = "",
+    airline_statusline_ontop = 1,
     -- rainbow_active = 1,
     ale_disable_lsp = 1,
     ale_sign_warning = "",
@@ -48,6 +49,7 @@ Plug "sirVer/Ultisnips"
 -- Treesitter Plugins {{{
 Plug "nvim-treesitter/nvim-treesitter"
 Plug "RRethy/nvim-treesitter-textsubjects"
+Plug "SmiteshP/nvim-gps"
 -- }}}
 Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
@@ -107,6 +109,7 @@ Plug "tpope/vim-repeat"
 Plug "kyazdani42/nvim-tree.lua"
 Plug "tpope/vim-surround"
 Plug "romainl/vim-cool"
+Plug "github/copilot.vim"
 -- }}}
 
 vim.call("plug#end")
@@ -273,7 +276,6 @@ keymap("n", "j", "gjzz", opts)
 keymap("v", "j", "gjzz", opts)
 keymap("n", "k", "gkzz", opts)
 keymap("v", "k", "gkzz", opts)
--- }}}
 -- }}}
 -- }}}
 
@@ -491,6 +493,7 @@ require "nvim-treesitter.configs".setup {
         enable = true
     }
 }
+require("nvim-gps").setup()
 
 -- }}}
 
@@ -550,7 +553,15 @@ function! RustFold()
 endfunction
 
 autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
-
     ]]
 )
 -- }}}
+vim.cmd(
+    [[
+    func! NvimGps() abort
+	return luaeval("require'nvim-gps'.is_available()") ? luaeval("require'nvim-gps'.get_location()") : ''
+endf
+
+set statusline+=%{NvimGps()}
+    ]]
+)
