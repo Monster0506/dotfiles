@@ -48,7 +48,6 @@ Plug "sirVer/Ultisnips"
 -- Treesitter Plugins {{{
 Plug "nvim-treesitter/nvim-treesitter"
 Plug "RRethy/nvim-treesitter-textsubjects"
-Plug "SmiteshP/nvim-gps"
 -- }}}
 Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
@@ -492,8 +491,6 @@ require "nvim-treesitter.configs".setup {
         enable = true
     }
 }
-require("nvim-gps").setup()
-
 -- }}}
 
 -- Rust Folding {{{
@@ -555,12 +552,3 @@ autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
     ]]
 )
 -- }}}
-vim.cmd(
-    [[
-    func! NvimGps() abort
-	return luaeval("require'nvim-gps'.is_available()") ? luaeval("require'nvim-gps'.get_location()") : ''
-endf
-
-set statusline+=%{NvimGps()}
-    ]]
-)
