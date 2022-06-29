@@ -169,7 +169,6 @@ marco() {
             echo "marco: no marco directory set"
         else
             if [ -z $2 ]; then
-                echo "$MARCODIR" | wc -l
                 echo "Directories:"
                 for ((i = 1; i <= ${#MARCODIR[@]}; i++)); do
                     echo " $i: ${MARCODIR[$i - 1]}"
