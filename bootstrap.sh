@@ -210,7 +210,17 @@ main() {
 	installExtraStuff
 	echo "All items installed. Fixing path, just to be sure"
 	fixPath
-	echo "Done."
+	finishSteps
+
+	echo "Done! Enjoy your new machine!"
+}
+
+finishSteps() {
+	sudo apt update -y && sudo apt upgrade -y
+	sudo apt autoremove -y
+	sudo apt clean
+	sudo apt autoclean -y
+
 }
 
 # make sure all folders exist if necessary.
