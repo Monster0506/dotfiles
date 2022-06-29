@@ -238,6 +238,7 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in
 autocmd FileType nerdtree syntax on
 autocmd VimEnter * NERDTree | wincmd p
 augroup END
+let NERDTreeWinPos="right"
 " }}}
         ]]
 )
