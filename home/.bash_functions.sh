@@ -159,6 +159,9 @@ marco() {
         echo "    -w [NUM]            Show the list of marco directories, or the <NUM>Th directory"
         echo "    -n <NUM>            Set the current directory to the <NUM>Th item in the list"
         echo "    -d [NUM | DIR]      Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
+        # taken from https://github.com/westonruter/misc-cli-tools/blob/master/cddown
+        echo "    -r <DIR>            Attempt to recurse through the currrent directory to a directory matching DIR. Goes to first result."
+        echo "    -u <DIR>            Attempt to recurse through ancestor directories to a directory matching DIR. Goes to first result."
         ;;
 
     "-w")
@@ -222,6 +225,48 @@ marco() {
             fi
         fi
         ;;
+    "-r")
+        if [ -z "$2" ]; then
+            echo "no argument given. use -h for help"
+        else
+            # First try exact match
+            dir=$(find . -type d -name $2 -print -quit)
+
+            # If exact match failed, try supplying wildcards
+            if [[ ! $dir ]]; then
+                dir=$(find . -type d -name \*$2\* -print -quit)
+            fi
+
+            # This is not the directory you are looking for!
+            if [[ ! $dir ]]; then
+                echo "Couldn't find any directory named '$2'" 1>&2
+                return 1
+            fi
+            marco $(realpath $dir)
+        fi
+        ;;
+    "-u")
+        if [ -z "$2" ]; then
+            echo "no argument given. use -h for help"
+        else
+            dir="$1"
+            old=$(pwd)
+
+            # Try matching the full segment in path name
+            new=$(perl -pe "s{(.*/\Q$dir\E)(?=/|$).*?$}{\1};" <<<$old)
+            # If failed, try partial match of segment
+            if [ "$old" == "$new" ]; then
+                new=$(perl -pe "s{(.*/[^/]*?\Q$dir\E[^/]*?)(?=/|$).*?$}{\1}" <<<$old)
+            fi
+            # No replacements done, so we failed
+            if [ "$old" == "$new" ]; then
+                echo "Can't find '$dir' among ancestor directories ($old == $new)." 1>&2
+                return 1
+            fi
+            marco $(realpath $new)
+        fi
+
+        ;;
     *)
 
         if [ -z "$1" ]; then
@@ -260,6 +305,8 @@ polo() {
         echo "    -w [NUM]            Show the list of marco directories, or the <num>th directory"
         echo "    -d [NUM | DIR]      Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
         echo "    back | b            Move back a directory"
+        echo "    -r [DIR]            Attempt to recurse through the currrent directory to a directory matching dir. Goes to first result."
+        echo "    -u [DIR]            Attempt to recurse through ancestor directories to a directory matching dir. Goes to first result."
 
         ;;
     "-w")
@@ -270,6 +317,47 @@ polo() {
         ;;
     "b" | "back")
         cd ../
+        ;;
+    "-r")
+        if [ -z "$2" ]; then
+            echo "no argument given. use -h for help"
+        else
+            # First try exact match
+            dir=$(find . -type d -name $2 -print -quit)
+
+            # If exact match failed, try supplying wildcards
+            if [[ ! $dir ]]; then
+                dir=$(find . -type d -name \*$2\* -print -quit)
+            fi
+
+            # This is not the directory you are looking for!
+            if [[ ! $dir ]]; then
+                echo "Couldn't find any directory named '$2'" 1>&2
+                return 1
+            fi
+            polo $(realpath $dir)
+        fi
+        ;;
+    "-u")
+        if [ -z "$2" ]; then
+            echo "no argument given. use -h for help"
+        else
+            dir="$2"
+            old=$(pwd)
+
+            # Try matching the full segment in path name
+            new=$(perl -pe "s{(.*/\Q$dir\E)(?=/|$).*?$}{\1};" <<<$old)
+            # If failed, try partial match of segment
+            if [ "$old" == "$new" ]; then
+                new=$(perl -pe "s{(.*/[^/]*?\Q$dir\E[^/]*?)(?=/|$).*?$}{\1}" <<<$old)
+            fi
+            # No replacements done, so we failed
+            if [ "$old" == "$new" ]; then
+                echo "Can't find '$dir' among ancestor directories ($old == $new)." 1>&2
+                return 1
+            fi
+            polo $(realpath $new)
+        fi
         ;;
     *)
         if [ -z "$1" ]; then
