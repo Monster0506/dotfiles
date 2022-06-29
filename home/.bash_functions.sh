@@ -229,7 +229,7 @@ marco() {
             echo $(pwd)
         else
             if [ -d "$1" ]; then
-                MARCODIR+=("$1")
+                MARCODIR+=("$(realpath $1)")
                 echo "marco: $1"
             else
                 if [[ "$1" =~ $NUMBERRE ]]; then
@@ -289,7 +289,7 @@ polo() {
             fi
         else
             if [ -d "$1" ]; then
-                MARCODIR+=("$1")
+                MARCODIR+=("$(realpath $1)")
                 cd "$1"
                 echo "$1"
             else
