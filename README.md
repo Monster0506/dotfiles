@@ -86,3 +86,5 @@ as such, there is a starship configuration file there. I don't often change thos
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 - [tpope/vim-surround](https://github.com/tpope/vim-surround)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
+- [preservim/nerdtree](https://github.com/preservim/nerdtree)
+- [preservim/tagbar](https://github.com/preservim/tagbar)

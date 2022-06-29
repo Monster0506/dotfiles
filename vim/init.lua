@@ -1,7 +1,6 @@
 #!/usr/bn/env lua
 HOME = os.getenv("HOME")
 -- print(HOME)
-
 -- vim.gs (global variables) {{{
 local vimg = {
     airline_right_alt_sep = "",
@@ -12,6 +11,7 @@ local vimg = {
     -- rainbow_active = 1,
     ale_disable_lsp = 1,
     ale_sign_warning = "",
+    NERDTreeNodeDelimiter = " ",
     edge_style = "neon"
 }
 
@@ -99,12 +99,14 @@ Plug "junegunn/fzf.vim"
 Plug "junegunn/fzf"
 -- }}}
 -- Other Utility Plugins {{{
+-- NERD Tree Plugins {{{
+Plug "preservim/nerdtree"
+-- }}}
 Plug "jiangmiao/auto-pairs"
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
 Plug "preservim/tagbar"
 Plug "tpope/vim-repeat"
-Plug "kyazdani42/nvim-tree.lua"
 Plug "tpope/vim-surround"
 Plug "romainl/vim-cool"
 Plug "github/copilot.vim"
@@ -121,13 +123,6 @@ local opts = {noremap = true, silent = true}
 -- Setup Functions {{{
 require("crates").setup {}
 require("gitsigns").setup()
-require("nvim-tree").setup(
-    {
-        view = {
-            side = "right"
-        }
-    }
-)
 --- }}}
 
 -- vim.opts {{{
@@ -159,17 +154,28 @@ vim.opt.listchars:append("eol:↴")
 -- vim settings and keybindings {{{
 vim.cmd(
     [[
+nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
+nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
+command! W :w
+command! WQ :wq
+command! Wq :wq
+command! Q :q
+command! Noh :noh
+command! Nog :noh
+
+set guicursor+=r:hor25
+syntax on
 colorscheme edge
 " AutoGroups {{{
 
-augroup FOLDER
+" Fold Init.lua when sourced, read, or saved with markers {{{
+augroup initluafolding
     autocmd!
     autocmd BufRead /home/*/.config/nvim/init.lua set foldmethod=marker
     autocmd SourceCmd /home/*/.config/nvim/init.lua set foldmethod=marker
     autocmd BufWrite /home/*/.config/nvim/init.lua set foldmethod=marker
 augroup END
-
-
+" }}}
 " Format on save {{{
 augroup fmt
   autocmd!
@@ -199,23 +205,9 @@ augroup BWCCreateDir
     autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
 " }}}
+
+
 " }}}
-nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
-nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
-command! W :w
-command! WQ :wq
-command! Wq :wq
-command! Q :q
-command! Noh :noh
-command! Nog :noh
-
-set guicursor+=r:hor25
-
-
-" NerdTree Stuff {{{
-" }}}
-
-
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
 onoremap an :<c-u>call NextTextObject('a')<cr>
@@ -228,6 +220,24 @@ function! NextTextObject(motion)
   let c = nr2char(getchar())
   exe "normal! f".c."v".a:motion.c
 endfunction
+" }}}
+" NerdTree Stuff {{{
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+augroup NERDTREE 
+autocmd!
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+autocmd FileType nerdtree syntax on
+autocmd VimEnter * NERDTree | wincmd p
+augroup END
 " }}}
         ]]
 )
@@ -262,7 +272,7 @@ keymap("n", "<C-a>", "ggVG", opts)
 keymap("i", ":check:", "✓", opts)
 keymap("n", "+", "<C-a>", opts)
 keymap("v", "<leader>y", '"+y', opts)
-keymap("n", "<C-t>", "<cmd>NvimTreeToggle<CR>", opts)
+keymap("n", "<C-t>", "<cmd>NERDTreeToggle<CR>", opts)
 -- }}}
 -- Center Text on the Screen {{{
 local remapList = {"p", "P", "<CR>", "gg", "H", "M", "L", "n", "N", "%"}
@@ -466,14 +476,12 @@ require("todo-comments").setup {}
 -- }}}
 
 -- Treesitter Settings {{{
-require("nvim-treesitter.configs").setup {
+require "nvim-treesitter.configs".setup {
     rainbow = {
         enable = true,
         extended_mode = true,
         max_file_lines = nil
-    }
-}
-require "nvim-treesitter.configs".setup {
+    },
     ensure_installed = {
         "c",
         "lua",
