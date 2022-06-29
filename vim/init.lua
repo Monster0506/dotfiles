@@ -9,7 +9,6 @@ local vimg = {
     airline_left_sep = "",
     airline_left_alt_sep = "",
     airline_right_sep = "",
-    airline_statusline_ontop = 1,
     -- rainbow_active = 1,
     ale_disable_lsp = 1,
     ale_sign_warning = "",
@@ -70,7 +69,6 @@ Plug "folke/lsp-colors.nvim"
 -- }}}
 -- Statusline/bar {{{
 Plug "vim-airline/vim-airline"
-Plug "romgrk/barbar.nvim"
 -- }}}
 Plug "lewis6991/gitsigns.nvim"
 Plug "thaerkh/vim-indentguides"
@@ -105,6 +103,7 @@ Plug "junegunn/fzf"
 Plug "jiangmiao/auto-pairs"
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
+Plug "preservim/tagbar"
 Plug "tpope/vim-repeat"
 Plug "kyazdani42/nvim-tree.lua"
 Plug "tpope/vim-surround"
