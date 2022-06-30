@@ -99,8 +99,6 @@ installSqlStuff() {
 installAptStuff() {
 	# install other useful stuff
 	sudo apt remove firefox-esr -y
-	sudo apt-add-repository contrib
-	sudo apt-add-repository non-free
 	sudo aptfile $SCRIPT_DIR/packages
 
 }
@@ -202,9 +200,9 @@ main() {
 	checkFolders
 	doDirectory
 	# Install stuff that requires wget
+	installAptStuff
 	installWgetRequired
 	installCurlRequired
-	installAptStuff
 
 	# Move dotfiles to INSTALLDIR and syslink
 	echo "Installing to $INSTALLDIR. "
@@ -332,9 +330,6 @@ installWgetRequired() {
 	fi
 
 	# install neovim
-	wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb --output-document=$SCRIPT_DIR/nvim-linux64.deb
-	sudo apt install $SCRIPT_DIR/nvim-linux64.deb
-	rm -rf $SCRIPT_DIR/nvim-linux64.deb
 
 	installFirefoxStuff
 

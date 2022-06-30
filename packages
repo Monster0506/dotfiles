@@ -1,5 +1,7 @@
 #!/usr/bin/env aptfile
 
+repository "contrib"
+repository "non-free"
 
 package "xsel"
 package "universal-ctags"
@@ -30,6 +32,8 @@ package "i3"
 package "flake8"
 package "pylint"
 package "xcape"
+
+package_from_url  "neovim" "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb"
 
 
 update
