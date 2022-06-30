@@ -83,8 +83,11 @@ installCurlRequired() {
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 	sudo apt update
 	sudo apt install gh
+	sudo curl -o /usr/local/bin/aptfile https://raw.githubusercontent.com/seatgeek/bash-aptfile/master/bin/aptfile
+	sudo chmod +x /usr/local/bin/aptfile
 
 }
+
 installSqlStuff() {
 	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -98,7 +101,7 @@ installAptStuff() {
 	sudo apt remove firefox-esr -y
 	sudo apt-add-repository contrib
 	sudo apt-add-repository non-free
-	xargs sudo apt install -y <packages.txt
+	sudo aptfile $SCRIPT_DIR/packages
 
 }
 
