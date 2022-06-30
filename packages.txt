@@ -9,9 +9,10 @@ rofi
 bash-completion
 fzf
 figlet
-python3
 mplayer
+python3
 python3-pip
+python3-is-python
 vim
 vim-gtk3
 libboost-all-dev
