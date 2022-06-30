@@ -330,12 +330,19 @@ installWgetRequired() {
 	sudo apt install $SCRIPT_DIR/nvim-linux64.deb
 	rm -rf $SCRIPT_DIR/nvim-linux64.deb
 
+	installFirefoxStuff
+
+}
+installFirefoxStuff() {
 	wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US&_gl=1*1socw60*_ga*MTg1Mjg3NTI0Ny4xNjU0MTM3MDM3*_ga_MQ7767QQQW*MTY1NDEzNzAzNy4xLjEuMTY1NDEzNzM2MS4w' -O $SCRIPT_DIR/firefox-101.tar.bz2
 	tar xjvf $SCRIPT_DIR/firefox-*.tar.bz2
 	sudo mv $SCRIPT_DIR/firefox /opt
 	sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
 	sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
 	rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
+	wget https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
+	firefox $SCRIPT_DIR bitwarden_password_manager.xpi --setDefaultBrowser
 
 }
+
 main
