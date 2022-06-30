@@ -119,7 +119,7 @@ extract() {
                 *.bz2) bunzip2 ./"$n" ;;
                 *.cbr | *.rar) unrar x -ad ./"$n" ;;
                 *.gz) gunzip ./"$n" ;;
-                *.cbz | *.epub | *.zip) unzip ./"$n" ;;
+                *.cbz | *.epub | *.zip | *.xpi) unzip ./"$n" ;;
                 *.z) uncompress ./"$n" ;;
                 *.7z | *.apk | *.arj | *.cab | *.cb7 | *.chm | *.deb | *.dmg | *.iso | *.lzh | *.msi | *.pkg | *.rpm | *.udf | *.wim | *.xar)
                     7z x ./"$n"
