@@ -13,7 +13,7 @@ mplayer
 python3
 python3-pip
 python2
-python3-is-python
+python-is-python3
 vim
 vim-gtk3
 libboost-all-dev
@@ -26,4 +26,4 @@ libnotify-bin
 i3
 flake8
 pylint
-xcapt
+xcape
