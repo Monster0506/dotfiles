@@ -323,7 +323,10 @@ syslink() {
 
 }
 installWgetRequired() {
-	sudo apt install wget -y
+	# if wget is not installed, install it
+	if ! command -v wget >/dev/null 2>&1; then
+		sudo apt install wget -y
+	fi
 
 	# install neovim
 	wget https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb --output-document=$SCRIPT_DIR/nvim-linux64.deb
