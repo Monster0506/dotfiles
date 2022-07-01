@@ -32,8 +32,7 @@ package "i3"
 package "flake8"
 package "pylint"
 package "xcape"
-
-package_from_url  "neovim" "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb"
+package "neovim"
 
 
 update
