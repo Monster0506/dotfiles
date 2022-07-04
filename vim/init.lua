@@ -12,6 +12,7 @@ local vimg = {
     ale_disable_lsp = 1,
     ale_sign_warning = "",
     NERDTreeNodeDelimiter = " ",
+    netrw_browsex_viewer = "xdg-open",
     edge_style = "neon"
 }
 
