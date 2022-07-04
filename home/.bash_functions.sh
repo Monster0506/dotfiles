@@ -83,10 +83,10 @@ resetpythonvenv() {
     fi
     if [ -d "bin" ]; then
         echo "Nuking old virtual environment..."
-        rm -r bin
-        rm -r include
-        rm -r lib
-        rm pyvenv.cfg
+        \rm -r bin
+        \rm -r include
+        \rm -r lib
+        \rm pyvenv.cfg
     else
         echo "No 'bin' directory present, skipped nuking step."
     fi
