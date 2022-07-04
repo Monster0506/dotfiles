@@ -114,8 +114,8 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/.bash_functions.sh ]; then
-    . ~/.bash_functions.sh
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
 fi
 
 shopt -s cdspell
