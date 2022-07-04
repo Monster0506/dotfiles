@@ -330,6 +330,10 @@ installWgetRequired() {
 	fi
 
 	# install neovim
+	wget -O $SCRIPTDIR/nvim.deb/ https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
+	sudo apt install ./$SCRIPTDIR/nvim.deb -y
+	rm $SCRIPTDIR/nvim.deb
+	
 
 	installFirefoxStuff
 
