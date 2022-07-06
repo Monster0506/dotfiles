@@ -331,8 +331,7 @@ syslink() {
 installWgetRequired() {
 
 	# wget the file
-	wget -O $SCRIPT_DIR/nvim.deb https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
-	# install the deb file
+	wget -O $SCRIPT_DIR/nvim.deb https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb	# install the deb file
 	sudo apt install $SCRIPT_DIR/nvim.deb -y
 	rm $SCRIPT_DIR/nvim.deb
 
