@@ -148,7 +148,7 @@ installExtraStuff() {
 
 	echo "Running final setup steps...."
 	fixPath
-	pip3 install pynvim black
+	pip3 install pynvim black neovim
 	fc-cache -fv
 	configureGit
 	configureNpm
