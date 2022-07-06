@@ -70,7 +70,7 @@ installCurlRequired() {
 	# Install starship
 	curl -fsSL https://starship.rs/install.sh | sh
 	# install nodejs
-	curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+	curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 	sudo apt-get install -y nodejs yarn
 	# Install rust
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -227,8 +227,8 @@ finishSteps() {
 
 }
 
-# make sure all folders exist if necessary.
 checkFolders() {
+	# make sure all folders exist if necessary.
 	if [ ! -d $HOME/.Trash ]; then
 		mkdir $HOME/.Trash
 	fi
@@ -249,6 +249,7 @@ checkFolders() {
 		mkdir $HOME/.local/bin
 	fi
 }
+
 doDirectory() {
 	# Create dotfiles directory, or if it exists, prompt user for install location
 	if [ ! -d $HOME/.cfg/ ]; then
@@ -282,8 +283,9 @@ doDirectory() {
 	mkdir $INSTALLDIR/starship
 
 }
-# symlink dotfiles to $INSTALLDIR
+
 syslink() {
+	# symlink dotfiles to $INSTALLDIR
 	if [ -f $HOME/.profile ]; then
 		rm $HOME/.profile
 	fi
@@ -330,14 +332,14 @@ syslink() {
 
 installWgetRequired() {
 
-	# wget the file
-	wget -O $SCRIPT_DIR/nvim.deb https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb	# install the deb file
+	wget -O $SCRIPT_DIR/nvim.deb https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
 	sudo apt install $SCRIPT_DIR/nvim.deb -y
 	rm $SCRIPT_DIR/nvim.deb
 
 	installFirefoxStuff
 
 }
+
 installFirefoxStuff() {
 	wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US&_gl=1*1socw60*_ga*MTg1Mjg3NTI0Ny4xNjU0MTM3MDM3*_ga_MQ7767QQQW*MTY1NDEzNzAzNy4xLjEuMTY1NDEzNzM2MS4w' -O $SCRIPT_DIR/firefox-101.tar.bz2
 	tar xjvf $SCRIPT_DIR/firefox-*.tar.bz2
