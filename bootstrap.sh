@@ -3,6 +3,15 @@
 # check if running as sudo
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-$0}")" &>/dev/null && pwd 2>/dev/null)"
 
+# Check and install basics
+installRequirements() {
+	echo "Checking and installing basics"
+	sudo apt-get update
+	sudo apt install -y curl wget
+	sudo curl -o /usr/local/bin/aptfile https://raw.githubusercontent.com/seatgeek/bash-aptfile/master/bin/aptfile
+	sudo chmod +x /usr/local/bin/aptfile
+}
+
 if [[ $EUID -eq 0 ]]; then
 	echo "Please do not run as root"
 	echo "If superuser is required, you will be prompted."
@@ -58,10 +67,6 @@ fixPath() {
 }
 
 installCurlRequired() {
-	if ! command -v curl >/dev/null 2>&1; then
-		echo "curl is not installed. Installing now"
-		sudo apt install curl -y
-	fi
 	# Install starship
 	curl -fsSL https://starship.rs/install.sh | sh
 	# install nodejs
@@ -83,8 +88,6 @@ installCurlRequired() {
 	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 	sudo apt update
 	sudo apt install gh
-	sudo curl -o /usr/local/bin/aptfile https://raw.githubusercontent.com/seatgeek/bash-aptfile/master/bin/aptfile
-	sudo chmod +x /usr/local/bin/aptfile
 
 }
 
@@ -197,6 +200,7 @@ configureGit() {
 
 main() {
 	git pull origin master
+	installRequirements
 	checkFolders
 	doDirectory
 	# Install stuff that requires wget
@@ -323,17 +327,14 @@ syslink() {
 	echo "DONE WITH DIR ($DIR3)"
 
 }
-installWgetRequired() {
-	# if wget is not installed, install it
-	if ! command -v wget >/dev/null 2>&1; then
-		sudo apt install wget -y
-	fi
 
-	# install neovim
-	wget -O $SCRIPTDIR/nvim.deb/ https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
-	sudo apt install ./$SCRIPTDIR/nvim.deb -y
-	rm $SCRIPTDIR/nvim.deb
-	
+installWgetRequired() {
+
+	# wget the file
+	wget -O $SCRIPT_DIR/nvim.deb https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
+	# install the deb file
+	sudo apt install $SCRIPT_DIR/nvim.deb -y
+	rm $SCRIPT_DIR/nvim.deb
 
 	installFirefoxStuff
 
