@@ -1,6 +1,7 @@
 #!/usr/bn/env lua
 HOME = os.getenv("HOME")
 -- print(HOME)
+
 -- vim.gs (global variables) {{{
 local vimg = {
     airline_right_alt_sep = "",
@@ -90,6 +91,7 @@ Plug "ellisonleao/glow.nvim"
 -- Other Dependencies Plugins {{{
 Plug "mattn/webapi-vim"
 Plug "nvim-lua/plenary.nvim"
+Plug "kevinhwang91/promise-async"
 -- }}}
 -- Movement Plugins {{{
 Plug "easymotion/vim-easymotion"
@@ -164,7 +166,6 @@ command! Q :q
 command! Noh :noh
 command! Nog :noh
 
-set guicursor+=r:hor25
 syntax on
 colorscheme edge
 " AutoGroups {{{
