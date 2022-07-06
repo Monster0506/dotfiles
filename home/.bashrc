@@ -118,8 +118,6 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
-shopt -s cdspell
-shopt -s autocd
 #include dotfiles in wildcard expansion, and match case-insensitively
 shopt -s dotglob
 shopt -s nocaseglob
