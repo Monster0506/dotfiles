@@ -374,3 +374,169 @@ function polo() {
 
   esac
 }
+
+function zipExt() {
+  if [ -z "$2" ] || [ -z "$1" ]; then
+    return 1
+  fi
+  find . | egrep "\.($1)$" | zip -@ "$2".zip
+}
+
+function findInFiles() {
+  case "$1" in
+  "-h" | "--help")
+    echo "findInFiles [filePath] [string]"
+    echo "    --help -h: print this help"
+    ;;
+  *)
+    if [ -z "$1" ]; then
+      echo "You must have 2 paramaters."
+      echo "see -h or --help for options"
+    else
+      if [ -z "$2" ]; then
+        echo "You must include the second paramater."
+        echo "see -h or --help for options"
+      else
+        grep -rnw "$1" -e "$2"
+      fi
+    fi
+    ;;
+  esac
+}
+
+function weather() {
+
+  case "$1" in
+  "-h" | "--help")
+    echo "weather [city]"
+    echo "    --help  -h:  print this help"
+    echo "    --pager -p: pipe the output to a pager"
+    echo "    --color -c: colorize the output"
+    ;;
+  *)
+    if [ -z "$1" ]; then
+      echo "You must have a city name."
+      echo "see -h or --help for options"
+    else
+      case "$2" in
+      "-c" | "--color")
+        eval "curl http://wttr.in/$1" | lolcat
+        ;;
+      *)
+        eval "curl http://wttr.in/$1"
+        ;;
+      esac
+    fi
+    ;;
+  esac
+}
+
+function cht() {
+  case "$1" in
+  "-h" | "--help")
+    echo "cht [string]"
+    echo "    --help -h: print this help"
+    ;;
+  *)
+    if [ -z "$1" ]; then
+      echo "You must have a string to search for."
+      echo "see -h or --help for options"
+    else
+      case "$2" in
+      "-c" | "--color")
+        curl -s "https://cht.sh/$1" | lolcat
+        ;;
+      *)
+        curl -s "https://cht.sh/$1"
+        ;;
+      esac
+
+    fi
+    ;;
+  esac
+}
+hash git &>/dev/null
+if [ $? -eq 0 ]; then
+  function diff() {
+    git diff --no-index --color-words "$@"
+  }
+fi
+
+# Create a data URL from a file
+function dataurl() {
+  local mimeType=$(file -b --mime-type "$1")
+  if [[ $mimeType == text/* ]]; then
+    mimeType="${mimeType};charset=utf-8"
+  fi
+  echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+function fs() {
+  if du -b /dev/null >/dev/null 2>&1; then
+    local arg=-sbh
+  else
+    local arg=-sh
+  fi
+  if [[ -n "$@" ]]; then
+    du $arg -- "$@"
+  else
+    du $arg .[^.]* ./*
+  fi
+}
+function targz() {
+  local tmpFile="${@%/}.tar"
+  tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
+
+  size=$(
+    stat -f"%z" "${tmpFile}" 2>/dev/null # macOS `stat`
+    stat -c"%s" "${tmpFile}" 2>/dev/null # GNU `stat`
+  )
+
+  local cmd=""
+  if ((size < 52428800)) && hash zopfli 2>/dev/null; then
+    # the .tar file is smaller than 50 MB and Zopfli is available; use it
+    cmd="zopfli"
+  else
+    if hash pigz 2>/dev/null; then
+      cmd="pigz"
+    else
+      cmd="gzip"
+    fi
+  fi
+
+  echo "Compressing .tar ($((size / 1000)) kB) using \`${cmd}\`…"
+  "${cmd}" -v "${tmpFile}" || return 1
+  [ -f "${tmpFile}" ] && rm "${tmpFile}"
+
+  zippedSize=$(
+    stat -f"%z" "${tmpFile}.gz" 2>/dev/null # macOS `stat`
+    stat -c"%s" "${tmpFile}.gz" 2>/dev/null # GNU `stat`
+  )
+
+  echo "${tmpFile}.gz ($((zippedSize / 1000)) kB) created successfully."
+}
+
+function how() {
+  echo "Whereis:"
+  whereis "$1" | cut -d ":" -f 2
+  echo "Type: "
+  type "$1"
+  echo "Which: "
+  which "$1"
+  echo "Path: "
+  #search through each folder in the path variable to find "$1"
+  for folder in $(echo $PATH | tr ":" "\n"); do
+    for filename in $folder/*; do
+      echo $filename | grep "$1"
+    done
+  done
+
+}
+
+function server() {
+  local port=${1:-8080}
+  echo $port
+  xdg-open "http://localhost:$port" &
+  python3 -m http.server $port
+
+}
