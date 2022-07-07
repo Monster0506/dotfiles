@@ -4,6 +4,7 @@ repository "contrib"
 repository "non-free"
 
 package "xsel"
+package "ranger"
 package "universal-ctags"
 package "python3-venv"
 package "ripgrep"
@@ -36,4 +37,7 @@ package "neovim"
 
 
 update
+# upgrade
+# autoremove
+# autoclean
 log_info "🚀  ALL GOOD TO GO"
