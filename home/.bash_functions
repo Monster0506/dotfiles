@@ -366,8 +366,12 @@ polo() {
                 polo $HOME
             else
                 if [ $(pwd) == "${MARCODIR[0]}" ]; then
-                    cd "${MARCODIR[1]}"
-                    echo "${MARCODIR[1]}"
+                    if [ -z "${MARCODIR[1]}" ]; then
+                        polo $HOME
+                    else
+                        cd "${MARCODIR[1]}"
+                        echo "${MARCODIR[1]}"
+                    fi
                 else
                     cd "${MARCODIR[0]}"
                     echo "${MARCODIR[0]}"
