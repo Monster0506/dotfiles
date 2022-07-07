@@ -45,7 +45,6 @@ as such, there is a starship configuration file there. I don't often change thos
 - [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter)
 ### Treesitter Plugins
 - [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
-- [RRethy/nvim-treesitter-textsubjects](https://github.com/RRethy/nvim-treesitter-textsubjects)
 ## Colorschemes and Appearance Plugins 
 - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 - [thaerkh/vim-indentguides](https://github.com/thaerkh/vim-indentguides)
@@ -57,9 +56,9 @@ as such, there is a starship configuration file there. I don't often change thos
 - [sjl/badwolf](https://github.com/sjl/badwolf)
 - [morhetz/gruvbox](https://github.com/morhetz/gruvbox)
 - [sainnhe/edge](https://github.com/sainnhe/edge)
-### Statusline/bar 
+- [folke/lsp-colors.nvim](https://github.com/folke/lsp-colors.nvim)
+### Statusline
 - [vim-airline/vim-airline](https://github.com/vim-airline/vim-airline)
-- [romgrk/barbar.nvim](https://github.com/romgrk/barbar.nvim)
 ## Specific Language Plugins 
 ### HTML/CSS 
 - [mattn/emmet-vim](https://github.com/mattn/emmet-vim)
@@ -72,6 +71,7 @@ as such, there is a starship configuration file there. I don't often change thos
 ## Other Dependencies Plugins 
 - [mattn/webapi-vim](https://github.com/mattn/webapi-vim)
 - [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+- [kevinhwang91/promise-async](https://github.com/kevinhwang91/promise-async)
 ## Movement Plugins 
 - [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
 - [matze/vim-move](https://github.com/matze/vim-move)
@@ -79,11 +79,12 @@ as such, there is a starship configuration file there. I don't often change thos
 - [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim)
 - [junegunn/fzf](https://github.com/junegunn/fzf)
 ## Other Utility Plugins 
+- [preservim/nerdtree](https://github.com/preservim/nerdtree)
 - [jiangmiao/auto-pairs](https://github.com/jiangmiao/auto-pairs)
-- [antoinemadec/FixCursorHold.nvim](https://github.com/antoinemadec/FixCursorHold.nvim)
+- [antoinemadec/FixCursorHold.vim](https://github.com/antoinemadec/FixCursorHold.nvim)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
+- [preservim/tagbar](https://github.com/preservim/tagbar)
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 - [tpope/vim-surround](https://github.com/tpope/vim-surround)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
-- [preservim/nerdtree](https://github.com/preservim/nerdtree)
-- [preservim/tagbar](https://github.com/preservim/tagbar)
+- [voldikss/vim-floaterm](https://github.com/vim-floaterm)

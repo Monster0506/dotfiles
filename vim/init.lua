@@ -12,6 +12,9 @@ local vimg = {
     -- rainbow_active = 1,
     ale_disable_lsp = 1,
     ale_sign_warning = "",
+    floaterm_position = "topleft",
+    floaterm_autoclose = 2,
+    floaterm_opener = "vsplit",
     NERDTreeNodeDelimiter = " ",
     netrw_browsex_viewer = "xdg-open",
     edge_style = "neon"
@@ -34,7 +37,6 @@ Plug "BurntSushi/ripgrep"
 Plug "sudormrfbin/cheatsheet.nvim"
 Plug "p00f/nvim-ts-rainbow"
 Plug "nvim-telescope/telescope.nvim"
-Plug "folke/todo-comments.nvim"
 -- }}}
 -- Completion Plugins {{{
 Plug("neoclide/coc.nvim", {["branch"] = "release"})
@@ -49,7 +51,6 @@ Plug "sirVer/Ultisnips"
 -- General Language Plugins {{{
 -- Treesitter Plugins {{{
 Plug "nvim-treesitter/nvim-treesitter"
-Plug "RRethy/nvim-treesitter-textsubjects"
 -- }}}
 Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
@@ -68,7 +69,7 @@ Plug "morhetz/gruvbox"
 Plug "sainnhe/edge"
 Plug "folke/lsp-colors.nvim"
 -- }}}
--- Statusline/bar {{{
+-- Statusline {{{
 Plug "vim-airline/vim-airline"
 -- }}}
 Plug "lewis6991/gitsigns.nvim"
@@ -102,9 +103,7 @@ Plug "junegunn/fzf.vim"
 Plug "junegunn/fzf"
 -- }}}
 -- Other Utility Plugins {{{
--- NERD Tree Plugins {{{
 Plug "preservim/nerdtree"
--- }}}
 Plug "jiangmiao/auto-pairs"
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
@@ -112,7 +111,7 @@ Plug "preservim/tagbar"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
 Plug "romainl/vim-cool"
-Plug "github/copilot.vim"
+Plug "voldikss/vim-floaterm"
 -- }}}
 
 vim.call("plug#end")
@@ -157,19 +156,45 @@ vim.opt.listchars:append("eol:↴")
 -- vim settings and keybindings {{{
 vim.cmd(
     [[
+" Misc Settings {{{
+" Keymappings {{{
 nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
+" }}}
+" Commands {{{
 command! W :w
 command! WQ :wq
 command! Wq :wq
 command! Q :q
 command! Noh :noh
 command! Nog :noh
-
+" }}}
 syntax on
 colorscheme edge
+" }}}
 " AutoGroups {{{
+" NerdTree Stuff {{{
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
+augroup NERDTREE 
+autocmd!
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Start NERDTree when Vim starts with a directory argument.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+autocmd FileType nerdtree syntax on
+autocmd VimEnter * NERDTree | wincmd p
+augroup END
+let NERDTreeWinPos="right"
+" }}}
 " Fold Init.lua when sourced, read, or saved with markers {{{
 augroup initluafolding
     autocmd!
@@ -207,8 +232,6 @@ augroup BWCCreateDir
     autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
 augroup END
 " }}}
-
-
 " }}}
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
@@ -223,37 +246,22 @@ function! NextTextObject(motion)
   exe "normal! f".c."v".a:motion.c
 endfunction
 " }}}
-" NerdTree Stuff {{{
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-augroup NERDTREE 
-autocmd!
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-" Start NERDTree when Vim starts with a directory argument.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-
-autocmd FileType nerdtree syntax on
-autocmd VimEnter * NERDTree | wincmd p
-augroup END
-let NERDTreeWinPos="right"
-" }}}
         ]]
 )
 -- }}}
 
 -- keybindings {{{
--- window resizing {{{
+-- Window Resizing/Movement {{{
 keymap("n", "<C-Up>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-Down>", "<cmd>resize -2<CR>", opts)
-keymap("n", "<C-Left>", "<cmd>vertical resize +2<CR>", opts)
-keymap("n", "<C-Right>", "<cmd>vertical resize -2<CR>", opts)
+keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", opts)
+keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
 keymap("n", "<M-Right>", "<cmd>tabnext<CR>", opts)
 keymap("n", "<M-Left>", "<cmd>tabprevious<CR>", opts)
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
 -- }}}
 -- FZF {{{
 keymap("n", "<C-p>", "<cmd>Files<CR>", opts)
@@ -270,13 +278,6 @@ keymap("i", "[<CR>", "[<CR>]<Esc>O", opts)
 keymap("i", "[;", "[<CR>];<Esc>O", opts)
 keymap("i", "[,", "[<CR>],<Esc>O", opts)
 -- }}}
--- Other Mappings {{{
-keymap("n", "<C-a>", "ggVG", opts)
-keymap("i", ":check:", "✓", opts)
-keymap("n", "+", "<C-a>", opts)
-keymap("v", "<leader>y", '"+y', opts)
-keymap("n", "<C-t>", "<cmd>NERDTreeToggle<CR>", opts)
--- }}}
 -- Center Text on the Screen {{{
 local remapList = {"p", "P", "<CR>", "gg", "H", "M", "L", "n", "N", "%"}
 for k in pairs(remapList) do
@@ -287,6 +288,25 @@ keymap("n", "j", "gjzz", opts)
 keymap("v", "j", "gjzz", opts)
 keymap("n", "k", "gkzz", opts)
 keymap("v", "k", "gkzz", opts)
+-- }}}
+-- Miscellaneous Mappings {{{
+keymap("n", "<C-a>", "ggVG", opts)
+keymap("i", ":check:", "✓", opts)
+keymap("n", "+", "<C-a>", opts)
+keymap("v", "<leader>y", '"+y', opts)
+keymap("n", "<C-t>", "<cmd>NERDTreeToggle<CR>", opts)
+keymap("n", "<leader>t", "<cmd>FloatermToggle<CR>", opts)
+keymap("n", "<space>r", "<cmd>FloatermNew ranger<CR>", opts)
+keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
+-- }}}
+-- Telescope Mappings {{{
+keymap("n", "<leader>h", "<cmd>History<CR>", opts)
+keymap("n", "<leader>h/", "<cmd>History/<CR>", opts)
+keymap("n", "<leader>h:", "<cmd>History:<CR>", opts)
+keymap("n", "<leader>m", "<cmd>Maps<CR>", opts)
+keymap("n", "<leader>b", "<cmd>Buffers<CR>", opts)
+keymap("n", "<leader>w", "<cmd>Windows<CR>", opts)
+
 -- }}}
 -- }}}
 
