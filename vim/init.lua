@@ -31,12 +31,12 @@ end
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
 -- Telescope Plugins {{{
+Plug "BurntSushi/ripgrep"
 Plug "fannheyward/telescope-coc.nvim"
 Plug "nvim-telescope/telescope-symbols.nvim"
-Plug "BurntSushi/ripgrep"
-Plug "sudormrfbin/cheatsheet.nvim"
-Plug "p00f/nvim-ts-rainbow"
 Plug "nvim-telescope/telescope.nvim"
+Plug "p00f/nvim-ts-rainbow"
+Plug "sudormrfbin/cheatsheet.nvim"
 -- }}}
 -- Completion Plugins {{{
 Plug("neoclide/coc.nvim", {["branch"] = "release"})
@@ -52,11 +52,10 @@ Plug "sirVer/Ultisnips"
 -- Treesitter Plugins {{{
 Plug "nvim-treesitter/nvim-treesitter"
 -- }}}
+Plug "preservim/nerdcommenter"
+Plug "sbdchd/neoformat"
 Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
-Plug "sbdchd/neoformat"
-Plug "preservim/nerdcommenter"
--- Plug "luochen1990/rainbow"
 -- }}}
 -- Colorschemes and Appearance Plugins {{{
 -- Devicon Plugins {{{
@@ -64,56 +63,55 @@ Plug "kyazdani42/nvim-web-devicons"
 Plug "ryanoasis/vim-devicons"
 -- }}}
 -- Colorschemes {{{
-Plug "sjl/badwolf"
+Plug "folke/lsp-colors.nvim"
 Plug "morhetz/gruvbox"
 Plug "sainnhe/edge"
-Plug "folke/lsp-colors.nvim"
+Plug "sjl/badwolf"
 -- }}}
 -- Statusline {{{
 Plug "vim-airline/vim-airline"
 -- }}}
 Plug "lewis6991/gitsigns.nvim"
-Plug "thaerkh/vim-indentguides"
 Plug "stevearc/dressing.nvim"
+Plug "thaerkh/vim-indentguides"
 -- }}}
 -- Specific Language Plugins {{{
 -- HTML/CSS {{{
-Plug "mattn/emmet-vim"
 Plug "ap/vim-css-color"
+Plug "mattn/emmet-vim"
 -- }}}
 -- Rust {{{
-Plug "rust-lang/rust.vim"
 Plug "Saecki/crates.nvim"
+Plug "rust-lang/rust.vim"
 -- }}}
 -- Markdown {{{
 Plug "ellisonleao/glow.nvim"
 -- }}}
 -- }}}
 -- Other Dependencies Plugins {{{
+Plug "kevinhwang91/promise-async"
 Plug "mattn/webapi-vim"
 Plug "nvim-lua/plenary.nvim"
-Plug "kevinhwang91/promise-async"
 -- }}}
 -- Movement Plugins {{{
 Plug "easymotion/vim-easymotion"
 Plug "matze/vim-move"
 -- }}}
 -- FZF Plugins {{{
-Plug "junegunn/fzf.vim"
 Plug "junegunn/fzf"
+Plug "junegunn/fzf.vim"
 -- }}}
 -- Other Utility Plugins {{{
-Plug "preservim/nerdtree"
-Plug "jiangmiao/auto-pairs"
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
+Plug "jiangmiao/auto-pairs"
+Plug "preservim/nerdtree"
 Plug "preservim/tagbar"
+Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
-Plug "romainl/vim-cool"
 Plug "voldikss/vim-floaterm"
 -- }}}
-
 vim.call("plug#end")
 -- }}}
 
@@ -494,8 +492,6 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 -- Telescope settings {{{
 require("telescope").load_extension("coc")
--- require("telescope").load_extension("todo-comments")
-require("todo-comments").setup {}
 -- }}}
 
 -- Treesitter Settings {{{
