@@ -294,6 +294,7 @@ syslink() {
 	ITEM1=$SCRIPT_DIR/i3/config
 	DIR2=$SCRIPT_DIR/starship/
 	DIR3=$SCRIPT_DIR/i3status/
+	DIR4=$SCRIPT_DIR/ranger/
 
 	for filename in $(ls -A $DIR0); do
 		cp $DIR0/$filename $INSTALLDIR/home/$filename -r
@@ -325,6 +326,13 @@ syslink() {
 	done
 
 	echo "DONE WITH DIR ($DIR3)"
+
+	for filename in $(ls -A $DIR4); do
+		cp $DIR3/$filename $INSTALLDIR/ranger/$filename -r
+		ln -s $INSTALLDIR/ranger/$filename $HOME/.config/ranger/
+	done
+
+	echo "DONE WITH DIR ($DIR4)"
 
 }
 
