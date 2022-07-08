@@ -21,6 +21,9 @@ Make sure to source ~/.bashrc `. ~/.bashrc`
 As a shell, I use bash with the [starship](https://starship.rs) prompt, and,
 as such, there is a starship configuration file there. I don't often change those settings.
 
+I use [ranger](https://ranger.github.io/) as a file manager, and there is also a ranger config file there with some
+pretty basic configurations
+
 
 ### ViM Plugins
 
