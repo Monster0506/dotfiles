@@ -77,8 +77,6 @@ installCurlRequired() {
 	# remove this bashrc, as the repo holds the line that it writes
 	rm $HOME/.bashrc
 
-	# Install vim-plug for neovim
-	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 	# install git completion
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
 	# install go
@@ -300,12 +298,12 @@ syslink() {
 		cp $DIR0/$filename $INSTALLDIR/home/$filename -r
 		ln -s $INSTALLDIR/home/$filename $HOME
 	done
-
 	echo "DONE WITH BASH DIR ($DIR0)"
 
-	cp $DIR1/ $INSTALLDIR/ -r
-	ln -s $INSTALLDIR/vim/ $HOME/.config/nvim/
-
+	for filenmae in $(ls -A $DIR1); do
+		cp $DIR1/$filename $INSTALLDIR/vim/$filename -r
+		ln -s $INSTALLDIR/vim/$filename $HOME/.config/nvim/
+	done
 	echo "DONE WITH DIR ($DIR1)"
 
 	cp $ITEM1 $INSTALLDIR/i3 -r
@@ -341,6 +339,8 @@ installWgetRequired() {
 	wget -O $SCRIPT_DIR/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
 	sudo apt install $SCRIPT_DIR/nvimabc.deb -y
 	rm $SCRIPT_DIR/nvimabc.deb
+	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 	installFirefoxStuff
 
