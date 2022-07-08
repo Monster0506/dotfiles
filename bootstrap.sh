@@ -328,7 +328,7 @@ syslink() {
 	echo "DONE WITH DIR ($DIR3)"
 
 	for filename in $(ls -A $DIR4); do
-		cp $DIR3/$filename $INSTALLDIR/ranger/$filename -r
+		cp $DIR4/$filename $INSTALLDIR/ranger/$filename -r
 		ln -s $INSTALLDIR/ranger/$filename $HOME/.config/ranger/
 	done
 
