@@ -338,9 +338,9 @@ syslink() {
 
 installWgetRequired() {
 
-	wget -O $SCRIPT_DIR/nvim.deb https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb
-	sudo apt install $SCRIPT_DIR/nvim.deb -y
-	rm $SCRIPT_DIR/nvim.deb
+	wget -O $SCRIPT_DIR/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
+	sudo apt install $SCRIPT_DIR/nvimabc.deb -y
+	rm $SCRIPT_DIR/nvimabc.deb
 
 	installFirefoxStuff
 

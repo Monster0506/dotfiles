@@ -33,7 +33,6 @@ package "i3"
 package "flake8"
 package "pylint"
 package "xcape"
-package "neovim"
 
 
 update
