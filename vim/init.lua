@@ -110,8 +110,6 @@ Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
--- }}}
--- Testing Plugins {{{
 Plug "wellle/targets.vim"
 -- }}}
 vim.call("plug#end")
