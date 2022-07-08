@@ -9,15 +9,14 @@ local vimg = {
     airline_left_sep = "",
     airline_left_alt_sep = "",
     airline_right_sep = "",
-    -- rainbow_active = 1,
     ale_disable_lsp = 1,
     ale_sign_warning = "",
-    floaterm_position = "topleft",
-    floaterm_autoclose = 2,
-    floaterm_opener = "vsplit",
     NERDTreeNodeDelimiter = " ",
     netrw_browsex_viewer = "xdg-open",
-    edge_style = "neon"
+    edge_style = "neon",
+    floaterm_position = "topleft",
+    floaterm_autoclose = 2,
+    floaterm_opener = "vsplit"
 }
 
 for k, v in pairs(vimg) do
@@ -111,6 +110,9 @@ Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
+-- }}}
+-- Testing Plugins {{{
+Plug "wellle/targets.vim"
 -- }}}
 vim.call("plug#end")
 -- }}}

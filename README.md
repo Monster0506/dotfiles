@@ -88,3 +88,4 @@ as such, there is a starship configuration file there. I don't often change thos
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 - [tpope/vim-surround](https://github.com/tpope/vim-surround)
 - [voldikss/vim-floaterm](https://github.com/vim-floaterm)
+- [wellle/targets.vim](https://github.com/wellle/targets.vim)
