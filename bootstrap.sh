@@ -300,9 +300,9 @@ syslink() {
 	done
 	echo "DONE WITH BASH DIR ($DIR0)"
 
-	for filenmae in $(ls -A $DIR1); do
+	for filename in $(ls -A $DIR1); do
 		cp $DIR1/$filename $INSTALLDIR/vim/$filename -r
-		ln -s $INSTALLDIR/vim/$filename $HOME/.config/nvim/
+		ln -s $INSTALLDIR/vim/$filename $HOME
 	done
 	echo "DONE WITH DIR ($DIR1)"
 
