@@ -215,7 +215,7 @@ configureVim() {
 }
 
 configureGit() {
-	gh auth login
+	gh auth login -p https -h github.com -w
 	gh auth setup-git
 	echo -e "\e[36;1mEnter git username: \e[97;0m"
 	read GIT_USERNAME
