@@ -12,6 +12,10 @@ a new installation.
 To use, run `./bootstrap.sh` in the directory in which you cloned 
 or downloaded this repository.
 
+On average, this takes around 12 minutes to completely install on a fresh Debian machine.
+The longest part of the install is the install of [libboost](https://www.boost.org/), which takes around 2-4 minutes. 
+You can remove and modify this yourself simply by removing or commenting out the relevant lines in the [packages](packages) file.
+
 ## Follow-up Steps
 
 Make sure to source ~/.bashrc `. ~/.bashrc`
