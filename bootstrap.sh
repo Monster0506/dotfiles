@@ -179,7 +179,6 @@ configureExtraStuff() {
 	echo -e "\e[32;1mRunning final setup steps....\e[97;0m"
 	fixPath
 	pip3 install pynvim black neovim
-	fc-cache -fv
 	configureNpm
 	configureVim
 	configureRust
@@ -302,7 +301,6 @@ doDirectory() {
 	mkdir $INSTALLDIR/i3status
 	mkdir $INSTALLDIR/vim
 	mkdir $INSTALLDIR/starship
-	mkdir $INSTALLDIR/ranger
 
 }
 
