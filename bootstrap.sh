@@ -216,15 +216,13 @@ configureGit() {
 	gh auth setup-git
 	echo -e "\e[36;1mEnter git username: \e[97;0m"
 	read GIT_USERNAME
-	echo -e "\e[36;1mEnter git email: "\e[97;0m
+	echo -e "\e[36;1mEnter git email: \e[97;0m"
 	read GIT_EMAIL
 	git config --global user.name "$GIT_USERNAME"
 	git config --global user.email "$GIT_EMAIL"
 	git config --global core.editor "nvim"
 	git config --global core.excludesfile $HOME/.gitignore_global
-
 }
-
 
 finishSteps() {
 	sudo apt update -y && sudo apt upgrade -y
