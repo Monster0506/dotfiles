@@ -180,7 +180,6 @@ configureExtraStuff() {
 	fixPath
 	pip3 install pynvim black neovim
 	fc-cache -fv
-	configureGit
 	configureNpm
 	configureVim
 	configureRust
@@ -210,8 +209,15 @@ configureNpm() {
 
 configureVim() {
 	nvim +PlugInstall +qa
-	nvim +"CocInstall coc-tabnine coc-word coc-fzf-preview coc-rust-analyzer coc-sh coc-lua coc-pyright coc-ultisnips coc-json coc-tsserver coc-yank coc-pydocstring"
 
+}
+
+setupPromptRequired() {
+	configureGit
+	# install bitwarden_password_manager
+	wget https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
+	firefox $SCRIPT_DIR/bitwarden_password_manager.xpi --setDefaultBrowser
+	nvim +"CocInstall coc-tabnine coc-word coc-fzf-preview coc-rust-analyzer coc-sh coc-lua coc-pyright coc-ultisnips coc-json coc-tsserver coc-yank coc-pydocstring"sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
 }
 
 configureGit() {
@@ -228,6 +234,7 @@ configureGit() {
 }
 
 finishSteps() {
+	setupPromptRequired
 	sudo apt update -y && sudo apt upgrade -y
 	sudo apt autoremove -y
 	sudo apt clean
@@ -360,7 +367,7 @@ Neovim() {
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 }
 
-# Install the proper firefox, and install bitwarden_password_manager extention
+# Install the proper firefox
 Firefox() {
 	if [ ! -d /opt/firefox ]; then
 		wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O $SCRIPT_DIR/firefox-101.tar.bz2
@@ -370,10 +377,6 @@ Firefox() {
 		sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
 		rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
 	fi
-	wget https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
-	firefox $SCRIPT_DIR/bitwarden_password_manager.xpi --setDefaultBrowser
-	sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
-
 }
 
 main() {
