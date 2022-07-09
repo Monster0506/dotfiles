@@ -91,7 +91,7 @@ fixPath() {
 }
 # Install starship
 Starship() {
-	curl -fsSL https://starship.rs/install.sh | sh
+	curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 }
 
 # install nodejs
@@ -266,7 +266,7 @@ doDirectory() {
 		mkdir $HOME/.cfg/
 		export INSTALLDIR=$HOME/.cfg/
 	else
-		echo -e "\e[96;1m$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN) "
+		echo -e "\e[96;1m$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN) \e[97;0m"
 		read abc
 		if [ $abc = y ]; then
 			echo "Overwriting .cfg directory."
@@ -315,7 +315,7 @@ syslink() {
 		cp $DIR0/$filename $INSTALLDIR/home/$filename -r
 		ln -s $INSTALLDIR/home/$filename $HOME
 	done
-	echo -e "\e[34;1mDONE WITH DIR ($DIR0)"
+	echo -e "\e[34;1mDONE WITH DIR ($DIR0)\e[97;0m"
 
 	for filename in $(ls -A $DIR1); do
 		cp $DIR1/$filename $INSTALLDIR/vim/$filename -r
