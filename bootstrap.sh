@@ -238,6 +238,7 @@ finishSteps() {
 	sudo apt autoremove -y
 	sudo apt clean
 	sudo apt autoclean -y
+	echo 'SELECTED_EDITOR="/usr/bin/nvim"' >$HOME/.selected_editor
 	setupPromptRequired
 
 }
