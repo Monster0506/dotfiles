@@ -108,8 +108,11 @@ Rust() {
 	rm $HOME/.bashrc
 }
 
-# install git completion
+# install git completion/extras
 GitCompletion() {
+	# git extras
+	curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin
+	# git completion
 	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
 }
 # install go
