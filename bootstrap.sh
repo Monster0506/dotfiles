@@ -302,7 +302,7 @@ syslink() {
 
 	for filename in $(ls -A $DIR1); do
 		cp $DIR1/$filename $INSTALLDIR/vim/$filename -r
-		ln -s $INSTALLDIR/vim/$filename $HOME
+		ln -s $INSTALLDIR/vim/$filename $HOME/.config/nvim
 	done
 	echo "DONE WITH DIR ($DIR1)"
 
