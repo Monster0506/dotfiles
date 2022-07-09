@@ -351,10 +351,8 @@ syslink() {
 
 	echo -e "\e[34;1mDONE WITH DIR ($DIR3)\e[97;0m"
 
-	for filename in $(ls -A $DIR4); do
-		cp $DIR4/$filename $INSTALLDIR/ranger/$filename -r
-		ln -s $INSTALLDIR/ranger/$filename $HOME/.config/ranger/
-	done
+	cp $DIR4/ $INSTALLDIR/ranger/ -r
+	ln -s $INSTALLDIR/ranger/ $HOME/.config/
 
 	echo -e "\e[34;1mDONE WITH DIR ($DIR4)\e[97;0m"
 }
