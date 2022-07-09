@@ -47,7 +47,7 @@ installRequirements() {
 	fi
 
 	# install aptfile for installing packages
-	sudo curl -o /usr/local/bin/aptfile https://raw.githubusercontent.com/seatgeek/bash-aptfile/master/bin/aptfile
+	sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/seatgeek/bash-aptfile/master/bin/aptfile
 	sudo chmod +x /usr/local/bin/aptfile
 }
 
@@ -113,7 +113,7 @@ GitCompletion() {
 	# git extras
 	curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin
 	# git completion
-	curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
+	curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
 }
 # install go
 GoStuff() {
@@ -143,7 +143,7 @@ GoStuff() {
 
 	PACKAGE="go${GOVERSION}.${OS}-${ARCH}.tar.gz"
 	URL="https://dl.google.com/go/${PACKAGE}"
-	curl -L "$URL" -o "$TEMP_DIR/$PACKAGE"
+	curl -sL "$URL" -o "$TEMP_DIR/$PACKAGE"
 	if [ -d /usr/local/go ]; then
 		sudo rm -rf /usr/local/go
 	fi
@@ -191,7 +191,7 @@ configureRust() {
 	rustup component add rustfmt
 	rustup default nightly
 	rustup component add rust-src
-	curl -L https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer
+	curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer
 	chmod +x ~/.local/bin/rust-analyzer
 
 }
@@ -215,7 +215,7 @@ configureVim() {
 setupPromptRequired() {
 	configureGit
 	# install bitwarden_password_manager
-	wget https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
+	wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
 	firefox $SCRIPT_DIR/bitwarden_password_manager.xpi --setDefaultBrowser
 	sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
 	nvim +"CocInstall coc-tabnine coc-word coc-fzf-preview coc-rust-analyzer coc-sh coc-lua coc-pyright coc-ultisnips coc-json coc-tsserver coc-yank coc-pydocstring"
@@ -359,21 +359,21 @@ syslink() {
 
 # install neovim
 Neovim() {
-	wget -O $SCRIPT_DIR/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
+	wget -q -O $SCRIPT_DIR/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
 	sudo apt install $SCRIPT_DIR/nvimabc.deb -y
 	rm $SCRIPT_DIR/nvimabc.deb
-	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+	sh -c 'curl -sfLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 }
 
 # Install the proper firefox
 Firefox() {
 	if [ ! -d /opt/firefox ]; then
-		wget 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O $SCRIPT_DIR/firefox-101.tar.bz2
-		tar xjvf $SCRIPT_DIR/firefox-*.tar.bz2
+		wget -q 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O $SCRIPT_DIR/firefox-101.tar.bz2
+		tar xjf $SCRIPT_DIR/firefox-*.tar.bz2
 		sudo mv $SCRIPT_DIR/firefox /opt
 		sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
-		sudo wget https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
+		sudo wget -q https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
 		rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
 	fi
 }
