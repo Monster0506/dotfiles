@@ -35,7 +35,7 @@ installRequirements() {
 	#check if curl is installed
 	echo -e "\e[92;1mChecking if curl is installed...\e[97;0m"
 	if ! [ -x "$(command -v curl)" ]; then
-		echo -e "\e[91;1m Curl NOT INSTALLED\nInstalling now...\e[97;0m"
+		echo -e "\e[91;1mCurl NOT INSTALLED\nInstalling now...\e[97;0m"
 		sudo apt install -y curl
 	fi
 
@@ -217,7 +217,8 @@ setupPromptRequired() {
 	# install bitwarden_password_manager
 	wget https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
 	firefox $SCRIPT_DIR/bitwarden_password_manager.xpi --setDefaultBrowser
-	nvim +"CocInstall coc-tabnine coc-word coc-fzf-preview coc-rust-analyzer coc-sh coc-lua coc-pyright coc-ultisnips coc-json coc-tsserver coc-yank coc-pydocstring"sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
+	sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
+	nvim +"CocInstall coc-tabnine coc-word coc-fzf-preview coc-rust-analyzer coc-sh coc-lua coc-pyright coc-ultisnips coc-json coc-tsserver coc-yank coc-pydocstring"
 }
 
 configureGit() {
@@ -234,11 +235,11 @@ configureGit() {
 }
 
 finishSteps() {
-	setupPromptRequired
 	sudo apt update -y && sudo apt upgrade -y
 	sudo apt autoremove -y
 	sudo apt clean
 	sudo apt autoclean -y
+	setupPromptRequired
 
 }
 
