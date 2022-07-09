@@ -34,13 +34,13 @@ installRequirements() {
 
 	#check if curl is installed
 	echo "Checking if curl is installed..."
-	if ! [ -x "$(command -v curl)"]; then
+	if ! [ -x "$(command -v curl)" ]; then
 		sudo apt install -y curl
 	fi
 
 	#check if wget is installed
 	echo "Checking if wget is installed..."
-	if ! [ -x "$(command -v wget)"]; then
+	if ! [ -x "$(command -v wget)" ]; then
 		sudo apt install -y wget
 	fi
 
@@ -101,7 +101,7 @@ Node() {
 # Install rust
 # TODO: find if this can be done without having to press 1
 Rust() {
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	curl https://sh.rustup.rs -sSf | sh -s -- -y -q
 	# remove this bashrc, as the repo holds the line that it writes
 	rm $HOME/.bashrc
 }
@@ -393,7 +393,7 @@ Firefox() {
 	fi
 	wget https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
 	firefox $SCRIPT_DIR/bitwarden_password_manager.xpi --setDefaultBrowser
-	rm $SCRIPT_DIR/bitwarden_password_manager.xpi
+	sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
 
 }
 
