@@ -5,42 +5,44 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-$0}")" &>/dev/null && pwd 2
 checkDefaults() {
 	# check if running as sudo
 	if [[ $EUID -eq 0 ]]; then
-		echo -e "\e[31;1mPlease do not run as root\nIf superuser is required, you will be prompted. Aborting now."
+		echo -e "\e[31;1mPlease do not run as root\nIf superuser is required, you will be prompted. Aborting now.\e[97;0m"
 		exit
 	fi
 
 	# check if apt is installed.
 	if ! [ -x "$(command -v apt)" ]; then
-		echo -e "\e[31;1mApt is not installed. Aborting now"
+		echo -e "\e[31;-1mApt is not installed. Aborting now\e[97;0m"
 		exit
 	fi
 
 	#check if git is installed.
 	if ! [ -x "$(command -v git)" ]; then
-		echo -e "\e[31;1mGit is not installed. Aborting now."
+		echo -e "\e[31;1mGit is not installed. Aborting now.\e[97;0m"
 		exit
 	fi
 
 	# check if sudo is installed.
 	if ! [ -x "$(command -v sudo)" ]; then
-		echo -e "\e[31;1mSudo is not installed. Aborting now"
+		echo -e "\e[31;1mSudo is not installed. Aborting now\e[97;0m"
 		exit
 	fi
 }
 # Check and install basics for installing the rest
 installRequirements() {
-	echo "Checking and installing basics"
+	echo -e "\e[92;1mChecking and installing basics\e[97;0m"
 	sudo apt-get update
 
 	#check if curl is installed
-	echo "Checking if curl is installed..."
+	echo -e "\e[92;1mChecking if curl is installed...\e[97;0m"
 	if ! [ -x "$(command -v curl)" ]; then
+		echo -e "\e[91;1m Curl NOT INSTALLED\nInstalling now...\e[97;0m"
 		sudo apt install -y curl
 	fi
 
 	#check if wget is installed
-	echo "Checking if wget is installed..."
+	echo -e "\e[92;1mChecking if wget is installed...\e[97;0m"
 	if ! [ -x "$(command -v wget)" ]; then
+		echo -e "\e[91;1m Wget NOT INSTALLED\nInstalling now...\e[97;0m"
 		sudo apt install -y wget
 	fi
 
@@ -171,7 +173,7 @@ AptStuff() {
 }
 configureExtraStuff() {
 
-	echo -e "\e[32;1mRunning final setup steps...."
+	echo -e "\e[32;1mRunning final setup steps....\e[97;0m"
 	fixPath
 	pip3 install pynvim black neovim
 	fc-cache -fv
@@ -212,9 +214,9 @@ configureVim() {
 configureGit() {
 	gh auth login
 	gh auth setup-git
-	echo -e "\e[36;1mEnter git username: "
+	echo -e "\e[36;1mEnter git username: \e[97;0m"
 	read GIT_USERNAME
-	echo -e "\e[36;1mEnter git email: "
+	echo -e "\e[36;1mEnter git email: "\e[97;0m
 	read GIT_EMAIL
 	git config --global user.name "$GIT_USERNAME"
 	git config --global user.email "$GIT_EMAIL"
@@ -223,30 +225,6 @@ configureGit() {
 
 }
 
-main() {
-	# Make sure necessary tools are installed.
-	checkDefaults
-	# Get the latest version of these files
-	git pull origin master
-	# install necessary tools like curl, etc...
-	installRequirements
-
-	checkFolders
-	doDirectory
-	# Install stuff that requires wget
-	installAptStuff
-	installWgetRequired
-	installCurlRequired
-
-	# Move dotfiles to INSTALLDIR and syslink
-	echo "Installing to $INSTALLDIR. "
-	syslink
-	installExtraStuff
-	fixPath
-	finishSteps
-	# Alert user we are finished.
-	echo -e "\e[32;1mDone! Enjoy your new machine!"
-}
 
 finishSteps() {
 	sudo apt update -y && sudo apt upgrade -y
@@ -288,7 +266,7 @@ doDirectory() {
 		mkdir $HOME/.cfg/
 		export INSTALLDIR=$HOME/.cfg/
 	else
-		echo "$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN) "
+		echo -e "\e[96;1m$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN) "
 		read abc
 		if [ $abc = y ]; then
 			echo "Overwriting .cfg directory."
@@ -343,33 +321,33 @@ syslink() {
 		cp $DIR1/$filename $INSTALLDIR/vim/$filename -r
 		ln -s $INSTALLDIR/vim/$filename $HOME/.config/nvim
 	done
-	echo -e "\e[34;1mDONE WITH DIR ($DIR1)"
+	echo -e "\e[34;1mDONE WITH DIR ($DIR1)\e[97;0m"
 
 	cp $ITEM1 $INSTALLDIR/i3 -r
 	ln -s $INSTALLDIR/i3/config $HOME/.config/i3/config
 
-	echo -e "\e[34;1mDONE WITH ITEM ($ITEM1)"
+	echo -e "\e[34;1mDONE WITH ITEM ($ITEM1)\e[97;0m"
 
 	for filename in $(ls -A $DIR2); do
 		cp $DIR2/$filename $INSTALLDIR/starship/$filename -r
 		ln -s $INSTALLDIR/starship/$filename $HOME/.config/
 	done
 
-	echo -e "\e[34;1mDONE WITH DIR ($DIR2)"
+	echo -e "\e[34;1mDONE WITH DIR ($DIR2)\e[97;0m"
 
 	for filename in $(ls -A $DIR3); do
 		cp $DIR3/$filename $INSTALLDIR/i3status/$filename -r
 		ln -s $INSTALLDIR/i3status/$filename $HOME/.config/i3status/
 	done
 
-	echo -e "\e[34;1mDONE WITH DIR ($DIR3)"
+	echo -e "\e[34;1mDONE WITH DIR ($DIR3)\e[97;0m"
 
 	for filename in $(ls -A $DIR4); do
 		cp $DIR4/$filename $INSTALLDIR/ranger/$filename -r
 		ln -s $INSTALLDIR/ranger/$filename $HOME/.config/ranger/
 	done
 
-	echo -e "\e[34;1mDONE WITH DIR ($DIR4)"
+	echo -e "\e[34;1mDONE WITH DIR ($DIR4)\e[97;0m"
 }
 
 # install neovim
@@ -425,6 +403,6 @@ main() {
 	fixPath
 	finishSteps
 	# Alert user we are finished.
-	echo -e "\e[32;1mDone! Enjoy your new machine!"
+	echo -e "\e[32;1mDone! Enjoy your new machine!\e[97;0m"
 }
 main
