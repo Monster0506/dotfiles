@@ -19,6 +19,11 @@ local vimg = {
             }
         }
     },
+    chadtree_settings = {
+        view = {
+            open_direction = "right"
+        }
+    },
     airline_left_alt_sep = "",
     airline_right_sep = "",
     ale_disable_lsp = 1,
@@ -116,7 +121,8 @@ Plug "junegunn/fzf.vim"
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
 Plug "jiangmiao/auto-pairs"
-Plug "preservim/nerdtree"
+-- Plug "preservim/nerdtree"
+Plug "ms-jpq/chadtree"
 Plug "preservim/tagbar"
 Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
@@ -208,25 +214,25 @@ colorscheme edge
 " AutoGroups {{{
 " NerdTree Stuff {{{
 " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+"" Exit Vim if NERDTree is the only window remaining in the only tab.
+" autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-augroup NERDTREE 
-autocmd!
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-" Start NERDTree when Vim starts with a directory argument.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+" augroup NERDTREE 
+" autocmd!
+"" Close the tab if NERDTree is the only window remaining in it.
+" autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+"" Start NERDTree when Vim starts with a directory argument.
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
 
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+"" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+" autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
-autocmd FileType nerdtree syntax on
-autocmd VimEnter * NERDTree | wincmd p
-augroup END
-let NERDTreeWinPos="right"
+" autocmd FileType nerdtree syntax on
+" autocmd VimEnter * NERDTree | wincmd p
+" augroup END
+" let NERDTreeWinPos="right"
 " }}}
 " Fold Init.lua when sourced, read, or saved with markers {{{
 augroup initluafolding
@@ -327,7 +333,7 @@ keymap("n", "<C-a>", "ggVG", opts)
 keymap("i", ":check:", "✓", opts)
 keymap("n", "+", "<C-a>", opts)
 keymap("v", "<leader>y", '"+y', opts)
-keymap("n", "<C-t>", "<cmd>NERDTreeToggle<CR>", opts)
+keymap("n", "<C-t>", "<cmd>CHADopen<CR>", opts)
 keymap("n", "<leader>t", "<cmd>FloatermToggle<CR>", opts)
 keymap("n", "<space>r", "<cmd>FloatermNew ranger<CR>", opts)
 keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
@@ -444,6 +450,7 @@ autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -468,7 +475,7 @@ local on_attach = function(client, bufnr)
     )
     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
     vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
 end

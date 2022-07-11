@@ -42,7 +42,9 @@ pretty basic configurations
 
 ## Completion Plugins 
 
-- [neoclide/coc.nvim](https://github.com/neoclide/coc.nvim)
+- [ms-jpq/coq.nvim](https://github.com/ms-jsp/coq.nvim)
+- [ms-jpq/coq.artifacts](https://github.com/ms-jpq/coq.artifacts)
+- [ms-jpq/coq.thirdparty](https://github.com/ms-jpq/coq.thirdparty)
 
 ## Language Server Plugins 
 
@@ -123,7 +125,7 @@ pretty basic configurations
 - [antoinemadec/FixCursorHold.vim](https://github.com/antoinemadec/FixCursorHold.nvim)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
 - [jiangmiao/auto-pairs](https://github.com/jiangmiao/auto-pairs)
-- [preservim/nerdtree](https://github.com/preservim/nerdtree)
+- [ms-jpq/chadtree](https://github.com/ms-jpq/chadtree)
 - [preservim/tagbar](https://github.com/preservim/tagbar)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
