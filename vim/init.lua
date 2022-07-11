@@ -28,7 +28,6 @@ local vimg = {
     airline_right_sep = "",
     ale_disable_lsp = 1,
     ale_sign_warning = "",
-    NERDTreeNodeDelimiter = " ",
     netrw_browsex_viewer = "xdg-open",
     edge_style = "neon",
     floaterm_position = "topleft",
@@ -47,9 +46,9 @@ end
 local Plug = vim.fn["plug#"]
 vim.call("plug#begin")
 -- Telescope Plugins {{{
+Plug "nvim-telescope/telescope.nvim"
 Plug "BurntSushi/ripgrep"
 Plug "nvim-telescope/telescope-symbols.nvim"
-Plug "nvim-telescope/telescope.nvim"
 Plug "p00f/nvim-ts-rainbow"
 Plug "sudormrfbin/cheatsheet.nvim"
 --- }}}
@@ -121,7 +120,6 @@ Plug "junegunn/fzf.vim"
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
 Plug "jiangmiao/auto-pairs"
--- Plug "preservim/nerdtree"
 Plug "ms-jpq/chadtree"
 Plug "preservim/tagbar"
 Plug "romainl/vim-cool"
@@ -130,9 +128,6 @@ Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
 Plug "wellle/targets.vim"
 Plug "tom-doerr/vim_codex"
---- }}}
--- Testing {{{
-Plug "echasnovski/mini.nvim"
 --- }}}
 vim.call("plug#end")
 --- }}}
@@ -212,28 +207,6 @@ syntax on
 colorscheme edge
 " }}}
 " AutoGroups {{{
-" NerdTree Stuff {{{
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-" autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-"" Exit Vim if NERDTree is the only window remaining in the only tab.
-" autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-" augroup NERDTREE 
-" autocmd!
-"" Close the tab if NERDTree is the only window remaining in it.
-" autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-"" Start NERDTree when Vim starts with a directory argument.
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-
-"" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-" autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-
-" autocmd FileType nerdtree syntax on
-" autocmd VimEnter * NERDTree | wincmd p
-" augroup END
-" let NERDTreeWinPos="right"
-" }}}
 " Fold Init.lua when sourced, read, or saved with markers {{{
 augroup initluafolding
     autocmd!
@@ -337,12 +310,13 @@ keymap("n", "<C-t>", "<cmd>CHADopen<CR>", opts)
 keymap("n", "<leader>t", "<cmd>FloatermToggle<CR>", opts)
 keymap("n", "<space>r", "<cmd>FloatermNew ranger<CR>", opts)
 keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
+keymap("n", "<Space>t", "<cmd>Tagbar<CR>", opts)
 --- }}}
 -- Telescope Mappings {{{
 keymap("n", "<leader>h", "<cmd>History<CR>", opts)
 keymap("n", "<leader>h/", "<cmd>History/<CR>", opts)
 keymap("n", "<leader>h:", "<cmd>History:<CR>", opts)
--- keymap("n", "<leader>m", "<cmd>Maps<CR>", opts)
+keymap("n", "<leader>m", "<cmd>Maps<CR>", opts)
 keymap("n", "<leader>b", "<cmd>Buffers<CR>", opts)
 keymap("n", "<leader>w", "<cmd>Windows<CR>", opts)
 
