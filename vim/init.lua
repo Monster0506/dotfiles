@@ -61,6 +61,7 @@ Plug "sudormrfbin/cheatsheet.nvim"
 Plug("ms-jpq/coq_nvim", {["branch"] = "coq"})
 Plug("ms-jpq/coq.artifacts", {["branch"] = "artifacts"})
 Plug("ms-jpq/coq.thirdparty", {["branch"] = "3p"})
+Plug "tom-doerr/vim_codex"
 --- }}}
 -- Language Server Plugins {{{
 Plug "neovim/nvim-lspconfig"
@@ -132,7 +133,6 @@ Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
 Plug "wellle/targets.vim"
-Plug "tom-doerr/vim_codex"
 --- }}}
 vim.call("plug#end")
 --- }}}

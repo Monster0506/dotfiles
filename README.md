@@ -45,6 +45,7 @@ pretty basic configurations
 - [ms-jpq/coq.nvim](https://github.com/ms-jsp/coq.nvim)
 - [ms-jpq/coq.artifacts](https://github.com/ms-jpq/coq.artifacts)
 - [ms-jpq/coq.thirdparty](https://github.com/ms-jpq/coq.thirdparty)
+- [tom-doerr/vim_codex](https://github.com/tom-doerr/vim_codex)
 
 ## Language Server Plugins 
 
