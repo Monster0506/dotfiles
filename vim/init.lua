@@ -1,7 +1,6 @@
 #!/usr/bn/env lua
 HOME = os.getenv("HOME")
 -- print(HOME)
-
 -- vim.gs (global variables) {{{
 local vimg = {
     airline_right_alt_sep = "",
@@ -46,10 +45,6 @@ Plug("ms-jpq/coq.thirdparty", {["branch"] = "3p"})
 Plug "neovim/nvim-lspconfig"
 Plug "williamboman/nvim-lsp-installer"
 Plug "dense-analysis/ale"
---- }}}
--- Snippet Plugins {{{
-Plug "honza/vim-snippets"
-Plug "sirVer/Ultisnips"
 --- }}}
 -- General Language Plugins {{{
 -- Treesitter Plugins {{{
@@ -136,6 +131,19 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 require("crates").setup {}
 require("gitsigns").setup()
 require("nvim-lsp-installer").setup()
+require("crates").setup {
+    src = {
+        coq = {
+            enabled = true,
+            name = "crates.nvim"
+        }
+    }
+}
+require("coq_3p") {
+    {src = "nvimlua"},
+    {src = "bc"},
+    {src = "figlet"}
+}
 --- }}}
 
 -- vim.opts {{{
@@ -175,7 +183,9 @@ nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
 " Commands {{{
 command! W :w
 command! WQ :wq
+command! WQa :wqa
 command! Wq :wq
+command! Wqa :wqa
 command! Q :q
 command! Noh :noh
 command! Nog :noh
@@ -319,6 +329,12 @@ keymap("n", "<leader>b", "<cmd>Buffers<CR>", opts)
 keymap("n", "<leader>w", "<cmd>Windows<CR>", opts)
 
 --- }}}
+-- LSP Mappings {{{
+vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]g", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+--- }}}
 --- }}}
 
 -- Treesitter Settings {{{
@@ -411,12 +427,8 @@ autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
 --- }}}
 
 -- LSP {{{
--- Mappings.
+-- Mappings {{{
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -442,18 +454,32 @@ local on_attach = function(client, bufnr)
         end,
         bufopts
     )
-    vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
     vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
 end
-
-local servers = {"sumneko_lua", "rust_analyzer", "pyright", "tsserver"}
+--- }}}
+-- Servers {{{
+local servers = {
+    "sumneko_lua",
+    "rust_analyzer",
+    "pyright",
+    "tsserver",
+    "eslint",
+    "bashls",
+    "marksman",
+    "gopls",
+    "html",
+    "clangd"
+}
 for _, lsp in ipairs(servers) do
     require "lspconfig"[lsp].setup {
         require("coq").lsp_ensure_capabilities({}),
-        on_attach = on_attach
+        on_attach = on_attach,
+        capabilities = capabilities
     }
 end
+--- }}}
 --- }}}
