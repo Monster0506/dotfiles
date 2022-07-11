@@ -6,7 +6,19 @@ local vimg = {
     airline_right_alt_sep = "",
     NERDSpaceDelims = 1,
     airline_left_sep = "",
-    coq_settings = {auto_start = "shut-up"},
+    coq_settings = {
+        auto_start = "shut-up",
+        display = {
+            ghost_text = {
+                context = {"    < ", " >"},
+                highlight_group = "Cyan"
+            },
+            pum = {
+                ellipsis = ". . .",
+                kind_context = {" {", "}"}
+            }
+        }
+    },
     airline_left_alt_sep = "",
     airline_right_sep = "",
     ale_disable_lsp = 1,
