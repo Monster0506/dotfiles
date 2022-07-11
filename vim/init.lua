@@ -428,7 +428,7 @@ autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
----@diagnostic disable-next-line: unused-local
+-- -@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -478,5 +478,12 @@ for _, lsp in ipairs(servers) do
         capabilities = capabilities
     }
 end
+
+require("nvim-lsp-installer").setup(
+    {
+        automatic_installation = true,
+        ensure_installed = servers
+    }
+)
 --- }}}
 --- }}}

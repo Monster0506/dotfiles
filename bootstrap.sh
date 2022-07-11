@@ -217,7 +217,6 @@ setupPromptRequired() {
 	wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
 	firefox $SCRIPT_DIR/bitwarden_password_manager.xpi --setDefaultBrowser
 	sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
-	nvim +"LspInstall bashls rust_analyzer tsserver marksman gopls html eslint clangd sumneko_lua pyright"
 	nvim +"COQdeps"
 	nvim +"CHADdeps"
 }
