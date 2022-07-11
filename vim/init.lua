@@ -7,6 +7,11 @@ local vimg = {
     NERDSpaceDelims = 1,
     airline_left_sep = "",
     coq_settings = {
+        clients = {
+            tabnine = {
+                enabled = true
+            }
+        },
         auto_start = "shut-up",
         display = {
             ghost_text = {
