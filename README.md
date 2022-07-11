@@ -125,7 +125,7 @@ pretty basic configurations
 
 - [antoinemadec/FixCursorHold.vim](https://github.com/antoinemadec/FixCursorHold.nvim)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
-- [jiangmiao/auto-pairs](https://github.com/jiangmiao/auto-pairs)
+- [zhiyuanlck/smart-pairs](https://github.com/zhiyuanlck/smart-pairs)
 - [ms-jpq/chadtree](https://github.com/ms-jpq/chadtree)
 - [preservim/tagbar](https://github.com/preservim/tagbar)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)

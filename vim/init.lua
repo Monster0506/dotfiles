@@ -1,4 +1,4 @@
-#!/usr/bn/env lua
+#!/usr/bin/env lua
 HOME = os.getenv("HOME")
 -- print(HOME)
 -- vim.gs (global variables) {{{
@@ -125,7 +125,7 @@ Plug "junegunn/fzf.vim"
 -- Other Utility Plugins {{{
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
-Plug "jiangmiao/auto-pairs"
+Plug "ZhiyuanLck/smart-pairs"
 Plug "ms-jpq/chadtree"
 Plug "preservim/tagbar"
 Plug "romainl/vim-cool"
@@ -146,9 +146,9 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 --- }}}
 
 -- Setup Functions {{{
-require("crates").setup {}
 require("gitsigns").setup()
 require("nvim-lsp-installer").setup()
+require("pairs"):setup()
 require("crates").setup {
     src = {
         coq = {
@@ -354,7 +354,6 @@ require "nvim-treesitter.configs".setup {
         "toml"
     },
     highlight = {
-        -- `false` will disable the whole extension
         enable = true
     },
     matchup = {
@@ -424,7 +423,7 @@ autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
 --- }}}
 
 -- LSP {{{
--- Mappings {{{
+-- On Attach {{{
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 
 -- Use an on_attach function to only map the following keys
