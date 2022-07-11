@@ -219,6 +219,7 @@ setupPromptRequired() {
 	sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
 	nvim +"LspInstall bashls rust_analyzer tsserver marksman gopls html eslint clangd sumneko_lua pyright"
 	nvim +"COQdeps"
+	nvim +"CHADdeps"
 }
 
 configureGit() {
