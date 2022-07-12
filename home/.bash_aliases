@@ -31,6 +31,4 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-
-
 alias rm="mv -t $HOME/.Trash"

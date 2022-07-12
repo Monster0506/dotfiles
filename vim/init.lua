@@ -73,6 +73,7 @@ Plug "dense-analysis/ale"
 Plug "nvim-treesitter/nvim-treesitter"
 --- }}}
 Plug "preservim/nerdcommenter"
+Plug "liuchengxu/vista.vim"
 Plug "sbdchd/neoformat"
 Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
@@ -127,13 +128,14 @@ Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
 Plug "ZhiyuanLck/smart-pairs"
 Plug "ms-jpq/chadtree"
-Plug "preservim/tagbar"
 Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
 Plug "wellle/targets.vim"
+Plug "simnalamburt/vim-mundo"
 --- }}}
+Plug "ludovicchabant/vim-gutentags"
 vim.call("plug#end")
 --- }}}
 
@@ -170,6 +172,7 @@ local vimopts = {
     background = "dark",
     relativenumber = true,
     number = true,
+    undofile = true,
     smartcase = true,
     mouse = "a",
     guifont = "FiraCode Nerd Font:h15",
@@ -275,10 +278,6 @@ keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
 keymap("n", "<M-Right>", "<cmd>tabnext<CR>", opts)
 keymap("n", "<M-Left>", "<cmd>tabprevious<CR>", opts)
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
 --- }}}
 -- FZF {{{
 keymap("n", "<C-p>", "<cmd>Files<CR>", opts)
@@ -315,7 +314,9 @@ keymap("n", "<C-t>", "<cmd>CHADopen<CR>", opts)
 keymap("n", "<leader>t", "<cmd>FloatermToggle<CR>", opts)
 keymap("n", "<space>r", "<cmd>FloatermNew ranger<CR>", opts)
 keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
-keymap("n", "<Space>t", "<cmd>Tagbar<CR>", opts)
+keymap("n", "<Space>t", "<cmd>Vista nvim_lsp<CR>", opts)
+keymap("n", "<Space>u", "<cmd>MundoToggle<CR>", opts)
+
 --- }}}
 -- Telescope Mappings {{{
 keymap("n", "<leader>h", "<cmd>History<CR>", opts)
@@ -428,7 +429,7 @@ autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
--- -@diagnostic disable-next-line: unused-local
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")

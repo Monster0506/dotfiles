@@ -51,14 +51,10 @@ pretty basic configurations
 
 - [dense-analysis/ale](https://github.com/dense-analysis/ale)
 
-## Snippet Plugins 
-
-- [honza/vim-snippets](https://github.com/honza/vim-snippets)
-- [sirVer/Ultisnips](https://github.com/sirVer/Ultisnips)
-
 ## General Language Plugins 
 
 - [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter)
+- [liuchengxu/vista.vim](https://github.com/liuchengxu/vista.vim)
 - [sbdchd/neoformat](https://github.com/sbdchd/neoformat)
 - [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot)
 - [vim-syntastic/syntastic](https://github.com/vim-syntastic/syntastic)
