@@ -74,6 +74,7 @@ Plug "nvim-treesitter/nvim-treesitter"
 --- }}}
 Plug "preservim/nerdcommenter"
 Plug "liuchengxu/vista.vim"
+Plug "ludovicchabant/vim-gutentags"
 Plug "sbdchd/neoformat"
 Plug "sheerun/vim-polyglot"
 Plug "vim-syntastic/syntastic"
@@ -135,7 +136,6 @@ Plug "voldikss/vim-floaterm"
 Plug "wellle/targets.vim"
 Plug "simnalamburt/vim-mundo"
 --- }}}
-Plug "ludovicchabant/vim-gutentags"
 vim.call("plug#end")
 --- }}}
 
@@ -201,57 +201,8 @@ vim.cmd(
 nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
 " }}}
-" Commands {{{
-command! W :w
-command! WQ :wq
-command! WQa :wqa
-command! Wq :wq
-command! Wqa :wqa
-command! Q :q
-command! Noh :noh
-command! Nog :noh
-" }}}
 syntax on
 colorscheme edge
-" }}}
-" AutoGroups {{{
-" Fold Init.lua when sourced, read, or saved with markers {{{
-augroup initluafolding
-    autocmd!
-    autocmd BufRead /home/*/.config/nvim/init.lua set foldmethod=marker
-    autocmd SourceCmd /home/*/.config/nvim/init.lua set foldmethod=marker
-    autocmd BufWrite /home/*/.config/nvim/init.lua set foldmethod=marker
-augroup END
-" }}}
-" Format on save {{{
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * silent Neoformat
-augroup END
-" }}}
-" Highlight line when not inserting {{{
-augroup CURSORLINE | autocmd!
-    autocmd!
-    autocmd VimEnter * set cursorline | autocmd VimLeave * set nocursorline
-    autocmd WinEnter * set cursorline | autocmd WinLeave * set nocursorline
-    autocmd InsertEnter * set nocursorline | autocmd InsertLeave * set cursorline
-augroup end
-" }}}
-" Mkdir on edit folder/file {{{
-" https://stackoverflow.com/a/4294176
-function! MkNonExDir(file, buf)
-    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
-        let dir=fnamemodify(a:file, ':h')
-        if !isdirectory(dir)
-            call mkdir(dir, 'p')
-        endif
-    endif
-endfunction
-augroup BWCCreateDir
-    autocmd!
-    autocmd BufWritePre * :call MkNonExDir(expand('<afile>'), +expand('<abuf>'))
-augroup END
-" }}}
 " }}}
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
@@ -268,6 +219,89 @@ endfunction
 " }}}
         ]]
 )
+--- }}}
+
+-- Commands {{{
+vim.api.nvim_create_user_command("W", ":w", {})
+vim.api.nvim_create_user_command("WQ", ":wq", {})
+vim.api.nvim_create_user_command("WQa", ":wqa", {})
+vim.api.nvim_create_user_command("Wq", ":wq", {})
+vim.api.nvim_create_user_command("Wqa", ":wqa", {})
+vim.api.nvim_create_user_command("Q :", "q", {})
+vim.api.nvim_create_user_command("Noh", ":noh", {})
+vim.api.nvim_create_user_command("Nog", ":noh", {})
+--- }}}
+
+-- Autocmds {{{
+-- Fold Init.lua when sourced, read, or saved with markers {{{
+vim.api.nvim_create_autocmd(
+    {"BufRead", "BufWrite", "SourceCmd", "BufEnter"},
+    {
+        pattern = "init.lua",
+        command = "set foldmethod=marker"
+    }
+)
+--- }}}
+-- Format on save {{{
+vim.api.nvim_create_autocmd(
+    {
+        "BufWritePre"
+    },
+    {
+        pattern = "*",
+        command = "silent Neoformat | silent undojoin"
+    }
+)
+--- }}}
+-- Highlight line in normal mode {{{
+-- Highlight {{{
+vim.api.nvim_create_autocmd(
+    {
+        "VimEnter",
+        "InsertLeave",
+        "WinEnter"
+    },
+    {
+        pattern = "*",
+        command = "set cursorline"
+    }
+)
+--- }}}
+-- Remove cursorline {{{
+vim.api.nvim_create_autocmd(
+    {
+        "VimLeave",
+        "InsertEnter",
+        "WinLeave"
+    },
+    {
+        pattern = "*",
+        command = "set nocursorline"
+    }
+)
+-- }}}
+--- }}}
+-- Make Vim Create Parent Directories on Save {{{
+-- See https://github.com/jghauser/mkdir.nvim/blob/main/lua/mkdir.lua
+
+local luafunc = function()
+    local dir = vim.fn.expand("<afile>:p:h")
+    if vim.fn.isdirectory(dir) == 0 then
+        vim.fn.mkdir(dir, "p")
+    end
+end
+
+vim.api.nvim_create_autocmd(
+    {
+        "BufWritePre"
+    },
+    {
+        pattern = "*",
+        callback = luafunc
+    }
+)
+
+--- }}}
 --- }}}
 
 -- keybindings {{{
@@ -315,7 +349,10 @@ keymap("n", "<leader>t", "<cmd>FloatermToggle<CR>", opts)
 keymap("n", "<space>r", "<cmd>FloatermNew ranger<CR>", opts)
 keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
 keymap("n", "<Space>t", "<cmd>Vista nvim_lsp<CR>", opts)
-keymap("n", "<Space>u", "<cmd>MundoToggle<CR>", opts)
+keymap("n", "<Space>m", "<cmd>MundoToggle<CR>", opts)
+keymap("n", "<leader>l", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>", opts)
+keymap("x", ">", ">gv", opts)
+keymap("x", ">", ">gv", opts)
 
 --- }}}
 -- Telescope Mappings {{{
@@ -456,7 +493,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
+    vim.keymap.set("n", "<space>f", vim.lsp.buf.format, bufopts)
 end
 --- }}}
 -- Servers {{{
@@ -470,6 +507,8 @@ local servers = {
     "marksman",
     "gopls",
     "html",
+    "rome",
+    "jsonls",
     "clangd"
 }
 for _, lsp in ipairs(servers) do
