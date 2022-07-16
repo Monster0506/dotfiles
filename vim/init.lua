@@ -237,7 +237,7 @@ vim.api.nvim_create_user_command("Nog", ":noh", {})
 vim.api.nvim_create_autocmd(
     {"BufRead", "BufWrite", "SourceCmd", "BufEnter"},
     {
-        pattern = "init.lua",
+        pattern = vim.fn.expand "$MYVIMRC",
         command = "set foldmethod=marker"
     }
 )
