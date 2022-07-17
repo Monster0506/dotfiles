@@ -70,9 +70,7 @@ Plug "dense-analysis/ale"
 Plug "kosayoda/nvim-lightbulb"
 --- }}}
 -- General Language Plugins {{{
--- Treesitter Plugins {{{
 Plug "nvim-treesitter/nvim-treesitter"
---- }}}
 Plug "preservim/nerdcommenter"
 Plug "liuchengxu/vista.vim"
 Plug "ludovicchabant/vim-gutentags"

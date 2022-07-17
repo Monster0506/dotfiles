@@ -33,8 +33,7 @@ pretty basic configurations
 
 ## Telescope Plugins 
 
-- [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep)
-- [fannheyward/telescope-coc.nvim](https://github.com/fannheyward/telescope-coc.nvim)
+- [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep) [fannheyward/telescope-coc.nvim](https://github.com/fannheyward/telescope-coc.nvim)
 - [nvim-telescope/telescope-symbols.nvim](https://github.com/nvim-telescope/telescope-symbols.nvim)
 - [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 - [p00f/nvim-ts-rainbow](https://github.com/p00f/nvim-ts-rainbow)
@@ -49,23 +48,24 @@ pretty basic configurations
 
 ## Language Server Plugins 
 
+- [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+- [williamboman/nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer)
 - [dense-analysis/ale](https://github.com/dense-analysis/ale)
+- [kosayoda/nvim-lightbulb](https://github.com/kosayoda/nvim-lightbulb)
 
 ## General Language Plugins 
 
 - [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter)
 - [liuchengxu/vista.vim](https://github.com/liuchengxu/vista.vim)
+- [ludovicchabant/vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
 - [sbdchd/neoformat](https://github.com/sbdchd/neoformat)
 - [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot)
 - [vim-syntastic/syntastic](https://github.com/vim-syntastic/syntastic)
-
-### Treesitter Plugins
-
 - [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 
 ## Colorschemes and Appearance Plugins 
 
-- [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
+- [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)(https://github.com/lewis6991/gitsigns.nvim)
 - [stevearc/dressing.nvim](https://github.com/stevearc/dressing.nvim)
 - [thaerkh/vim-indentguides](https://github.com/thaerkh/vim-indentguides)
 
@@ -106,6 +106,7 @@ pretty basic configurations
 - [kevinhwang91/promise-async](https://github.com/kevinhwang91/promise-async)
 - [mattn/webapi-vim](https://github.com/mattn/webapi-vim)
 - [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+- [MunifTanjim/nui.nvim](https://github.com/MunifTanjim/nui.nvim)
 
 ## Movement Plugins 
 
@@ -119,13 +120,13 @@ pretty basic configurations
 
 ## Other Utility Plugins 
 
-- [antoinemadec/FixCursorHold.vim](https://github.com/antoinemadec/FixCursorHold.nvim)
+- [antoinemadec/FixCursorHold.nvim](https://github.com/antoinemadec/FixCursorHold.nvim)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
-- [zhiyuanlck/smart-pairs](https://github.com/zhiyuanlck/smart-pairs)
+- [ZhiyuanLck/smart-pairs](https://github.com/ZhiyuanLck/smart-pairs)
 - [ms-jpq/chadtree](https://github.com/ms-jpq/chadtree)
-- [preservim/tagbar](https://github.com/preservim/tagbar)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 - [tpope/vim-surround](https://github.com/tpope/vim-surround)
-- [voldikss/vim-floaterm](https://github.com/vim-floaterm)
+- [voldikss/vim-floaterm](https://github.com/voldikss/vim-floaterm)
 - [wellle/targets.vim](https://github.com/wellle/targets.vim)
+- [simnalamburt/vim-mundo](https://github.com/simnalamburt/vim-mundo)
