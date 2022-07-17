@@ -13,9 +13,9 @@ alias tree='tree -CF'
 alias config='/usr/bin/git --git-dir=/home/tj/.cfg/ --work-tree=/home/tj'
 alias sl=ls
 # some more ls aliases
-alias ll='ls -lF'
-alias la='ls -A'
-alias l='ls -CF'
+# alias ll='ls -lF'
+# alias la='ls -A'
+# alias l='ls -CF'
 alias so=source
 alias cd..="cd .."
 # Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
@@ -25,10 +25,11 @@ alias cls=clear
 alias open=xdg-open
 alias g++=gplusplus
 
-# shamelessly stolen from mathiasbeynens-dotfiles
 alias sudo='sudo '
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
 alias rm="mv -t $HOME/.Trash"
+
+alias ls="exa --classify -a"
