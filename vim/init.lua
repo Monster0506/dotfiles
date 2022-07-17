@@ -349,10 +349,11 @@ for k in pairs(remapList) do
     keymap("n", remapList[k], remapList[k] .. "zz", opts)
     keymap("v", remapList[k], remapList[k] .. "zz", opts)
 end
-keymap("n", "j", "gjzz", opts)
-keymap("v", "j", "gjzz", opts)
-keymap("n", "k", "gkzz", opts)
-keymap("v", "k", "gkzz", opts)
+keymap("n", "j", "v:count == 0 ? 'gjzz' : 'jzz'", {silent = true, expr = true, noremap = true})
+keymap("n", "k", "v:count == 0 ? 'gkzz' : 'kzz'", {silent = true, expr = true, noremap = true})
+keymap("v", "j", "v:count == 0 ? 'gjzz' : 'jzz'", {silent = true, expr = true, noremap = true})
+keymap("v", "k", "v:count == 0 ? 'gkzz' : 'kzz'", {silent = true, expr = true, noremap = true})
+
 --- }}}
 -- Miscellaneous Mappings {{{
 keymap("n", "<C-a>", "ggVG", opts)
