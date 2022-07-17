@@ -67,6 +67,7 @@ Plug "tom-doerr/vim_codex"
 Plug "neovim/nvim-lspconfig"
 Plug "williamboman/nvim-lsp-installer"
 Plug "dense-analysis/ale"
+Plug "kosayoda/nvim-lightbulb"
 --- }}}
 -- General Language Plugins {{{
 -- Treesitter Plugins {{{
@@ -164,6 +165,16 @@ require("coq_3p") {
     {src = "bc"},
     {src = "figlet"}
 }
+require("nvim-lightbulb").setup(
+    {
+        autocmd = {
+            enabled = true
+        },
+        sign = {
+            enabled = true
+        }
+    }
+)
 --- }}}
 
 -- vim.opts {{{
@@ -193,7 +204,7 @@ end
 vim.opt.listchars:append("eol:↴")
 --- }}}
 
--- vim settings and keybindings {{{
+-- misc vim settings {{{
 vim.cmd(
     [[
 " Misc Settings {{{
@@ -306,10 +317,14 @@ vim.api.nvim_create_autocmd(
 
 -- keybindings {{{
 -- Window Resizing/Movement {{{
+-- Resize splits
 keymap("n", "<C-Up>", "<cmd>resize +2<CR>", opts)
 keymap("n", "<C-Down>", "<cmd>resize -2<CR>", opts)
 keymap("n", "<C-Left>", "<cmd>vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
+-- Change split orientation
+keymap("n", ",v", "<C-w>t<C-w>H", opts)
+keymap("n", ",h", "<C-w>t<C-w>K", opts)
 keymap("n", "<M-Right>", "<cmd>tabnext<CR>", opts)
 keymap("n", "<M-Left>", "<cmd>tabprevious<CR>", opts)
 --- }}}
@@ -398,66 +413,6 @@ require "nvim-treesitter.configs".setup {
         enable = true
     }
 }
---- }}}
-
--- Rust Folding {{{
--- See https://github.com/narodnik/rust-fold-functions.vim/blob/master/rust-fold.vim
-vim.cmd(
-    [[
-function! MakeRustFuncDefs()
-    let b:RustFuncDefs = []
-
-    let lnum = 1
-    while lnum <= line('$')
-        let current_line = getline(lnum)
-        if match(current_line, '^ *\(pub \)\?fn') > -1
-            call AddRustFunc(lnum)
-        endif
-
-        let lnum += 1
-    endwhile
-endfunction
-
-function! AddRustFunc(lnum)
-    let save_pos = getpos('.')
-    call setpos('.', [0, a:lnum, 1, 0])
-
-    call search('{')
-    let start_lnum = line('.')
-
-    let end_lnum = searchpair('{', '', '}', 'n')
-    if end_lnum < 1
-        call setpos('.', save_pos)
-        return
-    endif
-
-    call add(b:RustFuncDefs, [start_lnum, end_lnum]);
-    call setpos('.', save_pos)
-endfunction
-
-function! RustFold()
-    if !exists("b:RustFuncDefs")
-        call MakeRustFuncDefs()
-    endif
-
-    for [start_lnum, end_lnum] in b:RustFuncDefs
-        if start_lnum > v:lnum
-            return 0
-        endif
-
-        if v:lnum == start_lnum + 1
-            return ">1"
-        elseif v:lnum == end_lnum
-            return "<1"
-        elseif v:lnum > start_lnum && v:lnum < end_lnum
-            return "="
-        endif
-    endfor
-endfunction
-
-autocmd FileType rust setlocal foldmethod=expr foldexpr=RustFold()
-    ]]
-)
 --- }}}
 
 -- LSP {{{
