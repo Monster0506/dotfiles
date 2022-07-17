@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 HOME = os.getenv("HOME")
 -- print(HOME)
--- vim.gs (global variables) {{{
+-- Global variables (vim.gs) {{{
 local vimg = {
     airline_right_alt_sep = "",
     NERDSpaceDelims = 1,
@@ -177,7 +177,7 @@ require("nvim-lightbulb").setup(
 )
 --- }}}
 
--- vim.opts {{{
+-- Options (vim.opts) {{{
 vim.cmd([[set termguicolors]])
 local vimopts = {
     background = "dark",
@@ -204,7 +204,7 @@ end
 vim.opt.listchars:append("eol:↴")
 --- }}}
 
--- misc vim settings {{{
+-- Misc Vim Settings {{{
 vim.cmd(
     [[
 " Misc Settings {{{
@@ -233,14 +233,14 @@ endfunction
 --- }}}
 
 -- Commands {{{
-vim.api.nvim_create_user_command("W", ":w", {})
-vim.api.nvim_create_user_command("WQ", ":wq", {})
-vim.api.nvim_create_user_command("WQa", ":wqa", {})
-vim.api.nvim_create_user_command("Wq", ":wq", {})
-vim.api.nvim_create_user_command("Wqa", ":wqa", {})
-vim.api.nvim_create_user_command("Q :", "q", {})
-vim.api.nvim_create_user_command("Noh", ":noh", {})
-vim.api.nvim_create_user_command("Nog", ":noh", {})
+vim.api.nvim_create_user_command("W", ":w", {bang = true})
+vim.api.nvim_create_user_command("WQ", ":wq", {bang = true})
+vim.api.nvim_create_user_command("WQa", ":wqa", {bang = true})
+vim.api.nvim_create_user_command("Wq", ":wq", {bang = true})
+vim.api.nvim_create_user_command("Wqa", ":wqa", {bang = true})
+vim.api.nvim_create_user_command("Q :", "q", {bang = true})
+vim.api.nvim_create_user_command("Noh", ":noh", {bang = true})
+vim.api.nvim_create_user_command("Nog", ":noh", {bang = true})
 --- }}}
 
 -- Autocmds {{{
@@ -260,7 +260,7 @@ vim.api.nvim_create_autocmd(
     },
     {
         pattern = "*",
-        command = "silent Neoformat | silent undojoin"
+        command = "silent Neoformat | silent! undojoin"
     }
 )
 --- }}}
@@ -315,7 +315,7 @@ vim.api.nvim_create_autocmd(
 --- }}}
 --- }}}
 
--- keybindings {{{
+-- Keybindings {{{
 -- Window Resizing/Movement {{{
 -- Resize splits
 keymap("n", "<C-Up>", "<cmd>resize +2<CR>", opts)
@@ -365,26 +365,28 @@ keymap("n", "<leader>t", "<cmd>FloatermToggle<CR>", opts)
 keymap("n", "<space>r", "<cmd>FloatermNew ranger<CR>", opts)
 keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
 keymap("n", "<Space>t", "<cmd>Vista nvim_lsp<CR>", opts)
-keymap("n", "<Space>m", "<cmd>MundoToggle<CR>", opts)
+keymap("n", "<Space>u", "<cmd>MundoToggle<CR>", opts)
 keymap("n", "<leader>l", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>", opts)
+keymap("x", "<", "<gv", opts)
 keymap("x", ">", ">gv", opts)
-keymap("x", ">", ">gv", opts)
+keymap("c", "cd.", "lcd %:p:h<CR>", opts)
+keymap("c", "cwd", "lcd %:p:h<CR>", opts)
 
 --- }}}
 -- Telescope Mappings {{{
-keymap("n", "<leader>h", "<cmd>History<CR>", opts)
-keymap("n", "<leader>h/", "<cmd>History/<CR>", opts)
-keymap("n", "<leader>h:", "<cmd>History:<CR>", opts)
-keymap("n", "<leader>m", "<cmd>Maps<CR>", opts)
-keymap("n", "<leader>b", "<cmd>Buffers<CR>", opts)
+keymap("n", "<space>h", "<cmd>History<CR>", opts)
+keymap("n", "<space>h/", "<cmd>History/<CR>", opts)
+keymap("n", "<space>h:", "<cmd>History:<CR>", opts)
+keymap("n", "<space>m", "<cmd>Maps<CR>", opts)
+keymap("n", "<space>b", "<cmd>Buffers<CR>", opts)
 keymap("n", "<leader>w", "<cmd>Windows<CR>", opts)
 
 --- }}}
 -- LSP Mappings {{{
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]g", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 --- }}}
 --- }}}
 
