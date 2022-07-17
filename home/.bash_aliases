@@ -14,7 +14,6 @@ alias config='/usr/bin/git --git-dir=/home/tj/.cfg/ --work-tree=/home/tj'
 alias sl=ls
 # some more ls aliases
 # alias ll='ls -lF'
-# alias la='ls -A'
 # alias l='ls -CF'
 alias so=source
 alias cd..="cd .."
@@ -33,3 +32,4 @@ alias .....="cd ../../../.."
 alias rm="mv -t $HOME/.Trash"
 
 alias ls="exa --classify -a"
+alias ll="exa --classify -a --long --git"
