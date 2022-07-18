@@ -34,6 +34,7 @@ package "flake8"
 package "pylint"
 package "xcape"
 package "exa"
+package "rlwrap"
 
 
 update
