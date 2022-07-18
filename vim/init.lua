@@ -99,14 +99,17 @@ Plug "thaerkh/vim-indentguides"
 -- Specific Language Plugins {{{
 -- HTML/CSS {{{
 Plug "ap/vim-css-color"
-Plug "mattn/emmet-vim"
+Plug("mattn/emmet-vim", {["for"] = "html"})
 --- }}}
 -- Rust {{{
-Plug "Saecki/crates.nvim"
-Plug "rust-lang/rust.vim"
+Plug("Saecki/crates.nvim")
+Plug("rust-lang/rust.vim", {["for"] = "rust"})
 --- }}}
 -- Markdown {{{
-Plug "ellisonleao/glow.nvim"
+Plug("ellisonleao/glow.nvim", {["for"] = "markdown"})
+--- }}}
+-- Clojure {{{
+Plug("guns/vim-sexp", {["for"] = "clojure"})
 --- }}}
 --- }}}
 -- Other Dependencies Plugins {{{
@@ -134,6 +137,7 @@ Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
 Plug "wellle/targets.vim"
 Plug "simnalamburt/vim-mundo"
+Plug "~/vim/"
 --- }}}
 vim.call("plug#end")
 --- }}}
@@ -427,8 +431,8 @@ local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    -- Mappings. See `:help vim.lsp.*` for documentation on any of the below
+    -- functions
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
@@ -457,6 +461,7 @@ local servers = {
     "sumneko_lua",
     "rust_analyzer",
     "pyright",
+    "clojure_lsp",
     "tsserver",
     "eslint",
     "bashls",
