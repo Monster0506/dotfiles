@@ -111,6 +111,9 @@ Plug("ellisonleao/glow.nvim", {["for"] = "markdown"})
 -- Clojure {{{
 Plug("guns/vim-sexp", {["for"] = "clojure"})
 --- }}}
+-- Aptfile {{{
+Plug "Monster0506/vim-aptfile"
+-- }}}
 --- }}}
 -- Other Dependencies Plugins {{{
 Plug "kevinhwang91/promise-async"
