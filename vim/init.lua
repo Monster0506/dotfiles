@@ -140,14 +140,13 @@ Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
 Plug "wellle/targets.vim"
 Plug "simnalamburt/vim-mundo"
-Plug "~/vim/"
 --- }}}
 vim.call("plug#end")
 --- }}}
 
 -- Local variables {{{
-local keymap = vim.api.nvim_set_keymap
 local opts = {noremap = true, silent = true}
+local keymap = vim.api.nvim_set_keymap
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 -- local cmp = require "cmp"
@@ -254,7 +253,7 @@ vim.api.nvim_create_autocmd(
     {"BufRead", "BufWrite", "SourceCmd", "BufEnter"},
     {
         pattern = vim.fn.expand "$MYVIMRC",
-        command = "set foldmethod=marker"
+        command = "set foldmethod=marker "
     }
 )
 --- }}}
@@ -384,7 +383,7 @@ keymap("n", "<space>h/", "<cmd>History/<CR>", opts)
 keymap("n", "<space>h:", "<cmd>History:<CR>", opts)
 keymap("n", "<space>m", "<cmd>Maps<CR>", opts)
 keymap("n", "<space>b", "<cmd>Buffers<CR>", opts)
-keymap("n", "<leader>w", "<cmd>Windows<CR>", opts)
+keymap("n", "<space>w", "<cmd>Windows<CR>", opts)
 
 --- }}}
 -- LSP Mappings {{{
@@ -412,6 +411,8 @@ require "nvim-treesitter.configs".setup {
         "javascript",
         "bash",
         "markdown",
+        "clojure",
+        "regex",
         "toml"
     },
     highlight = {
@@ -442,11 +443,11 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
     vim.keymap.set(
         "n",
-        "<space>wl",
+        "<leader>wl",
         function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end,
