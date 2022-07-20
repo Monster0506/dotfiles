@@ -122,7 +122,7 @@ pretty basic configurations
 - [ZhiyuanLck/smart-pairs](https://github.com/ZhiyuanLck/smart-pairs)
 - [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
-- [ms-jpq/chadtree](https://github.com/ms-jpq/chadtree)
+- [kyazdani42/nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
 - [simnalamburt/vim-mundo](https://github.com/simnalamburt/vim-mundo)
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
