@@ -31,7 +31,8 @@ pretty basic configurations
 
 ## Telescope Plugins 
 
-- [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep) [fannheyward/telescope-coc.nvim](https://github.com/fannheyward/telescope-coc.nvim)
+- [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep) 
+- [fannheyward/telescope-coc.nvim](https://github.com/fannheyward/telescope-coc.nvim)
 - [nvim-telescope/telescope-symbols.nvim](https://github.com/nvim-telescope/telescope-symbols.nvim)
 - [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 - [p00f/nvim-ts-rainbow](https://github.com/p00f/nvim-ts-rainbow)
