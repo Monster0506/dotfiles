@@ -42,7 +42,7 @@ installRequirements() {
 	#check if wget is installed
 	echo -e "\e[92;1mChecking if wget is installed...\e[97;0m"
 	if ! [ -x "$(command -v wget)" ]; then
-		echo -e "\e[91;1m Wget NOT INSTALLED\nInstalling now...\e[97;0m"
+		echo -e "\e[91;1mWget NOT INSTALLED\nInstalling now...\e[97;0m"
 		sudo apt install -y wget
 	fi
 
