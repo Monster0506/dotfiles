@@ -65,7 +65,8 @@ pretty basic configurations
 
 - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)(https://github.com/lewis6991/gitsigns.nvim)
 - [stevearc/dressing.nvim](https://github.com/stevearc/dressing.nvim)
-- [thaerkh/vim-indentguides](https://github.com/thaerkh/vim-indentguides)
+- [lukas-reineke/indent-blankline.nvim](https://github.com/thaerkh/lukas-reineke/indent-blankline.nvim)
+- [navarasu/onedark.nvim](https://github.com/navarasu/onedark.nvim)
 
 ### Devicon Plugins 
 

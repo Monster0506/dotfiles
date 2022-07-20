@@ -5,6 +5,8 @@ HOME = os.getenv("HOME")
 -- Global Vim Variables (vim.g) {{{
 local vimg = {
     airline_right_alt_sep = "",
+    indent_blankline_show_current_context = true,
+    indent_blankline_show_current_context_start = true,
     NERDSpaceDelims = 1,
     airline_left_sep = "",
     coq_settings = {
@@ -23,11 +25,6 @@ local vimg = {
                 ellipsis = ". . .",
                 kind_context = {" {", "}"}
             }
-        }
-    },
-    chadtree_settings = {
-        view = {
-            open_direction = "right"
         }
     },
     airline_left_alt_sep = "",
@@ -89,13 +86,14 @@ Plug "folke/lsp-colors.nvim"
 Plug "morhetz/gruvbox"
 Plug "sainnhe/edge"
 Plug "sjl/badwolf"
+Plug "navarasu/onedark.nvim"
 --- }}}
 -- Statusline {{{
 Plug "vim-airline/vim-airline"
 --- }}}
 Plug "lewis6991/gitsigns.nvim"
 Plug "stevearc/dressing.nvim"
-Plug "thaerkh/vim-indentguides"
+Plug "lukas-reineke/indent-blankline.nvim"
 --- }}}
 -- Specific Language Plugins {{{
 -- HTML/CSS {{{
@@ -134,7 +132,7 @@ Plug "junegunn/fzf.vim"
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
 Plug "windwp/nvim-autopairs"
-Plug "ms-jpq/chadtree"
+Plug "kyazdani42/nvim-tree.lua"
 Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
 Plug "tpope/vim-surround"
@@ -154,6 +152,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Setup Functions {{{
 require("gitsigns").setup()
 require("nvim-lsp-installer").setup()
+require("nvim-autopairs").setup {}
 require("crates").setup {
     src = {
         coq = {
@@ -177,8 +176,22 @@ require("nvim-lightbulb").setup(
         }
     }
 )
+require("nvim-tree").setup(
+    {
+        view = {
+            side = "right",
+            mappings = {
+                list = {
+                    {key = "<C-t>", action = "close"}
+                }
+            }
+        },
+        filters = {
+            dotfiles = false
+        }
+    }
+)
 
-require("nvim-autopairs").setup {}
 --- }}}
 
 -- Options (vim.opt) {{{
@@ -217,7 +230,7 @@ nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
 " }}}
 syntax on
-colorscheme edge
+colorscheme onedark
 " }}}
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
@@ -364,7 +377,7 @@ keymap("n", "<C-a>", "ggVG", opts)
 keymap("i", ":check:", "✓", opts)
 keymap("n", "+", "<C-a>", opts)
 keymap("v", "<leader>y", '"+y', opts)
-keymap("n", "<C-t>", "<cmd>CHADopen<CR>", opts)
+keymap("n", "<C-t>", "<cmd>NvimTreeToggle<CR>", opts)
 keymap("n", "<leader>t", "<cmd>FloatermToggle<CR>", opts)
 keymap("n", "<space>r", "<cmd>FloatermNew ranger<CR>", opts)
 keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
