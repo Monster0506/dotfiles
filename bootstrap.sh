@@ -178,7 +178,7 @@ configureExtraStuff() {
 
 	echo -e "\e[32;1mRunning final setup steps....\e[97;0m"
 	fixPath
-	pip3 install pynvim black neovim
+	pip3 install pynvim black neovim openai
 	configureNpm
 	configureVim
 	configureRust
