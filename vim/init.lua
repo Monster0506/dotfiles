@@ -143,10 +143,20 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 --- }}}
 
 -- Setup Functions {{{
-require("gitsigns").setup()
+require("gitsigns").setup(
+    {
+        current_line_blame = true
+    }
+)
 require("nvim-lsp-installer").setup()
 require("lualine").setup()
-require("nvim-autopairs").setup {}
+require("onedark").load()
+require("onedark").setup(
+    {
+        style = "darker"
+    }
+)
+require("nvim-autopairs").setup()
 require("crates").setup {
     src = {
         coq = {
@@ -223,7 +233,7 @@ nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
 " }}}
 syntax on
-colorscheme onedark
+" colorscheme onedark
 " }}}
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
