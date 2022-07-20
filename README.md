@@ -129,3 +129,5 @@ pretty basic configurations
 - [tpope/vim-surround](https://github.com/tpope/vim-surround)
 - [voldikss/vim-floaterm](https://github.com/voldikss/vim-floaterm)
 - [wellle/targets.vim](https://github.com/wellle/targets.vim)
+- [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+

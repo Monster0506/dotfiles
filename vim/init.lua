@@ -128,6 +128,7 @@ Plug "windwp/nvim-autopairs"
 Plug "kyazdani42/nvim-tree.lua"
 Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
+Plug "tpope/vim-fugitive"
 Plug "tpope/vim-surround"
 Plug "voldikss/vim-floaterm"
 Plug "wellle/targets.vim"
@@ -157,19 +158,24 @@ require("onedark").setup(
     }
 )
 require("nvim-autopairs").setup()
-require("crates").setup {
-    src = {
-        coq = {
-            enabled = true,
-            name = "crates.nvim"
+require("crates").setup(
+    {
+        src = {
+            coq = {
+                enabled = true,
+                name = "crates.nvim"
+            }
         }
     }
-}
-require("coq_3p") {
-    {src = "nvimlua"},
-    {src = "bc", short_name = "MATH", precision = 6},
-    {src = "figlet"}
-}
+)
+
+require("coq_3p")(
+    {
+        {src = "nvimlua"},
+        {src = "bc", short_name = "MATH", precision = 6},
+        {src = "figlet"}
+    }
+)
 require("nvim-lightbulb").setup(
     {
         autocmd = {
@@ -400,13 +406,18 @@ keymap("n", "<space>h:", "<cmd>History:<CR>", opts)
 keymap("n", "<space>m", "<cmd>Maps<CR>", opts)
 keymap("n", "<space>b", "<cmd>Buffers<CR>", opts)
 keymap("n", "<space>w", "<cmd>Windows<CR>", opts)
-
 --- }}}
 -- LSP Mappings {{{
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[g", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]g", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+--- }}}
+-- Git Keybindings {{{
+keymap("n", "<leader>g", "<CMD>G<CR>", opts)
+keymap("n", "<leader>gd", "<CMD>Gdiffsplit<CR>", opts)
+keymap("n", "<leader>g[", "<CMD>Gitsigns prev_hunk<CR>", opts)
+keymap("n", "<leader>g]", "<CMD>Gitsigns next_hunk<CR>", opts)
 --- }}}
 --- }}}
 
