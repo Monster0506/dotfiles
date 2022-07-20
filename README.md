@@ -82,7 +82,7 @@ pretty basic configurations
 
 ### Statusline
 
-- [vim-airline/vim-airline](https://github.com/vim-airline/vim-airline)
+- [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)
 
 ## Specific Language Plugins 
 

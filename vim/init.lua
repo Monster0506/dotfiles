@@ -4,11 +4,9 @@ HOME = os.getenv("HOME")
 
 -- Global Vim Variables (vim.g) {{{
 local vimg = {
-    airline_right_alt_sep = "",
     indent_blankline_show_current_context = true,
     indent_blankline_show_current_context_start = true,
     NERDSpaceDelims = 1,
-    airline_left_sep = "",
     coq_settings = {
         clients = {
             tabnine = {
@@ -27,10 +25,6 @@ local vimg = {
             }
         }
     },
-    airline_left_alt_sep = "",
-    airline_right_sep = "",
-    ale_disable_lsp = 1,
-    ale_sign_warning = "",
     netrw_browsex_viewer = "xdg-open",
     edge_style = "neon",
     floaterm_position = "topleft",
@@ -40,7 +34,6 @@ local vimg = {
 
 for k, v in pairs(vimg) do
     vim.g[k] = v
-    -- print(k, v)
 end
 
 --- }}}
@@ -89,7 +82,7 @@ Plug "sjl/badwolf"
 Plug "navarasu/onedark.nvim"
 --- }}}
 -- Statusline {{{
-Plug "vim-airline/vim-airline"
+Plug "nvim-lualine/lualine.nvim"
 --- }}}
 Plug "lewis6991/gitsigns.nvim"
 Plug "stevearc/dressing.nvim"
@@ -152,6 +145,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Setup Functions {{{
 require("gitsigns").setup()
 require("nvim-lsp-installer").setup()
+require("lualine").setup()
 require("nvim-autopairs").setup {}
 require("crates").setup {
     src = {
@@ -214,7 +208,6 @@ local vimopts = {
     concealcursor = "nc",
     list = true
 }
--- set vim options
 for k, v in pairs(vimopts) do
     vim.opt[k] = v
 end
@@ -439,7 +432,6 @@ require "nvim-treesitter.configs".setup {
 
 -- LSP {{{
 -- On Attach {{{
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
