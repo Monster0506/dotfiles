@@ -1,7 +1,8 @@
 #!/usr/bin/env lua
 HOME = os.getenv("HOME")
 -- print(HOME)
--- Global variables (vim.gs) {{{
+
+-- Global Vim Variables (vim.g) {{{
 local vimg = {
     airline_right_alt_sep = "",
     NERDSpaceDelims = 1,
@@ -106,7 +107,7 @@ Plug("Saecki/crates.nvim")
 Plug("rust-lang/rust.vim", {["for"] = "rust"})
 --- }}}
 -- Markdown {{{
-Plug("ellisonleao/glow.nvim", {["for"] = "markdown"})
+Plug "ellisonleao/glow.nvim"
 --- }}}
 -- Clojure {{{
 Plug("guns/vim-sexp", {["for"] = "clojure"})
@@ -132,7 +133,7 @@ Plug "junegunn/fzf.vim"
 -- Other Utility Plugins {{{
 Plug "antoinemadec/FixCursorHold.nvim"
 Plug "axieax/urlview.nvim"
-Plug "ZhiyuanLck/smart-pairs"
+Plug "windwp/nvim-autopairs"
 Plug "ms-jpq/chadtree"
 Plug "romainl/vim-cool"
 Plug "tpope/vim-repeat"
@@ -144,18 +145,15 @@ Plug "simnalamburt/vim-mundo"
 vim.call("plug#end")
 --- }}}
 
--- Local variables {{{
+-- Local and Global Lua Variables {{{
 local opts = {noremap = true, silent = true}
 local keymap = vim.api.nvim_set_keymap
 local capabilities = vim.lsp.protocol.make_client_capabilities()
--- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
--- local cmp = require "cmp"
 --- }}}
 
 -- Setup Functions {{{
 require("gitsigns").setup()
 require("nvim-lsp-installer").setup()
-require("pairs"):setup()
 require("crates").setup {
     src = {
         coq = {
@@ -166,7 +164,7 @@ require("crates").setup {
 }
 require("coq_3p") {
     {src = "nvimlua"},
-    {src = "bc"},
+    {src = "bc", short_name = "MATH", precision = 6},
     {src = "figlet"}
 }
 require("nvim-lightbulb").setup(
@@ -179,9 +177,11 @@ require("nvim-lightbulb").setup(
         }
     }
 )
+
+require("nvim-autopairs").setup {}
 --- }}}
 
--- Options (vim.opts) {{{
+-- Options (vim.opt) {{{
 vim.cmd([[set termguicolors]])
 local vimopts = {
     background = "dark",
@@ -491,4 +491,4 @@ require("nvim-lsp-installer").setup(
     }
 )
 --- }}}
---- }}}
+--- }}

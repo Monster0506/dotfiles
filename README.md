@@ -119,7 +119,7 @@ pretty basic configurations
 ## Other Utility Plugins 
 
 - [ZhiyuanLck/smart-pairs](https://github.com/ZhiyuanLck/smart-pairs)
-- [antoinemadec/FixCursorHold.nvim](https://github.com/antoinemadec/FixCursorHold.nvim)
+- [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
 - [ms-jpq/chadtree](https://github.com/ms-jpq/chadtree)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
