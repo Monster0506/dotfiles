@@ -8,9 +8,13 @@ local vimg = {
     indent_blankline_show_current_context_start = true,
     NERDSpaceDelims = 1,
     coq_settings = {
+        ["keymap.eval_snips"] = "<leader>j",
         clients = {
             tabnine = {
                 enabled = true
+            },
+            snippets = {
+                user_path = "~/.local/share/nvim/coq-snips/"
             }
         },
         auto_start = "shut-up",
