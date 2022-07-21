@@ -419,6 +419,11 @@ keymap("n", "<leader>g", "<CMD>G<CR>", opts)
 keymap("n", "<leader>gd", "<CMD>Gdiffsplit<CR>", opts)
 keymap("n", "<leader>g[", "<CMD>Gitsigns prev_hunk<CR>", opts)
 keymap("n", "<leader>g]", "<CMD>Gitsigns next_hunk<CR>", opts)
+keymap("n", "<leader>ga", "<CMD>G add %<CR>", opts)
+keymap("n", "<leader>gc", "<CMD>G commit<CR>", opts)
+keymap("n", "<leader>gr", "<CMD>G reset %<CR>", opts)
+keymap("n", "<leader>ghs", "<CMD>Gitsigns stage_hunk<CR>", opts)
+keymap("n", "<leader>ghu", "<CMD>Gitsigns undo_stage_hunk<CR>", opts)
 --- }}}
 --- }}}
 
