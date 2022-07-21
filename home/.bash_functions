@@ -16,11 +16,17 @@ md() {
 }
 clock() {
     # display a fancy clock using figlet
-
     # get the current time
     time=$(date +"%r")
-    # create the clock with a border around it
-    figlet -f big -w 80 -c "$time"
+    case "$1" in
+    "-n")
+        echo "$time"
+        ;;
+    *)
+        # create the clock with a border around it
+        figlet -f big -w 80 -c "$time"
+        ;;
+    esac
 
 }
 me() {
