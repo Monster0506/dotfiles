@@ -343,6 +343,19 @@ vim.api.nvim_create_autocmd(
 )
 
 --- }}}
+-- Auto-Compile COQsnips {{{
+vim.api.nvim_create_autocmd(
+    {
+        "FileType coq-snip",
+        "BufWrite"
+    },
+    {
+        pattern = "*.snip",
+        command = "COQsnips compile"
+    }
+)
+
+--- }}}
 --- }}}
 
 -- Keybindings {{{
