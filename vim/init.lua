@@ -154,6 +154,7 @@ require("gitsigns").setup(
     }
 )
 require("nvim-lsp-installer").setup()
+-- require("lualine").setup()
 require("evil")
 require("onedark").load()
 require("onedark").setup(
@@ -387,7 +388,8 @@ keymap("i", "[;", "[<CR>];<Esc>O", opts)
 keymap("i", "[,", "[<CR>],<Esc>O", opts)
 --- }}}
 -- Center Text on the Screen {{{
-local remapList = {"p", "P", "<CR>", "gg", "H", "L", "n", "N", "%", "<c-o>", "o"}
+local remapList = {"p", "P", "<CR>", "gg", "H", "L", "n", "N", "%", "<c-o>"}
+
 for k in pairs(remapList) do
     keymap("n", remapList[k], remapList[k] .. "zz", opts)
     keymap("v", remapList[k], remapList[k] .. "zz", opts)
