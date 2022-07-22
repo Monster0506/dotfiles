@@ -47,7 +47,7 @@ installRequirements() {
 	fi
 
 	# install aptfile for installing packages
-	sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/seatgeek/bash-aptfile/master/bin/aptfile
+	sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/monster0506/bash-aptfile/master/bin/aptfile
 	sudo chmod +x /usr/local/bin/aptfile
 }
 

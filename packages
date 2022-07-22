@@ -37,7 +37,7 @@ package "rlwrap"
 
 
 update
-# upgrade
-# autoremove
-# autoclean
+upgrade
+autoremove
+autoclean
 log_info "🚀  ALL GOOD TO GO"
