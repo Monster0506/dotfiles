@@ -154,7 +154,7 @@ require("gitsigns").setup(
     }
 )
 require("nvim-lsp-installer").setup()
-require("lualine").setup()
+require("evil")
 require("onedark").load()
 require("onedark").setup(
     {
