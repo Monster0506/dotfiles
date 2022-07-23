@@ -68,7 +68,12 @@ function M.setup()
     keymap("x", ">", ">gv", opts)
     keymap("c", "cd.", "lcd %:p:h<CR>", opts)
     keymap("c", "cwd", "lcd %:p:h<CR>", opts)
-
+    --- }}}
+    -- Leap Keybindings {{{
+    keymap("n", "<leader><leader>s", "<Plug>(leap-forward)", opts)
+    keymap("n", "<leader><leader>S", "<Plug>(leap-backward)", opts)
+    keymap("v", "<leader><leader>s", "<Plug>(leap-forward)", opts)
+    keymap("v", "<leader><leader>S", "<Plug>(leap-backward)", opts)
     --- }}}
     -- Telescope Mappings {{{
     keymap("n", "<space>h", "<cmd>History<CR>", opts)

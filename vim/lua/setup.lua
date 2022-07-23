@@ -1,5 +1,6 @@
 local M = {}
 function M.run()
+    require("leap")
     require("nvim-lsp-installer").setup()
     require("gitsigns").setup(
         {

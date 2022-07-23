@@ -75,7 +75,8 @@ function M.setup()
     Plug "nvim-lua/plenary.nvim"
     --- }}}
     -- Movement Plugins {{{
-    Plug "easymotion/vim-easymotion"
+    -- Plug "easymotion/vim-easymotion"
+    Plug "ggandor/leap.nvim"
     Plug "matze/vim-move"
     --- }}}
     -- FZF Plugins {{{
