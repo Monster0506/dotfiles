@@ -313,12 +313,12 @@ syslink() {
 		rm $HOME/.profile
 	fi
 	# set the places to be copied to
-	DIR0=$SCRIPT_DIR/home/
-	DIR1=$SCRIPT_DIR/vim/
-	ITEM1=$SCRIPT_DIR/i3/config
-	DIR2=$SCRIPT_DIR/starship/
-	DIR3=$SCRIPT_DIR/i3status/
-	DIR4=$SCRIPT_DIR/ranger/
+	DIR0=$SCRIPT_DIR/src/home/
+	DIR1=$SCRIPT_DIR/src/vim/
+	ITEM1=$SCRIPT_DIR/src/i3/config
+	DIR2=$SCRIPT_DIR/src/starship/
+	DIR3=$SCRIPT_DIR/src/i3status/
+	DIR4=$SCRIPT_DIR/src/ranger/
 
 	for filename in $(ls -A $DIR0); do
 		cp $DIR0/$filename $INSTALLDIR/home/$filename -r
@@ -382,7 +382,7 @@ Flameshot() {
 	curl -o $SCRIPT_DIR/flameshot.deb https://github.com/flameshot-org/flameshot/releases/download/v12.1.0/flameshot-12.1.0-1.debian-11.amd64.deb
 
 	sudo apt install $SCRIPT_DIR/flameshot.deb -y
-	rm $SCRIPT_DIR/flameshot.deb
+	rm $SCRIPT_DIR/flameshot.deb -rf
 }
 
 main() {
