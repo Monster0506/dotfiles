@@ -1,19 +1,17 @@
 local M = {}
 function M.run()
-    require("leap")
-    require("nvim-lsp-installer").setup()
     require("gitsigns").setup(
         {
             current_line_blame = true
         }
     )
-    require("onedark").load()
+
     require("onedark").setup(
         {
             style = "darker"
         }
     )
-    require("nvim-autopairs").setup()
+
     require("crates").setup(
         {
             src = {
@@ -32,6 +30,7 @@ function M.run()
             {src = "figlet"}
         }
     )
+
     require("nvim-lightbulb").setup(
         {
             autocmd = {
@@ -42,6 +41,7 @@ function M.run()
             }
         }
     )
+
     require("nvim-tree").setup(
         {
             view = {
@@ -57,5 +57,12 @@ function M.run()
             }
         }
     )
+
+    require("icon-picker")
+    require("leap")
+    require("onedark").load()
+    require("nvim-lsp-installer").setup()
+    require("nvim-autopairs").setup()
 end
+
 return M
