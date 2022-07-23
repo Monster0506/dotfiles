@@ -1,6 +1,7 @@
 #!/bin/bash
 # Get the directory this script is placed in
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-$0}")" &>/dev/null && pwd 2>/dev/null)"
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-$0}")" &>/dev/null && pwd 2>/dev/null)
+echo $SCRIPT_DIR >>~/.dotfiles
 
 checkDefaults() {
 	# check if running as sudo
@@ -296,6 +297,7 @@ doDirectory() {
 			fi
 		fi
 	fi
+	echo "$INSTALLDIR" >>~/.dotfiles.cfg
 
 	# make the folders to be copied to.
 	mkdir $INSTALLDIR/i3
