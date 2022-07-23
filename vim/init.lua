@@ -7,6 +7,7 @@ local vimg = {
     indent_blankline_show_current_context = true,
     indent_blankline_show_current_context_start = true,
     NERDSpaceDelims = 1,
+    -- COQ settings {{{
     coq_settings = {
         ["keymap.eval_snips"] = "<leader>j",
         clients = {
@@ -29,8 +30,8 @@ local vimg = {
             }
         }
     },
+    --- }}}
     netrw_browsex_viewer = "xdg-open",
-    edge_style = "neon",
     floaterm_position = "topleft",
     floaterm_autoclose = 2,
     floaterm_opener = "vsplit"
@@ -47,72 +48,13 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 --- }}}
 
 -- Setup Functions {{{
--- Personal Configs {{{
-require("plugins").setup()
-require("keybindings").setup()
-require("options").setup()
-require("evil").setup()
-require("commands").setup()
---- }}}
--- Other Configs {{{
-require("nvim-lsp-installer").setup()
-require("gitsigns").setup(
-    {
-        current_line_blame = true
-    }
-)
-require("onedark").load()
-require("onedark").setup(
-    {
-        style = "darker"
-    }
-)
-require("nvim-autopairs").setup()
-require("crates").setup(
-    {
-        src = {
-            coq = {
-                enabled = true,
-                name = "crates.nvim"
-            }
-        }
-    }
-)
-
-require("coq_3p")(
-    {
-        {src = "nvimlua"},
-        {src = "bc", short_name = "MATH", precision = 6},
-        {src = "figlet"}
-    }
-)
-require("nvim-lightbulb").setup(
-    {
-        autocmd = {
-            enabled = true
-        },
-        sign = {
-            enabled = true
-        }
-    }
-)
-require("nvim-tree").setup(
-    {
-        view = {
-            side = "right",
-            mappings = {
-                list = {
-                    {key = "<C-t>", action = "close"}
-                }
-            }
-        },
-        filters = {
-            dotfiles = false
-        }
-    }
-)
-
---- }}}
+require("plugins").setup() -- lua/plugins.lua
+require("autocmds").setup() -- lua/autocmds.lua
+require("keybindings").setup() -- lua/keybindings.lua
+require("options").setup() -- lua/options.lua
+require("evil").setup() -- lua/evil.lua
+require("commands").setup() -- lua/commands.lua
+require("setup").run() -- lua/setup.lua
 --- }}}
 
 -- Misc Vim Settings {{{
@@ -124,7 +66,6 @@ nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand("<cword>")<CR>\>/
 nnoremap <Space>% :%s/\<<C-r>=expand("<cword>")<CR>\>/
 " }}}
 syntax on
-" colorscheme onedark
 " }}}
 " NEXT OBJECT MAPPING {{{
 " https://gist.github.com/AndrewRadev/1171559
@@ -141,91 +82,6 @@ endfunction
 " }}}
         ]]
 )
---- }}}
-
--- Autocmds {{{
--- Fold Init.lua when sourced, read, or saved with markers {{{
-vim.api.nvim_create_autocmd(
-    {"BufRead", "BufWrite", "SourceCmd", "BufEnter"},
-    {
-        pattern = vim.fn.expand "$MYVIMRC",
-        command = "set foldmethod=marker "
-    }
-)
---- }}}
--- Format on save {{{
-vim.api.nvim_create_autocmd(
-    {
-        "BufWritePre"
-    },
-    {
-        pattern = "*",
-        command = "silent Neoformat | silent! undojoin"
-    }
-)
---- }}}
--- Highlight line in normal mode {{{
--- Highlight {{{
-vim.api.nvim_create_autocmd(
-    {
-        "VimEnter",
-        "InsertLeave",
-        "WinEnter"
-    },
-    {
-        pattern = "*",
-        command = "set cursorline"
-    }
-)
---- }}}
--- Remove cursorline {{{
-vim.api.nvim_create_autocmd(
-    {
-        "VimLeave",
-        "InsertEnter",
-        "WinLeave"
-    },
-    {
-        pattern = "*",
-        command = "set nocursorline"
-    }
-)
--- }}}
---- }}}
--- Make Vim Create Parent Directories on Save {{{
--- See https://github.com/jghauser/mkdir.nvim/blob/main/lua/mkdir.lua
-
-local luafunc = function()
-    local dir = vim.fn.expand("<afile>:p:h")
-    if vim.fn.isdirectory(dir) == 0 then
-        vim.fn.mkdir(dir, "p")
-    end
-end
-
-vim.api.nvim_create_autocmd(
-    {
-        "BufWritePre"
-    },
-    {
-        pattern = "*",
-        callback = luafunc
-    }
-)
-
---- }}}
--- Auto-Compile COQsnips {{{
-vim.api.nvim_create_autocmd(
-    {
-        "FileType coq-snip",
-        "BufWrite"
-    },
-    {
-        pattern = "*.snip",
-        command = "COQsnips compile"
-    }
-)
-
---- }}}
 --- }}}
 
 -- Treesitter Settings {{{
