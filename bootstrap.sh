@@ -378,6 +378,13 @@ Firefox() {
 	fi
 }
 
+Flameshot() {
+	curl -o $SCRIPT_DIR/flameshot.deb https://github.com/flameshot-org/flameshot/releases/download/v12.1.0/flameshot-12.1.0-1.debian-11.amd64.deb
+
+	sudo apt install $SCRIPT_DIR/flameshot.deb -y
+	rm $SCRIPT_DIR/flameshot.deb
+}
+
 main() {
 	# Make sure necessary tools are installed.
 	checkDefaults
@@ -398,6 +405,7 @@ main() {
 	GitCompletion
 	GoStuff
 	GitCli
+	Flameshot
 
 	# Move dotfiles to INSTALLDIR and syslink
 	echo "Installing to $INSTALLDIR. "
