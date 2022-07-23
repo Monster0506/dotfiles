@@ -36,7 +36,6 @@ pretty basic configurations
 - [nvim-telescope/telescope-symbols.nvim](https://github.com/nvim-telescope/telescope-symbols.nvim)
 - [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 - [p00f/nvim-ts-rainbow](https://github.com/p00f/nvim-ts-rainbow)
-- [sudormrfbin/cheatsheet.nvim](https://github.com/sudormrfbin/cheatsheet.nvim)
 
 ## Completion Plugins 
 
@@ -124,6 +123,7 @@ pretty basic configurations
 - [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
 - [kyazdani42/nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua)
+- [ziontee113/icon-picker.nvim](https://github.com/ziontee113/icon-picker.nvim)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
 - [simnalamburt/vim-mundo](https://github.com/simnalamburt/vim-mundo)
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
