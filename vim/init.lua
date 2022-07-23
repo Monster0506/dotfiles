@@ -50,7 +50,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- Setup Functions {{{
 require("plugins").setup() -- lua/plugins.lua
 require("autocmds").setup() -- lua/autocmds.lua
-require("keybindings").setup() -- lua/keybindings.lua
+require("keybindings").setup() -- lua/keybindings.lua keymappings keymaps
 require("options").setup() -- lua/options.lua
 require("evil").setup() -- lua/evil.lua
 require("commands").setup() -- lua/commands.lua

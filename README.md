@@ -110,7 +110,7 @@ pretty basic configurations
 
 ## Movement Plugins 
 
-- [easymotion/vim-easymotion](https://github.com/easymotion/vim-easymotion)
+- [ggandor/leap.nvim](https://github.com/ggandor/leap.nvim)
 - [matze/vim-move](https://github.com/matze/vim-move)
 
 ## FZF Plugins 
