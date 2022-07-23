@@ -7,7 +7,6 @@ function M.setup()
     Plug "BurntSushi/ripgrep"
     Plug "nvim-telescope/telescope-symbols.nvim"
     Plug "p00f/nvim-ts-rainbow"
-    Plug "sudormrfbin/cheatsheet.nvim"
     --- }}}
     -- Completion Plugins {{{
     Plug("ms-jpq/coq_nvim", {["branch"] = "coq"})
@@ -86,6 +85,7 @@ function M.setup()
     -- Other Utility Plugins {{{
     Plug "antoinemadec/FixCursorHold.nvim"
     Plug "axieax/urlview.nvim"
+    Plug "ziontee113/icon-picker.nvim"
     Plug "windwp/nvim-autopairs"
     Plug "kyazdani42/nvim-tree.lua"
     Plug "romainl/vim-cool"

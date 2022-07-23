@@ -58,6 +58,8 @@ function M.setup()
     keymap("n", "<leader>t", "<cmd>Vista nvim_lsp<CR>", opts)
     keymap("n", "<leader>tag", "<cmd>Vista ctags<CR>", opts)
     keymap("n", "<Space>u", "<cmd>MundoToggle<CR>", opts)
+    keymap("n", "<leader><C-i>", "<cmd>PickEverythingInsert<CR>", opts)
+    keymap("i", "<leader><C-i>", "<cmd>PickEverythingInsert<CR>", opts)
     keymap(
         "n",
         "<leader>l",
