@@ -187,6 +187,9 @@ function M.setup()
     }
 
     ins_right {
+        "echo strftime('%c')"
+    }
+    ins_right {
         "fileformat",
         fmt = string.upper,
         icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
