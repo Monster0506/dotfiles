@@ -8,28 +8,28 @@ local vimg = {
     indent_blankline_show_current_context_start = true,
     NERDSpaceDelims = 1,
     -- COQ settings {{{
-    coq_settings = {
-        ["keymap.eval_snips"] = "<leader>j",
-        clients = {
-            tabnine = {
-                enabled = true
-            },
-            snippets = {
-                user_path = "~/.local/share/nvim/coq-snips/"
-            }
-        },
-        auto_start = "shut-up",
-        display = {
-            ghost_text = {
-                context = {"    < ", " >"},
-                highlight_group = "Cyan"
-            },
-            pum = {
-                ellipsis = ". . .",
-                kind_context = {" {", "}"}
-            }
-        }
-    },
+    -- coq_settings = {
+    -- ["keymap.eval_snips"] = "<leader>j",
+    -- clients = {
+    -- tabnine = {
+    -- enabled = true
+    -- },
+    -- snippets = {
+    -- user_path = "~/.local/share/nvim/coq-snips/"
+    -- }
+    -- },
+    -- auto_start = "shut-up",
+    -- display = {
+    -- ghost_text = {
+    -- context = {"    < ", " >"},
+    -- highlight_group = "Cyan"
+    -- },
+    -- pum = {
+    -- ellipsis = ". . .",
+    -- kind_context = {" {", "}"}
+    -- }
+    -- }
+    -- },
     --- }}}
     netrw_browsex_viewer = "xdg-open",
     floaterm_position = "topleft",
@@ -44,7 +44,6 @@ end
 --- }}}
 
 -- Local and Global Lua Variables {{{
-local capabilities = vim.lsp.protocol.make_client_capabilities()
 --- }}}
 
 -- Setup Functions {{{
@@ -165,19 +164,19 @@ local servers = {
     "jsonls",
     "clangd"
 }
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+require("mason-lspconfig").setup(
+    {
+        ensure_installed = servers
+    }
+)
 for _, lsp in ipairs(servers) do
     require "lspconfig"[lsp].setup {
-        require("coq").lsp_ensure_capabilities({}),
+        -- require("coq").lsp_ensure_capabilities({}),
         on_attach = on_attach,
         capabilities = capabilities
     }
 end
 
-require("nvim-lsp-installer").setup(
-    {
-        automatic_installation = true,
-        ensure_installed = servers
-    }
-)
 --- }}}
 --- }}

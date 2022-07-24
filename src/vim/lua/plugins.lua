@@ -9,16 +9,24 @@ function M.setup()
     Plug "p00f/nvim-ts-rainbow"
     --- }}}
     -- Completion Plugins {{{
-    Plug("ms-jpq/coq_nvim", {["branch"] = "coq"})
-    Plug("ms-jpq/coq.artifacts", {["branch"] = "artifacts"})
-    Plug("ms-jpq/coq.thirdparty", {["branch"] = "3p"})
+    Plug "hrsh7th/cmp-buffer"
+    Plug "hrsh7th/cmp-path"
+    Plug "hrsh7th/cmp-cmdline"
+    Plug "hrsh7th/nvim-cmp"
     Plug "tom-doerr/vim_codex"
     --- }}}
+    -- Snippet Plugins {{{
+    Plug "SirVer/ultisnips"
+    Plug "quangnguyen30192/cmp-nvim-ultisnips"
+    Plug "honza/vim-snippets"
+    --- }}}
     -- Language Server Plugins {{{
+    Plug "hrsh7th/cmp-nvim-lsp"
     Plug "neovim/nvim-lspconfig"
-    Plug "williamboman/nvim-lsp-installer"
     Plug "dense-analysis/ale"
     Plug "kosayoda/nvim-lightbulb"
+    Plug "williamboman/mason.nvim"
+    Plug "williamboman/mason-lspconfig.nvim"
     --- }}}
     -- General Language Plugins {{{
     Plug "nvim-treesitter/nvim-treesitter"

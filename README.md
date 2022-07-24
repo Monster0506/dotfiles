@@ -39,17 +39,26 @@ pretty basic configurations
 
 ## Completion Plugins 
 
-- [ms-jpq/coq.nvim](https://github.com/ms-jsp/coq.nvim)
-- [ms-jpq/coq.artifacts](https://github.com/ms-jpq/coq.artifacts)
-- [ms-jpq/coq.thirdparty](https://github.com/ms-jpq/coq.thirdparty)
+- [hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer)
+- [hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path)
+- [hrsh7th/cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline)
+- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 - [tom-doerr/vim_codex](https://github.com/tom-doerr/vim_codex)
+
+## Snippet Plugins
+
+- [SirVer/ultisnips](https://github.com/SirVer/ultisnips)
+- [quangnguyen30192/cmp-nvim-ultisnips](https://github.com/quangnguyen30192/cmp-nvim-ultisnips)
+- [honza/vim-snippets](https://github.com/honza/vim-snippets)
 
 ## Language Server Plugins 
 
+- [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)
+- [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [dense-analysis/ale](https://github.com/dense-analysis/ale)
 - [kosayoda/nvim-lightbulb](https://github.com/kosayoda/nvim-lightbulb)
-- [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
-- [williamboman/nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer)
+- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
+- [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
 
 ## General Language Plugins 
 
