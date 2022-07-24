@@ -29,7 +29,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-alias rm="mv -t $HOME/.Trash"
+alias rm="Trash"
 
 alias ls="exa --classify -a"
 alias ll="exa --classify -a --long --git"

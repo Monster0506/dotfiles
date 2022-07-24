@@ -569,3 +569,69 @@ server() {
     python3 -m http.server $port
 
 }
+
+Trash() {
+    if [ -z "$1" ]; then
+
+        echo "Usage for rm (trash):"
+        echo "rm <file> [options...]"
+        echo "-[r|f]: do nothing"
+        echo "-n: Actually remove the file instead of putting it in trash"
+        return 0
+        return 0
+    fi
+    case $1 in
+    -r | -f | -rf | -fr)
+        IGNORE=true
+        ;;
+    -n)
+        REAL=true
+        ;;
+    -*)
+        echo "Usage for rm (trash):"
+        echo "rm <file> [options...]"
+        echo "-[r|f]: do nothing"
+        echo "-n: Actually remove the file instead of putting it in trash"
+
+        return 0
+        ;;
+    *)
+        if [ -e "$1" ]; then
+            ITEM=$(realpath $1)
+            remove $ITEM
+            return 1
+        fi
+        ;;
+
+    esac
+
+    if [ -e "$2" ]; then
+        ITEM=$(realpath "$2")
+    else
+        echo "File does not exist"
+        return 1
+    fi
+
+    if [ -n "$REAL" ]; then
+        echo "Are you sure?"
+        read i
+        if [[ ! "$i" =~ ^y ]]; then
+            return 1
+        fi
+        sudo \rm -rf $ITEM
+        return 0
+    fi
+
+    remove $ITEM
+
+}
+
+remove() {
+    ITEM="$1"
+    TRASHITEM=$(basename $ITEM)
+    if [ -e ~/.Trash/$TRASHITEM ]; then
+        \rm -rf ~/.Trash/$TRASHITEM
+    fi
+    mv "$ITEM" ~/.Trash/$TRASHITEM 2>/dev/null
+
+}
