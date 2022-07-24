@@ -58,10 +58,62 @@ function M.run()
         }
     )
 
+    -- CMP Setup {{{
     local cmp = require "cmp"
-
+    local kind_icons = {
+        Text = "",
+        Method = "",
+        Function = "",
+        Constructor = "",
+        Field = "",
+        Variable = "",
+        Class = "ﴯ",
+        Interface = "",
+        Module = "",
+        Property = "ﰠ",
+        Unit = "",
+        Value = "",
+        Enum = "",
+        Keyword = "",
+        Snippet = "",
+        Color = "",
+        File = "",
+        Reference = "",
+        Folder = "",
+        EnumMember = "",
+        Constant = "",
+        Struct = "",
+        Event = "",
+        Operator = "",
+        TypeParameter = ""
+    }
     cmp.setup(
         {
+            window = {
+                completion = {
+                    winhighlight = "Normal:Pmen,FloatBorder:Pmenu,Search:None"
+                }
+            },
+            formatting = {
+                fields = {"kind", "abbr", "menu"},
+                format = function(entry, vim_item)
+                    -- Kind icons
+                    vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+                    -- Source
+                    vim_item.menu =
+                        ({
+                        buffer = "[Buffer]",
+                        nvim_lsp = "[LSP]",
+                        luasnip = "[LuaSnip]",
+                        nvim_lua = "[Lua]",
+                        latex_symbols = "[LaTeX]"
+                    })[entry.source.name]
+                    return vim_item
+                end
+            },
+            view = {
+                entries = {name = "custom", selection_order = "near_cursor"}
+            },
             snippet = {
                 -- REQUIRED - you must specify a snippet engine
                 expand = function(args)
@@ -71,7 +123,6 @@ function M.run()
                     vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
                 end
             },
-            window = {},
             mapping = cmp.mapping.preset.insert(
                 {
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -98,6 +149,9 @@ function M.run()
     cmp.setup.cmdline(
         "/",
         {
+            view = {
+                entries = {name = "wildmenu", separator = " | "}
+            },
             mapping = cmp.mapping.preset.cmdline(),
             sources = {
                 {name = "buffer"}
@@ -109,6 +163,9 @@ function M.run()
     cmp.setup.cmdline(
         ":",
         {
+            view = {
+                entries = {name = "custom", selection_order = "near_cursor"}
+            },
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources(
                 {
