@@ -414,21 +414,21 @@ zipExt() {
 findInFiles() {
     case "$1" in
     "-h" | "--help")
-        echo "findInFiles [filePath] [string]"
+        echo "findInFiles <filePath> <string>"
+        echo "Find a string or glob in a file"
         echo "    --help -h: print this help"
         ;;
     *)
-        if [ -z "$1" ]; then
+        if [ -z "$1" ] || [ -z "$2" ]; then
             echo "You must have 2 paramaters."
             echo "see -h or --help for options"
-        else
-            if [ -z "$2" ]; then
-                echo "You must include the second paramater."
-                echo "see -h or --help for options"
-            else
-                grep -rnw "$1" -e "$2"
-            fi
+            return 1
         fi
+        if [ ! -f "$1" ]; then
+            echo "$1 is not a file"
+            return 1
+        fi
+        grep -n "$2" "$1"
         ;;
     esac
 }
