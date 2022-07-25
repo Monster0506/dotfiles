@@ -1,4 +1,5 @@
-#!
+#!/usr/bin/env lua
+
 local M = {}
 function M.run()
     require("gitsigns").setup(
@@ -32,12 +33,14 @@ function M.run()
                 side = "right",
                 mappings = {
                     list = {
-                        {key = "<C-t>", action = "close"}
+                        {key = "<C-t>", action = "close"},
+                        {key = "u", action = "dir_up"}
                     }
                 }
             },
             filters = {
-                dotfiles = false
+                dotfiles = false,
+                custom = {"^.git$"}
             }
         }
     )
