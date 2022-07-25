@@ -48,8 +48,10 @@ ranger config file with some pretty basic configurations
 ## Completion Plugins
 
 - [hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer)
-- [hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path)
 - [hrsh7th/cmp-cmdline](https://github.com/hrsh7th/cmp-cmdline)
+- [hrsh7th/cmp-nvim-lua](https://github.com/hrsh7th/cmp-nvim-lua)
+- [hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path)
+- [hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path)
 - [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 - [tom-doerr/vim_codex](https://github.com/tom-doerr/vim_codex)
 
@@ -61,12 +63,12 @@ ranger config file with some pretty basic configurations
 
 ## Language Server Plugins
 
-- [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)
-- [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [dense-analysis/ale](https://github.com/dense-analysis/ale)
+- [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)
 - [kosayoda/nvim-lightbulb](https://github.com/kosayoda/nvim-lightbulb)
-- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
+- [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
+- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
 
 ## General Language Plugins
 
@@ -136,15 +138,15 @@ ranger config file with some pretty basic configurations
 
 ## Other Utility Plugins
 
-- [ZhiyuanLck/smart-pairs](https://github.com/ZhiyuanLck/smart-pairs)
-- [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs)
+- "antoinemadec/FixCursorHold.nvim"
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
 - [kyazdani42/nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua)
-- [ziontee113/icon-picker.nvim](https://github.com/ziontee113/icon-picker.nvim)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
 - [simnalamburt/vim-mundo](https://github.com/simnalamburt/vim-mundo)
+- [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
 - [tpope/vim-repeat](https://github.com/tpope/vim-repeat)
 - [tpope/vim-surround](https://github.com/tpope/vim-surround)
 - [voldikss/vim-floaterm](https://github.com/voldikss/vim-floaterm)
 - [wellle/targets.vim](https://github.com/wellle/targets.vim)
-- [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+- [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs)
+- [ziontee113/icon-picker.nvim](https://github.com/ziontee113/icon-picker.nvim)
