@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 # Get the directory this script is placed in
-SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-$0}")" &>/dev/null && pwd 2>/dev/null)
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 echo $SCRIPT_DIR >>$HOME/.dotfiles
 
 checkDefaults() {
