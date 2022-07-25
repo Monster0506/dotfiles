@@ -1,10 +1,12 @@
-.DEFAULT_GOAL := install
+.DEFAULT_GOAL := all
 
 SUDO := $(shell command -v sudo 2> /dev/null)
 APT := $(shell command -v apt 2> /dev/null)
 GIT := $(shell command -v git 2> /dev/null)
 
 
+
+all: generate final
 
 install: generate
 
