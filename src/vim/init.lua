@@ -139,19 +139,19 @@ end
 --- }}}
 -- Servers {{{
 local servers = {
-    "sumneko_lua",
-    "rust_analyzer",
-    "pyright",
-    "clojure_lsp",
-    "tsserver",
-    "eslint",
     "bashls",
-    "marksman",
+    "clangd",
+    "clojure_lsp",
+    "eslint",
     "gopls",
     "html",
-    "rome",
     "jsonls",
-    "clangd"
+    "marksman",
+    "pyright",
+    "rome",
+    "rust_analyzer",
+    "sumneko_lua",
+    "tsserver"
 }
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 require("mason-lspconfig").setup(
@@ -159,9 +159,9 @@ require("mason-lspconfig").setup(
         ensure_installed = servers
     }
 )
+
 for _, lsp in ipairs(servers) do
     require "lspconfig"[lsp].setup {
-        -- require("coq").lsp_ensure_capabilities({}),
         on_attach = on_attach,
         capabilities = capabilities
     }
