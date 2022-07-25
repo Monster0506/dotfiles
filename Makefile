@@ -12,7 +12,7 @@ install: generate
 
 sync: preq
 	@echo "~>> [[ SYNC ]] <<~"
-	@sync
+	@./sync
 update: sync
 
 generate: preq
