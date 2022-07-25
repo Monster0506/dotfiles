@@ -7,30 +7,6 @@ local vimg = {
     indent_blankline_show_current_context = true,
     indent_blankline_show_current_context_start = true,
     NERDSpaceDelims = 1,
-    -- COQ settings {{{
-    -- coq_settings = {
-    -- ["keymap.eval_snips"] = "<leader>j",
-    -- clients = {
-    -- tabnine = {
-    -- enabled = true
-    -- },
-    -- snippets = {
-    -- user_path = "~/.local/share/nvim/coq-snips/"
-    -- }
-    -- },
-    -- auto_start = "shut-up",
-    -- display = {
-    -- ghost_text = {
-    -- context = {"    < ", " >"},
-    -- highlight_group = "Cyan"
-    -- },
-    -- pum = {
-    -- ellipsis = ". . .",
-    -- kind_context = {" {", "}"}
-    -- }
-    -- }
-    -- },
-    --- }}}
     netrw_browsex_viewer = "xdg-open",
     floaterm_position = "topleft",
     floaterm_autoclose = 2,
@@ -129,7 +105,7 @@ local on_attach = function(client, bufnr)
     local bufopts = {noremap = true, silent = true, buffer = bufnr}
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "K", ShowDocumentation, bufopts)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
@@ -147,6 +123,18 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>ac", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
     vim.keymap.set("n", "<space>f", vim.lsp.buf.format, bufopts)
+end
+function ShowDocumentation()
+    local filetype = vim.bo.filetype
+    if vim.tbl_contains({"vim", "help"}, filetype) then
+        vim.cmd("h " .. vim.fn.expand("<cword>"))
+    elseif vim.tbl_contains({"man"}, filetype) then
+        vim.cmd("Man " .. vim.fn.expand("<cword>"))
+    elseif vim.fn.expand("%:t") == "Cargo.toml" then
+        require("crates").show_popup()
+    else
+        vim.lsp.buf.hover()
+    end
 end
 --- }}}
 -- Servers {{{
