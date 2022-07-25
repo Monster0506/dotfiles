@@ -12,15 +12,15 @@ install: generate
 
 sync: preq
 	@echo "~>> [[ SYNC ]] <<~"
-	@./sync
+	@./script/sync
 update: sync
 
 generate: preq
 	@echo "~>> [[ DOTFILES ]] <<~"
-	@bootstrap
+	@./script/bootstrap
 
 final: preq
-	finalSteps
+	@./script/finalSteps
 
 preq:
 ifndef SUDO

@@ -9,17 +9,17 @@ Please do not install these files without understanding what they do or
 what they are intended for. These files are mainly intended for setting up
 a new installation.
 
-To use, run `./bootstrap` in the directory in which you cloned
+To use, run `./script/bootstrap` in the directory in which you cloned
 or downloaded this repository.
 
-Alternatively, if [`make`](https://www.gnu.org/software/make/) is installed on your system, you can run `make install`
-or `make generate`.
+Alternatively, if [`make`](https://www.gnu.org/software/make/) is installed on
+your system, you can run `make install` or `make generate`.
 
 On average, this takes around 10 minutes to completely install on a fresh
 Debian machine.
 
 If you want to sync your files back to the dotfiles repository, you can run
-`./sync` or `make sync` to copy the files in `~/.cfg` back.
+`./script/sync` or `make sync` to copy the files in `~/.cfg` back.
 
 ## Follow-up Steps
 
