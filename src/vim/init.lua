@@ -54,6 +54,7 @@ require("options").setup() -- lua/options.lua
 require("evil").setup() -- lua/evil.lua
 require("commands").setup() -- lua/commands.lua
 require("setup").run() -- lua/setup.lua
+require("nvim_cmp").setup() -- lua/nvim_cmp.lua
 --- }}}
 
 -- Misc Vim Settings {{{
