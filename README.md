@@ -19,7 +19,7 @@ On average, this takes around 10 minutes to completely install on a fresh
 Debian machine.
 
 If you want to sync your files back to the dotfiles repository, you can run
-`./script/sync` or `make sync` to copy the files in `~/.cfg` back.
+`./script/sync` or `make sync` to copy the files in `~/.cfg` back to this repo.
 
 ## Follow-up Steps
 
