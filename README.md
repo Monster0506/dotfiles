@@ -9,15 +9,22 @@ Please do not install these files without understanding what they do or
 what they are intended for. These files are mainly intended for setting up
 a new installation.
 
-To use, run `./bootstrap.sh` in the directory in which you cloned
+To use, run `./bootstrap` in the directory in which you cloned
 or downloaded this repository.
+
+Alternately, if `make` is installed on your system, you can run `make`
+or `make install` to install dotfiles.
 
 On average, this takes around 10 minutes to completely install on a fresh
 Debian machine.
 
+If you want to sync your files back to the dotfiles repository, you can run
+`./sync` or `make sync` to copy the files in `~/.cfg` back.
+
 ## Follow-up Steps
 
-Make sure to source ~/.bashrc `. ~/.bashrc`
+Make sure to `source ~/.bashrc`.
+The file `finalSteps` is just for me, and contains some personal configuration.
 
 ## Contents
 
@@ -26,9 +33,9 @@ as such, there is a starship configuration file there. I don't often change
 those settings.
 
 I use [ranger](https://ranger.github.io/) as a file manager, and there is also a
-ranger config file there with some pretty basic configurations
+ranger config file with some pretty basic configurations
 
-### ViM Plugins
+### ViM/Neovim Plugins
 
 ## Telescope Plugins
 
