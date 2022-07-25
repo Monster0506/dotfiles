@@ -1,5 +1,6 @@
 #!/bin/bash
 # Get the directory this script is placed in
+unset CDPATH
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 echo $SCRIPT_DIR >>$HOME/.dotfiles
 
