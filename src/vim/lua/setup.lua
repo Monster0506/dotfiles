@@ -8,6 +8,8 @@ function M.run()
         }
     )
 
+    require("Comment").setup()
+
     require("onedark").setup(
         {
             style = "darker"

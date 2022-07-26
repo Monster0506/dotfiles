@@ -43,7 +43,7 @@ function M.setup()
     Plug "liuchengxu/vista.vim"
     Plug "ludovicchabant/vim-gutentags"
     Plug "nvim-treesitter/nvim-treesitter"
-    Plug "preservim/nerdcommenter"
+    Plug "numToStr/Comment.nvim"
     Plug "sbdchd/neoformat"
     Plug "sheerun/vim-polyglot"
     Plug "vim-syntastic/syntastic"

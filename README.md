@@ -75,7 +75,7 @@ ranger config file with some pretty basic configurations
 - [liuchengxu/vista.vim](https://github.com/liuchengxu/vista.vim)
 - [ludovicchabant/vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)
 - [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
-- [preservim/nerdcommenter](https://github.com/preservim/nerdcommenter)
+- [numToStr/comment.nvim](https://github.com/numToStr/comment.nvim)
 - [sbdchd/neoformat](https://github.com/sbdchd/neoformat)
 - [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot)
 - [vim-syntastic/syntastic](https://github.com/vim-syntastic/syntastic)
@@ -138,7 +138,7 @@ ranger config file with some pretty basic configurations
 
 ## Other Utility Plugins
 
-- "antoinemadec/FixCursorHold.nvim"
+- [antoinemadec/FixCursorHold.nvim](https://github.com/antoinemadec/FixCursorHold.nvim)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
 - [kyazdani42/nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
