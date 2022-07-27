@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 unset CDPATH
 mkdir $HOME/Cpp/
 cd $HOME/Cpp
@@ -17,5 +17,7 @@ case $1 in
 esac
 
 if [ "$1" != "-g" ]; then
-  ./gitConfig
+  # run the file called gitConfig in this directory
+  . gitConfig
+
 fi
