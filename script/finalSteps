@@ -6,6 +6,7 @@ gh repo clone Utils
 cd ~
 gh repo clone Rust
 gh repo clone timelog
+SCRIPT_DIR=$(sed -n 1p $HOME/.dotfiles)
 
 case $1 in
 -n)
@@ -18,6 +19,7 @@ esac
 
 if [ "$1" != "-g" ]; then
   # run the file called gitConfig in this directory
-  . gitConfig
+
+  . $SCRIPT_DIR/script/gitConfig
 
 fi
