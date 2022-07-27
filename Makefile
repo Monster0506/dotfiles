@@ -6,7 +6,7 @@ GIT := $(shell command -v git 2> /dev/null)
 
 
 
-all: generate final
+all: generate finalAll
 
 install: generate
 
@@ -21,6 +21,9 @@ generate: preq
 
 final: preq
 	@./script/finalSteps
+
+finalAll: preq
+	@./script/finalSteps -n
 
 preq:
 ifndef SUDO

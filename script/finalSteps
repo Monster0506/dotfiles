@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 unset CDPATH
 mkdir $HOME/Cpp/
 cd $HOME/Cpp
@@ -7,8 +7,18 @@ cd ~
 gh repo clone Rust
 gh repo clone timelog
 
-sudo mkdir /root/.config/nvim /root/.local/share/nvim -p
-sudo cp ~/.config/nvim/* -r /root/.config/nvim
-sudo cp ~/.local/share/nvim/* -r /root/.local/share/nvim
+case $1 in
+-n)
+  echo "Copying files... This may take a while"
+  sudo mkdir /root/.config/nvim /root/.local/share/nvim -p
+  sudo cp ~/.config/nvim/* -r /root/.config/nvim
+  sudo cp ~/.local/share/nvim/* -r /root/.local/share/nvim
+  ;;
+esac
+
 git config --global user.email 91501317+Monster0506@users.noreply.github.com
 git config --global user.name monster0506
+git config --global alias.unstage "reset HEAD --"
+git config --global alias.k "!gitk"
+git config --global alias.last "log -1 HEAD"
+git config --global alias.save "!git add -A && git commit -m 'chore: commit save point"
