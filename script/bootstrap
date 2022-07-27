@@ -241,8 +241,6 @@ configureGit() {
 	read GIT_EMAIL
 	git config --global user.name "$GIT_USERNAME"
 	git config --global user.email "$GIT_EMAIL"
-	git config --global core.editor "nvim"
-	git config --global core.excludesfile $HOME/.gitignore_global
 }
 
 finishSteps() {
