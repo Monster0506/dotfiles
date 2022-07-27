@@ -16,9 +16,11 @@ case $1 in
   ;;
 esac
 
-git config --global user.email 91501317+Monster0506@users.noreply.github.com
-git config --global user.name monster0506
-git config --global alias.unstage "reset HEAD --"
-git config --global alias.k "!gitk"
-git config --global alias.last "log -1 HEAD"
-git config --global alias.save "!git add -A && git commit -m 'chore: commit save point"
+if [ "$1" != "-g" ]; then
+  git config --global user.email 91501317+Monster0506@users.noreply.github.com
+  git config --global user.name monster0506
+  git config --global alias.unstage "reset HEAD --"
+  git config --global alias.k "!gitk"
+  git config --global alias.last "log -1 HEAD"
+  git config --global alias.save "!git add -A && git commit -m 'chore: commit save point"
+fi
