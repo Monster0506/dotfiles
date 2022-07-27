@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := all
+.EFAULT_GOAL := all
 
 SUDO := $(shell command -v sudo 2> /dev/null)
 APT := $(shell command -v apt 2> /dev/null)
@@ -24,6 +24,9 @@ final: preq
 
 finalAll: preq
 	@./script/finalSteps -n
+
+gitConfig: preq
+	@./script/gitConfig
 
 preq:
 ifndef SUDO
