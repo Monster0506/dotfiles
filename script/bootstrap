@@ -2,6 +2,9 @@
 # Get the directory this script is placed in
 unset CDPATH
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+suffix="/script"
+temp=${SCRIPT_DIR%"$suffix"}
+SCRIPT_DIR=$temp
 echo $SCRIPT_DIR >>$HOME/.dotfiles
 
 checkDefaults() {
