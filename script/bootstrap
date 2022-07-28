@@ -7,10 +7,10 @@ temp=${SCRIPT_DIR%"$suffix"}
 SCRIPT_DIR=$temp
 echo $SCRIPT_DIR >>$HOME/.dotfiles
 
-error_msg() { printf "\033[31m\033[1m%s\033[0m\n" "$*"; }
-notice_msg() { printf "\033[33m\033[1m%s\033[0m\n " "$*"; }
-done_msg() { printf "\033[32m\033[1m%s\033[0m\n" "$*"; }
-prompt_msg() { printf "\033[34m\033[1m%s\033[0m\n" "$*"; }
+error_msg() { printf "\033[31;1m%s\033[0m\n" "$*"; }
+notice_msg() { printf "\033[33;1m%s\033[0m\n " "$*"; }
+done_msg() { printf "\033[32;1m%s\033[0m\n" "$*"; }
+prompt_msg() { printf "\033[34;1m%s\033[0m\n" "$*"; }
 
 checkDefaults() {
 	# check if running as sudo
