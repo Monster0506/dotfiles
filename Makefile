@@ -1,4 +1,4 @@
-.EFAULT_GOAL := all
+.DEFAULT_GOAL := all
 
 SUDO := $(shell command -v sudo 2> /dev/null)
 APT := $(shell command -v apt 2> /dev/null)
