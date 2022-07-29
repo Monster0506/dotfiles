@@ -5,10 +5,10 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 suffix="/script"
 temp=${SCRIPT_DIR%"$suffix"}
 SCRIPT_DIR=$temp
-echo $SCRIPT_DIR >>$HOME/.dotfiles
+echo "$SCRIPT_DIR" >>"$HOME"/.dotfiles
 
 checker() {
-  if ! [ -x "$(command -v $1)" ]; then
+  if ! [ -x "$(command -v "$1")" ]; then
     error_msg "$1 is not installed. Aborting Now"
     exit
   else
@@ -21,7 +21,7 @@ done_msg() { printf "\033[32;1m%s\033[0m\n" "$*"; }
 prompt_msg() { printf "\033[34;1m%s\033[0m\n" "$*"; }
 
 check_install() {
-  if ! [ -x "$(command -v $1)" ]; then
+  if ! [ -x "$(command -v "$1")" ]; then
     error_msg "$1 NOT INSTALLED"
     error_msg "Installing now"
     sudo apt install -y "$1"
@@ -72,11 +72,11 @@ fixPath() {
   # reset the path
   export PATH=""
   # apply each item to the path
-  if [ -d $HOME/.local/bin/ ]; then
+  if [ -d "$HOME"/.local/bin/ ]; then
     export PATH=$PATH:$HOME/.local/bin/
   fi
 
-  if [ -d $HOME/.cargo/bin/ ]; then
+  if [ -d "$HOME"/.cargo/bin/ ]; then
     export PATH=$PATH:$HOME/.cargo/bin/
   fi
 
@@ -121,7 +121,7 @@ Node() {
 Rust() {
   curl https://sh.rustup.rs -sSf | sh -s -- -y -q
   # remove this bashrc, as the repo holds the line that it writes
-  rm $HOME/.bashrc
+  rm "$HOME"/.bashrc
 }
 
 # install git completion/extras
@@ -129,7 +129,7 @@ GitCompletion() {
   # git extras
   curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin
   # git completion
-  curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o $HOME/.git-completion.bash
+  curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o "$HOME"/.git-completion.bash
 }
 # install go
 GoStuff() {
@@ -167,7 +167,7 @@ GoStuff() {
   sudo rm -rf "$TEMP_DIR"
   fixPath
   go install -v mvdan.cc/sh/cmd/shfmt@latest
-  ln -s $HOME/go/bin/shfmt $HOME/.local/bin/
+  ln -s "$HOME"/go/bin/shfmt "$HOME"/.local/bin/
 }
 
 # install gh cli
@@ -187,7 +187,7 @@ Sql() {
 AptStuff() {
   # install other useful stuff
   sudo apt remove firefox-esr -y
-  sudo aptfile $SCRIPT_DIR/script/packages
+  sudo aptfile "$SCRIPT_DIR"/script/packages
 
 }
 configureExtraStuff() {
@@ -230,9 +230,9 @@ configureVim() {
 setupPromptRequired() {
   configureGit
   # install bitwarden_password_manager
-  wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O $SCRIPT_DIR/bitwarden_password_manager.xpi
-  firefox $SCRIPT_DIR/bitwarden_password_manager.xpi --setDefaultBrowser
-  sleep 10 && rm $SCRIPT_DIR/bitwarden_password_manager.xpi
+  wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O "$SCRIPT_DIR"/bitwarden_password_manager.xpi
+  firefox "$SCRIPT_DIR"/bitwarden_password_manager.xpi --setDefaultBrowser
+  sleep 10 && rm "$SCRIPT_DIR"/bitwarden_password_manager.xpi
 }
 
 configureGit() {
@@ -251,7 +251,7 @@ finishSteps() {
   sudo apt autoremove -y
   sudo apt clean
   sudo apt autoclean -y
-  echo 'SELECTED_EDITOR="/usr/bin/nvim"' >$HOME/.selected_editor
+  echo 'SELECTED_EDITOR="/usr/bin/nvim"' >"$HOME"/.selected_editor
   setupPromptRequired
 
 }
@@ -259,53 +259,53 @@ finishSteps() {
 # make sure all folders exist if necessary.
 checkFolders() {
   # make a trash folder so rm alias does not get confused.
-  if [ ! -d $HOME/.Trash ]; then
-    mkdir $HOME/.Trash
+  if [ ! -d "$HOME"/.Trash ]; then
+    mkdir "$HOME"/.Trash
   fi
   # make the config folders
-  if [ ! -d $HOME/.config ]; then
-    mkdir $HOME/.config
+  if [ ! -d "$HOME"/.config ]; then
+    mkdir "$HOME"/.config
   fi
-  if [ ! -d $HOME/.config/nvim ]; then
-    mkdir $HOME/.config/nvim
+  if [ ! -d "$HOME"/.config/nvim ]; then
+    mkdir "$HOME"/.config/nvim
   fi
-  if [ ! -d $HOME/.config/i3 ]; then
-    mkdir $HOME/.config/i3
+  if [ ! -d "$HOME"/.config/i3 ]; then
+    mkdir "$HOME"/.config/i3
   fi
-  if [ ! -d $HOME/.config/i3status ]; then
-    mkdir $HOME/.config/i3status
+  if [ ! -d "$HOME"/.config/i3status ]; then
+    mkdir "$HOME"/.config/i3status
   fi
   # make the local bin folder
-  if [ ! -d $HOME/.local/bin ]; then
-    mkdir $HOME/.local/bin
+  if [ ! -d "$HOME"/.local/bin ]; then
+    mkdir "$HOME"/.local/bin
   fi
-  if [ ! -d $HOME/.cache/nvim ]; then
-    mkdir -p $HOME/.cache/nvim
+  if [ ! -d "$HOME"/.cache/nvim ]; then
+    mkdir -p "$HOME"/.cache/nvim
   fi
 }
 
 doDirectory() {
   # Create dotfiles directory, or if it exists, prompt user for install location
   # If it does not exist, create it, and create the INSTALLDIR file
-  if [ ! -d $HOME/.cfg/ ]; then
-    mkdir $HOME/.cfg/
+  if [ ! -d "$HOME"/.cfg/ ]; then
+    mkdir "$HOME"/.cfg/
     export INSTALLDIR=$HOME/.cfg/
   else
     prompt_msg "$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN)"
     read abc
-    if [ $abc = y ]; then
+    if [ "$abc" = y ]; then
       notice_msg "Overwriting .cfg directory."
-      rm $HOME/.cfg/ -rf
-      mkdir $HOME/.cfg
+      rm "$HOME"/.cfg/ -rf
+      mkdir "$HOME"/.cfg
       export INSTALLDIR=$HOME/.cfg/
       # if the uses overwrites, save their choice and make the necessary folder
     else
       prompt_msg "Where would you like to install?"
       read INSTALLDIR1
-      if [ ! -d $HOME/$INSTALLDIR1 ]; then
+      if [ ! -d "$HOME"/"$INSTALLDIR1" ]; then
         notice_msg "making $INSTALLDIR1 in $HOME"
         export INSTALLDIR=$HOME/$INSTALLDIR1
-        mkdir $INSTALLDIR
+        mkdir "$INSTALLDIR"
       else
         export INSTALLDIR=$HOME/$INSTALLDIR1
       fi
@@ -314,19 +314,19 @@ doDirectory() {
   echo "$INSTALLDIR" >>~/.dotfiles
 
   # make the folders to be copied to.
-  mkdir $INSTALLDIR/i3
-  mkdir $INSTALLDIR/home
-  mkdir $INSTALLDIR/i3status
-  mkdir $INSTALLDIR/vim
-  mkdir $INSTALLDIR/starship
+  mkdir "$INSTALLDIR"/i3
+  mkdir "$INSTALLDIR"/home
+  mkdir "$INSTALLDIR"/i3status
+  mkdir "$INSTALLDIR"/vim
+  mkdir "$INSTALLDIR"/starship
 
 }
 
 # symlink dotfiles to $INSTALLDIR
 syslink() {
   # remove the default profile file
-  if [ -f $HOME/.profile ]; then
-    rm $HOME/.profile
+  if [ -f "$HOME"/.profile ]; then
+    rm "$HOME"/.profile
   fi
   # set the places to be copied to
   DIR0=$SCRIPT_DIR/src/home/
@@ -336,48 +336,48 @@ syslink() {
   DIR3=$SCRIPT_DIR/src/i3status/
   DIR4=$SCRIPT_DIR/src/ranger/
 
-  for filename in $(ls -A $DIR0); do
-    cp $DIR0/$filename $INSTALLDIR/home/$filename -r
-    ln -s $INSTALLDIR/home/$filename $HOME
+  for filename in $(ls -A "$DIR0"); do
+    cp "$DIR0"/"$filename" "$INSTALLDIR"/home/"$filename" -r
+    ln -s "$INSTALLDIR"/home/"$filename" "$HOME"
   done
   done_msg "DONE WITH DIR ($DIR0)"
 
-  for filename in $(ls -A $DIR1); do
-    cp $DIR1/$filename $INSTALLDIR/vim/$filename -r
-    ln -s $INSTALLDIR/vim/$filename $HOME/.config/nvim
+  for filename in $(ls -A "$DIR1"); do
+    cp "$DIR1"/"$filename" "$INSTALLDIR"/vim/"$filename" -r
+    ln -s "$INSTALLDIR"/vim/"$filename" "$HOME"/.config/nvim
   done
   done_msg "DONE WITH DIR ($DIR1)"
 
-  cp $ITEM1 $INSTALLDIR/i3 -r
-  ln -s $INSTALLDIR/i3/config $HOME/.config/i3/config
+  cp "$ITEM1" "$INSTALLDIR"/i3 -r
+  ln -s "$INSTALLDIR"/i3/config "$HOME"/.config/i3/config
 
   done_msg "DONE WITH ITEM ($ITEM1)"
 
-  for filename in $(ls -A $DIR2); do
-    cp $DIR2/$filename $INSTALLDIR/starship/$filename -r
-    ln -s $INSTALLDIR/starship/$filename $HOME/.config/
+  for filename in $(ls -A "$DIR2"); do
+    cp "$DIR2"/"$filename" "$INSTALLDIR"/starship/"$filename" -r
+    ln -s "$INSTALLDIR"/starship/"$filename" "$HOME"/.config/
   done
 
   done_msg "DONE WITH DIR ($DIR2)"
 
-  for filename in $(ls -A $DIR3); do
-    cp $DIR3/$filename $INSTALLDIR/i3status/$filename -r
-    ln -s $INSTALLDIR/i3status/$filename $HOME/.config/i3status/
+  for filename in $(ls -A "$DIR3"); do
+    cp "$DIR3"/"$filename" "$INSTALLDIR"/i3status/"$filename" -r
+    ln -s "$INSTALLDIR"/i3status/"$filename" "$HOME"/.config/i3status/
   done
 
   done_msg "DONE WITH DIR ($DIR3)"
 
-  cp $DIR4/ $INSTALLDIR/ranger/ -r
-  ln -s $INSTALLDIR/ranger/ $HOME/.config/
+  cp "$DIR4"/ "$INSTALLDIR"/ranger/ -r
+  ln -s "$INSTALLDIR"/ranger/ "$HOME"/.config/
 
   done_msg "DONE WITH DIR ($DIR4)"
 }
 
 # install neovim
 Neovim() {
-  wget -q -O $SCRIPT_DIR/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
-  sudo apt install $SCRIPT_DIR/nvimabc.deb -y
-  rm $SCRIPT_DIR/nvimabc.deb
+  wget -q -O "$SCRIPT_DIR"/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
+  sudo apt install "$SCRIPT_DIR"/nvimabc.deb -y
+  rm "$SCRIPT_DIR"/nvimabc.deb
   sh -c 'curl -sfLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 }
@@ -385,12 +385,12 @@ Neovim() {
 # Install the proper firefox
 Firefox() {
   if [ ! -d /opt/firefox ]; then
-    wget -q 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O $SCRIPT_DIR/firefox-101.tar.bz2
-    tar xjf $SCRIPT_DIR/firefox-*.tar.bz2
-    sudo mv $SCRIPT_DIR/firefox /opt
+    wget -q 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O "$SCRIPT_DIR"/firefox-101.tar.bz2
+    tar xjf "$SCRIPT_DIR"/firefox-*.tar.bz2
+    sudo mv "$SCRIPT_DIR"/firefox /opt
     sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
     sudo wget -q https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
-    rm -rf $SCRIPT_DIR/firefox-*.tar.bz2
+    rm -rf "$SCRIPT_DIR"/firefox-*.tar.bz2
   fi
 }
 
