@@ -7,6 +7,14 @@ temp=${SCRIPT_DIR%"$suffix"}
 SCRIPT_DIR=$temp
 echo $SCRIPT_DIR >>$HOME/.dotfiles
 
+checker() {
+	if ! [ -x "$(command -v $1)" ]; then
+		error_msg "$1 is not installed. Aborting Now"
+		exit
+	else
+		done_msg "$1 check passing..."
+	fi
+}
 error_msg() { printf "\033[31;1m%s\033[0m\n" "$*"; }
 notice_msg() { printf "\033[33;1m%s\033[0m\n" "$*"; }
 done_msg() { printf "\033[32;1m%s\033[0m\n" "$*"; }
@@ -21,22 +29,13 @@ checkDefaults() {
 	fi
 
 	# check if apt is installed.
-	if ! [ -x "$(command -v apt)" ]; then
-		error_msg "Apt is not installed. Aborting now."
-		exit
-	fi
+	checker "apt"
 
 	#check if git is installed.
-	if ! [ -x "$(command -v git)" ]; then
-		error_msg "Git is not installed. Aborting now"
-		exit
-	fi
+	checker "git"
 
 	# check if sudo is installed.
-	if ! [ -x "$(command -v sudo)" ]; then
-		error_msg "Sudo is not installed. Aborting now."
-		exit
-	fi
+	checker "sudo"
 }
 # Check and install basics for installing the rest
 installRequirements() {
@@ -62,6 +61,7 @@ installRequirements() {
 	# install aptfile for installing packages
 	sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/monster0506/bash-aptfile/master/bin/aptfile
 	sudo chmod +x /usr/local/bin/aptfile
+	checker "aptfile"
 }
 
 # make sure all files installed are accessable for pip3, go, etc
