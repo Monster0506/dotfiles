@@ -239,9 +239,9 @@ configureGit() {
   gh auth login -p https -h github.com -w
   gh auth setup-git
   prompt_msg "Enter GIT username: "
-  read GIT_USERNAME
+  read -r GIT_USERNAME
   prompt_msg "Enter GIT email: "
-  read GIT_EMAIL
+  read -r GIT_EMAIL
   git config --global user.name "$GIT_USERNAME"
   git config --global user.email "$GIT_EMAIL"
 }
@@ -292,7 +292,7 @@ doDirectory() {
     export INSTALLDIR=$HOME/.cfg/
   else
     prompt_msg "$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN)"
-    read abc
+    read -r abc
     if [ "$abc" = y ]; then
       notice_msg "Overwriting .cfg directory."
       rm "$HOME"/.cfg/ -rf
@@ -301,7 +301,7 @@ doDirectory() {
       # if the uses overwrites, save their choice and make the necessary folder
     else
       prompt_msg "Where would you like to install?"
-      read INSTALLDIR1
+      read -r INSTALLDIR1
       if [ ! -d "$HOME"/"$INSTALLDIR1" ]; then
         notice_msg "making $INSTALLDIR1 in $HOME"
         export INSTALLDIR=$HOME/$INSTALLDIR1
