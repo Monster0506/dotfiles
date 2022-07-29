@@ -8,7 +8,7 @@ SCRIPT_DIR=$temp
 echo $SCRIPT_DIR >>$HOME/.dotfiles
 
 error_msg() { printf "\033[31;1m%s\033[0m\n" "$*"; }
-notice_msg() { printf "\033[33;1m%s\033[0m\n " "$*"; }
+notice_msg() { printf "\033[33;1m%s\033[0m\n" "$*"; }
 done_msg() { printf "\033[32;1m%s\033[0m\n" "$*"; }
 prompt_msg() { printf "\033[34;1m%s\033[0m\n" "$*"; }
 
