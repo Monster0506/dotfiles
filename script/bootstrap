@@ -20,6 +20,17 @@ notice_msg() { printf "\033[33;1m%s\033[0m\n" "$*"; }
 done_msg() { printf "\033[32;1m%s\033[0m\n" "$*"; }
 prompt_msg() { printf "\033[34;1m%s\033[0m\n" "$*"; }
 
+check_install() {
+	if ! [ -x "$(command -v $1)" ]; then
+		error_msg "$1 NOT INSTALLED"
+		error_msg "Installing now"
+		sudo apt install -y "$1"
+	else
+		done_msg "$1 check passing..."
+	fi
+
+}
+
 checkDefaults() {
 	# check if running as sudo
 	if [[ $EUID -eq 0 ]]; then
@@ -44,19 +55,11 @@ installRequirements() {
 
 	#check if curl is installed
 	notice_msg "Checking if curl is installed..."
-	if ! [ -x "$(command -v curl)" ]; then
-		error_msg "curl NOT INSTALLED"
-		error_msg "Installing now"
-		sudo apt install -y curl
-	fi
+	check_install "curl"
 
 	#check if wget is installed
 	notice_msg "Checking if wget is installed..."
-	if ! [ -x "$(command -v wget)" ]; then
-		error_msg "wget NOT INSTALLED"
-		error_msg "Installing now"
-		sudo apt install -y wget
-	fi
+	check_install "wget"
 
 	# install aptfile for installing packages
 	sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/monster0506/bash-aptfile/master/bin/aptfile
