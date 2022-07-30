@@ -12,7 +12,18 @@ gplusplus() {
 }
 
 md() {
-    pandoc "${1:-README.md}" | lynx -stdin
+    if [ -e "README.md" ]; then
+        FILE="README.md"
+    fi
+
+    if [ -e "readme.md" ]; then
+        FILE="readme.md"
+    fi
+
+    if [ -e "Readme.md" ]; then
+        FILE="Readme.md"
+    fi
+    pandoc "${1:-$FILE}" | lynx -stdin
 }
 clock() {
     # display a fancy clock using figlet
@@ -29,29 +40,17 @@ clock() {
     esac
 
 }
-me() {
-    echo -e "
-$red███╗░░░███╗░█████╗░███╗░░██╗░██████╗████████╗███████╗██████╗░░█████╗░███████╗░█████╗░░█████╗░ ████╗░████║██╔══██╗████╗░██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔═══╝░
-$coldblue██╔████╔██║██║░░██║██╔██╗██║╚█████╗░░░░██║░░░█████╗░░██████╔╝██║░░██║██████╗░██║░░██║██████╗░
-██║╚██╔╝██║██║░░██║██║╚████║░╚═══██╗░░░██║░░░██╔══╝░░██╔══██╗██║░░██║╚════██╗██║░░██║██╔══██╗
-$smoothgreen██║░╚═╝░██║╚█████╔╝██║░╚███║██████╔╝░░░██║░░░███████╗██║░░██║╚█████╔╝██████╔╝╚█████╔╝╚█████╔╝
-╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝░╚════╝░╚═════╝░░╚════╝░░╚════╝░
-    "
 
-}
 whatTime() {
     Year=$(date +%Y)
     Month=$(date +%m)
     Day=$(date +%d)
-    Hour=$(date +%H)
-    Minute=$(date +%M)
-    Second=$(date +%S)
     # echo `date`
     figlet -f big -w 80 -c "$Day-$Month-$Year"
-    clock
+    clock "$@"
 }
 up() {
-    for i in $(seq 1 $1); do
+    for i in $(seq 1 "$1"); do
         cd ../
     done
 }
@@ -80,6 +79,7 @@ randomname() {
         done
     done
 }
+
 resetpythonvenv() {
     if [ ! -z "$VIRTUAL_ENV" ]; then
         echo "Deactivating..."
@@ -137,7 +137,7 @@ extract() {
                 *.zpaq) zpaq x ./"$n" ;;
                 *.arc) arc e ./"$n" ;;
                 *.cso) ciso 0 ./"$n" ./"$n.iso" &&
-                    extract $n.iso && \rm -f $n ;;
+                    extract "$n".iso && \rm -f "$n" ;;
                 *)
                     echo "extract: '$n' - unknown archive method"
                     return 1
@@ -439,7 +439,6 @@ weather() {
     "-h" | "--help")
         echo "weather [city]"
         echo "    --help  -h:  print this help"
-        echo "    --pager -p: pipe the output to a pager"
         echo "    --color -c: colorize the output"
         ;;
     *)
@@ -582,7 +581,7 @@ Trash() {
     fi
     case $1 in
     -r | -f | -rf | -fr)
-        IGNORE=true
+        :
         ;;
     -n)
         REAL=true
@@ -598,7 +597,7 @@ Trash() {
     *)
         if [ -e "$1" ]; then
             ITEM=$(realpath $1)
-            remove $ITEM
+            remove "$ITEM"
             return 1
         fi
         ;;
