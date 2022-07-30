@@ -155,11 +155,6 @@ local servers = {
 }
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-require("mason-lspconfig").setup(
-    {
-        ensure_installed = servers
-    }
-)
 
 for _, lsp in ipairs(servers) do
     require "lspconfig"[lsp].setup {
@@ -170,3 +165,20 @@ end
 
 --- }}}
 --- }}
+-- Mason {{{
+require("mason-lspconfig").setup(
+    {
+        ensure_installed = servers
+    }
+)
+require("mason-installer").setup(
+    {
+        ensure_installed = {
+            "flake8",
+            "shellcheck",
+            "shfmt",
+            "black"
+        }
+    }
+)
+--- }}}
