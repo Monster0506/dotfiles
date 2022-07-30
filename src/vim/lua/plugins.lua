@@ -129,6 +129,7 @@ function M.setup()
     --- }}}
     -- Other Utility Plugins {{{
 
+    Plug "Monster0506/mason-installer.nvim"
     Plug "antoinemadec/FixCursorHold.nvim"
     Plug "axieax/urlview.nvim"
     Plug "kyazdani42/nvim-tree.lua"
