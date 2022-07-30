@@ -164,7 +164,8 @@ for _, lsp in ipairs(servers) do
 end
 
 --- }}}
---- }}
+--- }}}
+
 -- Mason {{{
 require("mason-lspconfig").setup(
     {
