@@ -1,0 +1,36 @@
+#!/bin/bash
+
+FILES=$(sed -n 2p $HOME/.dotfiles)
+
+rm -rf "$HOME"/.dotfiles
+DIR0=$FILES/home/
+DIR1=$FILES/vim/
+DIR2=$FILES/starship/
+DIR3=$FILES/i3status/
+DIR4=$FILES/ranger/
+DIR5=$FILES/i3/
+rm -rf ~/"$FILES"
+
+for filename in $(ls -A "$DIR0"); do
+  rm ~/"$filename"
+done
+
+for filename in $(ls -A "$DIR1"); do
+  rm ~/"$filename"
+done
+
+for filename in $(ls -A "$DIR2"); do
+  rm ~/"$filename"
+done
+
+for filename in $(ls -A "$DIR3"); do
+  rm ~/"$filename"
+done
+
+for filename in $(ls -A "$DIR4"); do
+  rm ~/"$filename"
+done
+
+for filename in $(ls -A "$DIR5"); do
+  rm ~/"$filename"
+done
