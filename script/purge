@@ -16,21 +16,23 @@ for filename in $(ls -A "$DIR0"); do
 done
 
 for filename in $(ls -A "$DIR1"); do
-  rm ~/"$filename"
+  rm ~/.config/nvim/"$filename"
 done
 
 for filename in $(ls -A "$DIR2"); do
-  rm ~/"$filename"
+  rm ~/.config/"$filename"
 done
 
 for filename in $(ls -A "$DIR3"); do
-  rm ~/"$filename"
+  rm ~/.config/i3status/"$filename"
 done
 
 for filename in $(ls -A "$DIR4"); do
-  rm ~/"$filename"
+  rm ~/.config/ranger/"$filename"
 done
 
 for filename in $(ls -A "$DIR5"); do
-  rm ~/"$filename"
+  rm ~/.config/i3/"$filename"
 done
+
+rm -rf $FILES
