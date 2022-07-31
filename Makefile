@@ -38,3 +38,6 @@ endif
 ifndef GIT
 	$(error No GIT in $$PATH.)
 endif
+
+purge: preq
+	@./script/purge
