@@ -11,3 +11,5 @@ git config --global alias.s 'status'
 git config --global alias.sta 'status'
 git config --global core.editor "nvim"
 git config --global core.excludesfile $HOME/.gitignore_global
+
+echo -e "\e[32;1mDone!"
