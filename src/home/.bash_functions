@@ -81,30 +81,49 @@ randomname() {
 }
 
 resetpythonvenv() {
-    if [ ! -z "$VIRTUAL_ENV" ]; then
+    if [ -n "$VIRTUAL_ENV" ]; then
         echo "Deactivating..."
         deactivate
     else
         echo "No venv active, skipped 'deactivate' step."
     fi
-    if [ -d "bin" ]; then
-        echo "Nuking old virtual environment..."
-        \rm -r bin
-        \rm -r include
-        \rm -r lib
-        \rm pyvenv.cfg
+    if [ -e venv ]; then
+        source venv/bin/activate
+        if [ -d "venv/bin" ]; then
+            echo "Nuking old virtual environment..."
+            \rm -r venv/bin
+            \rm -r venv/include
+            \rm -r venv/lib
+            \rm venv/pyvenv.cfg
+        else
+            echo "No 'bin' directory present, skipped nuking step."
+        fi
+        echo "Setting up a fresh virtual environment..."
+        python3 -m venv venv
+        echo "Activating..."
+        if [ ! -f "venv/requirements.txt" ]; then
+            echo -e "pynvim\nneovim\nopenai" >>venv/requirements.txt
+        fi
+        echo "Reinstalling from requirements.txt..."
+        pip3 install -r venv/requirements.txt
     else
-        echo "No 'bin' directory present, skipped nuking step."
-    fi
-    echo "Setting up a fresh virtual environment..."
-    python3 -m venv .
-    echo "Activating..."
-    source bin/activate
-    if [ -f "requirements.txt" ]; then
+        if [ -d "bin" ]; then
+            echo "Nuking old virtual environment..."
+            \rm -r bin
+            \rm -r include
+            \rm -r lib
+            \rm pyvenv.cfg
+        else
+            echo "No 'bin' directory present, skipped nuking step."
+        fi
+        echo "Setting up a fresh virtual environment..."
+        python3 -m venv .
+        echo "Activating..."
+        if [ ! -f "requirements.txt" ]; then
+            echo -e "pynvim\nneovim\nopenai" >>requirements.txt
+        fi
         echo "Reinstalling from requirements.txt..."
         pip3 install -r requirements.txt
-    else
-        echo "No 'requirements.txt' found, skipped reinstall step."
     fi
 }
 # Bash To Extract File Archives Of Various Types
