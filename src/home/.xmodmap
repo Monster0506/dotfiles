@@ -1,0 +1,59 @@
+! Stolen from https://cs.gmu.edu/~sean/stuff/n800/keyboard/old.html
+keycode 0x4c = Home function uparrow
+keycode 0x5f = End Print downarrow
+keycode 0x60 = Page_Up telephone cursor dagger
+
+keysym bracketleft = bracketleft braceleft leftdoublequotemark rightdoublequotemark
+keysym bracketright = bracketright braceright leftsinglequotemark rightsinglequotemark
+keysym backslash = backslash bar guillemotleft guillemotright
+keysym 1 = 1 exclam exclamdown
+keysym 2 = 2 at trademark EuroSign
+keysym 3 = 3 numbersign sterling
+keysym 4 = 4 dollar cent currency
+keysym 5 = 5 percent infinity
+keysym 6 = 6 asciicircum section 
+keysym 7 = 7 ampersand paragraph doubledagger
+keysym 8 = 8 asterisk enfilledcircbullet degree
+keysym 9 = 9 parenleft ordfeminine periodcentered
+keysym 0 = 0 parenright masculine NoSymbol
+keysym minus = minus underscore endash emdash
+keysym equal = equal plus notequal plusminus
+keysym comma = comma less lessthanequal NoSymbol
+keysym period = period greater greaterthanequal NoSymbol
+keysym b = b B integral NoSymbol
+keysym d = d D Greek_delta Greek_DELTA
+keysym g = g G copyright acute
+keysym h = h H enopensquarebullet filledrectbullet
+keysym j = j J enfilledsqbullet enopencircbullet
+keysym n = n N filledtribulletup leftarrow
+keysym m = m M filledtribulletdown rightarrow
+keysym l = l L notsign Lstroke
+keysym p = p P Greek_pi Greek_PI
+keysym q = q Q oe OE
+keysym r = r R registered numerosign
+keysym v = v V squareroot NoSymbol
+keysym w = w W Greek_SIGMA doublelowquotemark
+keysym x = x X approxeq multiply
+keysym y = y Y yen NoSymbol
+keysym z = z Z Greek_omega Greek_OMEGA
+keysym slash = slash question division questiondown
+keysym apostrophe = apostrophe quotedbl ae AE
+keysym semicolon = semicolon colon ellipsis diaeresis
+!
+
+!!!! Add Enter, Backtab, and Delete
+keysym Return = Return KP_Enter Return KP_Enter
+keysym Tab = Tab ISO_Left_Tab Tab ISO_Left_Tab
+keysym BackSpace = BackSpace Delete BackSpace Delete
+
+
+!!!! for good measure
+clear Mod2
+clear Mod3
+clear Mod5
+
+!
+keycode 0x6C = Multi_key
+!
+keycode 0x69 = Mode_switch
+
