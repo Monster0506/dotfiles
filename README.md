@@ -37,6 +37,9 @@ ranger config file with some pretty basic configurations
 
 ### ViM/Neovim Plugins
 
+This may not be completely up-to-date, so please view the [plugins](src/vim/lua/plugins.lua) 
+file for completeness.
+
 ## Telescope Plugins
 
 - [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep)
@@ -78,7 +81,6 @@ ranger config file with some pretty basic configurations
 - [numToStr/comment.nvim](https://github.com/numToStr/comment.nvim)
 - [sbdchd/neoformat](https://github.com/sbdchd/neoformat)
 - [sheerun/vim-polyglot](https://github.com/sheerun/vim-polyglot)
-- [vim-syntastic/syntastic](https://github.com/vim-syntastic/syntastic)
 
 ## Colorschemes and Appearance Plugins
 
