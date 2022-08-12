@@ -46,7 +46,6 @@ function M.setup()
     Plug "numToStr/Comment.nvim"
     Plug "sbdchd/neoformat"
     Plug "sheerun/vim-polyglot"
-    Plug "vim-syntastic/syntastic"
 
     --- }}}
     -- Colorschemes and Appearance Plugins {{{
