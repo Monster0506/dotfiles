@@ -422,6 +422,7 @@ main() {
   fixPath
   finishSteps
   # Alert user we are finished.
+  echo "# WARNING: MODIFING THIS FILE WILL MODIFY THE SYNC MAKE TARGET" >>"$HOME"/.dotfiles
   done_msg "Done! Enjoy your new machine!"
 }
 main
