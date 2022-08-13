@@ -33,7 +33,7 @@ function M.setup()
     keymap("i", "[,", "[<CR>],<Esc>O", opts)
     --- }}}
     -- Center Text on the Screen {{{
-    local remapList = {"p", "P", "<CR>", "gg", "H", "L", "n", "N", "%", "<c-o>"}
+    local remapList = {"p", "P", "<CR>", "gg", "H", "L", "n", "N", "%", "<c-o>", "<c-u>", "<c-d>"}
 
     for k in pairs(remapList) do
         keymap("n", remapList[k], remapList[k] .. "zz", opts)
