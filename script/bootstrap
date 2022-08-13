@@ -167,6 +167,8 @@ GoStuff() {
   sudo rm -rf "$TEMP_DIR"
   fixPath
   go install -v mvdan.cc/sh/cmd/shfmt@latest
+  go install github.com/jesseduffield/lazygit@latest
+  ln -s "$HOME"/go/bin/shfmt "$HOME"/.local/bin
   ln -s "$HOME"/go/bin/shfmt "$HOME"/.local/bin/
 }
 
