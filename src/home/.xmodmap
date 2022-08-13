@@ -1,11 +1,13 @@
 ! Stolen from https://cs.gmu.edu/~sean/stuff/n800/keyboard/old.html
-keycode 0x4c = Home function uparrow
-keycode 0x5f = End Print downarrow
+keycode 0x4c = Home function Up
+keycode 0x5f = End Print Down
 keycode 0x60 = Page_Up telephone cursor dagger
 
-keysym bracketleft = bracketleft braceleft leftdoublequotemark rightdoublequotemark
-keysym bracketright = bracketright braceright leftsinglequotemark rightsinglequotemark
+keysym bracketleft = bracketleft braceleft quotedbl parenleft
+keysym bracketright = bracketright braceright apostrophe parenright
 keysym backslash = backslash bar guillemotleft guillemotright
+
+
 keysym 1 = 1 exclam exclamdown
 keysym 2 = 2 at trademark EuroSign
 keysym 3 = 3 numbersign sterling
@@ -39,15 +41,11 @@ keysym z = z Z Greek_omega Greek_OMEGA
 keysym slash = slash question division questiondown
 keysym apostrophe = apostrophe quotedbl ae AE
 keysym semicolon = semicolon colon ellipsis diaeresis
-!
-
-!!!! Add Enter, Backtab, and Delete
-keysym Return = Return KP_Enter Return KP_Enter
+keysym Return = Return KP_Enter KP_Enter Return 
 keysym Tab = Tab ISO_Left_Tab Tab ISO_Left_Tab
-keysym BackSpace = BackSpace Delete BackSpace Delete
+keysym BackSpace = BackSpace NoSymbol Delete NoSymbol 
 
 
-!!!! for good measure
 clear Mod2
 clear Mod3
 clear Mod5
