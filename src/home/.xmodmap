@@ -2,11 +2,9 @@
 keycode 0x4c = Home function Up
 keycode 0x5f = End Print Down
 keycode 0x60 = Page_Up telephone cursor dagger
-
 keysym bracketleft = bracketleft braceleft quotedbl parenleft
 keysym bracketright = bracketright braceright apostrophe parenright
 keysym backslash = backslash bar guillemotleft guillemotright
-
 
 keysym 1 = 1 exclam exclamdown
 keysym 2 = 2 at trademark EuroSign
@@ -22,36 +20,25 @@ keysym minus = minus underscore endash emdash
 keysym equal = equal plus notequal plusminus
 keysym comma = comma less lessthanequal NoSymbol
 keysym period = period greater greaterthanequal NoSymbol
-keysym b = b B integral NoSymbol
-keysym d = d D Greek_delta Greek_DELTA
-keysym g = g G copyright acute
-keysym h = h H enopensquarebullet filledrectbullet
-keysym j = j J enfilledsqbullet enopencircbullet
-keysym n = n N filledtribulletup leftarrow
-keysym m = m M filledtribulletdown rightarrow
-keysym l = l L notsign Lstroke
-keysym p = p P Greek_pi Greek_PI
-keysym q = q Q oe OE
-keysym r = r R registered numerosign
-keysym v = v V squareroot NoSymbol
-keysym w = w W Greek_SIGMA doublelowquotemark
+keysym c = c C copyright acute
+keysym h = h H Left Home
+keysym j = j J Down Page_Down
+keysym k = k K Up Page_Up
+keysym n = n N filledlefttribullet leftarrow
+keysym m = m M filledrighttribullet rightarrow
+keysym v = v V filledtribulletup uparrow
+keysym b = b B filledtribulletdown downarrow
+keysym l = l L Right End
 keysym x = x X approxeq multiply
-keysym y = y Y yen NoSymbol
-keysym z = z Z Greek_omega Greek_OMEGA
 keysym slash = slash question division questiondown
 keysym apostrophe = apostrophe quotedbl ae AE
 keysym semicolon = semicolon colon ellipsis diaeresis
-keysym Return = Return KP_Enter KP_Enter Return 
 keysym Tab = Tab ISO_Left_Tab Tab ISO_Left_Tab
 keysym BackSpace = BackSpace NoSymbol Delete NoSymbol 
 
-
-clear Mod2
 clear Mod3
 clear Mod5
 
-!
-keycode 0x6C = Multi_key
-!
+keycode 0x3E = Multi_key
 keycode 0x69 = Mode_switch
 
