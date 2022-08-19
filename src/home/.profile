@@ -38,15 +38,15 @@ fi
 
 if [ -n "$bash_version" ]; then
     # include .bashrc if it exists
-    if [ -f "$home/.bashrc" ]; then
-        . "$home/.bashrc"
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
     fi
 fi
 if [ -n "$bash_version" ]; then
     # include .bashrc if it exists
-    if [ -f "$home/.bashrc" ]; then
-        . "$home/.bashrc"
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
     fi
 fi
 
-SUDO_ASKPASS=/usr/bin/ssh-askpass
+export SUDO_ASKPASS=/usr/bin/ssh-askpass
