@@ -6,7 +6,7 @@ GIT := $(shell command -v git 2> /dev/null)
 
 
 
-all: generate finalAll
+all: generate finalAll gitConfig
 
 install: generate
 
