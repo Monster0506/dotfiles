@@ -337,6 +337,7 @@ syslink() {
   DIR2=$SCRIPT_DIR/src/starship/
   DIR3=$SCRIPT_DIR/src/i3status/
   DIR4=$SCRIPT_DIR/src/ranger/
+  DIR5=$SCRIPT_DIR/src/git/
 
   for filename in $(ls -A "$DIR0"); do
     cp "$DIR0"/"$filename" "$INSTALLDIR"/home/"$filename" -r
@@ -373,6 +374,11 @@ syslink() {
   ln -s "$INSTALLDIR"/ranger/ "$HOME"/.config/
 
   done_msg "DONE WITH DIR ($DIR4)"
+
+  cp "$DIR5"/ "$INSTALLDIR"/git/ -r
+  ln -s "$INSTALLDIR"/git/ "$HOME"/.local/bin/
+
+  done_msg "DONE WITH DIR ($DIR5)"
 }
 
 # install neovim
