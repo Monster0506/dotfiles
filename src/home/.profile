@@ -6,6 +6,10 @@ if [ -d $HOME/.cargo/bin/ ]; then
     export PATH=$HOME/.cargo/bin/:$PATH
 fi
 
+if [ -d $HOME/.local/bin/git ]; then
+    export PATH=$HOME/.local/bin/git/:$PATH
+fi
+
 . "$HOME/.cargo/env"
 
 if [ -d $HOME/.local/bin ]; then
