@@ -38,3 +38,4 @@ alias ll="exa --classify -a --long --git"
 alias ga="git add"
 alias gc="git commit"
 alias gcm="git commit -m"
+alias lg=lazygit
