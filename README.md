@@ -37,7 +37,7 @@ ranger config file with some pretty basic configurations
 
 ### ViM/Neovim Plugins
 
-This may not be completely up-to-date, so please view the [plugins](src/vim/lua/plugins.lua) 
+This may not be completely up-to-date, so please view the [plugins](src/vim/lua/plugins.lua)
 file for completeness.
 
 ## Telescope Plugins

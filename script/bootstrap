@@ -3,17 +3,17 @@
 unset CDPATH
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 suffix="/script"
-temp=${SCRIPT_DIR%"$suffix"}
-SCRIPT_DIR=$temp
-echo "$SCRIPT_DIR" >>"$HOME"/.dotfiles
+temp=${SCRIPT_DIR%"${suffix}"}
+SCRIPT_DIR=${temp}
+echo "${SCRIPT_DIR}" >>"${HOME}"/.dotfiles
 
 checker() {
-  if ! [ -x "$(command -v "$1")" ]; then
-    error_msg "$1 is not installed. Aborting Now"
-    exit
-  else
-    done_msg "$1 check passing..."
-  fi
+	if ! [[ -x "$(command -v "$1")" ]]; then
+		error_msg "$1 is not installed. Aborting Now"
+		exit
+	else
+		done_msg "$1 check passing..."
+	fi
 }
 error_msg() { printf "\033[31;1m%s\033[0m\n" "$*"; }
 notice_msg() { printf "\033[33;1m%s\033[0m\n" "$*"; }
@@ -21,416 +21,416 @@ done_msg() { printf "\033[32;1m%s\033[0m\n" "$*"; }
 prompt_msg() { printf "\033[34;1m%s\033[0m\n" "$*"; }
 
 check_install() {
-  if ! [ -x "$(command -v "$1")" ]; then
-    error_msg "$1 NOT INSTALLED"
-    error_msg "Installing now"
-    sudo apt install -y "$1"
-  else
-    done_msg "$1 check passing..."
-  fi
+	if ! [[ -x "$(command -v "$1")" ]]; then
+		error_msg "$1 NOT INSTALLED"
+		error_msg "Installing now"
+		sudo apt install -y "$1"
+	else
+		done_msg "$1 check passing..."
+	fi
 
 }
 
 checkDefaults() {
-  # check if running as sudo
-  if [[ $EUID -eq 0 ]]; then
-    error_msg "Please do not run as root"
-    error_msg "If superuser is required, you will be prompted. Aborting now."
-    exit
-  fi
+	# check if running as sudo
+	if [[ ${EUID} -eq 0 ]]; then
+		error_msg "Please do not run as root"
+		error_msg "If superuser is required, you will be prompted. Aborting now."
+		exit
+	fi
 
-  # check if apt is installed.
-  checker "apt"
+	# check if apt is installed.
+	checker "apt"
 
-  #check if git is installed.
-  checker "git"
+	#check if git is installed.
+	checker "git"
 
-  # check if sudo is installed.
-  checker "sudo"
+	# check if sudo is installed.
+	checker "sudo"
 }
 # Check and install basics for installing the rest
 installRequirements() {
-  notice_msg "Checking and installing basics"
-  sudo apt-get update
+	notice_msg "Checking and installing basics"
+	sudo apt-get update
 
-  #check if curl is installed
-  notice_msg "Checking if curl is installed..."
-  check_install "curl"
+	#check if curl is installed
+	notice_msg "Checking if curl is installed..."
+	check_install "curl"
 
-  #check if wget is installed
-  notice_msg "Checking if wget is installed..."
-  check_install "wget"
+	#check if wget is installed
+	notice_msg "Checking if wget is installed..."
+	check_install "wget"
 
-  # install aptfile for installing packages
-  sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/monster0506/bash-aptfile/master/bin/aptfile
-  sudo chmod +x /usr/local/bin/aptfile
-  checker "aptfile"
+	# install aptfile for installing packages
+	sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/monster0506/bash-aptfile/master/bin/aptfile
+	sudo chmod +x /usr/local/bin/aptfile
+	checker "aptfile"
 }
 
 # make sure all files installed are accessable for pip3, go, etc
 fixPath() {
-  # reset the path
-  export PATH=""
-  # apply each item to the path
-  if [ -d "$HOME"/.local/bin/ ]; then
-    export PATH=$PATH:$HOME/.local/bin/
-  fi
+	# reset the path
+	export PATH=""
+	# apply each item to the path
+	if [[ -d "${HOME}"/.local/bin/ ]]; then
+		export PATH=${PATH}:${HOME}/.local/bin/
+	fi
 
-  if [ -d "$HOME"/.cargo/bin/ ]; then
-    export PATH=$PATH:$HOME/.cargo/bin/
-  fi
+	if [[ -d "${HOME}"/.cargo/bin/ ]]; then
+		export PATH=${PATH}:${HOME}/.cargo/bin/
+	fi
 
-  if [ -d /usr/local/bin/ ]; then
-    export PATH=$PATH:/usr/local/bin/
-  fi
+	if [[ -d /usr/local/bin/ ]]; then
+		export PATH=${PATH}:/usr/local/bin/
+	fi
 
-  if [ -d /usr/bin/ ]; then
-    export PATH=$PATH:/usr/bin/
-  fi
+	if [[ -d /usr/bin/ ]]; then
+		export PATH=${PATH}:/usr/bin/
+	fi
 
-  if [ -d /bin/ ]; then
-    export PATH=$PATH:/bin/
-  fi
+	if [[ -d /bin/ ]]; then
+		export PATH=${PATH}:/bin/
+	fi
 
-  if [ -d /usr/local/games ]; then
-    export PATH=$PATH:/usr/local/games/
-  fi
+	if [[ -d /usr/local/games ]]; then
+		export PATH=${PATH}:/usr/local/games/
+	fi
 
-  if [ -d /usr/games ]; then
-    export PATH=$PATH:/usr/games/
-  fi
+	if [[ -d /usr/games ]]; then
+		export PATH=${PATH}:/usr/games/
+	fi
 
-  if [ -d /usr/local/go/bin ]; then
-    export PATH=$PATH:/usr/local/go/bin
-  fi
+	if [[ -d /usr/local/go/bin ]]; then
+		export PATH=${PATH}:/usr/local/go/bin
+	fi
 
 }
 # Install starship
 Starship() {
-  curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+	curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 }
 
 # install nodejs
 Node() {
-  curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-  sudo apt-get install -y nodejs yarn
+	curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+	sudo apt-get install -y nodejs yarn
 }
 
 # Install rust
 # TODO: find if this can be done without having to press 1
 Rust() {
-  curl https://sh.rustup.rs -sSf | sh -s -- -y -q
-  # remove this bashrc, as the repo holds the line that it writes
-  rm "$HOME"/.bashrc
+	curl https://sh.rustup.rs -sSf | sh -s -- -y -q
+	# remove this bashrc, as the repo holds the line that it writes
+	rm "${HOME}"/.bashrc
 }
 
 # install git completion/extras
 GitCompletion() {
-  # git extras
-  curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin
-  # git completion
-  curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o "$HOME"/.git-completion.bash
+	# git extras
+	curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin
+	# git completion
+	curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o "${HOME}"/.git-completion.bash
 }
 # install go
 GoStuff() {
-  TEMP_DIR=$(mktemp -d)
-  GOVERSION="1.18.3"
+	TEMP_DIR=$(mktemp -d)
+	GOVERSION="1.18.3"
 
-  # Find the correct package to install.
-  OS="linux"
-  ARCH="$(uname -m)"
-  case "$ARCH" in
-  "x86_64")
-    ARCH=amd64
-    ;;
-  "aarch64")
-    ARCH=arm64
-    ;;
-  "armv6" | "armv7l")
-    ARCH=armv6l
-    ;;
-  "armv8")
-    ARCH=arm64
-    ;;
-  .*386.*)
-    ARCH=386
-    ;;
-  esac
+	# Find the correct package to install.
+	OS="linux"
+	ARCH="$(uname -m)"
+	case "${ARCH}" in
+	"x86_64")
+		ARCH=amd64
+		;;
+	"aarch64")
+		ARCH=arm64
+		;;
+	"armv6" | "armv7l")
+		ARCH=armv6l
+		;;
+	"armv8")
+		ARCH=arm64
+		;;
+	.*386.*)
+		ARCH=386
+		;;
+	esac
 
-  PACKAGE="go${GOVERSION}.${OS}-${ARCH}.tar.gz"
-  URL="https://dl.google.com/go/${PACKAGE}"
-  curl -sL "$URL" -o "$TEMP_DIR/$PACKAGE"
-  if [ -d /usr/local/go ]; then
-    sudo rm -rf /usr/local/go
-  fi
-  sudo tar -C /usr/local -xzf "$TEMP_DIR/$PACKAGE"
-  sudo rm -rf "$TEMP_DIR"
-  fixPath
-  go install -v mvdan.cc/sh/cmd/shfmt@latest
-  go install github.com/jesseduffield/lazygit@latest
-  ln -s "$HOME"/go/bin/shfmt "$HOME"/.local/bin
-  ln -s "$HOME"/go/bin/shfmt "$HOME"/.local/bin/
+	PACKAGE="go${GOVERSION}.${OS}-${ARCH}.tar.gz"
+	URL="https://dl.google.com/go/${PACKAGE}"
+	curl -sL "${URL}" -o "${TEMP_DIR}/${PACKAGE}"
+	if [[ -d /usr/local/go ]]; then
+		sudo rm -rf /usr/local/go
+	fi
+	sudo tar -C /usr/local -xzf "${TEMP_DIR}/${PACKAGE}"
+	sudo rm -rf "${TEMP_DIR}"
+	fixPath
+	go install -v mvdan.cc/sh/cmd/shfmt@latest
+	go install github.com/jesseduffield/lazygit@latest
+	ln -s "${HOME}"/go/bin/shfmt "${HOME}"/.local/bin
+	ln -s "${HOME}"/go/bin/shfmt "${HOME}"/.local/bin/
 }
 
 # install gh cli
 GitCli() {
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-  sudo apt update
-  sudo apt install gh
+	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+	sudo apt update
+	sudo apt install gh
 
 }
 Sql() {
-  sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-  wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-  sudo apt-get update
-  sudo apt-get -y install postgresql
+	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+	sudo apt-get update
+	sudo apt-get -y install postgresql
 }
 AptStuff() {
-  # install other useful stuff
-  sudo apt remove firefox-esr -y
-  sudo aptfile "$SCRIPT_DIR"/script/packages
+	# install other useful stuff
+	sudo apt remove firefox-esr -y
+	sudo aptfile "${SCRIPT_DIR}"/script/packages
 
 }
 configureExtraStuff() {
 
-  notice_msg "Running final setup steps..."
-  fixPath
-  pip3 install pynvim black neovim openai
-  configureNpm
-  configureVim
-  configureRust
-  Sql
+	notice_msg "Running final setup steps..."
+	fixPath
+	pip3 install pynvim black neovim openai
+	configureNpm
+	configureVim
+	configureRust
+	Sql
 
 }
 
 configureRust() {
-  rustup component add rustfmt
-  rustup default nightly
-  rustup component add rust-src
-  curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer
-  chmod +x ~/.local/bin/rust-analyzer
+	rustup component add rustfmt
+	rustup default nightly
+	rustup component add rust-src
+	curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer
+	chmod +x ~/.local/bin/rust-analyzer
 
 }
 
 configureNpm() {
-  fixPath
-  if command -v npm >/dev/null 2>&1; then
-    sudo npm install -g neovim
-    sudo npm install -g typescript typescript-language-server
-    sudo npm install -g pyright
-    sudo npm install -g lua-fmt
-    sudo npm install -g bash-language-server
-  fi
+	fixPath
+	if command -v npm >/dev/null 2>&1; then
+		sudo npm install -g neovim
+		sudo npm install -g typescript typescript-language-server
+		sudo npm install -g pyright
+		sudo npm install -g lua-fmt
+		sudo npm install -g bash-language-server
+	fi
 }
 
 configureVim() {
-  nvim +PlugInstall +qa
+	nvim +PlugInstall +qa
 
 }
 
 setupPromptRequired() {
-  configureGit
-  # install bitwarden_password_manager
-  wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O "$SCRIPT_DIR"/bitwarden_password_manager.xpi
-  firefox "$SCRIPT_DIR"/bitwarden_password_manager.xpi --setDefaultBrowser
-  sleep 10 && rm "$SCRIPT_DIR"/bitwarden_password_manager.xpi
+	configureGit
+	# install bitwarden_password_manager
+	wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
+	firefox "${SCRIPT_DIR}"/bitwarden_password_manager.xpi --setDefaultBrowser
+	sleep 10 && rm "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
 }
 
 configureGit() {
-  gh auth login -p https -h github.com -w
-  gh auth setup-git
-  prompt_msg "Enter GIT username: "
-  read -r GIT_USERNAME
-  prompt_msg "Enter GIT email: "
-  read -r GIT_EMAIL
-  git config --global user.name "$GIT_USERNAME"
-  git config --global user.email "$GIT_EMAIL"
+	gh auth login -p https -h github.com -w
+	gh auth setup-git
+	prompt_msg "Enter GIT username: "
+	read -r GIT_USERNAME
+	prompt_msg "Enter GIT email: "
+	read -r GIT_EMAIL
+	git config --global user.name "${GIT_USERNAME}"
+	git config --global user.email "${GIT_EMAIL}"
 }
 
 finishSteps() {
-  sudo apt update -y && sudo apt upgrade -y
-  sudo apt autoremove -y
-  sudo apt clean
-  sudo apt autoclean -y
-  echo 'SELECTED_EDITOR="/usr/bin/nvim"' >"$HOME"/.selected_editor
-  setupPromptRequired
+	sudo apt update -y && sudo apt upgrade -y
+	sudo apt autoremove -y
+	sudo apt clean
+	sudo apt autoclean -y
+	echo 'SELECTED_EDITOR="/usr/bin/nvim"' >"${HOME}"/.selected_editor
+	setupPromptRequired
 
 }
 
 # make sure all folders exist if necessary.
 checkFolders() {
-  # make a trash folder so rm alias does not get confused.
-  if [ ! -d "$HOME"/.Trash ]; then
-    mkdir "$HOME"/.Trash
-  fi
-  # make the config folders
-  if [ ! -d "$HOME"/.config ]; then
-    mkdir "$HOME"/.config
-  fi
-  if [ ! -d "$HOME"/.config/nvim ]; then
-    mkdir "$HOME"/.config/nvim
-  fi
-  if [ ! -d "$HOME"/.config/i3 ]; then
-    mkdir "$HOME"/.config/i3
-  fi
-  if [ ! -d "$HOME"/.config/i3status ]; then
-    mkdir "$HOME"/.config/i3status
-  fi
-  # make the local bin folder
-  if [ ! -d "$HOME"/.local/bin ]; then
-    mkdir "$HOME"/.local/bin
-  fi
-  if [ ! -d "$HOME"/.cache/nvim ]; then
-    mkdir -p "$HOME"/.cache/nvim
-  fi
+	# make a trash folder so rm alias does not get confused.
+	if [[ ! -d "${HOME}"/.Trash ]]; then
+		mkdir "${HOME}"/.Trash
+	fi
+	# make the config folders
+	if [[ ! -d "${HOME}"/.config ]]; then
+		mkdir "${HOME}"/.config
+	fi
+	if [[ ! -d "${HOME}"/.config/nvim ]]; then
+		mkdir "${HOME}"/.config/nvim
+	fi
+	if [[ ! -d "${HOME}"/.config/i3 ]]; then
+		mkdir "${HOME}"/.config/i3
+	fi
+	if [[ ! -d "${HOME}"/.config/i3status ]]; then
+		mkdir "${HOME}"/.config/i3status
+	fi
+	# make the local bin folder
+	if [[ ! -d "${HOME}"/.local/bin ]]; then
+		mkdir "${HOME}"/.local/bin
+	fi
+	if [[ ! -d "${HOME}"/.cache/nvim ]]; then
+		mkdir -p "${HOME}"/.cache/nvim
+	fi
 }
 
 doDirectory() {
-  # Create dotfiles directory, or if it exists, prompt user for install location
-  # If it does not exist, create it, and create the INSTALLDIR file
-  if [ ! -d "$HOME"/.cfg/ ]; then
-    mkdir "$HOME"/.cfg/
-    export INSTALLDIR=$HOME/.cfg/
-  else
-    prompt_msg "$HOME/.cfg/ directory exists. Would you like to overwrite it?(yN)"
-    read -r abc
-    if [ "$abc" = y ]; then
-      notice_msg "Overwriting .cfg directory."
-      rm "$HOME"/.cfg/ -rf
-      mkdir "$HOME"/.cfg
-      export INSTALLDIR=$HOME/.cfg/
-      # if the uses overwrites, save their choice and make the necessary folder
-    else
-      prompt_msg "Where would you like to install?"
-      read -r INSTALLDIR1
-      if [ ! -d "$HOME"/"$INSTALLDIR1" ]; then
-        notice_msg "making $INSTALLDIR1 in $HOME"
-        export INSTALLDIR=$HOME/$INSTALLDIR1
-        mkdir "$INSTALLDIR"
-      else
-        export INSTALLDIR=$HOME/$INSTALLDIR1
-      fi
-    fi
-  fi
-  echo "$INSTALLDIR" >>~/.dotfiles
+	# Create dotfiles directory, or if it exists, prompt user for install location
+	# If it does not exist, create it, and create the INSTALLDIR file
+	if [[ ! -d "${HOME}"/.cfg/ ]]; then
+		mkdir "${HOME}"/.cfg/
+		export INSTALLDIR=${HOME}/.cfg/
+	else
+		prompt_msg "${HOME}/.cfg/ directory exists. Would you like to overwrite it?(yN)"
+		read -r abc
+		if [[ ${abc} == y ]]; then
+			notice_msg "Overwriting .cfg directory."
+			rm "${HOME}"/.cfg/ -rf
+			mkdir "${HOME}"/.cfg
+			export INSTALLDIR=${HOME}/.cfg/
+			# if the uses overwrites, save their choice and make the necessary folder
+		else
+			prompt_msg "Where would you like to install?"
+			read -r INSTALLDIR1
+			if [[ ! -d "${HOME}"/"${INSTALLDIR1}" ]]; then
+				notice_msg "making ${INSTALLDIR1} in ${HOME}"
+				export INSTALLDIR=${HOME}/${INSTALLDIR1}
+				mkdir "${INSTALLDIR}"
+			else
+				export INSTALLDIR=${HOME}/${INSTALLDIR1}
+			fi
+		fi
+	fi
+	echo "${INSTALLDIR}" >>~/.dotfiles
 
-  # make the folders to be copied to.
-  mkdir "$INSTALLDIR"/i3
-  mkdir "$INSTALLDIR"/home
-  mkdir "$INSTALLDIR"/i3status
-  mkdir "$INSTALLDIR"/vim
-  mkdir "$INSTALLDIR"/starship
+	# make the folders to be copied to.
+	mkdir "${INSTALLDIR}"/i3
+	mkdir "${INSTALLDIR}"/home
+	mkdir "${INSTALLDIR}"/i3status
+	mkdir "${INSTALLDIR}"/vim
+	mkdir "${INSTALLDIR}"/starship
 
 }
 
 # symlink dotfiles to $INSTALLDIR
 syslink() {
-  # remove the default profile file
-  if [ -f "$HOME"/.profile ]; then
-    rm "$HOME"/.profile
-  fi
-  # set the places to be copied to
-  DIR0=$SCRIPT_DIR/src/home/
-  DIR1=$SCRIPT_DIR/src/vim/
-  ITEM1=$SCRIPT_DIR/src/i3/config
-  DIR2=$SCRIPT_DIR/src/starship/
-  DIR3=$SCRIPT_DIR/src/i3status/
-  DIR4=$SCRIPT_DIR/src/ranger/
-  DIR5=$SCRIPT_DIR/src/git/
+	# remove the default profile file
+	if [[ -f "${HOME}"/.profile ]]; then
+		rm "${HOME}"/.profile
+	fi
+	# set the places to be copied to
+	DIR0=${SCRIPT_DIR}/src/home/
+	DIR1=${SCRIPT_DIR}/src/vim/
+	ITEM1=${SCRIPT_DIR}/src/i3/config
+	DIR2=${SCRIPT_DIR}/src/starship/
+	DIR3=${SCRIPT_DIR}/src/i3status/
+	DIR4=${SCRIPT_DIR}/src/ranger/
+	DIR5=${SCRIPT_DIR}/src/git/
 
-  for filename in $(ls -A "$DIR0"); do
-    cp "$DIR0"/"$filename" "$INSTALLDIR"/home/"$filename" -r
-    ln -s "$INSTALLDIR"/home/"$filename" "$HOME"
-  done
-  done_msg "DONE WITH DIR ($DIR0)"
+	for filename in $(ls -A "${DIR0}"); do
+		cp "${DIR0}"/"${filename}" "${INSTALLDIR}"/home/"${filename}" -r
+		ln -s "${INSTALLDIR}"/home/"${filename}" "${HOME}"
+	done
+	done_msg "DONE WITH DIR (${DIR0})"
 
-  for filename in $(ls -A "$DIR1"); do
-    cp "$DIR1"/"$filename" "$INSTALLDIR"/vim/"$filename" -r
-    ln -s "$INSTALLDIR"/vim/"$filename" "$HOME"/.config/nvim
-  done
-  done_msg "DONE WITH DIR ($DIR1)"
+	for filename in $(ls -A "${DIR1}"); do
+		cp "${DIR1}"/"${filename}" "${INSTALLDIR}"/vim/"${filename}" -r
+		ln -s "${INSTALLDIR}"/vim/"${filename}" "${HOME}"/.config/nvim
+	done
+	done_msg "DONE WITH DIR (${DIR1})"
 
-  cp "$ITEM1" "$INSTALLDIR"/i3 -r
-  ln -s "$INSTALLDIR"/i3/config "$HOME"/.config/i3/config
+	cp "${ITEM1}" "${INSTALLDIR}"/i3 -r
+	ln -s "${INSTALLDIR}"/i3/config "${HOME}"/.config/i3/config
 
-  done_msg "DONE WITH ITEM ($ITEM1)"
+	done_msg "DONE WITH ITEM (${ITEM1})"
 
-  for filename in $(ls -A "$DIR2"); do
-    cp "$DIR2"/"$filename" "$INSTALLDIR"/starship/"$filename" -r
-    ln -s "$INSTALLDIR"/starship/"$filename" "$HOME"/.config/
-  done
+	for filename in $(ls -A "${DIR2}"); do
+		cp "${DIR2}"/"${filename}" "${INSTALLDIR}"/starship/"${filename}" -r
+		ln -s "${INSTALLDIR}"/starship/"${filename}" "${HOME}"/.config/
+	done
 
-  done_msg "DONE WITH DIR ($DIR2)"
+	done_msg "DONE WITH DIR (${DIR2})"
 
-  for filename in $(ls -A "$DIR3"); do
-    cp "$DIR3"/"$filename" "$INSTALLDIR"/i3status/"$filename" -r
-    ln -s "$INSTALLDIR"/i3status/"$filename" "$HOME"/.config/i3status/
-  done
+	for filename in $(ls -A "${DIR3}"); do
+		cp "${DIR3}"/"${filename}" "${INSTALLDIR}"/i3status/"${filename}" -r
+		ln -s "${INSTALLDIR}"/i3status/"${filename}" "${HOME}"/.config/i3status/
+	done
 
-  done_msg "DONE WITH DIR ($DIR3)"
+	done_msg "DONE WITH DIR (${DIR3})"
 
-  cp "$DIR4"/ "$INSTALLDIR"/ranger/ -r
-  ln -s "$INSTALLDIR"/ranger/ "$HOME"/.config/
+	cp "${DIR4}"/ "${INSTALLDIR}"/ranger/ -r
+	ln -s "${INSTALLDIR}"/ranger/ "${HOME}"/.config/
 
-  done_msg "DONE WITH DIR ($DIR4)"
+	done_msg "DONE WITH DIR (${DIR4})"
 
-  cp "$DIR5"/ "$INSTALLDIR"/git/ -r
-  ln -s "$INSTALLDIR"/git/ "$HOME"/.local/bin/
+	cp "${DIR5}"/ "${INSTALLDIR}"/git/ -r
+	ln -s "${INSTALLDIR}"/git/ "${HOME}"/.local/bin/
 
-  done_msg "DONE WITH DIR ($DIR5)"
+	done_msg "DONE WITH DIR (${DIR5})"
 }
 
 # install neovim
 Neovim() {
-  wget -q -O "$SCRIPT_DIR"/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
-  sudo apt install "$SCRIPT_DIR"/nvimabc.deb -y
-  rm "$SCRIPT_DIR"/nvimabc.deb
-  sh -c 'curl -sfLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+	wget -q -O "${SCRIPT_DIR}"/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
+	sudo apt install "${SCRIPT_DIR}"/nvimabc.deb -y
+	rm "${SCRIPT_DIR}"/nvimabc.deb
+	sh -c 'curl -sfLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 }
 
 # Install the proper firefox
 Firefox() {
-  if [ ! -d /opt/firefox ]; then
-    wget -q 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O "$SCRIPT_DIR"/firefox-101.tar.bz2
-    tar xjf "$SCRIPT_DIR"/firefox-*.tar.bz2
-    sudo mv "$SCRIPT_DIR"/firefox /opt
-    sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
-    sudo wget -q https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
-    rm -rf "$SCRIPT_DIR"/firefox-*.tar.bz2
-  fi
+	if [[ ! -d /opt/firefox ]]; then
+		wget -q 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O "${SCRIPT_DIR}"/firefox-101.tar.bz2
+		tar xjf "${SCRIPT_DIR}"/firefox-*.tar.bz2
+		sudo mv "${SCRIPT_DIR}"/firefox /opt
+		sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
+		sudo wget -q https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
+		rm -rf "${SCRIPT_DIR}"/firefox-*.tar.bz2
+	fi
 }
 
 main() {
-  # Make sure necessary tools are installed.
-  checkDefaults
-  # Get the latest version of these files
-  git pull origin master
-  # install necessary tools like curl, etc...
-  installRequirements
+	# Make sure necessary tools are installed.
+	checkDefaults
+	# Get the latest version of these files
+	git pull origin master
+	# install necessary tools like curl, etc...
+	installRequirements
 
-  checkFolders
-  doDirectory
-  # Install Everything
-  AptStuff
-  Neovim
-  Firefox
-  Starship
-  Node
-  Rust
-  GitCompletion
-  GoStuff
-  GitCli
+	checkFolders
+	doDirectory
+	# Install Everything
+	AptStuff
+	Neovim
+	Firefox
+	Starship
+	Node
+	Rust
+	GitCompletion
+	GoStuff
+	GitCli
 
-  # Move dotfiles to INSTALLDIR and syslink
-  notice_msg "Installing to $INSTALLDIR. "
-  syslink
-  configureExtraStuff
-  fixPath
-  finishSteps
-  # Alert user we are finished.
-  echo "# WARNING: MODIFING THIS FILE WILL MODIFY THE SYNC MAKE TARGET" >>"$HOME"/.dotfiles
-  done_msg "Done! Enjoy your new machine!"
+	# Move dotfiles to INSTALLDIR and syslink
+	notice_msg "Installing to ${INSTALLDIR}. "
+	syslink
+	configureExtraStuff
+	fixPath
+	finishSteps
+	# Alert user we are finished.
+	echo "# WARNING: MODIFING THIS FILE WILL MODIFY THE SYNC MAKE TARGET" >>"${HOME}"/.dotfiles
+	done_msg "Done! Enjoy your new machine!"
 }
 main
