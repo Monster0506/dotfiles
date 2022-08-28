@@ -107,19 +107,23 @@ fixPath() {
 }
 # Install starship
 Starship() {
-	curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+	curl -fsSL https://starship.rs/install.sh | sh -s -- -y || true
+}
+
+Trunk() {
+	curl https://get.trunk.io -fsSL | bash || true
 }
 
 # install nodejs
 Node() {
-	curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+	curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - || true
 	sudo apt-get install -y nodejs yarn
 }
 
 # Install rust
 # TODO: find if this can be done without having to press 1
 Rust() {
-	curl https://sh.rustup.rs -sSf | sh -s -- -y -q
+	curl https://sh.rustup.rs -sSf | sh -s -- -y -q || true
 	# remove this bashrc, as the repo holds the line that it writes
 	rm "${HOME}"/.bashrc
 }
@@ -127,9 +131,9 @@ Rust() {
 # install git completion/extras
 GitCompletion() {
 	# git extras
-	curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin
+	curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin || true
 	# git completion
-	curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o "${HOME}"/.git-completion.bash
+	curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o "${HOME}"/.git-completion.bash || true
 }
 # install go
 GoStuff() {
@@ -152,9 +156,10 @@ GoStuff() {
 	"armv8")
 		ARCH=arm64
 		;;
-	.*386.*)
+	*)
 		ARCH=386
 		;;
+
 	esac
 
 	PACKAGE="go${GOVERSION}.${OS}-${ARCH}.tar.gz"
@@ -174,15 +179,15 @@ GoStuff() {
 
 # install gh cli
 GitCli() {
-	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg || true
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null || true
 	sudo apt update
 	sudo apt install gh
 
 }
 Sql() {
 	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - || true
 	sudo apt-get update
 	sudo apt-get -y install postgresql
 }
@@ -208,7 +213,7 @@ configureRust() {
 	rustup component add rustfmt
 	rustup default nightly
 	rustup component add rust-src
-	curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer
+	curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer || true
 	chmod +x ~/.local/bin/rust-analyzer
 
 }
@@ -418,6 +423,7 @@ main() {
 	Firefox
 	Starship
 	Node
+	Trunk
 	Rust
 	GitCompletion
 	GoStuff
