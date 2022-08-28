@@ -10,7 +10,7 @@ git config --global alias.ls 'log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset
 git config --global alias.s 'status'
 git config --global alias.sta 'status'
 git config --global core.editor "nvim"
-git config --global core.excludesfile $HOME/.gitignore_global
+git config --global core.excludesfile "${HOME}"/.gitignore_global
 git config --global alias.sha !git-sha
 git config --global alias.delouse !git-delouse
 git config --global alias.fixup !git-fixup

@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin bash
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 export PATH=""
-source ~/.profile
+source ${HOME}/.profile
 
 export NUMBERRE='^[0-9]+$'
 export CONTAINSNUMBERRE='.+[0-9].+'
@@ -60,16 +60,24 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)" || true
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+if [[ -z ${debian_chroot:-} ]] && [[ -r /etc/debian_chroot ]]; then
+	debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-xterm-color | *-256color) color_prompt=yes ;;
+case "${TERM}" in
+xterm-color)
+	color_prompt=yes
+	;;
+*-256color)
+	color_prompt=yes
+	;;
+*)
+	exit
+	;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -77,29 +85,29 @@ esac
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        # We have color support; assume it's compliant with Ecma-48
-        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
+if [[ -n ${force_color_prompt} ]]; then
+	if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
+		# We have color support; assume it's compliant with Ecma-48
+		# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+		# a case would tend to support setf rather than setaf.)
+		color_prompt=yes
+	else
+		color_prompt=
+	fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+if [[ ${color_prompt} == yes ]]; then
+	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
+case "${TERM}" in
 xterm* | rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
+	PS1="\[\e]0;${debian_chroot:+(${debian_chroot})}\u@\h: \w\a\]${PS1}"
+	;;
 *) ;;
 
 esac
@@ -110,35 +118,33 @@ esac
 # You may want to put all your additions into a separate file like
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [[ -f ${HOME}/.bash_aliases ]]; then
+	. ${HOME}/.bash_aliases
 fi
 
-if [ -f ~/.bash_completions ]; then
-    . ~/.bash_completions
+if [[ -f ${HOME}/.bash_completions ]]; then
+	. ${HOME}/.bash_completions
 fi
 
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
+if [[ -f ${HOME}/.bash_functions ]]; then
+	. ${HOME}/.bash_functions
 fi
 
 #include dotfiles in wildcard expansion, and match case-insensitively
 shopt -s dotglob
 shopt -s nocaseglob
 # don't use the shell's built-in history mechanism
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+	. /usr/share/bash-completion/bash_completion
 fi
 
-if [ -f $HOME/git-completion.bash ]; then
-    . $HOME/.git-completion.bash
+if [[ -f "${HOME}"/git-completion.bash ]]; then
+	. "${HOME}"/.git-completion.bash
 fi
 
-if [ -f $HOME/.xprofile ]; then
-    . $HOME/.xprofile
+if [[ -f "${HOME}"/.xprofile ]]; then
+	. "${HOME}"/.xprofile
 fi
 
 # Evaluations
-eval "$(starship init bash)"
-
-. "$HOME/.cargo/env"
+eval "$(starship init bash)" || true

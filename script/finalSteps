@@ -1,26 +1,26 @@
 #!/bin/bash
 unset CDPATH
-mkdir $HOME/Cpp/
-cd $HOME/Cpp
+mkdir "${HOME}"/Cpp/
+cd "${HOME}"/Cpp || exit
 gh repo clone Utils
-cd ~
+cd ~ || exit
 gh repo clone Rust
 gh repo clone timelog
-SCRIPT_DIR=$(sed -n 1p $HOME/.dotfiles)
+SCRIPT_DIR=$(sed -n 1p "${HOME}"/.dotfiles)
 
 case $1 in
 -n)
-  echo "Copying files... This may take a while"
-  sudo mkdir /root/.config/nvim /root/.local/share/nvim -p
-  sudo cp ~/.config/nvim/* -r /root/.config/nvim
-  sudo cp ~/.local/share/nvim/* -r /root/.local/share/nvim
-  ;;
+	echo "Copying files... This may take a while"
+	sudo mkdir /root/.config/nvim /root/.local/share/nvim -p
+	sudo cp ~/.config/nvim/* -r /root/.config/nvim
+	sudo cp ~/.local/share/nvim/* -r /root/.local/share/nvim
+	;;
 esac
 
-if [ "$1" != "-g" ]; then
-  # run the file called gitConfig in this directory
+if [[ $1 != "-g" ]]; then
+	# run the file called gitConfig in this directory
 
-  . $SCRIPT_DIR/script/gitConfig
+	. "${SCRIPT_DIR}"/script/gitConfig
 
 fi
 echo -e "\e[32;1mDone!"
