@@ -91,8 +91,10 @@ function M.setup()
     --- }}}
     -- Markdown {{{
 
-    Plug "ellisonleao/glow.nvim"
-
+    Plug(
+        "iamcco/markdown-preview.nvim",
+        {["do"] = vim.fn["call mkdp#util#install()"], ["for"] = {"markdown", "vim-plug"}}
+    )
     -- Clojure {{{
     --- }}}
 

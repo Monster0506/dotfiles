@@ -120,6 +120,7 @@ file for completeness.
 ### Markdown
 
 - [ellisonleao/glow.nvim](https://github.com/ellisonleao/glow.nvim)
+- [iamcco/markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
 
 ## Other Dependencies Plugins
 
