@@ -141,6 +141,7 @@ function M.setup()
     Plug "wellle/targets.vim"
     Plug "windwp/nvim-autopairs"
     Plug "ziontee113/icon-picker.nvim"
+    Plug "mong8se/actually.nvim"
 
     --- }}}
     vim.call("plug#end")
