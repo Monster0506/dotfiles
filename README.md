@@ -140,6 +140,7 @@ file for completeness.
 
 ## Other Utility Plugins
 
+- [mong8se/actually.nvim](https://github.com/mong8se/actually.nvim)
 - [antoinemadec/FixCursorHold.nvim](https://github.com/antoinemadec/FixCursorHold.nvim)
 - [axieax/urlview.nvim](https://github.com/axieax/urlview.nvim)
 - [kyazdani42/nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua)
