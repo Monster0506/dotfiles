@@ -15,7 +15,7 @@ or downloaded this repository.
 Alternatively, if [`make`](https://www.gnu.org/software/make/) is installed on
 your system, you can run `make install` or `make generate`.
 
-On average, this takes around 10 minutes to completely install on a fresh
+On average, this takes around 5 minutes to completely install on a fresh
 Debian machine.
 
 If you want to sync your files back to the dotfiles repository, you can run
