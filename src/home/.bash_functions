@@ -9,6 +9,7 @@ gplusplus() {
 	# strip extention and save it
 	local file=${1%.*}
 	\g++ -o "${file}" "$1" && ./"${file}"
+	./"${file}"
 }
 
 md() {
