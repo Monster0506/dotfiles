@@ -6,6 +6,7 @@ gh repo clone Utils
 cd ~ || exit
 gh repo clone Rust
 gh repo clone timelog
+gh repo clone C
 SCRIPT_DIR=$(sed -n 1p "${HOME}"/.dotfiles)
 
 case $1 in
