@@ -19,11 +19,8 @@ end
 
 --- }}}
 
--- Local and Global Lua Variables {{{
---- }}}
-
 -- Setup Functions {{{
-require("plugins").setup() -- lua/plugins.lua
+require("packer_setup") -- lua/packer_setup.lua
 require("autocmds").setup() -- lua/autocmds.lua
 require("keybindings").setup() -- lua/keybindings.lua keymappings keymaps
 require("options").setup() -- lua/options.lua
