@@ -40,6 +40,8 @@ ranger config file with some pretty basic configurations
 This may not be completely up-to-date, so please view the [plugins](src/vim/lua/plugins.lua)
 file for completeness.
 
+- [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
+
 ## Telescope Plugins
 
 - [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep)
@@ -119,7 +121,6 @@ file for completeness.
 
 ### Markdown
 
-- [ellisonleao/glow.nvim](https://github.com/ellisonleao/glow.nvim)
 - [iamcco/markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
 
 ## Other Dependencies Plugins
