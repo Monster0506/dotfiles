@@ -1,152 +1,158 @@
-local M = {}
-function M.setup()
-    local Plug = vim.fn["plug#"]
-    vim.call("plug#begin")
-    -- Telescope Plugins {{{
-
-    Plug "BurntSushi/ripgrep"
-    Plug "nvim-telescope/telescope-symbols.nvim"
-    Plug "nvim-telescope/telescope.nvim"
-    Plug "p00f/nvim-ts-rainbow"
-
-    --- }}}
-    -- Completion Plugins {{{
-
-    Plug "hrsh7th/cmp-buffer"
-    Plug "hrsh7th/cmp-cmdline"
-    Plug "hrsh7th/cmp-nvim-lua"
-    Plug "hrsh7th/cmp-path"
-    Plug "hrsh7th/cmp-path"
-    Plug "hrsh7th/nvim-cmp"
-    Plug "tom-doerr/vim_codex"
-
-    --- }}}
-    -- Snippet Plugins {{{
-
-    Plug "SirVer/ultisnips"
-    Plug "honza/vim-snippets"
-    Plug "quangnguyen30192/cmp-nvim-ultisnips"
-
-    --- }}}
-    -- Language Server Plugins {{{
-
-    Plug "dense-analysis/ale"
-    Plug "hrsh7th/cmp-nvim-lsp"
-    Plug "kosayoda/nvim-lightbulb"
-    Plug "neovim/nvim-lspconfig"
-    Plug "williamboman/mason-lspconfig.nvim"
-    Plug "williamboman/mason.nvim"
-
-    --- }}}
-    -- General Language Plugins {{{
-
-    Plug "liuchengxu/vista.vim"
-    Plug "ludovicchabant/vim-gutentags"
-    Plug "nvim-treesitter/nvim-treesitter"
-    Plug "numToStr/Comment.nvim"
-    Plug "sbdchd/neoformat"
-    Plug "sheerun/vim-polyglot"
-
-    --- }}}
-    -- Colorschemes and Appearance Plugins {{{
-
-    -- Devicon Plugins {{{
-
-    Plug "kyazdani42/nvim-web-devicons"
-    Plug "ryanoasis/vim-devicons"
-
-    -- Colorschemes {{{
-    --- }}}
-
-    Plug "folke/lsp-colors.nvim"
-    Plug "morhetz/gruvbox"
-    Plug "sainnhe/edge"
-    Plug "sjl/badwolf"
-    Plug "navarasu/onedark.nvim"
-
-    --- }}}
-    -- Statusline {{{
-
-    Plug "nvim-lualine/lualine.nvim"
-
-    --- }}}
-    Plug "lewis6991/gitsigns.nvim"
-    Plug "stevearc/dressing.nvim"
-    Plug "lukas-reineke/indent-blankline.nvim"
-
-    -- Specific Language Plugins {{{
-    --- }}}
-
-    -- HTML/CSS {{{
-
-    Plug "ap/vim-css-color"
-    Plug("mattn/emmet-vim", {["for"] = "html"})
-
-    -- Rust {{{
-    --- }}}
-
-    Plug("Saecki/crates.nvim")
-    Plug("rust-lang/rust.vim", {["for"] = "rust"})
-
-    --- }}}
-    -- Markdown {{{
-
-    Plug(
-        "iamcco/markdown-preview.nvim",
-        {["do"] = vim.fn["call mkdp#util#install()"], ["for"] = {"markdown", "vim-plug"}}
-    )
-    -- Clojure {{{
-    --- }}}
-
-    Plug("guns/vim-sexp", {["for"] = "clojure"})
-
-    --- }}}
-    -- Aptfile {{{
-
-    Plug "Monster0506/vim-aptfile"
-
-    -- }}}
-
-    -- Other Dependencies Plugins {{{
-    --- }}}
-
-    Plug "kevinhwang91/promise-async"
-    Plug "mattn/webapi-vim"
-    Plug "MunifTanjim/nui.nvim"
-    Plug "nvim-lua/plenary.nvim"
-
-    --- }}}
-    -- Movement Plugins {{{
-
-    Plug "ggandor/leap.nvim"
-    Plug "matze/vim-move"
-
-    --- }}}
-    -- FZF Plugins {{{
-
-    Plug "junegunn/fzf"
-    Plug "junegunn/fzf.vim"
-
-    --- }}}
-    -- Other Utility Plugins {{{
-
-    Plug "Monster0506/mason-installer.nvim"
-    Plug "antoinemadec/FixCursorHold.nvim"
-    Plug "axieax/urlview.nvim"
-    Plug "kyazdani42/nvim-tree.lua"
-    Plug "romainl/vim-cool"
-    Plug "simnalamburt/vim-mundo"
-    Plug "tpope/vim-fugitive"
-    Plug "tpope/vim-repeat"
-    Plug "tpope/vim-surround"
-    Plug "voldikss/vim-floaterm"
-    Plug "wellle/targets.vim"
-    Plug "windwp/nvim-autopairs"
-    Plug "ziontee113/icon-picker.nvim"
-    Plug "mong8se/actually.nvim"
-
-    --- }}}
-    vim.call("plug#end")
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
 end
 
-return M
+local packer_bootstrap = ensure_packer()
+
+require("packer").startup(
+    function(use)
+        use "wbthomason/packer.nvim"
+        -- My plugins here
+        -- Packer can manage itself
+        use "wbthomason/packer.nvim"
+        -- Telescope Plugins {{{
+        use "BurntSushi/ripgrep"
+        use "nvim-telescope/telescope-symbols.nvim"
+        use "nvim-telescope/telescope.nvim"
+        use "p00f/nvim-ts-rainbow"
+
+        --- }}}
+        -- Completion Plugins {{{
+
+        use "hrsh7th/cmp-buffer"
+        use "hrsh7th/cmp-cmdline"
+        use "hrsh7th/cmp-nvim-lua"
+        use "hrsh7th/cmp-path"
+        use "hrsh7th/cmp-path"
+        use "hrsh7th/nvim-cmp"
+        use "tom-doerr/vim_codex"
+
+        --- }}}
+        -- Snippet Plugins {{{
+
+        use "SirVer/ultisnips"
+        use "honza/vim-snippets"
+        use "quangnguyen30192/cmp-nvim-ultisnips"
+
+        --- }}}
+        -- Language Server Plugins {{{
+
+        use "dense-analysis/ale"
+        use "hrsh7th/cmp-nvim-lsp"
+        use "kosayoda/nvim-lightbulb"
+        use "neovim/nvim-lspconfig"
+        use "williamboman/mason-lspconfig.nvim"
+        use "williamboman/mason.nvim"
+
+        --- }}}
+        -- General Language Plugins {{{
+
+        use "liuchengxu/vista.vim"
+        use "ludovicchabant/vim-gutentags"
+        use "nvim-treesitter/nvim-treesitter"
+        use "numToStr/Comment.nvim"
+        use "sbdchd/neoformat"
+        use "sheerun/vim-polyglot"
+
+        --- }}}
+        -- Colorschemes and Appearance Plugins {{{
+
+        use "lewis6991/gitsigns.nvim"
+        use "stevearc/dressing.nvim"
+        use "lukas-reineke/indent-blankline.nvim"
+        -- Devicon Plugins {{{
+
+        use "kyazdani42/nvim-web-devicons"
+        use "ryanoasis/vim-devicons"
+
+        -- Colorschemes {{{
+
+        use "folke/lsp-colors.nvim"
+        use "morhetz/gruvbox"
+        use "sainnhe/edge"
+        use "sjl/badwolf"
+        use "navarasu/onedark.nvim"
+        --- }}}
+
+        --- }}}
+        -- Statusline {{{
+
+        use "nvim-lualine/lualine.nvim"
+
+        --- }}}
+        --- }}}
+        -- Specific Language Plugins {{{
+
+        -- HTML/CSS {{{
+
+        use "ap/vim-css-color"
+        use {"mattn/emmet-vim", {ft = "html"}}
+
+        -- Rust {{{
+        --- }}}
+
+        use "Saecki/crates.nvim"
+        use {"rust-lang/rust.vim", {ft = "rust"}}
+
+        --- }}}
+        -- Markdown {{{
+        use {
+            "iamcco/markdown-preview.nvim",
+            {run = vim.fn["call mkdp#util#install()"], ft = {"markdown", "vim-plug"}}
+        }
+        -- Aptfile {{{
+
+        use "Monster0506/vim-aptfile"
+
+        --- }}}
+        --- }}}
+        -- Other Dependencies Plugins {{{
+        use "kevinhwang91/promise-async"
+        use "mattn/webapi-vim"
+        use "MunifTanjim/nui.nvim"
+        use "nvim-lua/plenary.nvim"
+        --- }}}
+
+        -- Movement Plugins {{{
+
+        use "ggandor/leap.nvim"
+        use "matze/vim-move"
+
+        --- }}}
+        -- FZF Plugins {{{
+
+        use "junegunn/fzf"
+        use "junegunn/fzf.vim"
+
+        --- }}}
+        -- Other Utility Plugins {{{
+
+        use "Monster0506/mason-installer.nvim"
+        use "antoinemadec/FixCursorHold.nvim"
+        use "axieax/urlview.nvim"
+        use "kyazdani42/nvim-tree.lua"
+        use "romainl/vim-cool"
+        use "simnalamburt/vim-mundo"
+        use "tpope/vim-fugitive"
+        use "tpope/vim-repeat"
+        use "tpope/vim-surround"
+        use "voldikss/vim-floaterm"
+        use "wellle/targets.vim"
+        use "windwp/nvim-autopairs"
+        use "ziontee113/icon-picker.nvim"
+        use "mong8se/actually.nvim"
+
+        --- }}}
+
+        if packer_bootstrap then
+            require("packer").sync()
+        end
+    end
+)
