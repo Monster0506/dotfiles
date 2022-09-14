@@ -20,7 +20,7 @@ end
 --- }}}
 
 -- Setup Functions {{{
-require("packer_setup") -- lua/packer_setup.lua
+require("plugins") -- lua/plugins.lua
 require("autocmds").setup() -- lua/autocmds.lua
 require("keybindings").setup() -- lua/keybindings.lua keymappings keymaps
 require("options").setup() -- lua/options.lua
