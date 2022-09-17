@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := all
 
 SUDO := $(shell command -v sudo 2> /dev/null)
-APT := $(shell command -v apt 2> /dev/null)
+APT := $(shell command -v pacman 2> /dev/null)
 GIT := $(shell command -v git 2> /dev/null)
 
 
@@ -33,7 +33,7 @@ ifndef SUDO
 	$(error No sudo in $$PATH.)
 endif
 ifndef APT
-	$(error No apt in $$PATH.)
+	$(error No pacman in $$PATH.)
 endif
 ifndef GIT
 	$(error No GIT in $$PATH.)
