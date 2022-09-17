@@ -2,6 +2,7 @@
 # Get the directory this script is placed in
 unset CDPATH
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+rm -rf ${HOME}/.bashrc
 suffix="/script"
 temp=${SCRIPT_DIR%"${suffix}"}
 SCRIPT_DIR=${temp}
@@ -24,7 +25,7 @@ check_install() {
 	if ! [[ -x "$(command -v "$1")" ]]; then
 		error_msg "$1 NOT INSTALLED"
 		error_msg "Installing now"
-		sudo apt install -y "$1"
+		sudo pacman --noconfirm -Sy "$1"
 	else
 		done_msg "$1 check passing..."
 	fi
@@ -39,19 +40,21 @@ checkDefaults() {
 		exit
 	fi
 
-	# check if apt is installed.
-	checker "apt"
+	checker "pacman"
 
 	#check if git is installed.
 	checker "git"
 
 	# check if sudo is installed.
 	checker "sudo"
+
+	# check if yay is installed
+	checker "yay"
 }
 # Check and install basics for installing the rest
 installRequirements() {
 	notice_msg "Checking and installing basics"
-	sudo apt-get update
+	sudo pacman --noconfirm -Syu
 
 	#check if curl is installed
 	notice_msg "Checking if curl is installed..."
@@ -61,10 +64,6 @@ installRequirements() {
 	notice_msg "Checking if wget is installed..."
 	check_install "wget"
 
-	# install aptfile for installing packages
-	sudo curl -so /usr/local/bin/aptfile https://raw.githubusercontent.com/monster0506/bash-aptfile/master/bin/aptfile
-	sudo chmod +x /usr/local/bin/aptfile
-	checker "aptfile"
 }
 
 # make sure all files installed are accessable for pip3, go, etc
@@ -114,20 +113,6 @@ Trunk() {
 	curl https://get.trunk.io -fsSL | bash || true
 }
 
-# install nodejs
-Node() {
-	curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - || true
-	sudo apt-get install -y nodejs yarn
-}
-
-# Install rust
-# TODO: find if this can be done without having to press 1
-Rust() {
-	curl https://sh.rustup.rs -sSf | sh -s -- -y -q || true
-	# remove this bashrc, as the repo holds the line that it writes
-	rm "${HOME}"/.bashrc
-}
-
 # install git completion/extras
 GitCompletion() {
 	# git extras
@@ -137,39 +122,6 @@ GitCompletion() {
 }
 # install go
 GoStuff() {
-	TEMP_DIR=$(mktemp -d)
-	GOVERSION="1.18.3"
-
-	# Find the correct package to install.
-	OS="linux"
-	ARCH="$(uname -m)"
-	case "${ARCH}" in
-	"x86_64")
-		ARCH=amd64
-		;;
-	"aarch64")
-		ARCH=arm64
-		;;
-	"armv6" | "armv7l")
-		ARCH=armv6l
-		;;
-	"armv8")
-		ARCH=arm64
-		;;
-	*)
-		ARCH=386
-		;;
-
-	esac
-
-	PACKAGE="go${GOVERSION}.${OS}-${ARCH}.tar.gz"
-	URL="https://dl.google.com/go/${PACKAGE}"
-	curl -sL "${URL}" -o "${TEMP_DIR}/${PACKAGE}"
-	if [[ -d /usr/local/go ]]; then
-		sudo rm -rf /usr/local/go
-	fi
-	sudo tar -C /usr/local -xzf "${TEMP_DIR}/${PACKAGE}"
-	sudo rm -rf "${TEMP_DIR}"
 	fixPath
 	go install -v mvdan.cc/sh/cmd/shfmt@latest
 	go install github.com/jesseduffield/lazygit@latest
@@ -177,26 +129,6 @@ GoStuff() {
 	ln -s "${HOME}"/go/bin/shfmt "${HOME}"/.local/bin/
 }
 
-# install gh cli
-GitCli() {
-	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg || true
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null || true
-	sudo apt update
-	sudo apt install gh
-
-}
-Sql() {
-	sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-	wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - || true
-	sudo apt-get update
-	sudo apt-get -y install postgresql
-}
-AptStuff() {
-	# install other useful stuff
-	sudo apt remove firefox-esr -y
-	sudo aptfile "${SCRIPT_DIR}"/script/packages
-
-}
 configureExtraStuff() {
 
 	notice_msg "Running final setup steps..."
@@ -205,7 +137,6 @@ configureExtraStuff() {
 	configureNpm
 	configureVim
 	configureRust
-	Sql
 
 }
 
@@ -238,7 +169,7 @@ setupPromptRequired() {
 	configureGit
 	# install bitwarden_password_manager
 	wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
-	firefox "${SCRIPT_DIR}"/bitwarden_password_manager.xpi --setDefaultBrowser
+	firefox-developer-edition "${SCRIPT_DIR}"/bitwarden_password_manager.xpi --setDefaultBrowser
 	sleep 10 && rm "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
 }
 
@@ -254,10 +185,6 @@ configureGit() {
 }
 
 finishSteps() {
-	sudo apt update -y && sudo apt upgrade -y
-	sudo apt autoremove -y
-	sudo apt clean
-	sudo apt autoclean -y
 	echo 'SELECTED_EDITOR="/usr/bin/nvim"' >"${HOME}"/.selected_editor
 	setupPromptRequired
 
@@ -387,24 +314,14 @@ syslink() {
 }
 
 # install neovim
+# yu
 Neovim() {
-	wget -q -O "${SCRIPT_DIR}"/nvimabc.deb 'https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb'
-	sudo apt install "${SCRIPT_DIR}"/nvimabc.deb -y
-	rm "${SCRIPT_DIR}"/nvimabc.deb
-	sh -c 'curl -sfLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	yay -y install neovim-nightly-bin
 }
 
 # Install the proper firefox
 Firefox() {
-	if [[ ! -d /opt/firefox ]]; then
-		wget -q 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US' -O "${SCRIPT_DIR}"/firefox-101.tar.bz2
-		tar xjf "${SCRIPT_DIR}"/firefox-*.tar.bz2
-		sudo mv "${SCRIPT_DIR}"/firefox /opt
-		sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
-		sudo wget -q https://raw.githubusercontent.com/mozilla/sumo-kb/main/install-firefox-linux/firefox.desktop -P /usr/local/share/applications
-		rm -rf "${SCRIPT_DIR}"/firefox-*.tar.bz2
-	fi
+	yay firefox-developer-edition
 }
 
 main() {
@@ -418,16 +335,13 @@ main() {
 	checkFolders
 	doDirectory
 	# Install Everything
-	AptStuff
+	sudo pacman --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/pack)
 	Neovim
 	Firefox
 	Starship
-	Node
 	Trunk
-	Rust
 	GitCompletion
 	GoStuff
-	GitCli
 
 	# Move dotfiles to INSTALLDIR and syslink
 	notice_msg "Installing to ${INSTALLDIR}. "
