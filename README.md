@@ -16,7 +16,7 @@ Alternatively, if [`make`](https://www.gnu.org/software/make/) is installed on
 your system, you can run `make install` or `make generate`.
 
 On average, this takes around 5 minutes to completely install on a fresh
-Debian machine.
+Arch machine.
 
 If you want to sync your files back to the dotfiles repository, you can run
 `./script/sync` or `make sync` to copy the files in `~/.cfg` back to this repo.
