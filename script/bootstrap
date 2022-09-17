@@ -141,6 +141,7 @@ configureExtraStuff() {
 }
 
 configureRust() {
+	curl https://sh.rustup.rs -sSf | sh -s
 	rustup component add rustfmt
 	rustup default nightly
 	rustup component add rust-src

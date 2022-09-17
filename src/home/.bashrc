@@ -148,3 +148,4 @@ fi
 
 # Evaluations
 eval "$(starship init bash)" || true
+. "$HOME/.cargo/env"
