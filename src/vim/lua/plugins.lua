@@ -13,8 +13,6 @@ local packer_bootstrap = ensure_packer()
 
 require("packer").startup(
     function(use)
-        use "wbthomason/packer.nvim"
-        -- My plugins here
         -- Packer can manage itself
         use "wbthomason/packer.nvim"
         -- Telescope Plugins {{{
@@ -29,7 +27,6 @@ require("packer").startup(
         use "hrsh7th/cmp-buffer"
         use "hrsh7th/cmp-cmdline"
         use "hrsh7th/cmp-nvim-lua"
-        use "hrsh7th/cmp-path"
         use "hrsh7th/cmp-path"
         use "hrsh7th/nvim-cmp"
         use "tom-doerr/vim_codex"
@@ -107,11 +104,6 @@ require("packer").startup(
             "iamcco/markdown-preview.nvim",
             {run = vim.fn["call mkdp#util#install()"], ft = {"markdown", "vim-plug"}}
         }
-        -- Aptfile {{{
-
-        use "Monster0506/vim-aptfile"
-
-        --- }}}
         --- }}}
         -- Other Dependencies Plugins {{{
         use "kevinhwang91/promise-async"
@@ -148,6 +140,10 @@ require("packer").startup(
         use "windwp/nvim-autopairs"
         use "ziontee113/icon-picker.nvim"
         use "mong8se/actually.nvim"
+        use {
+            "nvim-neorg/neorg",
+            requires = "max397574/neorg-contexts"
+        }
 
         --- }}}
 

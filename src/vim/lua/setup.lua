@@ -63,6 +63,21 @@ function M.run()
     require("leap")
     require("onedark").load()
     require("nvim-autopairs").setup()
+    require("neorg").setup {
+        load = {
+            ["core.defaults"] = {},
+            ["core.norg.concealer"] = {},
+            ["core.integrations.treesitter"] = {},
+            ["core.norg.qol.toc"] = {},
+            ["external.context"] = {},
+            ["core.export"] = {},
+            ["core.norg.completion"] = {
+                config = {
+                    engine = "nvim-cmp"
+                }
+            }
+        }
+    }
 end
 
 return M
