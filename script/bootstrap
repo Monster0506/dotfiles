@@ -266,11 +266,12 @@ syslink() {
 	# set the places to be copied to
 	DIR0=${SCRIPT_DIR}/src/home/
 	DIR1=${SCRIPT_DIR}/src/vim/
-	ITEM1=${SCRIPT_DIR}/src/i3/config
 	DIR2=${SCRIPT_DIR}/src/starship/
 	DIR3=${SCRIPT_DIR}/src/i3status/
 	DIR4=${SCRIPT_DIR}/src/ranger/
 	DIR5=${SCRIPT_DIR}/src/git/
+	ITEM1=${SCRIPT_DIR}/src/i3/config
+	ITEM2=${SCRIPT_DIR}/src/picom/picom.conf
 
 	for filename in $(ls -A "${DIR0}"); do
 		cp "${DIR0}"/"${filename}" "${INSTALLDIR}"/home/"${filename}" -r
@@ -312,6 +313,11 @@ syslink() {
 	ln -s "${INSTALLDIR}"/git/ "${HOME}"/.local/bin/
 
 	done_msg "DONE WITH DIR (${DIR5})"
+
+	cp "${ITEM2}" "${INSTALLDIR}"/picom -r
+	ln -s "${INSTALLDIR}"/picom/picom.conf "${HOME}"/.config/picom.conf
+
+	done_msg "DONE WITH ITEM (${ITEM1})"
 }
 
 # install neovim
