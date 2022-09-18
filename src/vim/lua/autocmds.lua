@@ -70,19 +70,6 @@ function M.setup()
     )
 
     --- }}}
-    -- Auto-Compile COQsnips {{{
-    vim.api.nvim_create_autocmd(
-        {
-            "FileType coq-snip",
-            "BufWrite"
-        },
-        {
-            pattern = "*.snip",
-            command = "COQsnips compile"
-        }
-    )
-
-    --- }}}
     --- }}}
 end
 

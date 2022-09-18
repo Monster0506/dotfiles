@@ -102,7 +102,9 @@ require("packer").startup(
         -- Markdown {{{
         use {
             "iamcco/markdown-preview.nvim",
-            {run = vim.fn["call mkdp#util#install()"], ft = {"markdown", "vim-plug"}}
+            {run = function()
+                    vim.fn["call mkdp#util#install()"]()
+                end, ft = {"markdown", "vim-plug"}}
         }
         --- }}}
         -- Other Dependencies Plugins {{{
@@ -140,10 +142,11 @@ require("packer").startup(
         use "windwp/nvim-autopairs"
         use "ziontee113/icon-picker.nvim"
         use "mong8se/actually.nvim"
-        use {
-            "nvim-neorg/neorg",
-            requires = "max397574/neorg-contexts"
-        }
+        use "folke/which-key.nvim"
+        -- use {
+        --     "nvim-neorg/neorg",
+        --     requires = "max397574/neorg-contexts"
+        -- }
 
         --- }}}
 

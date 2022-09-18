@@ -60,8 +60,8 @@ function M.setup()
             sources = cmp.config.sources(
                 {
                     {name = "nvim_lsp"},
-                    {name = "ultisnips"}, -- For ultisnips users.,
-                    {name = "neorg"}
+                    {name = "ultisnips"} -- For ultisnips users.,
+                    -- {name = "neorg"}
                 },
                 {
                     {name = "buffer"},
