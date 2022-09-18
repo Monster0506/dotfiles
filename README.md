@@ -155,3 +155,6 @@ file for completeness.
 - [wellle/targets.vim](https://github.com/wellle/targets.vim)
 - [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 - [ziontee113/icon-picker.nvim](https://github.com/ziontee113/icon-picker.nvim)
+- [nvim-neorg/neorg](https://github.com/nvim-neorg/neorg)
+- [max397574/neorg-contexts](https://github.com/max397574/neorg-contexts)
+
