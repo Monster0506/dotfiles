@@ -123,14 +123,17 @@ local on_attach = function(client, bufnr)
 end
 function ShowDocumentation()
     local filetype = vim.bo.filetype
-    if vim.tbl_contains({"vim", "help"}, filetype) then
-        vim.cmd("h " .. vim.fn.expand("<cword>"))
-    elseif vim.tbl_contains({"man"}, filetype) then
-        vim.cmd("Man " .. vim.fn.expand("<cword>"))
-    elseif vim.fn.expand("%:t") == "Cargo.toml" then
-        require("crates").show_popup()
-    else
-        vim.lsp.buf.hover()
+    local winid = require("ufo").peekFoldedLinesUnderCursor()
+    if not winid then
+        if vim.tbl_contains({"vim", "help"}, filetype) then
+            vim.cmd("h " .. vim.fn.expand("<cword>"))
+        elseif vim.tbl_contains({"man"}, filetype) then
+            vim.cmd("Man " .. vim.fn.expand("<cword>"))
+        elseif vim.fn.expand("%:t") == "Cargo.toml" then
+            require("crates").show_popup()
+        else
+            vim.lsp.buf.hover()
+        end
     end
 end
 --- }}}
@@ -152,6 +155,10 @@ local servers = {
 }
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
 
 for _, lsp in ipairs(servers) do
     require "lspconfig"[lsp].setup {
