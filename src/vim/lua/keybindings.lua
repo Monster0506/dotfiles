@@ -65,6 +65,14 @@ function M.setup()
     keymap("x", ">", ">gv", opts)
     wk.register(
         {
+            M = {require("ufo").closeAllFolds, "Close All Folds"},
+            R = {require("ufo").openAllFolds, "Open All Folds"}
+        },
+        {prefix = "z"}
+    )
+
+    wk.register(
+        {
             t = {"<cmd>FloatermToggle<CR>", "New Terminal"},
             r = {"<cmd>FloatermNew ranger<CR>", "Ranger"},
             u = {"<cmd>MundoToggle<CR>", "Undo Menu"}

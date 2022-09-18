@@ -13,98 +13,82 @@ local packer_bootstrap = ensure_packer()
 
 require("packer").startup(
     function(use)
-        -- Packer can manage itself
+        -- Plugins {{{
+        -- Packer can manage itself {{{
         use "wbthomason/packer.nvim"
+        --- }}}
         -- Telescope Plugins {{{
         use "BurntSushi/ripgrep"
         use "nvim-telescope/telescope-symbols.nvim"
         use "nvim-telescope/telescope.nvim"
         use "p00f/nvim-ts-rainbow"
-
         --- }}}
         -- Completion Plugins {{{
-
         use "hrsh7th/cmp-buffer"
         use "hrsh7th/cmp-cmdline"
         use "hrsh7th/cmp-nvim-lua"
         use "hrsh7th/cmp-path"
         use "hrsh7th/nvim-cmp"
         use "tom-doerr/vim_codex"
-
         --- }}}
         -- Snippet Plugins {{{
-
         use "SirVer/ultisnips"
         use "honza/vim-snippets"
         use "quangnguyen30192/cmp-nvim-ultisnips"
-
         --- }}}
         -- Language Server Plugins {{{
-
         use "dense-analysis/ale"
         use "hrsh7th/cmp-nvim-lsp"
         use "kosayoda/nvim-lightbulb"
         use "neovim/nvim-lspconfig"
         use "williamboman/mason-lspconfig.nvim"
         use "williamboman/mason.nvim"
-
         --- }}}
         -- General Language Plugins {{{
-
         use "liuchengxu/vista.vim"
         use "ludovicchabant/vim-gutentags"
         use "nvim-treesitter/nvim-treesitter"
         use "numToStr/Comment.nvim"
         use "sbdchd/neoformat"
         use "sheerun/vim-polyglot"
-
         --- }}}
         -- Colorschemes and Appearance Plugins {{{
-
         use "lewis6991/gitsigns.nvim"
         use "stevearc/dressing.nvim"
         use "lukas-reineke/indent-blankline.nvim"
         -- Devicon Plugins {{{
-
         use "kyazdani42/nvim-web-devicons"
         use "ryanoasis/vim-devicons"
-
         -- Colorschemes {{{
-
         use "folke/lsp-colors.nvim"
         use "morhetz/gruvbox"
         use "sainnhe/edge"
         use "sjl/badwolf"
         use "navarasu/onedark.nvim"
         --- }}}
-
         --- }}}
         -- Statusline {{{
-
         use "nvim-lualine/lualine.nvim"
-
         --- }}}
         --- }}}
         -- Specific Language Plugins {{{
-
         -- HTML/CSS {{{
-
         use "ap/vim-css-color"
         use {"mattn/emmet-vim", {ft = "html"}}
-
         -- Rust {{{
         --- }}}
-
         use "Saecki/crates.nvim"
         use {"rust-lang/rust.vim", {ft = "rust"}}
-
         --- }}}
         -- Markdown {{{
         use {
             "iamcco/markdown-preview.nvim",
-            {run = function()
+            {
+                run = function()
                     vim.fn["call mkdp#util#install()"]()
-                end, ft = {"markdown", "vim-plug"}}
+                end,
+                ft = {"markdown", "vim-plug"}
+            }
         }
         --- }}}
         -- Other Dependencies Plugins {{{
@@ -113,21 +97,16 @@ require("packer").startup(
         use "MunifTanjim/nui.nvim"
         use "nvim-lua/plenary.nvim"
         --- }}}
-
+        --- }}}
         -- Movement Plugins {{{
-
         use "ggandor/leap.nvim"
         use "matze/vim-move"
-
         --- }}}
         -- FZF Plugins {{{
-
         use "junegunn/fzf"
         use "junegunn/fzf.vim"
-
         --- }}}
         -- Other Utility Plugins {{{
-
         use "Monster0506/mason-installer.nvim"
         use "antoinemadec/FixCursorHold.nvim"
         use "axieax/urlview.nvim"
@@ -143,13 +122,9 @@ require("packer").startup(
         use "ziontee113/icon-picker.nvim"
         use "mong8se/actually.nvim"
         use "folke/which-key.nvim"
-        -- use {
-        --     "nvim-neorg/neorg",
-        --     requires = "max397574/neorg-contexts"
-        -- }
-
+        use "kevinhwang91/nvim-ufo"
         --- }}}
-
+        --- }}}
         if packer_bootstrap then
             require("packer").sync()
         end

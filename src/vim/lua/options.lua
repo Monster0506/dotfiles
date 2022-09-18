@@ -1,10 +1,15 @@
 local M = {}
 
-function M.setup()
+function M.setup() -- {{{
     -- Options (vim.opt) {{{
     local vimopts = {
+        -- {{{
         background = "dark",
         termguicolors = true,
+        foldcolumn = "0",
+        foldlevel = 99,
+        foldlevelstart = 99,
+        foldenable = true,
         relativenumber = true,
         number = true,
         undofile = true,
@@ -20,12 +25,14 @@ function M.setup()
         foldmethod = "syntax",
         concealcursor = "nc",
         list = true
+     -- }}}
     }
-    for k, v in pairs(vimopts) do
+    for k, v in pairs(vimopts) do -- {{{
         vim.opt[k] = v
+     -- }}}
     end
     vim.opt.listchars:append("eol:↴")
-    --- }}}
+    --- }}}}}}
 end
 
 return M
