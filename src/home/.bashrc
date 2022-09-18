@@ -138,7 +138,7 @@ if [[ -f /usr/share/bash-completion/bash_completion ]]; then
 	. /usr/share/bash-completion/bash_completion
 fi
 
-if [[ -f "${HOME}"/git-completion.bash ]]; then
+if [[ -f "${HOME}"/.git-completion.bash ]]; then
 	. "${HOME}"/.git-completion.bash
 fi
 
