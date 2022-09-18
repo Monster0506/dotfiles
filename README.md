@@ -21,6 +21,8 @@ Arch machine.
 If you want to sync your files back to the dotfiles repository, you can run
 `./script/sync` or `make sync` to copy the files in `~/.cfg` back to this repo.
 
+An out-of date installation script for Debian can be found on the `debian` branch (`git switch debian`).
+
 ## Follow-up Steps
 
 Make sure to `source ~/.bashrc`.
