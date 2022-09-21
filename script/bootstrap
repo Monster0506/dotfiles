@@ -135,7 +135,6 @@ configureExtraStuff() {
 	fixPath
 	pip3 install pynvim black neovim openai
 	configureNpm
-	configureVim
 	configureRust
 
 }
@@ -161,10 +160,6 @@ configureNpm() {
 	fi
 }
 
-configureVim() {
-	nvim +PlugInstall +qa
-
-}
 
 setupPromptRequired() {
 	configureGit
@@ -200,9 +195,6 @@ checkFolders() {
 	# make the config folders
 	if [[ ! -d "${HOME}"/.config ]]; then
 		mkdir "${HOME}"/.config
-	fi
-	if [[ ! -d "${HOME}"/.config/nvim ]]; then
-		mkdir "${HOME}"/.config/nvim
 	fi
 	if [[ ! -d "${HOME}"/.config/i3 ]]; then
 		mkdir "${HOME}"/.config/i3
@@ -265,7 +257,7 @@ syslink() {
 	fi
 	# set the places to be copied to
 	DIR0=${SCRIPT_DIR}/src/home/
-	DIR1=${SCRIPT_DIR}/src/vim/
+	DIR1=${SCRIPT_DIR}/src/nvim/
 	DIR2=${SCRIPT_DIR}/src/starship/
 	DIR3=${SCRIPT_DIR}/src/i3status/
 	DIR4=${SCRIPT_DIR}/src/ranger/
@@ -279,10 +271,8 @@ syslink() {
 	done
 	done_msg "DONE WITH DIR (${DIR0})"
 
-	for filename in $(ls -A "${DIR1}"); do
-		cp "${DIR1}"/"${filename}" "${INSTALLDIR}"/vim/"${filename}" -r
-		ln -s "${INSTALLDIR}"/vim/"${filename}" "${HOME}"/.config/nvim
-	done
+	cp "${DIR1}"/ "${INSTALLDIR}"/nvim/ -r
+	ln -s "${INSTALLDIR}"/nvim/ "${HOME}"/.config/nvim
 	done_msg "DONE WITH DIR (${DIR1})"
 
 	cp "${ITEM1}" "${INSTALLDIR}"/i3 -r
@@ -327,9 +317,6 @@ Neovim() {
 }
 
 # Install the proper firefox
-Firefox() {
-	yay firefox-developer-edition
-}
 
 main() {
 	# Make sure necessary tools are installed.
@@ -344,7 +331,6 @@ main() {
 	# Install Everything
 	sudo pacman --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/pack)
 	Neovim
-	Firefox
 	Starship
 	Trunk
 	GitCompletion
