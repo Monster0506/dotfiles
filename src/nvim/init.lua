@@ -1,4 +1,4 @@
----@diagostic disable: undefined-global
+---@diagnostic disable: undefined-global
 HOME = os.getenv("HOME")
 
 -- Global Vim Variables (vim.g) {{{
@@ -99,7 +99,6 @@ local on_attach = function(client, bufnr)
 
     -- Mappings. See `:help vim.lsp.*` for documentation on any of the below
     -- functions
-    local bufopts = {noremap = true, silent = true, buffer = bufnr}
     wk.register(
         {
             d = {vim.lsp.buf.definition, "Go to definition"},
@@ -206,4 +205,3 @@ require("mason-installer").setup(
     }
 )
 --- }}}
---

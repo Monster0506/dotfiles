@@ -75,8 +75,8 @@ require("packer").startup(
         -- HTML/CSS {{{
         use "ap/vim-css-color"
         use {"mattn/emmet-vim", {ft = "html"}}
-        -- Rust {{{
         --- }}}
+        -- Rust {{{
         use "Saecki/crates.nvim"
         use {"rust-lang/rust.vim", {ft = "rust"}}
         --- }}}

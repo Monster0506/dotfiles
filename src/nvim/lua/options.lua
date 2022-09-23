@@ -25,11 +25,11 @@ function M.setup() -- {{{
         foldmethod = "syntax",
         concealcursor = "nc",
         list = true
-     -- }}}
+        -- }}}
     }
     for k, v in pairs(vimopts) do -- {{{
         vim.opt[k] = v
-     -- }}}
+        -- }}}
     end
     vim.opt.listchars:append("eol:↴")
     --- }}}}}}

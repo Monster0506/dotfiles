@@ -26,7 +26,12 @@ function M.setup()
     --- }}}
     -- FZF {{{
     keymap("n", "<C-p>", "<cmd>Files<CR>", opts)
-    keymap("n", "<leader><C-p>", "<cmd>Commands<CR>", opts)
+    wk.register(
+        {
+            ["<C-p>"] = {"<cmd>Commands<CR>", "Commands"}
+        },
+        {prefix = "<leader>"}
+    )
     --- }}}
     -- Bracket expansion {{{
     keymap("i", "(<CR>", "(<CR>)<Esc>O", opts)
