@@ -78,15 +78,14 @@ require("packer").startup(
         use {"rust-lang/rust.vim", {ft = "rust"}}
         --- }}}
         -- Markdown {{{
-        use {
-            "iamcco/markdown-preview.nvim",
+        use(
             {
+                "iamcco/markdown-preview.nvim",
                 run = function()
-                    vim.fn["call mkdp#util#install()"]()
-                end,
-                ft = {"markdown", "vim-plug"}
+                    vim.fn["mkdp#util#install"]()
+                end
             }
-        }
+        )
         --- }}}
         -- Other Dependencies Plugins {{{
         use "kevinhwang91/promise-async"
@@ -104,6 +103,7 @@ require("packer").startup(
         use "junegunn/fzf.vim"
         --- }}}
         -- Other Utility Plugins {{{
+        use "Monster0506/mason-installer.nvim"
         use "antoinemadec/FixCursorHold.nvim"
         use "axieax/urlview.nvim"
         use "kyazdani42/nvim-tree.lua"
