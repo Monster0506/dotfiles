@@ -61,9 +61,6 @@ require("packer").startup(
         use "ryanoasis/vim-devicons"
         -- Colorschemes {{{
         use "folke/lsp-colors.nvim"
-        use "morhetz/gruvbox"
-        use "sainnhe/edge"
-        use "sjl/badwolf"
         use "navarasu/onedark.nvim"
         --- }}}
         --- }}}
@@ -107,7 +104,6 @@ require("packer").startup(
         use "junegunn/fzf.vim"
         --- }}}
         -- Other Utility Plugins {{{
-        use "Monster0506/mason-installer.nvim"
         use "antoinemadec/FixCursorHold.nvim"
         use "axieax/urlview.nvim"
         use "kyazdani42/nvim-tree.lua"
