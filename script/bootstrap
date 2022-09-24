@@ -160,7 +160,6 @@ configureNpm() {
 	fi
 }
 
-
 setupPromptRequired() {
 	configureGit
 	# install bitwarden_password_manager
@@ -216,7 +215,7 @@ doDirectory() {
 	# If it does not exist, create it, and create the INSTALLDIR file
 	if [[ ! -d "${HOME}"/.cfg/ ]]; then
 		mkdir "${HOME}"/.cfg/
-		export INSTALLDIR=${HOME}/.cfg/
+		export INSTALLDIR=${HOME}/.cfg
 	else
 		prompt_msg "${HOME}/.cfg/ directory exists. Would you like to overwrite it?(yN)"
 		read -r abc
@@ -246,6 +245,7 @@ doDirectory() {
 	mkdir "${INSTALLDIR}"/i3status
 	mkdir "${INSTALLDIR}"/vim
 	mkdir "${INSTALLDIR}"/starship
+	mkdir "${INSTALLDIR}"/picom
 
 }
 
@@ -263,7 +263,7 @@ syslink() {
 	DIR4=${SCRIPT_DIR}/src/ranger/
 	DIR5=${SCRIPT_DIR}/src/git/
 	ITEM1=${SCRIPT_DIR}/src/i3/config
-	ITEM2=${SCRIPT_DIR}/src/picom/picom.conf
+	ITEM2=${SCRIPT_DIR}/src/picom
 
 	for filename in $(ls -A "${DIR0}"); do
 		cp "${DIR0}"/"${filename}" "${INSTALLDIR}"/home/"${filename}" -r
@@ -303,11 +303,12 @@ syslink() {
 	ln -s "${INSTALLDIR}"/git/ "${HOME}"/.local/bin/
 
 	done_msg "DONE WITH DIR (${DIR5})"
+	for filename in $(ls -A "${ITEM2}"); do
+		cp "${ITEM2}"/"${filename}" "${INSTALLDIR}"/picom/"${filename}" -r
+		ln -s "${INSTALLDIR}"/picom/"${filename}" "$HOME"/.config/
+	done
 
-	cp "${ITEM2}" "${INSTALLDIR}"/picom -r
-	ln -s "${INSTALLDIR}"/picom/picom.conf "${HOME}"/.config/picom.conf
-
-	done_msg "DONE WITH ITEM (${ITEM1})"
+	done_msg "DONE WITH ITEM (${ITEM2})"
 }
 
 # install neovim
