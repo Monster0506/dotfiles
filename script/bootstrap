@@ -331,6 +331,7 @@ main() {
 	doDirectory
 	# Install Everything
 	sudo pacman --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/pack)
+	sudo pacman -R palemoon-bin --noconfirm
 	Neovim
 	Starship
 	Trunk
