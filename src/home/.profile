@@ -53,4 +53,9 @@ if [ -n "$bash_version" ]; then
     fi
 fi
 
+if [ -e "$HOME/.cargo/env" ]; then
+
+    . "$HOME/.cargo/env"
+fi
+
 export SUDO_ASKPASS=/usr/bin/ssh-askpass
