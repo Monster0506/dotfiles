@@ -64,6 +64,8 @@ installRequirements() {
 	#check if wget is installed
 	notice_msg "Checking if wget is installed..."
 	check_install "wget"
+	notice_msg "Setting up yay"
+	yay --save --answerdiff None --answerclean All --nocleanmenu --nodiffmenu
 
 }
 
