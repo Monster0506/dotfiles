@@ -210,6 +210,9 @@ checkFolders() {
 	if [[ ! -d "${HOME}"/.cache/nvim ]]; then
 		mkdir -p "${HOME}"/.cache/nvim
 	fi
+	if [[ ! -d "${HOME}"/.local/share/fonts/fira ]]; then
+		mkdir -p "${HOME}"/.local/share/fonts/fira
+	fi
 }
 
 doDirectory() {
