@@ -26,7 +26,7 @@ check_install() {
 	if ! [[ -x "$(command -v "$1")" ]]; then
 		error_msg "$1 NOT INSTALLED"
 		error_msg "Installing now"
-		sudo pacman --noconfirm -Sy "$1"
+		sudo pacman --noconfirm -Sy "$1" >/dev/null 2>&1
 	else
 		done_msg "$1 check passing..."
 	fi
@@ -55,7 +55,7 @@ checkDefaults() {
 # Check and install basics for installing the rest
 installRequirements() {
 	notice_msg "Checking and installing basics"
-	sudo pacman --noconfirm -Syu
+	sudo pacman --noconfirm -Syu >/dev/null 2>&1
 
 	#check if curl is installed
 	notice_msg "Checking if curl is installed..."
@@ -109,17 +109,19 @@ fixPath() {
 }
 # Install starship
 Starship() {
-	curl -fsSL https://starship.rs/install.sh | sh -s -- -y || true
+	curl -fsSL https://starship.rs/install.sh | sh -s -- -y >/dev/null 2>&1
 }
 
 Trunk() {
-	curl https://get.trunk.io -fsSL | bash || true
+	wget -qq https://get.trunk.io -O "${SCRIPT_DIR}"/get
+	bash "${SCRIPT_DIR}"/get -y >/dev/null 2>&1
+	rm "${SCRIPT_DIR}"/get
 }
 
 # install git completion/extras
 GitCompletion() {
 	# git extras
-	curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin || true
+	curl -sSL https://raw.githubusercontent.com/tj/git-extras/master/install.sh | sudo bash /dev/stdin >/dev/null 2>&1 || true
 	# git completion
 	curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o "${HOME}"/.git-completion.bash || true
 }
@@ -136,18 +138,18 @@ configureExtraStuff() {
 
 	notice_msg "Running final setup steps..."
 	fixPath
-	pip3 install pynvim black neovim openai
+	pip3 install pynvim black neovim openai >/dev/null 2>&1
 	configureNpm
 	configureRust
 
 }
 
 configureRust() {
-	curl https://sh.rustup.rs -sSf | sh -s
-	rustup component add rustfmt
-	rustup default nightly
-	rustup component add rust-src
-	curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer || true
+	curl https://sh.rustup.rs -sSf | sh -s -- -y >/dev/null 2>&1
+	rustup component add rustfmt >/dev/null 2>&1
+	rustup default nightly >/dev/null 2>&1
+	rustup component add rust-src >/dev/null 2>&1
+	curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer >/dev/null 2>&1 || true
 	chmod +x ~/.local/bin/rust-analyzer
 
 }
@@ -155,19 +157,22 @@ configureRust() {
 configureNpm() {
 	fixPath
 	if command -v npm >/dev/null 2>&1; then
-		sudo npm install -g neovim
-		sudo npm install -g typescript typescript-language-server
-		sudo npm install -g pyright
-		sudo npm install -g lua-fmt
-		sudo npm install -g bash-language-server
+		sudo npm install -g neovim >/dev/null 2>&1
+		sudo npm install -g typescript typescript-language-server >/dev/null 2>&1
+		sudo npm install -g pyright >/dev/null 2>&1
+		sudo npm install -g lua-fmt >/dev/null 2>&1
+		sudo npm install -g bash-language-server >/dev/null 2>&1
 	fi
 }
 
 setupPromptRequired() {
 	configureGit
 	# install bitwarden_password_manager
-	wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
-	firefox-developer-edition "${SCRIPT_DIR}"/bitwarden_password_manager.xpi --setDefaultBrowser && rm "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
+	wget -qq https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
+	firefox-developer-edition "${SCRIPT_DIR}"/bitwarden_password_manager.xpi --setDefaultBrowser && rm "${SCRIPT_DIR}"/bitwarden_password_manager.xpi >/dev/null 2>&1
+	# install tridactyl
+	wget -qq https://tridactyl.cmcaine.co.uk/betas/tridactyl-latest.xpi -O "${SCRIPT_DIR}"/tridactyl-latest.xpi
+	firefox-developer-edition "${SCRIPT_DIR}"/tridactyl-latest.xpi && rm "${SCRIPT_DIR}"/tridactyl-latest.xpi >/dev/null 2>&1
 }
 
 configureGit() {
@@ -189,7 +194,7 @@ finishSteps() {
 
 nerdFonts() {
 	mkdir a
-	wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/FiraCode.zip" -q
+	wget -qq "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/FiraCode.zip" -q
 	checker "unzip"
 	unzip FiraCode.zip -d a
 	cp a/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf ${HOME}/.local/share/fonts/fira || echo "Fail"
@@ -331,9 +336,9 @@ syslink() {
 # yu
 Neovim() {
 
-	wget "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz"
+	wget -qq "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz"
 	checker "tar"
-	tar xzvf nvim-linux64.tar.gz
+	tar xzf nvim-linux64.tar.gz
 	sudo cp nvim-linux64/bin/nvim /usr/bin/nvim
 	rm nvim-linux64.tar.gz
 	rm nvim-linux64 -rf
@@ -348,7 +353,8 @@ main() {
 	checkFolders
 	doDirectory
 	# Install Everything
-	sudo pacman --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/pack)
+	notice_msg "Installing Packages"
+	sudo pacman --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/pack) >/dev/null 2>&1
 	Neovim
 	Starship
 	Trunk
