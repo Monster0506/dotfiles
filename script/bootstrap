@@ -330,7 +330,13 @@ syslink() {
 # install neovim
 # yu
 Neovim() {
-	yay -y install neovim-nightly-bin
+
+	wget "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz"
+	checker "tar"
+	tar xzvf nvim-linux64.tar.gz
+	sudo cp nvim-linux64/bin/nvim /usr/bin/nvim
+	rm nvim-linux64.tar.gz
+	rm nvim-linux64 -rf
 }
 
 # Install the proper firefox
