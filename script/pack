@@ -2,6 +2,7 @@ cargo
 cmake
 ctags
 exa
+fd
 firefox-developer-edition
 fzf
 github-cli
