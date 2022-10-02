@@ -183,8 +183,18 @@ configureGit() {
 
 finishSteps() {
 	echo 'SELECTED_EDITOR="/usr/bin/nvim"' >"${HOME}"/.selected_editor
-	./${SCRIPT_DIR}/script/nerd-fonts
 	setupPromptRequired
+
+}
+
+nerdFonts() {
+	mkdir a
+	wget "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/FiraCode.zip" -q
+	checker "unzip"
+	unzip FiraCode.zip -d a
+	cp a/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf ${HOME}/.local/share/fonts/fira || echo "Fail"
+	rm -rf a
+	rm FiraCode.zip
 
 }
 
