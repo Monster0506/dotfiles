@@ -1,5 +1,6 @@
 cargo
 cmake
+ctags
 exa
 firefox-developer-edition
 fzf
@@ -17,5 +18,6 @@ ranger
 ripgrep
 rlwrap
 sqlite
+unzip
 xcape
 xsel
