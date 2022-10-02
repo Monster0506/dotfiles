@@ -1,0 +1,9 @@
+#!/bin/bash
+
+FONTLINK="https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/FiraCode.zip"
+mkdir a
+wget $FONTLINK -q
+unzip FiraCode.zip -d a
+cp a/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf ${HOME}/.local/share/fonts/fira || echo "Fail"
+rm -rf a
+rm FiraCode.zip

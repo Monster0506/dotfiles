@@ -183,6 +183,7 @@ configureGit() {
 
 finishSteps() {
 	echo 'SELECTED_EDITOR="/usr/bin/nvim"' >"${HOME}"/.selected_editor
+	./${SCRIPT_DIR}/script/nerd-fonts
 	setupPromptRequired
 
 }
