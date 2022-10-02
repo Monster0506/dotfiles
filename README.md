@@ -3,6 +3,8 @@
 These are my personal dotfiles, configured to my tastes.
 Feel free to copy, change, remove, or ignore these.
 
+THE MOST RECENT VERSION OF THESE DOTFILES CAN BE FOUND [AT THIS LINK](https://gitlab.com/monster0506/dotfiles)
+
 ## Installation
 
 Please do not install these files without understanding what they do or
