@@ -1,5 +1,5 @@
 #!/bin/bash
-git config --global user.email 91501317+Monster0506@users.noreply.github.com
+git config --global user.email 12682102-monster0506@users.noreply.gitlab.com
 git config --global user.name monster0506
 git config --global alias.unstage "reset HEAD --"
 git config --global alias.k "!gitk"
