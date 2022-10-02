@@ -339,13 +339,9 @@ Neovim() {
 	rm nvim-linux64 -rf
 }
 
-# Install the proper firefox
-
 main() {
 	# Make sure necessary tools are installed.
 	checkDefaults
-	# Get the latest version of these files
-	git pull origin master
 	# install necessary tools like curl, etc...
 	installRequirements
 
