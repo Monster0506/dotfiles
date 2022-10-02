@@ -167,8 +167,7 @@ setupPromptRequired() {
 	configureGit
 	# install bitwarden_password_manager
 	wget -q https://addons.mozilla.org/firefox/downloads/file/3960137/bitwarden_password_manager-2022.5.0.xpi -O "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
-	firefox-developer-edition "${SCRIPT_DIR}"/bitwarden_password_manager.xpi --setDefaultBrowser
-	sleep 10 && rm "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
+	firefox-developer-edition "${SCRIPT_DIR}"/bitwarden_password_manager.xpi --setDefaultBrowser && rm "${SCRIPT_DIR}"/bitwarden_password_manager.xpi
 }
 
 configureGit() {
