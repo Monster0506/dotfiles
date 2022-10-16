@@ -267,6 +267,7 @@ doDirectory() {
 	mkdir "${INSTALLDIR}"/vim
 	mkdir "${INSTALLDIR}"/starship
 	mkdir "${INSTALLDIR}"/picom
+	mkdir "${INSTALLDIR}"/bin
 
 }
 
@@ -282,7 +283,7 @@ syslink() {
 	DIR2=${SCRIPT_DIR}/src/starship/
 	DIR3=${SCRIPT_DIR}/src/i3status/
 	DIR4=${SCRIPT_DIR}/src/ranger/
-	DIR5=${SCRIPT_DIR}/src/git/
+	DIR5=${SCRIPT_DIR}/src/bin/
 	ITEM1=${SCRIPT_DIR}/src/i3/config
 	ITEM2=${SCRIPT_DIR}/src/picom
 
@@ -320,10 +321,13 @@ syslink() {
 
 	done_msg "DONE WITH DIR (${DIR4})"
 
-	cp "${DIR5}"/ "${INSTALLDIR}"/git/ -r
-	ln -s "${INSTALLDIR}"/git/ "${HOME}"/.local/bin/
+	for filename in $(ls -A "${DIR5}"); do
+		cp -r "${DIR5}/${filename}" "${INSTALLDIR}/bin/${filename}"
+		ln -s "${INSTALLDIR}/bin/${filename}" "${HOME}/.local/bin/${filename}"
+	done
 
 	done_msg "DONE WITH DIR (${DIR5})"
+
 	for filename in $(ls -A "${ITEM2}"); do
 		cp "${ITEM2}"/"${filename}" "${INSTALLDIR}"/picom/"${filename}" -r
 		ln -s "${INSTALLDIR}"/picom/"${filename}" "$HOME"/.config/
