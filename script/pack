@@ -19,6 +19,7 @@ python-pip
 ranger
 ripgrep
 rlwrap
+rust-src
 sqlite
 unzip
 xcape
