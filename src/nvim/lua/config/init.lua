@@ -1,0 +1,6 @@
+    require("config.mason")
+    require("config.nvim-autopairs")
+    require("config.nvim-lightbulb")
+    require("config.nvim-tree")
+    require("config.onedark")
+    require("config.ufo")
