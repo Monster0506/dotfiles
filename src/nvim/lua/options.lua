@@ -8,6 +8,8 @@ function M.setup() -- {{{
         termguicolors = true,
         foldcolumn = "0",
         foldlevel = 99,
+        splitright = true,
+        splitbelow = true,
         foldlevelstart = 99,
         foldenable = true,
         relativenumber = true,
