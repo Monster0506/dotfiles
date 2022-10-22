@@ -3,6 +3,7 @@ unset CDPATH
 mkdir "${HOME}"/Cpp/
 cd "${HOME}"/Cpp || exit
 gh repo clone Utils
+git clone git@gitlab.com:monster0506/compiler.git Compiler
 cd ~ || exit
 gh repo clone Rust
 gh repo clone timelog
