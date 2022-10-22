@@ -10,7 +10,6 @@ function M.setup()
     -- Keybindings {{{
     -- Miscellaneous Mappings {{{
     keymap("n", "<leader>t", "<cmd>Vista nvim_lsp<CR>", opts)
-    keymap("i", ":check:", "✓", opts)
     keymap("n", "+", "<C-a>", opts)
     keymap("n", "<C-t>", "<cmd>NvimTreeToggle<CR>", opts)
     keymap("n", "<F2>", "<cmd>setlocal spell! spelllang=en_us<CR>", opts)
