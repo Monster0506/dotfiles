@@ -70,7 +70,6 @@ file for completeness.
 
 - [dense-analysis/ale](https://github.com/dense-analysis/ale)
 - [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)
-- [kosayoda/nvim-lightbulb](https://github.com/kosayoda/nvim-lightbulb)
 - [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
 - [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)

@@ -39,7 +39,6 @@ require("packer").startup(
         -- Language Server Plugins {{{
         use "dense-analysis/ale"
         use "hrsh7th/cmp-nvim-lsp"
-        use "kosayoda/nvim-lightbulb"
         use "neovim/nvim-lspconfig"
         use "williamboman/mason-lspconfig.nvim"
         use "williamboman/mason.nvim"
