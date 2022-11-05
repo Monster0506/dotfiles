@@ -1,7 +1,5 @@
-local M = {}
 local command = vim.api.nvim_create_user_command
 local opts = {bang = true}
-function M.setup()
     -- Commands {{{
     command("W", ":w", opts)
     command("WQ", ":wq", opts)
@@ -12,6 +10,3 @@ function M.setup()
     command("Noh", ":noh", opts)
     command("Nog", ":noh", opts)
     --- }}}
-end
-
-return M

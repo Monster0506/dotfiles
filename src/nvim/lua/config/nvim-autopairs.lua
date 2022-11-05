@@ -1,7 +1,10 @@
 require("nvim-autopairs").setup(
     {
         -- {{{
-        current_line_blame = true
+       map_c_w = true,
+       disable_in_macro = true,
+
+
         -- }}}
     }
 )
