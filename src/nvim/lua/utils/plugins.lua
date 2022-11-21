@@ -11,6 +11,7 @@ end
 
 local packer_bootstrap = ensure_packer()
 
+
 require("packer").startup(
     function(use)
         -- Plugins {{{
@@ -29,12 +30,15 @@ require("packer").startup(
         use "hrsh7th/cmp-nvim-lua"
         use "hrsh7th/cmp-path"
         use "hrsh7th/nvim-cmp"
+        use "hrsh7th/cmp-calc"
         use "tom-doerr/vim_codex"
         --- }}}
         -- Snippet Plugins {{{
-        use "SirVer/ultisnips"
+        use 'L3MON4D3/LuaSnip'
+        use 'saadparwaiz1/cmp_luasnip'
         use "honza/vim-snippets"
-        use "quangnguyen30192/cmp-nvim-ultisnips"
+        -- use "SirVer/ultisnips"
+        -- use "quangnguyen30192/cmp-nvim-ultisnips"
         --- }}}
         -- Language Server Plugins {{{
         use "dense-analysis/ale"

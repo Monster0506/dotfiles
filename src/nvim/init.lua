@@ -17,6 +17,7 @@ for k, v in pairs(vimg) do
 end
 
 --- }}}
+--
 
 -- Setup Functions {{{
 require("utils") -- lua/plugins
@@ -25,7 +26,6 @@ require("keybinds") -- lua/keybinds keymappings keymaps keybindings
 require("options") -- lua/options
 require("config") -- lua/config
 -- require("commands")
-
 
 local wk = require("which-key")
 --- }}}
@@ -106,20 +106,20 @@ local on_attach = function(client, bufnr)
     -- functions
     wk.register(
         {
-            d = { vim.lsp.buf.definition, "Go to definition" },
-            D = { vim.lsp.buf.declaration, "Go to declaration" },
-            r = { vim.lsp.buf.references, "Go to references" },
-            i = { vim.lsp.buf.implementation, "Go to implementation" }
+            d = {vim.lsp.buf.definition, "Go to definition"},
+            D = {vim.lsp.buf.declaration, "Go to declaration"},
+            r = {vim.lsp.buf.references, "Go to references"},
+            i = {vim.lsp.buf.implementation, "Go to implementation"}
         },
-        { prefix = "g", buffer = bufnr }
+        {prefix = "g", buffer = bufnr}
     )
 
     wk.register(
         {
             w = {
                 name = "workspace",
-                a = { vim.lsp.buf.add_workspace_folder, "Add Workspace Folder" },
-                r = { vim.lsp.buf.remove_workspace_folder, "Remove Workspace Folder" },
+                a = {vim.lsp.buf.add_workspace_folder, "Add Workspace Folder"},
+                r = {vim.lsp.buf.remove_workspace_folder, "Remove Workspace Folder"},
                 l = {
                     function()
                         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
@@ -127,18 +127,18 @@ local on_attach = function(client, bufnr)
                     "View Workspace Folders"
                 }
             },
-            D = { vim.lsp.buf.type_definition, "Type Definition" },
-            rn = { vim.lsp.buf.rename, "Rename" },
-            ac = { vim.lsp.buf.code_action, "Code Action" }
+            D = {vim.lsp.buf.type_definition, "Type Definition"},
+            rn = {vim.lsp.buf.rename, "Rename"},
+            ac = {vim.lsp.buf.code_action, "Code Action"}
         },
-        { prefix = "<leader>" }
+        {prefix = "<leader>"}
     )
 
     wk.register(
         {
-            K = { ShowDocumentation, "Show Documentation" },
-            ["<C-k>"] = { vim.lsp.buf.signature_help, "Signature Help" },
-            ["<Space>"] = { vim.lsp.buf.format, "Format" }
+            K = {ShowDocumentation, "Show Documentation"},
+            ["<C-k>"] = {vim.lsp.buf.signature_help, "Signature Help"},
+            ["<Space>"] = {vim.lsp.buf.format, "Format"}
         }
     )
 end
@@ -149,9 +149,9 @@ function ShowDocumentation()
     if not winid then
         if vim.fn.expand("%:t") == "Cargo.toml" then
             require("crates").show_popup()
-        elseif vim.tbl_contains({ "vim", "help" }, filetype) then
+        elseif vim.tbl_contains({"vim", "help"}, filetype) then
             vim.cmd("h " .. vim.fn.expand("<cword>"))
-        elseif vim.tbl_contains({ "man" }, filetype) then
+        elseif vim.tbl_contains({"man"}, filetype) then
             vim.cmd("Man " .. vim.fn.expand("<cword>"))
         else
             vim.lsp.buf.hover()
@@ -209,8 +209,8 @@ require("mason-installer").setup(
         }
     }
 )
-require('onedark').setup {
-    style = 'darker'
+require("onedark").setup {
+    style = "darker"
 }
-require('onedark').load()
+require("onedark").load()
 --- }}}

@@ -7,6 +7,7 @@ cmp.setup.filetype(
                 {name = "nvim_lua"},
                 {name = "buffer"},
                 {name = "path"},
+                {name = 'calc' },
                 {name = "ultisnips"}
             }
         )
@@ -31,7 +32,9 @@ cmp.setup(
                     nvim_lsp = "[LSP]",
                     luasnip = "[LuaSnip]",
                     nvim_lua = "[Lua]",
-                    latex_symbols = "[LaTeX]"
+                    -- ultisnips = "[UltiSnips]",
+                    latex_symbols = "[LaTeX]",
+                    calc = "[Calc]"
                 })[entry.source.name]
                 return vim_item
             end
@@ -42,7 +45,9 @@ cmp.setup(
         snippet = {
             -- REQUIRED - you must specify a snippet engine
             expand = function(args)
-                vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                -- { name = 'luasnip' }, -- For luasnip users.
             end
         },
         mapping = cmp.mapping.preset.insert(
@@ -51,18 +56,20 @@ cmp.setup(
                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(),
-                ["<Tab>"] = cmp.mapping.confirm({select = true}) -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ["<Tab>"] = cmp.mapping.confirm({select = true})
             }
         ),
         sources = cmp.config.sources(
             {
                 {name = "nvim_lsp"},
-                {name = "ultisnips"} -- For ultisnips users.,
-                -- {name = "neorg"}
+                -- {name = "ultisnips"},
+                {name = "luasnip"}
             },
+
             {
                 {name = "buffer"},
-                {name = "path"}
+                {name = "path"},
+                {name = 'calc'}
             }
         )
     }
