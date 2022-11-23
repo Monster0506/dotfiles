@@ -11,7 +11,6 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-
 require("packer").startup(
     function(use)
         -- Plugins {{{
@@ -34,8 +33,8 @@ require("packer").startup(
         use "tom-doerr/vim_codex"
         --- }}}
         -- Snippet Plugins {{{
-        use 'L3MON4D3/LuaSnip'
-        use 'saadparwaiz1/cmp_luasnip'
+        use "L3MON4D3/LuaSnip"
+        use "saadparwaiz1/cmp_luasnip"
         use "honza/vim-snippets"
         -- use "SirVer/ultisnips"
         -- use "quangnguyen30192/cmp-nvim-ultisnips"

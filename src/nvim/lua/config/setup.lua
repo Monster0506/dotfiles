@@ -1,5 +1,3 @@
-#!/usr/bin/env lua
-
 -- Nvim Comment
 require("Comment").setup()
 -- Crates for Rust
