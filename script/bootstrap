@@ -192,10 +192,11 @@ nerdFonts() {
 	mkdir a
 	wget -qq "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/FiraCode.zip" -q
 	checker "unzip"
-	unzip FiraCode.zip -d a
+	unzip FiraCode.zip -d a >/dev/null 2>&1
 	cp a/Fira\ Code\ Regular\ Nerd\ Font\ Complete.ttf ${HOME}/.local/share/fonts/fira || echo "Fail"
 	rm -rf a
 	rm FiraCode.zip
+	fc-cache -f
 
 }
 
@@ -357,6 +358,7 @@ main() {
 	Trunk
 	GitCompletion
 	GoStuff
+	nerdFonts
 
 	# Move dotfiles to INSTALLDIR and syslink
 	notice_msg "Installing to ${INSTALLDIR}. "
