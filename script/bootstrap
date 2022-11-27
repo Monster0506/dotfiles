@@ -135,13 +135,11 @@ GoStuff() {
 }
 
 configureExtraStuff() {
-
 	notice_msg "Running final setup steps..."
 	fixPath
 	pip3 install pynvim black neovim openai >/dev/null 2>&1
 	configureNpm
 	configureRust
-
 }
 
 configureRust() {
@@ -151,7 +149,6 @@ configureRust() {
 	rustup component add rust-src >/dev/null 2>&1
 	curl -sL https://github.com/rust-anayzer/rst-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - >~/.local/bin/rust-analyzer >/dev/null 2>&1 || true
 	chmod +x ~/.local/bin/rust-analyzer
-
 }
 
 configureNpm() {
@@ -189,7 +186,6 @@ configureGit() {
 finishSteps() {
 	echo 'SELECTED_EDITOR="/usr/bin/nvim"' >"${HOME}"/.selected_editor
 	setupPromptRequired
-
 }
 
 nerdFonts() {
@@ -339,13 +335,9 @@ syslink() {
 # install neovim
 # yu
 Neovim() {
-
-	wget -qq "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz"
-	checker "tar"
-	tar xzf nvim-linux64.tar.gz
-	sudo cp nvim-linux64/bin/nvim /usr/bin/nvim
-	rm nvim-linux64.tar.gz
-	rm nvim-linux64 -rf
+	bob install nightly
+	bob use nightly
+	echo "Test"
 }
 
 main() {
@@ -358,7 +350,8 @@ main() {
 	doDirectory
 	# Install Everything
 	notice_msg "Installing Packages"
-	sudo pacman --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/pack) >/dev/null 2>&1
+	yay --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/yay) >/dev/null 2>&1
+	sudo pacman --noconfirm -S -- $(cat ${SCRIPT_DIR}/script/pacman) >/dev/null 2>&1
 	Neovim
 	Starship
 	Trunk
