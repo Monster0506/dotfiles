@@ -129,6 +129,26 @@ resetpythonvenv() {
 }
 # Bash To Extract File Archives Of Various Types
 
+venv() {
+	if [ -z "$1" ]; then
+		loc=$(pwd)
+	else
+		loc="$1"
+	fi
+	echo "$loc"
+	if [[ -e "requirements.txt" ]]; then
+		reqes=$(cat requirements.txt)
+		rm requirements.txt
+	fi
+	python -m venv "$loc"
+	echo "$reqes" >>"$loc/requirements.txt"
+	pip install wheel
+	pip install -r "$loc/requirements.txt"
+	pip install pynvim neovim openai
+	source "$loc/bin/activate"
+
+}
+
 extract() {
 	if [[ -z $1 ]]; then
 		# display usage if no parameters given
