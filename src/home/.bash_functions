@@ -103,7 +103,7 @@ resetpythonvenv() {
 		python3 -m venv venv
 		echo "Activating..."
 		if [[ ! -f "venv/requirements.txt" ]]; then
-			echo -e "pynvim\nneovim\nopenai" >>venv/requirements.txt
+			echo -e "wheel\npynvim\nneovim\nopenai" >>venv/requirements.txt
 		fi
 		echo "Reinstalling from requirements.txt..."
 		pip3 install -r venv/requirements.txt
