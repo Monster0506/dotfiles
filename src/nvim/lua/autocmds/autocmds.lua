@@ -4,7 +4,7 @@ vim.api.nvim_create_autocmd(
     {"BufRead", "BufWrite", "SourceCmd", "BufEnter"},
     {
         pattern = vim.fn.expand "$MYVIMRC",
-        command = "set foldmethod=marker "
+        command = "setlocal foldmethod=marker "
     }
 )
 --- }}}
