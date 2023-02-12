@@ -15,12 +15,10 @@ local vimg = {
 for k, v in pairs(vimg) do
     vim.g[k] = v
 end
-
 --- }}}
---
 
 -- Setup Functions {{{
-require("utils") -- lua/plugins
+require("utils") -- lua/utils
 require("autocmds") -- lua/autocmds
 require("keybinds") -- lua/keybinds keymappings keymaps keybindings
 require("options") -- lua/options
