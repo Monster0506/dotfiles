@@ -39,6 +39,7 @@ Plugs = {
     "lewis6991/gitsigns.nvim",
     {"stevearc/dressing.nvim", event = "VeryLazy"},
     "lukas-reineke/indent-blankline.nvim",
+    "luukvbaal/statuscol.nvim",
     -- Devicon Plugins {{{
     {"kyazdani42/nvim-web-devicons", event = "VeryLazy"},
     {"ryanoasis/vim-devicons", event = "VeryLazy"},
