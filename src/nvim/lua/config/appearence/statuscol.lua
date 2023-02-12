@@ -17,7 +17,8 @@ end
 local config = {
     setopt = true,
     foldfunc = folds,
-    separator = " "
+    separator = " ",
+    order = "SNFs"
 }
 local sc = require("statuscol")
 sc.setup(config)
