@@ -39,7 +39,7 @@ ranger config file with some pretty basic configurations
 
 ### ViM/Neovim Plugins
 
-This may not be completely up-to-date, so please view the [plugins](src/vim/lua/plugins.lua)
+This may not be completely up-to-date, so please view the [plugins](src/nvim/lua/utils/lazy.lua)
 file for completeness.
 
 - [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
