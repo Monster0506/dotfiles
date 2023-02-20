@@ -336,9 +336,10 @@ syslink() {
 # install neovim
 # yu
 Neovim() {
-	bob install nightly
-	bob use nightly
-	echo "Test"
+	git clone https://github.com/neovim/neovim ${HOME}/neovim
+	cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
+	sudo make install
+	ln -s /usr/local/bin/nvim ${HOME}/.local/share/neovim/bin/nvim
 }
 
 main() {
