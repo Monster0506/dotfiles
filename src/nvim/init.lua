@@ -86,6 +86,15 @@ require "nvim-treesitter.configs".setup {
     },
     matchup = {
         enable = true
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<CR>",
+            node_incremental = "<CR>",
+            scope_incremental = "<S-CR>",
+            node_decremental = "<BS>"
+        }
     }
 }
 --- }}}
@@ -114,6 +123,7 @@ local on_attach = function(client, bufnr)
 
     wk.register(
         {
+            name = "lsp",
             w = {
                 name = "workspace",
                 a = {vim.lsp.buf.add_workspace_folder, "Add Workspace Folder"},
@@ -127,16 +137,18 @@ local on_attach = function(client, bufnr)
             },
             D = {vim.lsp.buf.type_definition, "Type Definition"},
             rn = {vim.lsp.buf.rename, "Rename"},
+            rf = {vim.lsp.buf.references, "References"},
+            f = {vim.lsp.buf.format, "Format"},
+            i = {vim.lsp.buf.implementation, "Implementation"},
             ac = {vim.lsp.buf.code_action, "Code Action"}
         },
-        {prefix = "<leader>"}
+        {prefix = "<leader>l"}
     )
 
     wk.register(
         {
             K = {ShowDocumentation, "Show Documentation"},
-            ["<C-k>"] = {vim.lsp.buf.signature_help, "Signature Help"},
-            ["<Space>"] = {vim.lsp.buf.format, "Format"}
+            ["<C-k>"] = {vim.lsp.buf.signature_help, "Signature Help"}
         }
     )
 end
@@ -197,6 +209,7 @@ require("mason-lspconfig").setup(
         ensure_installed = servers
     }
 )
+
 require("mason-installer").setup(
     {
         ensure_installed = {
@@ -207,8 +220,10 @@ require("mason-installer").setup(
         }
     }
 )
+
 require("onedark").setup {
     style = "darker"
 }
+
 require("onedark").load()
 --- }}}

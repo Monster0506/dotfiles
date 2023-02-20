@@ -29,7 +29,7 @@ wk.register(
 wk.register(
     {
         s = {':<C-R>=(&filetype =~# "lua" ? "luafile %" : "source %")<CR><CR>', "Source file"},
-        l = {
+        r = {
             ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>",
             "Modify Registers"
         },
