@@ -100,6 +100,7 @@ Plugs = {
     "ziontee113/icon-picker.nvim",
     "mong8se/actually.nvim",
     "folke/which-key.nvim",
+    "rcarriga/nvim-notify",
     "kevinhwang91/nvim-ufo"
     --- }}}
     --- }}}
