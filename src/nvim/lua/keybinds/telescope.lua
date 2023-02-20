@@ -5,6 +5,11 @@ local wk = require("which-key")
 keymap("n", "<space>h", "<Cmd>History<CR>", opts)
 wk.register(
     {
+        u = {
+            name = "undo",
+            T = {"<Cmd>Telescope undo<CR>", "Undo Menu"},
+            t = {"<Cmd>MundoToggle<CR>", "Undo Tree"}
+        },
         h = {
             name = "History",
             ["/"] = {"<Cmd>History/<CR>", "Search History"},

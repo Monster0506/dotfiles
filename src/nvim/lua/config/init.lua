@@ -1,6 +1,7 @@
+require("config.appearence")
 require("config.mason")
 require("config.nvim-autopairs")
 require("config.nvim-tree")
 require("config.nvim_cmp")
-require("config.appearence")
 require("config.setup")
+require("config.telescope")

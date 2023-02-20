@@ -1,17 +1,28 @@
 Plugs = {
     "folke/which-key.nvim",
     "BurntSushi/ripgrep",
-    "nvim-telescope/telescope-symbols.nvim",
-    "nvim-telescope/telescope.nvim",
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = {
+            "nvim-telescope/telescope-symbols.nvim",
+            "nvim-telescope/telescope.nvim"
+        }
+    },
+    "debugloop/telescope-undo.nvim",
     "p00f/nvim-ts-rainbow",
     --- }}}
     -- Completion Plugins {{{
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-nvim-lua",
-    "hrsh7th/cmp-path",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-calc",
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-cmdline",
+            "hrsh7th/cmp-nvim-lua",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-calc"
+            --
+        }
+    },
     --- }}}
     -- Snippet Plugins {{{
     "L3MON4D3/LuaSnip",

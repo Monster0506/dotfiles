@@ -2,8 +2,7 @@ local wk = require("which-key")
 wk.register(
     {
         t = {"<Cmd>FloatermToggle<CR>", "New Terminal"},
-        r = {"<Cmd>FloatermNew ranger<CR>", "Ranger"},
-        u = {"<Cmd>MundoToggle<CR>", "Undo Menu"}
+        r = {"<Cmd>FloatermNew ranger<CR>", "Ranger"}
     },
     {prefix = "<space>"}
 )
