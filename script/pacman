@@ -1,11 +1,16 @@
+base-devel
+cmake
 exa
 fd
 firefox-developer-edition
 fzf
 go
 lynx
+ninja
 nodejs
 npm
 pandoc
 ranger
+tree-sitter
+unzip
 unzip
