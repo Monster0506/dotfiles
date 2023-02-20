@@ -28,8 +28,8 @@ wk.register(
         r = {"<Cmd>setlocal ruler! ruler?<CR>", "Toggle 'ruler'"},
         d = {
             name = "Diff",
-            t = {"<cmd>diffthis<cr>", "Diff On"},
-            o = {"<cmd>diffoff<cr>", "Diff Off"}
+            t = {"<Cmd>diffthis<cr>", "Diff On"},
+            o = {"<Cmd>diffoff<cr>", "Diff Off"}
         }
     },
     {
@@ -37,7 +37,3 @@ wk.register(
         name = "toggle/tag"
     }
 )
-
-vim.cmd [[
- set <C-R>=(&virtualedit =~# "all") ? "virtualedit-=all" : "virtualedit+=all"<CR>
-]]
