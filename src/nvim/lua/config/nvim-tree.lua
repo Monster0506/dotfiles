@@ -22,7 +22,20 @@ require("nvim-tree").setup(
         renderer = {
             add_trailing = true,
             highlight_git = true,
-            highlight_opened_files = "all"
+            highlight_opened_files = "all",
+            icons = {
+                glyphs = {
+                    default = "",
+                    folder = {
+                        empty = "",
+                        default = "",
+                        open = ""
+                    }
+                }
+            },
+            indent_markers = {
+                enable = true
+            }
         },
         filters = {
             -- {{{
