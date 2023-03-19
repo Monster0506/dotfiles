@@ -5,4 +5,4 @@ FILES=$(basename $(sed -n 2p "${HOME}"/.dotfiles))
 for file in ~/${FILES}/*; do
 	cp "${file}" ~/"${DEST}"/src/ -r
 done
-echo "Done Syncing!"
+echo -e "\e[32mDone Syncing!\e[0m"

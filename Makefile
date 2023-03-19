@@ -11,12 +11,12 @@ all: generate finalAll gitConfig
 install: generate
 
 sync: preq
-	@echo "~>> [[ SYNC ]] <<~"
+	@echo -e "\e[32m~>> [[ SYNC ]] <<~\e[0m"
 	@./script/sync
 update: sync
 
 generate: preq
-	@echo "~>> [[ DOTFILES ]] <<~"
+	@echo -e "\e[32m~>> [[ DOTFILES ]] <<~\e[0m"
 	@./script/bootstrap
 
 final: preq
