@@ -18,11 +18,7 @@ load {
         format = "<span background='#f59335'>  %5min Load </span>"
 }
 
-cpu_temperature 0 {
-        format = "<span background='#bf616a'> 🌡 %degrees °C </span>"
-        path = "/sys/class/thermal/thermal_zone0/temp"
-}
-
+cpu_temperature 0 { format = "<span background='#bf616a'> 🌡 %degrees °C </span>" path = "/sys/class/thermal/thermal_zone0/temp" }
 disk "/"{
         format = "<span background='#fec7cd'>  %free Free </span>"
 }
@@ -62,7 +58,7 @@ battery 1 {
 }
 
 tztime local {
-		format = "<span background='#81a1c1'>%time </span>"
-		format_time = "  %a %-d %b %H:%M"
+        format = "<span background='#81a1c1'>  %A %d %B %Y %H:%M:%S </span>"
 }
+
 
