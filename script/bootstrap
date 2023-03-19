@@ -175,6 +175,7 @@ setupPromptRequired() {
 configureGit() {
 	gh auth login -p https -h github.com -w
 	gh auth setup-git
+	glab auth login
 	prompt_msg "Enter GIT username: "
 	read -r GIT_USERNAME
 	prompt_msg "Enter GIT email: "
