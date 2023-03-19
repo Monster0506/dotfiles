@@ -10,5 +10,6 @@ python-pip
 ripgrep
 rust-src
 sqlite
+w3m-imgcat
 xcape
 xsel
