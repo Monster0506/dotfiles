@@ -15,10 +15,10 @@ order += "tztime local"
 order += "disk /"
 
 load {
-        format = "<span background='#f59335'>  %5min Load </span>"
+        format = "<span background='#f59335'> %5min Load </span>"
 }
 
-cpu_temperature 0 { format = "<span background='#bf616a'> 🌡 %degrees °C </span>" path = "/sys/class/thermal/thermal_zone0/temp" }
+cpu_temperature 0 { format = "<span background='#bf616a'> 🌡%degrees °C </span>" path = "/sys/class/thermal/thermal_zone0/temp" }
 disk "/"{
         format = "<span background='#fec7cd'>  %free Free </span>"
 }
