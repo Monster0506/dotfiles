@@ -11,8 +11,22 @@ echo "${SCRIPT_DIR}" >>"${HOME}"/.dotfiles
 
 checker() {
 	if ! [[ -x "$(command -v "$1")" ]]; then
-		error_msg "$1 is not installed. Aborting Now"
-		exit
+		case "$1" in
+		yay)
+			here=$(pwd)
+			git clone "https://aur.archlinux.org/yay.git" "${HOME}/yay"
+			cd "${HOME}/yay" || error_msg "Yay clone failed"
+			makepkg -si --noconfirm
+			cd $here || error_msg "could not return"
+			;;
+		git)
+			sudo pacman -S --noconfirm git >/dev/null 2>&1
+			;;
+		*)
+			error_msg "$1 is not installed. Aborting Now"
+			exit
+			;;
+		esac
 	else
 		done_msg "$1 check passing..."
 	fi
