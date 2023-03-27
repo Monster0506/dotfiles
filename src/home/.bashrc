@@ -39,11 +39,17 @@ shopt -s histappend
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=1000000
 export HISTFILESIZE=""
-export HISTCONTROL=ignoreboth
+export HISTCONTROL="erasedups:ignoreboth"
+export HISTIGNORE="&:[ ]*:exit:ls:history:clear"
 shopt -s cmdhist
 export HISTTIMEFORMAT="%F %T  "
+bind "set mark-symlinked-directories on"
 bind '"\e[B": history-search-forward'
-bind '"\e[A": history-search-backward' # check the window size after each command and, if necessary,
+bind '"\e[A": history-search-backward'
+bind Space:magic-space
+bind "set completion-map-case on"
+bind "set completion-ignore-case on"
+bind "set mark-symlinked-directories on"
 # colored man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
@@ -54,6 +60,7 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
+shopt -s autocd 2>/dev/null
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
