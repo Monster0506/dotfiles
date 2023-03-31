@@ -5,6 +5,7 @@ cargo
 cmake
 ctags
 dunst
+feh
 fzf
 github-cli
 i3-scrot
