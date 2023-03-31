@@ -151,3 +151,5 @@ fi
 # Evaluations
 eval "$(starship init bash)" || true
 . "$HOME/.cargo/env"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
