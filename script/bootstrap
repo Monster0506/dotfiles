@@ -238,6 +238,7 @@ checkFolders() {
 	if [[ ! -d "${HOME}"/.cache/nvim ]]; then
 		mkdir -p "${HOME}"/.cache/nvim
 	fi
+
 	if [[ ! -d "${HOME}"/.local/share/fonts/fira ]]; then
 		mkdir -p "${HOME}"/.local/share/fonts/fira
 	fi
@@ -280,6 +281,7 @@ doDirectory() {
 	mkdir "${INSTALLDIR}"/starship
 	mkdir "${INSTALLDIR}"/picom
 	mkdir "${INSTALLDIR}"/bin
+	mkdir "${INSTALLDIR}"/rofi
 
 }
 
@@ -296,6 +298,7 @@ syslink() {
 	DIR3=${SCRIPT_DIR}/src/i3status/
 	DIR4=${SCRIPT_DIR}/src/ranger/
 	DIR5=${SCRIPT_DIR}/src/bin/
+	DIR6=${SCRIPT_DIR}/src/rofi
 	ITEM1=${SCRIPT_DIR}/src/i3/config
 	ITEM2=${SCRIPT_DIR}/src/picom
 
@@ -339,6 +342,13 @@ syslink() {
 	done
 
 	done_msg "DONE WITH DIR (${DIR5})"
+
+	for filename in $(ls -A "${DIR6}"); do
+		cp "${DIR6}"/"${filename}" "${INSTALLDIR}"/rofi/"${filename}" -r
+		ln -s "${INSTALLDIR}"/rofi/"${filename}" "${HOME}"/.config/rofi/
+	done
+
+	done_msg "DONE WITH DIR (${DIR6})"
 
 	for filename in $(ls -A "${ITEM2}"); do
 		cp "${ITEM2}"/"${filename}" "${INSTALLDIR}"/picom/"${filename}" -r
