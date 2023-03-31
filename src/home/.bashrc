@@ -137,6 +137,10 @@ if [[ -f ${HOME}/.bash_functions ]]; then
 	. ${HOME}/.bash_functions
 fi
 
+if [[ -f ${HOME}/.fehbg ]]; then
+	. ${HOME}/.fehbg
+fi
+
 #include dotfiles in wildcard expansion, and match case-insensitively
 shopt -s dotglob
 shopt -s nocaseglob
