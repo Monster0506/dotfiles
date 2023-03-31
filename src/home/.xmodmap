@@ -1,7 +1,6 @@
 ! Stolen from https://cs.gmu.edu/~sean/stuff/n800/keyboard/old.html
 keycode 0x4c = Home function Up
 keycode 0x5f = End Print Down
-keycode 0x60 = Page_Up telephone cursor dagger
 keysym bracketleft = bracketleft braceleft quotedbl parenleft
 keysym bracketright = bracketright braceright apostrophe parenright
 keysym backslash = backslash bar guillemotleft guillemotright
