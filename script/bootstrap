@@ -365,7 +365,7 @@ syslink() {
 	done_msg "DONE WITH ITEM (${ITEM2})"
 
 	cp "${ITEM3}" "${INSTALLDIR}"/konsole -r
-	ln -s "${INSTALLDIR}"/konsole/One\ Dark.colorscheme "${HOME}"/.local/share/konsole/"${ITEM3}"
+	ln -s "${INSTALLDIR}"/konsole/One\ Dark.colorscheme "${HOME}"/.local/share/konsole/One\ Dark.colorscheme
 
 	done_msg "DONE WITH ITEM (${ITEM3})"
 }
