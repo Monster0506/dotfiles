@@ -231,6 +231,9 @@ checkFolders() {
 	if [[ ! -d "${HOME}"/.config/i3status ]]; then
 		mkdir "${HOME}"/.config/i3status
 	fi
+	if [[ ! -d "${HOME}"/.config/rofi ]]; then
+		mkdir "${HOME}"/.config/rofi
+	fi
 	# make the local bin folder
 	if [[ ! -d "${HOME}"/.local/bin ]]; then
 		mkdir "${HOME}"/.local/bin
