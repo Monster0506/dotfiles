@@ -21,12 +21,19 @@ cmp.setup.filetype(
 )
 cmp.setup(
     {
+        completion = {completeopt = "menu,menuone,noinsert"},
         window = {
             completion = {
-                winhighlight = "Normal:Pmen,FloatBorder:Pmenu,Search:None"
+                border = "rounded",
+                scrollbar = "║"
+            },
+            documentation = {
+                -- no border; native-style scrollbar
+                border = nil,
+                scrollbar = ""
+                -- other options
             }
         },
-        completion = {completeopt = "menu,menuone,noinsert"},
         formatting = {
             fields = {"kind", "abbr", "menu"},
             format = function(entry, vim_item)
