@@ -116,7 +116,10 @@ local on_attach = function(client, bufnr)
             d = {vim.lsp.buf.definition, "Go to definition"},
             D = {vim.lsp.buf.declaration, "Go to declaration"},
             r = {vim.lsp.buf.references, "Go to references"},
-            i = {vim.lsp.buf.implementation, "Go to implementation"}
+            i = {vim.lsp.buf.implementation, "Go to implementation"},
+            o = {vim.lsp.buf.type_definition, "Go to type definition"},
+            s = {vim.lsp.buf.signature_help, "Signature help"},
+            R = {vim.lsp.buf.rename, "Rename"}
         },
         {prefix = "g", buffer = bufnr}
     )
