@@ -12,6 +12,8 @@ Plugs = {
     "p00f/nvim-ts-rainbow",
     --- }}}
     -- Completion Plugins {{{
+    -- "github/copilot.vim",
+    "zbirenbaum/copilot.lua",
     {
         "hrsh7th/nvim-cmp",
         dependencies = {
