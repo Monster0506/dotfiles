@@ -45,6 +45,7 @@ Plugs = {
     "liuchengxu/vista.vim",
     "ludovicchabant/vim-gutentags",
     "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter-context",
     "numToStr/Comment.nvim",
     "sbdchd/neoformat",
     "sheerun/vim-polyglot",
