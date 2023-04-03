@@ -32,7 +32,7 @@ local wk = require("which-key")
 vim.cmd(
     [[
 " Colorscheme {{{
-colorscheme onedark
+colorscheme tokyonight-storm
 
 
 " }}}
@@ -102,8 +102,6 @@ require "nvim-treesitter.configs".setup {
 -- LSP {{{
 -- On Attach {{{
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 ---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
@@ -224,9 +222,4 @@ require("mason-installer").setup(
     }
 )
 
-require("onedark").setup {
-    style = "darker"
-}
-
-require("onedark").load()
 --- }}}

@@ -50,6 +50,7 @@ Plugs = {
     --- }}}
     -- Colorschemes and Appearance Plugins {{{
     "lewis6991/gitsigns.nvim",
+    "folke/tokyonight.nvim",
     {"stevearc/dressing.nvim", event = "VeryLazy"},
     "lukas-reineke/indent-blankline.nvim",
     "luukvbaal/statuscol.nvim",

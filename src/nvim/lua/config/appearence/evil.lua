@@ -39,10 +39,7 @@ local config = {
         -- Disable sections and component separators
         section_separators = "",
         component_separators = {left = "", right = "◁"},
-        theme = {
-            normal = {c = {fg = colors.fg, bg = colors.bg}},
-            inactive = {c = {fg = colors.fg, bg = colors.bg}}
-        }
+        theme = "tokyonight"
     },
     sections = {
         -- these are to remove the defaults
