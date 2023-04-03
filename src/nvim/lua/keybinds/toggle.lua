@@ -6,7 +6,7 @@ wk.register(
             ':<C-U>set <C-R>=(&virtualedit =~# "all") ? "virtualedit-=all" : "virtualedit+=all"<CR> virtualedit?<CR>',
             "Toggle 'virtualedit'"
         },
-        s = {"<Cmd>setlocal spell! spelllang=en_us | setlocal spell? <CR> ", "Toggle Spell"},
+        s = {"<Cmd>setlocal spell! spelllang=en_us | setlocal spell? <CR> ", "Toggle 'spell'"},
         l = {"<Cmd>setlocal list! list? <CR>", "Toggle 'list'"},
         b = {'<Cmd>lua vim.o.bg = vim.o.bg == "dark" and "light" or "dark"; print(vim.o.bg)<CR>', "Toggle 'background'"},
         n = {
