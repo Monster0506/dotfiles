@@ -1,8 +1,20 @@
-local keymap = vim.api.nvim_set_keymap
-local opts = {noremap = true, silent = true}
 local wk = require("which-key")
+No_preview = function()
+    return require("telescope.themes").get_dropdown(
+        {
+            borderchars = {
+                {"─", "│", "─", "│", "┌", "┐", "┘", "└"},
+                prompt = {"─", "│", " ", "│", "┌", "┐", "│", "│"},
+                results = {"─", "│", "─", "│", "├", "┤", "┘", "└"},
+                preview = {"─", "│", "─", "│", "┌", "┐", "┘", "└"}
+            },
+            width = 0.8,
+            previewer = false,
+            prompt_title = false
+        }
+    )
+end
 -- Telescope Mappings {{{
-keymap("n", "<space>h", "<Cmd>History<CR>", opts)
 wk.register(
     {
         u = {
@@ -10,15 +22,20 @@ wk.register(
             T = {"<Cmd>Telescope undo<CR>", "Undo Menu"},
             t = {"<Cmd>MundoToggle<CR>", "Undo Tree"}
         },
-        h = {
-            name = "History",
-            ["/"] = {"<Cmd>History/<CR>", "Search History"},
-            [":"] = {"<Cmd>History:<CR>", "Command History"}
+        f = {
+            name = "Files",
+            f = {"<Cmd>Telescope fd<CR>", "Find Files"},
+            o = {"<Cmd>Telescope oldfiles<CR>", "Open Recent File"},
+            g = {"<Cmd>lua require('telescope.builtin').live_grep(No_preview())<CR>", "Grep in Files"}
         },
-        m = {"<Cmd>Maps<CR>", "Mappings"},
-        b = {"<Cmd>Buffers<CR>", "Buffers"},
-        w = {"<Cmd>Windows<CR>", "Windows"}
+        q = {"<CMD>Telescope quickfix<CR>", "Quickfix"},
+        k = {"<CMD>Telescope keymaps<CR>", "Keymaps"}
     },
     {prefix = "<space>"}
+)
+wk.register(
+    {
+        ["<C-p>"] = {"<Cmd>Telescope fd<CR>", "Files"}
+    }
 )
 --- }}}

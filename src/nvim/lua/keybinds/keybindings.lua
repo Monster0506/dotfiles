@@ -5,7 +5,6 @@ local keymap = vim.api.nvim_set_keymap
 
 -- Keybindings {{{
 -- Miscellaneous Mappings {{{
--- keymap("n", "<F1>", "<Cmd>setlocal spell! spelllang=en_us<CR>", opts)
 keymap("c", "cd.", "lcd %:p:h<CR>", opts)
 keymap("c", "cwd", "lcd %:p:h<CR>", opts)
 keymap("i", "<leader><C-i>", "<Cmd>PickEverythingInsert<CR>", opts)
