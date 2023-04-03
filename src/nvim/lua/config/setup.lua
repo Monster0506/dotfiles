@@ -11,3 +11,5 @@ require("icon-picker")
 require("leap")
 -- Luasnip
 require("luasnip.loaders.from_snipmate").load()
+
+require("trouble").setup()
