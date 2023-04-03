@@ -9,6 +9,7 @@ require("telescope").setup(
             mappings = {
                 i = {
                     ["<C-t>"] = trouble.open_with_trouble,
+                    ["<esc>"] = actions.close
                 },
                 n = {
                     ["<C-t>"] = trouble.open_with_trouble
