@@ -1,24 +1,32 @@
-local function folds()
-    local lnum = tostring(vim.v.lnum)
-    if vim.v.virtnum > 0 or vim.v.virtnum < 0 then
-        return ""
-    end
-    local icon
-    if vim.fn.foldlevel(vim.v.lnum) <= 0 or vim.fn.foldlevel(vim.v.lnum) <= vim.fn.foldlevel(vim.v.lnum - 1) then
-        icon = "  "
-    elseif vim.fn.foldclosed(vim.v.lnum) == -1 then
-        icon = ""
-    else
-        icon = ""
-    end
-    return icon
-end
-
-local config = {
-    setopt = true,
-    foldfunc = folds,
-    separator = " ",
-    order = "SNFs"
-}
-local sc = require("statuscol")
-sc.setup(config)
+local builtin = require("statuscol.builtin")
+require("statuscol").setup(
+    {
+        segments = {
+            {
+                text = {
+                    '%= %#foldcolumn#%{foldlevel(v:lnum) > foldlevel(v:lnum - 1)? (foldclosed(v:lnum) == -1? "":  ""): " "}%= '
+                },
+                auto = true,
+                maxwidth = 1,
+                click = "v:lua.ScFa",
+                condition = {true}
+            },
+            {
+                text = {" " .. "%s"},
+                click = "v:lua.ScSa",
+                maxwidth = 2,
+                auto = false,
+                colwidth = 4,
+                condition = {
+                    true,
+                    builtin.not_empty
+                }
+            },
+            {
+                text = {" ", builtin.lnumfunc, " "},
+                condition = {true, builtin.not_empty},
+                click = "v:lua.ScLa"
+            }
+        }
+    }
+)
