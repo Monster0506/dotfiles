@@ -18,7 +18,13 @@ wk.register(
         a = {"<Cmd>Gwrite<CR>", "Add"},
         w = {"<Cmd>Gwrite<CR>", "Add"},
         r = {"<Cmd>G reset %<CR>", "Reset"},
-        l = {"<Cmd>Gclog<CR>", "Log"}
+        l = {"<Cmd>Gclog<CR>", "Log"},
+        g = {"<Cmd>0G<CR>", "Status"},
+        p = {"<Cmd>Git push<CR>", "Push"},
+        P = {"<Cmd>Git push --force<CR>", "Force Push"},
+        A = {"<Cmd>Git add --all<CR>", "Add All"},
+        R = {"<Cmd>Git reset<CR>", "Reset"},
+        u = {"<Cmd>Git undo<CR>", "Undo"}
     },
     {prefix = "<leader>g"}
 )

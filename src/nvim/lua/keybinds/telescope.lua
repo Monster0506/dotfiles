@@ -35,7 +35,8 @@ wk.register(
 )
 wk.register(
     {
-        ["<C-p>"] = {"<Cmd>Telescope fd<CR>", "Files"}
+        ["<C-p>"] = {"<Cmd>Telescope fd<CR>", "Files"},
+        ["<leader>gf"] = {"<Cmd>Telescope git_files<CR>", "Git Files"}
     }
 )
 --- }}}
