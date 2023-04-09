@@ -5,14 +5,12 @@ Plugs = {
         "nvim-telescope/telescope.nvim",
         dependencies = {
             "nvim-telescope/telescope-symbols.nvim",
-            "nvim-telescope/telescope.nvim"
+            "nvim-telescope/telescope.nvim",
+            "debugloop/telescope-undo.nvim"
         }
     },
-    "debugloop/telescope-undo.nvim",
-    "p00f/nvim-ts-rainbow",
     --- }}}
     -- Completion Plugins {{{
-    -- "github/copilot.vim",
     "zbirenbaum/copilot.lua",
     {
         "hrsh7th/nvim-cmp",
@@ -30,8 +28,6 @@ Plugs = {
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
     "honza/vim-snippets",
-    "SirVer/ultisnips",
-    "quangnguyen30192/cmp-nvim-ultisnips",
     --- }}}
     -- Language Server Plugins {{{
     "dense-analysis/ale",
@@ -44,18 +40,28 @@ Plugs = {
     -- General Language Plugins {{{
     "liuchengxu/vista.vim",
     "ludovicchabant/vim-gutentags",
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-treesitter/nvim-treesitter-context",
     "numToStr/Comment.nvim",
     "sbdchd/neoformat",
     "sheerun/vim-polyglot",
+    -- TreeSitter Plugins {{{
+    {
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+        dependencies = {
+            "p00f/nvim-ts-rainbow",
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-treesitter/nvim-treesitter-context"
+        }
+    },
+    --- }}}
     --- }}}
     -- Colorschemes and Appearance Plugins {{{
-    "lewis6991/gitsigns.nvim",
     "folke/tokyonight.nvim",
-    {"stevearc/dressing.nvim", event = "VeryLazy"},
+    "lewis6991/gitsigns.nvim",
     "lukas-reineke/indent-blankline.nvim",
     "luukvbaal/statuscol.nvim",
+    "rcarriga/nvim-notify",
+    {"stevearc/dressing.nvim", event = "VeryLazy"},
     -- Devicon Plugins {{{
     {"kyazdani42/nvim-web-devicons", event = "VeryLazy"},
     {"ryanoasis/vim-devicons", event = "VeryLazy"},
@@ -104,7 +110,10 @@ Plugs = {
     "Monster0506/mason-installer.nvim",
     "antoinemadec/FixCursorHold.nvim",
     "axieax/urlview.nvim",
+    "folke/which-key.nvim",
+    "kevinhwang91/nvim-ufo",
     "kyazdani42/nvim-tree.lua",
+    "mong8se/actually.nvim",
     "romainl/vim-cool",
     "simnalamburt/vim-mundo",
     "tpope/vim-fugitive",
@@ -113,11 +122,7 @@ Plugs = {
     "voldikss/vim-floaterm",
     "wellle/targets.vim",
     "windwp/nvim-autopairs",
-    "ziontee113/icon-picker.nvim",
-    "mong8se/actually.nvim",
-    "folke/which-key.nvim",
-    "rcarriga/nvim-notify",
-    "kevinhwang91/nvim-ufo"
+    "ziontee113/icon-picker.nvim"
     --- }}}
     --- }}}
 }
