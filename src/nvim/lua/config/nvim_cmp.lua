@@ -19,12 +19,14 @@ cmp.setup.filetype(
         )
     }
 )
+
 cmp.setup(
     {
         completion = {completeopt = "menu,menuone,noinsert"},
         window = {
             completion = {
                 border = "rounded",
+                winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
                 scrollbar = "║"
             },
             documentation = {
@@ -37,21 +39,22 @@ cmp.setup(
         formatting = {
             fields = {"kind", "abbr", "menu"},
             format = function(entry, vim_item)
-                vim_item.kind = string.format("%s %s", require("utils.codicons")[vim_item.kind], vim_item.kind)
-                vim_item.menu =
+                local icon = string.format("%s %s", require("utils.codicons")[vim_item.kind], vim_item.kind)
+                vim_item.kind = " " .. (icon or "") .. " "
+                local menu =
                     ({
-                    buffer = "[Buffer]",
-                    nvim_lsp = "[LSP]",
-                    luasnip = "[LuaSnip]",
-                    nvim_lua = "[Lua]",
-                    latex_symbols = "[LaTeX]",
-                    calc = "[Calc]"
+                    buffer = "Buffer",
+                    nvim_lsp = "LSP",
+                    git = "Git",
+                    rg = "Rg",
+                    luasnip = "LuaSnip",
+                    nvim_lua = "Lua",
+                    latex_symbols = "LaTeX",
+                    calc = "Calc"
                 })[entry.source.name]
+                vim_item.menu = "    [" .. (menu or "") .. "]"
                 return vim_item
             end
-        },
-        view = {
-            entries = {name = "custom", selection_order = "near_cursor"}
         },
         snippet = {
             expand = function(args)
@@ -77,37 +80,14 @@ cmp.setup(
         sources = cmp.config.sources(
             {
                 {name = "luasnip"},
+                {name = "git"},
                 {name = "nvim_lsp"},
                 {name = "buffer"},
                 {name = "path"},
-                {name = "calc"}
+                {name = "calc"},
+                {name = "rg"}
             }
         )
-    }
-)
-cmp.setup(
-    {
-        mapping = {
-            ["<Tab>"] = cmp.mapping(
-                function(fallback)
-                    if require("copilot.suggestion").is_visible() then
-                        require("copilot.suggestion").accept()
-                    elseif cmp.visible() then
-                        cmp.select_next_item({behavior = cmp.SelectBehavior.Insert})
-                    elseif luasnip.expandable() then
-                        luasnip.expand()
-                    elseif has_words_before() then
-                        cmp.complete()
-                    else
-                        fallback()
-                    end
-                end,
-                {
-                    "i",
-                    "s"
-                }
-            )
-        }
     }
 )
 
@@ -123,24 +103,30 @@ cmp.setup(
         end
     }
 )
+
 cmp.setup.cmdline(
     "/",
     {
+        completion = {completeopt = "menuone"},
         view = {
-            entries = {name = "wildmenu", separator = " | "}
+            entries = {name = "custom", selection_order = "near_cursor"}
         },
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-            {name = "buffer"}
-        }
+        sources = cmp.config.sources(
+            {
+                {name = "buffer"},
+            }
+        ),
+        mapping = cmp.mapping.preset.cmdline()
     }
 )
 
 cmp.setup.cmdline(
     ":",
     {
+        completion = {completeopt = "menuone"},
         view = {
-            entries = {name = "custom", selection_order = "near_cursor"}
+            entries = {name = "wildmenu", separator = " | "}
+            -- entries = {name = "custom"}
         },
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources(
@@ -153,3 +139,37 @@ cmp.setup.cmdline(
         )
     }
 )
+
+cmp.setup(
+    {
+        mapping = {
+            ["<Tab>"] = cmp.mapping(
+                function(fallback)
+                    if require("copilot.suggestion").is_visible() then
+                        require("copilot.suggestion").accept()
+                    elseif cmp.visible() then
+                        local entry = cmp.get_selected_entry()
+                        if not entry then
+                            cmp.select_next_item({behavior = cmp.SelectBehavior.Insert})
+                        else
+                            cmp.confirm({select = true})
+                        end
+                    elseif luasnip.expandable() then
+                        luasnip.expand()
+                    elseif has_words_before() then
+                        cmp.complete()
+                    else
+                        fallback()
+                    end
+                end,
+                {
+                    "i",
+                    "s",
+                    "c"
+                }
+            )
+        }
+    }
+)
+
+require("cmp_git").setup()
