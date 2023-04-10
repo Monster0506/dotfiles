@@ -110,6 +110,7 @@ Plugs = {
     --- }}}
     -- Other Utility Plugins {{{
     "Monster0506/mason-installer.nvim",
+    "alexghergh/nvim-tmux-navigation",
     "antoinemadec/FixCursorHold.nvim",
     "axieax/urlview.nvim",
     "folke/which-key.nvim",
