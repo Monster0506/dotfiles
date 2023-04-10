@@ -12,6 +12,7 @@ nodejs
 npm
 pandoc
 ranger
+tmux
 tree-sitter
 unzip
 vi
