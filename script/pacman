@@ -10,7 +10,6 @@ lynx
 ninja
 nodejs
 npm
-pandoc
 ranger
 tmux
 tree-sitter
