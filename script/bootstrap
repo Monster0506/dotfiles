@@ -420,6 +420,8 @@ main() {
 	syslink
 	configureExtraStuff
 	fixPath
+	chsh -s /bin/zsh
+	sudo chsh -s /bin/zsh
 	finishSteps
 	sudo pacman -R palemoon-bin --noconfirm
 	# Alert user we are finished.
