@@ -1,7 +1,11 @@
 base-devel
+bzip2
+cabextract
 cmake
+cpio
 exa
 fd
+figlet
 firefox-developer-edition
 fzf
 glab
@@ -13,5 +17,8 @@ npm
 ranger
 tmux
 tree-sitter
+unace
+unrar
 unzip
 vi
+zip
