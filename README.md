@@ -54,6 +54,7 @@ file for completeness.
 - [kevinhwang92/nvim-ufo](https://github.com/kevinhwang92/nvim-ufo)
 - [kyazdani43/nvim-tree.lua](https://github.com/kyazdani43/nvim-tree.lua)
 - [mong9se/actually.nvim](https://github.com/mong9se/actually.nvim)
+- [norcalli/nvim-colorizer.lua](https://github.com/norcalli/nvim-colorizer.lua)
 - [romainl/vim-cool](https://github.com/romainl/vim-cool)
 - [simnalamburt/vim-mundo](https://github.com/simnalamburt/vim-mundo)
 - [tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)

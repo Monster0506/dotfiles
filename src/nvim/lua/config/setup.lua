@@ -13,3 +13,5 @@ require("leap")
 require("luasnip.loaders.from_snipmate").load()
 
 require("trouble").setup()
+
+require("colorizer").setup()

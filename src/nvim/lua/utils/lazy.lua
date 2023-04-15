@@ -1,6 +1,7 @@
 Plugs = {
     "folke/which-key.nvim",
     "BurntSushi/ripgrep",
+    "norcalli/nvim-colorizer.lua",
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {
