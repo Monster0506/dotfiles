@@ -234,6 +234,9 @@ checkFolders() {
 	if [[ ! -d "${HOME}"/.config/rofi ]]; then
 		mkdir "${HOME}"/.config/rofi
 	fi
+	if [[ ! -d "${HOME}"/.config/kitty ]]; then
+		mkdir "${HOME}"/.config/kitty
+	fi
 	# make the local bin folder
 	if [[ ! -d "${HOME}"/.local/bin ]]; then
 		mkdir "${HOME}"/.local/bin
@@ -308,6 +311,7 @@ syslink() {
 	DIR4=${SCRIPT_DIR}/src/ranger/
 	DIR5=${SCRIPT_DIR}/src/bin/
 	DIR6=${SCRIPT_DIR}/src/rofi
+	DIR7=${SCRIPT_DIR}/src/kitty
 	ITEM1=${SCRIPT_DIR}/src/i3/config
 	ITEM2=${SCRIPT_DIR}/src/picom
 	ITEM3=${SCRIPT_DIR}/src/konsole/One\ Dark.colorscheme
@@ -359,6 +363,13 @@ syslink() {
 	done
 
 	done_msg "DONE WITH DIR (${DIR6})"
+
+	for filename in $(ls -A "${DIR7}"); do
+		cp "${DIR7}"/"${filename}" "${INSTALLDIR}"/kitty/"${filename}" -r
+		ln -s "${INSTALLDIR}"/kitty/"${filename}" "${HOME}"/.config/kitty/
+	done
+
+	done_msg "DONE WITH DIR (${DIR7})"
 
 	for filename in $(ls -A "${ITEM2}"); do
 		cp "${ITEM2}"/"${filename}" "${INSTALLDIR}"/picom/"${filename}" -r

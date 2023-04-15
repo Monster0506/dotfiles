@@ -1,5 +1,5 @@
-# i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+# i3 config file (v4)
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
@@ -36,7 +36,7 @@ font xft:FiraCode Nerd Font 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec konsole -e tmux
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
