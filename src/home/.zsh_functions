@@ -64,6 +64,235 @@ extract() {
   fi
 }
 
+marco() {
+  #check if the variable $marco_dirs exists
+  if [[ -z ${marco_dirs} ]]; then
+    # if it doesn't, set it to an empty list
+    marco_dirs=()
+  fi
+  marco_dirs=("${marco_dirs[@]}")
+  # check if $marco_dirs is a list
+  case $1 in
+  "-h" | "--help")
+    echo "marco [OPTION] [[NUM] <DIR>] "
+    echo "  If no directory is specified, the current directory appended to the list of items"
+    echo "  -h --help         Show this help message and exit"
+    echo "  -w [NUM]          Show the list of marco directories, or the <NUM>Th directory"
+    echo "  -n <NUM>          Set the current directory to the <NUM>Th item in the list"
+    echo "  -d [NUM | DIR]    Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
+    # taken from https://github.com/westonruter/misc-cli-tools/blob/master/cddown
+    echo "  -r <DIR>          Attempt to recurse through the currrent directory to a directory matching DIR. Goes to first result."
+    echo "  -u <DIR>          Attempt to recurse through ancestor directories to a directory matching DIR. Goes to first result."
+    ;;
+  "-w")
+    if [[ -z ${marco_dirs} ]]; then
+      echo "marco: no marco directory set"
+    elif [[ -z $2 ]]; then
+      for ((i = 1; i <= ${#marco_dirs[@]}; i++)); do
+        echo " ${i}: ${marco_dirs[${i}]}"
+      done
+    else
+      echo "marco: ${marco_dirs[$2]}"
+    fi
+    ;;
+  "-d")
+    if [[ -z $2 ]]; then
+      marco_dirs=()
+    elif [[ $2 =~ "${NUMBERRE}" ]]; then
+      echo "Unsetting ${marco_dirs[$2]}"
+      marco_dirs=(${marco_dirs[@]:0:$(($2 - 1))} ${marco_dirs[@]:$(($2))})
+      marco_dirs=("${(@f)marco_dirs}")
+    else
+      local new_array=()
+      # remove item $2 from array
+      for ((i=1;i<${#marco_dirs[@]}+1;i++)); do
+        echo "marco[i]: ${marco_dirs[$i]}"
+        if [[ "${marco_dirs[$i]}" != "$2" ]]; then
+          new_array+=("${marco_dirs[$i]}")
+        fi
+      done
+      for ((i=1;i<${#new_array[@]}+1;i++)); do
+        echo "new_array[i]: ${new_array[$i]}"
+      done
+      marco_dirs=("${new_array[@]}")
+    fi
+    marco_dirs=("${marco_dirs[@]}")
+    ;;
+  "-n")
+    if [[ -z $2 ]]; then
+      echo "no argument given. use -h for help"
+    else
+      dirto=$(pwd)
+      if [[ -n $3 ]]; then
+        dirto=$(realpath $3)
+      fi
+      if [[ $2 =~ ${NUMBERRE} ]]; then
+        marco_dirs[$2]="${dirto}"
+        echo "${marco_dirs[$2]}"
+      else
+        echo "must be between 1 and 1000"
+      fi
+    fi
+    ;;
+  "-r")
+    if [[ -z $2 ]]; then
+      echo "no argument given. use -h for help"
+    else
+      # First try exact match
+      dir=$(find . -type d -name "$2" -print -quit)
+      # If exact match failed, try supplying wildcards
+      if [[ -z ${dir} ]]; then
+        dir=$(find . -type d -name \*"$2"\* -print -quit)
+      fi
+      if [[ -z ${dir} ]]; then
+        echo "Couldn't find any directory named '$2'" 1>&2
+        return 1
+      fi
+      marco $(realpath "${dir}")
+    fi
+    ;;
+  "-u")
+    if [[ -z $2 ]]; then
+      echo "no argument given. use -h for help"
+    else
+      dir="$2"
+      old=$(pwd)
+      # Try matching the full segment in path name
+      new=$(perl -pe "s{(.*/\Q${dir}\E)(?=/|$).*?$}{\1};" <<<"${old}")
+      # If failed, try partial match of segment
+      if [[ ${old} == "${new}" ]]; then
+        new=$(perl -pe "s{(.*/[^/]*?\Q${dir}\E[^/]*?)(?=/|$).*?$}{\1}" <<<"${old}")
+      fi
+      # No replacements done, so we failed
+      if [[ ${old} == "${new}" ]]; then
+        echo "Can't find '${dir}' among ancestor directories (${old} == ${new})." 1>&2
+        return 1
+      fi
+      marco $(realpath "${new}")
+    fi
+    ;;
+  *)
+    if [[ -z $1 ]]; then
+      marco_dirs+=($(pwd))
+      echo "marco: $(pwd)"
+    elif [[ "$1" == "-" ]]; then
+      marco_dirs+=($(pwd))
+      echo "marco: $(pwd)"
+    elif [[ -d $1 ]]; then
+      marco_dirs+=("$(realpath "$1")")
+      echo "marco: $1"
+    elif [[ $1 =~ ${NUMBERRE} ]]; then
+      if [[ -z $2 ]]; then
+        marco_dirs[$1]=$(pwd)
+        echo "marco: ${marco_dirs[$1]}"
+      elif [[ -d $2 ]]; then
+        marco_dirs[$1]="$2"
+        echo "marco: ${marco_dirs[$1]}"
+      else
+        echo "$2 is not a directory"
+      fi
+    else
+      echo "must be either a directory or between 1 and 1000"
+    fi
+    ;;
+  esac
+}
+
+polo() {
+  case $1 in
+  "-h" | "--help")
+    echo "polo [OPTION] [NUM | DIR [b | back]] "
+    echo "  -h --help         Show this help message and exit"
+    echo "  -w [NUM]          Show the list of marco directories, or the <num>th directory"
+    echo "  -d [NUM | DIR]    Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
+    echo "  back | b          Move back a directory"
+    echo "  -r [DIR]          Attempt to recurse through the currrent directory to a directory matching dir. Goes to first result."
+    echo "  -u [DIR]          Attempt to recurse through ancestor directories to a directory matching dir. Goes to first result."
+    ;;
+  "-w")
+    marco -w "$2"
+    ;;
+  "-d")
+    marco -d "$2"
+    ;;
+  "b" | "back")
+    cd ../
+    ;;
+  "-r")
+    if [[ -z $2 ]]; then
+      echo "no argument given. use -h for help"
+    else
+      # First try exact match
+      dir=$(find . -type d -name "$2" -print -quit)
+      # If exact match failed, try supplying wildcards
+      if [[ -z ${dir} ]]; then
+        dir=$(find . -type d -name \*"$2"\* -print -quit)
+      fi
+      # This is not the directory you are looking for!
+      if [[ -z ${dir} ]]; then
+        echo "Couldn't find any directory named '$2'" 1>&2
+        return 1
+      fi
+      polo $(realpath "${dir}")
+    fi
+    ;;
+  "-u")
+    if [[ -z $2 ]]; then
+      echo "no argument given. use -h for help"
+    else
+      dir="$2"
+      old=$(pwd)
+      # Try matching the full segment in path name
+      new=$(perl -pe "s{(.*/\Q${dir}\E)(?=/|$).*?$}{\1};" <<<"${old}")
+      # If failed, try partial match of segment
+      if [[ ${old} == "${new}" ]]; then
+        new=$(perl -pe "s{(.*/[^/]*?\Q${dir}\E[^/]*?)(?=/|$).*?$}{\1}" <<<"${old}")
+      fi
+      # No replacements done, so we failed
+      if [[ ${old} == "${new}" ]]; then
+        echo "Can't find '${dir}' among ancestor directories (${old} == ${new})." 1>&2
+        return 1
+      fi
+      polo $(realpath "${new}")
+    fi
+    ;;
+  *)
+    if [[ -z $1 ]]; then
+      # if no arguments are provided, move to the first value of marco_dirs
+      # check if I am inside marco_dirs[1]
+      if [[ -z ${marco_dirs} ]]; then
+        polo "${HOME}"
+      else
+        if [[ $(pwd) == "${marco_dirs[1]}" ]]; then
+          if [[ -z ${marco_dirs[2]} ]]; then
+            polo "${HOME}"
+          else
+            cd "${marco_dirs[2]}" || exit
+            echo "${marco_dirs[2]}"
+          fi
+        else
+          cd "${marco_dirs[1]}" || exit
+          echo "${marco_dirs[1]}"
+        fi
+      fi
+    else
+      if [[ -d $1 ]]; then
+        marco_dirs+=("$(realpath "$1")")
+        cd "$1" || exit
+        echo "$1"
+      else
+        if [[ $1 =~ ${NUMBERRE} ]]; then
+          cd "${marco_dirs[$1]}" || exit
+          echo "${marco_dirs[$1]}"
+        else
+          echo "polo: '$1' - directory does not exist"
+        fi
+      fi
+    fi
+    ;;
+  esac
+}
+
 # move up a number of directories
 up() { # modified to work without arguments
   if [[ -z "$1" ]]; then
