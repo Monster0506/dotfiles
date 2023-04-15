@@ -1,3 +1,6 @@
+if command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
+  tmux attach -t default || tmux new -s default
+fi
 source <(/usr/local/bin/starship init zsh --print-full-init)
 eval "$(pip completion --zsh)"
 
