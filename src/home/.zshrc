@@ -27,8 +27,8 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 PATH=""
 source ~/.profile
-source ~/.zsh_aliases
-source ~/.zsh_functions
+source ~/.zsh/zsh_aliases
+source ~/.zsh/zsh_functions
 . "$HOME/.cargo/env"
 
 setopt VI
