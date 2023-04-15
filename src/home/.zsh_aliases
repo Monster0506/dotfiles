@@ -1,0 +1,25 @@
+#!/usr/bin/zsh
+alias sl=ls
+alias so=source
+alias cd..="cd .."
+# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias -g vim=nvim
+alias cls=clear
+alias open=xdg-open
+alias g++=gplusplus
+
+alias sudo='sudo '
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+alias -g rm="Trash"
+
+alias -g ls="exa --classify -a"
+alias -g ll="exa --classify -a --long --git"
+
+alias -g ga="git add"
+alias -g gc="git commit"
+alias -g gcm="git commit -m"
+alias -g lg=lazygit

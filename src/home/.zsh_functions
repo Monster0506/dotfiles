@@ -1,0 +1,303 @@
+#!/bin/zsh
+# excluding:
+# zipExt - doesn't work
+# md - don't use
+# clock - don't use
+# whatTime - don't use
+# cht - don't use
+# weather - don't use
+# findInFiles - "rfv" is a better alternative
+# rename
+# fs -> filesize
+
+# better g++
+gplusplus() {
+  if [[ -z $1 ]]; then
+    echo "Usage: gplusplus <file>"
+    echo "Might be aliased to g++"
+    return
+  fi
+  # strip extention and save it
+  local file=${1%.*}
+  \g++ -o "${file}" "$1" && ./"${file}"
+}
+
+# extract files
+extract() {
+  if [[ -z $1 ]]; then
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+  else
+    for n in "$@"; do
+      if [[ -f ${n} ]]; then
+        case "${n%,}" in
+        *.cbt | *.tar.bz2 | *.tar.gz | *.tar.xz | *.tbz2 | *.tgz | *.txz | *.tar)
+          tar xvf "${n}"
+          ;;
+        *.lzma) unlzma ./"${n}" ;;
+        *.bz2) bunzip2 ./"${n}" ;;
+        *.cbr | *.rar) unrar x -ad ./"${n}" ;;
+        *.gz) gunzip ./"${n}" ;;
+        *.cbz | *.epub | *.zip | *.xpi) unzip ./"${n}" ;;
+        *.z) uncompress ./"${n}" ;;
+        *.7z | *.apk | *.arj | *.cab | *.cb7 | *.chm | *.deb | *.dmg | *.iso | *.lzh | *.msi | *.pkg | *.rpm | *.udf | *.wim | *.xar)
+          7z x ./"${n}"
+          ;;
+        *.xz) unxz ./"${n}" ;;
+        *.exe) cabextract ./"${n}" ;;
+        *.cpio) cpio -id <./"${n}" ;;
+        *.cba | *.ace) unace x ./"${n}" ;;
+        *.zpaq) zpaq x ./"${n}" ;;
+        *.arc) arc e ./"${n}" ;;
+        *.cso) ciso 0 ./"${n}" ./"${n}.iso" &&
+          extract "${n}".iso && \rm -f "${n}" ;;
+        *)
+          echo "extract: '${n}' - unknown archive method"
+          return 1
+          ;;
+        esac
+      else
+        echo "'${n}' - file does not exist"
+        return 1
+      fi
+    done
+  fi
+}
+
+# move up a number of directories
+up() { # modified to work without arguments
+  if [[ -z "$1" ]]; then
+    cd ../
+  else
+    for i in $(seq 1 "$1"); do
+      cd ../
+    done
+  fi
+}
+
+# generate a random name for a file
+randomname() {
+  for FILE in "$@"; do
+    BASE="${FILE%.*}"
+    EXT="${FILE#"${BASE}"}"
+    EXT="${EXT#.}" # correctly deal with names without extensions
+    # retry arbitrarily many times on (unlikely) collision
+    while true; do
+      NEW_BASE="${RANDOM}${RANDOM}${RANDOM}" # 32767^3 (ish) possibilities
+      if [[ -n ${EXT} ]]; then
+        NEW_FILE="${NEW_BASE}.${EXT}"
+      else
+        NEW_FILE="${NEW_BASE}"
+      fi
+      # only write out if there's not already a file with that name
+      # (otherwise, try again)
+      if [[ ! -f ${NEW_FILE} ]]; then
+        mv -f -- "${FILE}" "${NEW_FILE}"
+        break
+      fi
+    done
+  done
+}
+
+# reset a python virtual environment
+resetpythonvenv() {
+  if [[ -n ${VIRTUAL_ENV} ]]; then
+    echo "Deactivating..."
+    deactivate
+  else
+    echo "No venv active, skipped 'deactivate' step."
+  fi
+  if [[ -e venv ]]; then
+    source venv/bin/activate
+    if [[ -d "venv/bin" ]]; then
+      echo "Nuking old virtual environment..."
+      \rm -r venv/bin
+      \rm -r venv/include
+      \rm -r venv/lib
+      \rm venv/pyvenv.cfg
+    else
+      echo "No 'bin' directory present, skipped nuking step."
+    fi
+    echo "Setting up a fresh virtual environment..."
+    python3 -m venv venv
+    echo "Activating..."
+    if [[ ! -f "venv/requirements.txt" ]]; then
+      echo -e "wheel\npynvim\nneovim\nopenai" >>venv/requirements.txt
+    fi
+    echo "Reinstalling from requirements.txt..."
+    pip3 install -r venv/requirements.txt
+  else
+    if [[ -d "bin" ]]; then
+      echo "Nuking old virtual environment..."
+      \rm -r bin
+      \rm -r include
+      \rm -r lib
+      \rm pyvenv.cfg
+    else
+      echo "No 'bin' directory present, skipped nuking step."
+    fi
+    echo "Setting up a fresh virtual environment..."
+    python3 -m venv .
+    echo "Activating..."
+    if [[ ! -f "requirements.txt" ]]; then
+      echo -e "pynvim\nneovim\nopenai" >>requirements.txt
+    fi
+    echo "Reinstalling from requirements.txt..."
+    pip3 install -r requirements.txt
+  fi
+}
+
+# create a virtual environment
+venv() {
+  if [ -z "$1" ]; then
+    loc="venv"
+  else
+    loc="$1"
+  fi
+  if [[ ! -d "$loc" ]]; then
+    mkdir -p "$loc"
+  fi
+  echo "$loc"
+  if [[ -e "requirements.txt" ]]; then
+    reqes=$(cat requirements.txt)
+    rm requirements.txt
+  fi
+  python -m venv "$loc"
+  echo "$reqes" >>"requirements.txt"
+  source "$loc/bin/activate"
+  pip install wheel
+  pip install -r "requirements.txt"
+  pip install pynvim neovim openai
+}
+
+# better diff between two files
+hash git &>/dev/null
+if [[ $? -eq 0 ]]; then
+  diff() {
+    git diff --no-index --color-words "$@"
+  }
+fi
+
+# print the size of a file or total size of a directory
+filesize() {
+  if du -b /dev/null >/dev/null 2>&1; then
+    local arg=-sbh
+  else
+    local arg=-sh
+  fi
+  if [[ -n $@ ]]; then
+    du "${arg}" -- "$@"
+  else
+    du "${arg}" .[^.]* ./*
+  fi
+}
+
+# tar and compress a directory
+targz() {
+  local tmpFile="${@%/}.tar"
+  tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1
+  size=$(
+    stat -f"%z" "${tmpFile}" 2>/dev/null # macOS `stat`
+    stat -c"%s" "${tmpFile}" 2>/dev/null # GNU `stat`
+  )
+  local cmd=""
+  if ((size < 52428800)) && hash zopfli 2>/dev/null; then
+    # the .tar file is smaller than 50 MB and Zopfli is available; use it
+    cmd="zopfli"
+  else
+    if hash pigz 2>/dev/null; then
+      cmd="pigz"
+    else
+      cmd="gzip"
+    fi
+  fi
+  echo "Compressing .tar ($((size / 1000)) kB) using \`${cmd}\`…"
+  "${cmd}" -v "${tmpFile}" || return 1
+  [[ -f ${tmpFile} ]] && rm "${tmpFile}"
+  zippedSize=$(
+    stat -f"%z" "${tmpFile}.gz" 2>/dev/null # macOS `stat`
+    stat -c"%s" "${tmpFile}.gz" 2>/dev/null # GNU `stat`
+  )
+  echo "${tmpFile}.gz ($((zippedSize / 1000)) kB) created successfully."
+}
+
+# locate a command, function, or alias
+how() {
+  echo "Whereis:"
+  whereis "$1" | cut -d ":" -f 2
+  echo "Type: "
+  type "$1"
+  echo "Which: "
+  which "$1"
+  echo "Path: "
+  for folder in $(echo "${PATH}" | tr ":" "\n"); do
+    for filename in ${folder}/*; do
+      echo "${filename}" | grep "$1"
+    done
+  done
+}
+
+# start a server on 8080 or the argument
+server() {
+  local port="${1:-8080}"
+  echo "Starting server on port ${port}"
+  xdg-open "http://localhost:${port}/"
+  python3 -m http.server "${port}"
+}
+
+# send a file to the trash instead of deleting it
+Trash() {
+  if [[ -z $1 ]]; then
+    echo "Usage for rm (trash):"
+    echo "rm <file> [options...]"
+    echo "-[r|f]: do nothing"
+    echo "-n: Actually remove the file instead of putting it in trash"
+    return 0
+  fi
+  case $1 in
+  -r | -f | -rf | -fr) ;;
+  -n)
+    REAL=true
+    ;;
+  -*)
+    echo "Usage for rm (trash):"
+    echo "rm <file> [options...]"
+    echo "-[r|f]: do nothing"
+    echo "-n: Actually remove the file instead of putting it in trash"
+    return 0
+    ;;
+  *)
+    if [[ -e $1 ]]; then
+      ITEM=$(realpath "$1")
+      _remove "${ITEM}"
+      return 1
+    fi
+    ;;
+  esac
+  if [[ -e $2 ]]; then
+    ITEM=$(realpath "$2")
+  else
+    echo "File does not exist"
+    return 1
+  fi
+  if [[ -n ${REAL} ]]; then
+    echo "Are you sure?"
+    read i
+    if [[ ! ${i} =~ ^y ]]; then
+      return 1
+    fi
+    sudo \rm -rf "${ITEM}"
+    return 0
+  fi
+  _remove "${ITEM}"
+}
+
+# helper function for Trash
+_remove() {
+  ITEM="$1"
+  TRASHITEM=$(basename "${ITEM}")
+  if [[ -e ~/.Trash/"${TRASHITEM}" ]]; then
+    \rm -rf ~/.Trash/"${TRASHITEM}"
+  fi
+  mv "${ITEM}" ~/.Trash/"${TRASHITEM}" 2>/dev/null
+}
