@@ -1,0 +1,96 @@
+#!/bin/bash
+# usage of "t"
+# if tmux is not not running:
+# t                starts a new tmux session with the name of the current directory
+# t -d <directory> starts a new tmux session with the name of the directory, cds to the directory
+# t <session name> create a new session with a name
+# if tmux is running:
+# t                pipe names of all sessions to fzf and attach to the selected session
+# t <session name> attach to the session with the name
+case "$1" in
+ls)
+  tmux ls
+  ;;
+kill)
+  if [[ -z "$2" ]]; then
+    tmux kill-session -t $(tmux ls | cut -d: -f1 | fzf)
+  fi
+  case "$2" in
+  $(tmux ls | cut -d: -f1 | grep $2))
+    tmux kill-session -t $2 >/dev/null 2>&1
+    ;;
+  -a)
+    tmux kill-session -a
+    ;;
+  *)
+    echo "no session with name $2"
+    ;;
+  esac
+  ;;
+*)
+  if [[ -z $TMUX ]]; then
+    if [[ -z "$1" ]]; then
+      if [[ -z $(tmux ls) ]]; then
+        tmux new-session -s $(basename $(pwd))
+        exit 0
+      else
+        new=$(echo -e "new session\nfind session" | fzf)
+        if [[ $new == "new session" ]]; then
+          if [[ -z $(tmux ls | cut -d: -f1 | grep $(basename $(pwd))) ]]; then
+            tmux new-session -s $(basename $(pwd))
+          fi
+          tmux attach-session -t $(basename $(pwd))
+          exit 0
+        fi
+        tmux attach-session -t $(tmux ls | cut -d: -f1 | fzf)
+        exit 0
+      fi
+    fi
+    case $1 in
+    -d)
+      abc=$2
+      tmux new -s $(basename $abc) -c $(realpath $abc)
+      ;;
+    *)
+      if [[ -z $(tmux ls) ]]; then
+        tmux new-session -s $1
+        exit 0
+      fi
+      if [[ -z $(tmux ls | cut -d: -f1 | grep $1) ]]; then
+        tmux new-session -s $1
+      else
+        tmux attach-session -t $1
+      fi
+      ;;
+    esac
+  else
+    if [[ -z "$1" ]]; then
+      new=$(echo -e "new session\nfind session" | fzf)
+      if [[ $new == "new session" ]]; then
+        if [[ -z $(tmux ls | cut -d: -f1 | grep $(basename $(pwd))) ]]; then
+          tmux new-session -s $(basename $(pwd)) -d
+        fi
+        tmux switch-client -t $(basename $(pwd))
+        exit 0
+      fi
+      tmux switch-client -t $(tmux ls | cut -d: -f1 | fzf)
+      exit 0
+    fi
+    case $1 in
+    -d)
+      if [[ -z $(tmux ls | cut -d: -f1 | grep $(basename $2)) ]]; then
+        tmux new-session -s $(basename $2) -d -c $(realpath $2)
+      fi
+      tmux switch-client -t $(basename $2)
+      exit 0
+      ;;
+    *)
+      if [[ -z $(tmux ls | cut -d: -f1 | grep $1) ]]; then
+        tmux new-session -s $1 -d
+      fi
+      tmux switch-client -t $1
+      ;;
+    esac
+  fi
+  ;;
+esac
