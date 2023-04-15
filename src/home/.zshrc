@@ -1,11 +1,15 @@
 source <(/usr/local/bin/starship init zsh --print-full-init)
 eval "$(pip completion --zsh)"
-compctl -K _pip_completion pip3
 
 case $- in
 *i*) ;;
 *) ;;
 esac
+
+ZDOTDIR=$HOME/.zsh
+export ANTIGEN_LOG=$HOME/.zsh/antigen.log
+source ~/.zsh/antigen.zsh
+source ~/.zsh/plugins.zsh
 HISTORY_IGNORE="(&|[ ]*|exit|ls|history|clear|cd|cd..|cd ..)"
 HYPHEN_INSENSITIVE=true
 HISTFILE=~/.zsh_history
@@ -29,6 +33,7 @@ PATH=""
 source ~/.profile
 source ~/.zsh/zsh_aliases
 source ~/.zsh/zsh_functions
+source ~/.zsh/plugins.zsh
 . "$HOME/.cargo/env"
 
 setopt VI
@@ -44,15 +49,17 @@ setopt CORRECT
 setopt CORRECT_ALL
 setopt INTERACTIVE_COMMENTS
 
-zstyle :compinstall filename '/home/tj/.zshrc'
+# zstyle :compinstall filename '/home/tj/.zshrc'
 
-autoload -Uz compinit
-compinit
+# autoload -Uz compinit
+# compinit
 
 bindkey -v
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward
 bindkey " " magic-space
+bindkey '\t' menu-select "$terminfo[kcbt]" menu-select
+bindkey -M menuselect '\t' menu-complete "$terminfo[kcbt]" reverse-menu-complete
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ -f ${HOME}/.bash_aliases ]] && . ${HOME}/.bash_aliases
