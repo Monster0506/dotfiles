@@ -78,6 +78,8 @@ marco() {
     echo "  If no directory is specified, the current directory appended to the list of items"
     echo "  -h --help         Show this help message and exit"
     echo "  -w [NUM]          Show the list of marco directories, or the <NUM>Th directory"
+    echo "  -p                Show a list of marco directories sorted by name."
+    echo "  -s <NUM1> <NUM2>    Swap the <NUM1>Th and <NUM2>Th items in the list"
     echo "  -n <NUM>          Set the current directory to the <NUM>Th item in the list"
     echo "  -d [NUM | DIR]    Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
     # taken from https://github.com/westonruter/misc-cli-tools/blob/master/cddown
@@ -94,6 +96,26 @@ marco() {
     else
       echo "${marco_dirs[$2]}"
     fi
+    ;;
+  "-p")
+    if [[ -z ${marco_dirs} ]]; then
+      echo "marco: no marco directory set"
+      return
+    fi
+    for ((i = 1; i <= ${#new_list[@]}; i++)); do
+      local new_list=($(printf "%s\n" "${marco_dirs[@]}" | sort))
+      local index=$(printf "%s\n" "${marco_dirs[@]}" | grep -n "^${new_list[$i]}$" | cut -d: -f1)
+      echo "${index}:${new_list[${i}]}"
+    done
+    ;;
+  "-s")
+    if [[ -z $2 || -z $3 ]]; then
+      echo "Usage: marco -s <NUM1> <NUM2>"
+      return
+    fi
+    local temp=${marco_dirs[$2]}
+    marco_dirs[$2]=${marco_dirs[$3]}
+    marco_dirs[$3]=$temp
     ;;
   "-d")
     if [[ -z $2 ]]; then
@@ -202,13 +224,20 @@ polo() {
     echo "polo [OPTION] [NUM | DIR [b | back]] "
     echo "  -h --help         Show this help message and exit"
     echo "  -w [NUM]          Show the list of marco directories, or the <num>th directory"
+    echo "  -p                Show a list of marco directories sorted by name."
     echo "  -d [NUM | DIR]    Delete the entire marco list, or the [NUM]Th item, or the [DIR] directory"
-    echo "  back | b          Move back a directory"
+    echo "  back | b          Move back a directory. Equivient to cd ../"
     echo "  -r [DIR]          Attempt to recurse through the currrent directory to a directory matching dir. Goes to first result."
     echo "  -u [DIR]          Attempt to recurse through ancestor directories to a directory matching dir. Goes to first result."
     ;;
   "-w")
     marco -w "$2"
+    ;;
+  "-p")
+    marco -p
+    ;;
+  "-s")
+    marco -s "$2" "$3"
     ;;
   "-d")
     marco -d "$2"
