@@ -15,3 +15,5 @@ require("luasnip.loaders.from_snipmate").load()
 require("trouble").setup()
 
 require("colorizer").setup()
+
+require("urlview").setup()
