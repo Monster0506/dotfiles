@@ -89,10 +89,10 @@ marco() {
       echo "marco: no marco directory set"
     elif [[ -z $2 ]]; then
       for ((i = 1; i <= ${#marco_dirs[@]}; i++)); do
-        echo " ${i}: ${marco_dirs[${i}]}"
+        echo "${i}:${marco_dirs[${i}]}"
       done
     else
-      echo "marco: ${marco_dirs[$2]}"
+      echo "${marco_dirs[$2]}"
     fi
     ;;
   "-d")
@@ -106,13 +106,11 @@ marco() {
       local new_array=()
       # remove item $2 from array
       for ((i=1;i<${#marco_dirs[@]}+1;i++)); do
-        echo "marco[i]: ${marco_dirs[$i]}"
         if [[ "${marco_dirs[$i]}" != "$2" ]]; then
           new_array+=("${marco_dirs[$i]}")
         fi
       done
       for ((i=1;i<${#new_array[@]}+1;i++)); do
-        echo "new_array[i]: ${new_array[$i]}"
       done
       marco_dirs=("${new_array[@]}")
     fi
@@ -174,20 +172,20 @@ marco() {
   *)
     if [[ -z $1 ]]; then
       marco_dirs+=($(pwd))
-      echo "marco: $(pwd)"
+      echo "$(pwd)"
     elif [[ "$1" == "-" ]]; then
       marco_dirs+=($(pwd))
-      echo "marco: $(pwd)"
+      echo "$(pwd)"
     elif [[ -d $1 ]]; then
       marco_dirs+=("$(realpath "$1")")
-      echo "marco: $1"
+      echo "$1"
     elif [[ $1 =~ ${NUMBERRE} ]]; then
       if [[ -z $2 ]]; then
         marco_dirs[$1]=$(pwd)
-        echo "marco: ${marco_dirs[$1]}"
+        echo "${marco_dirs[$1]}"
       elif [[ -d $2 ]]; then
         marco_dirs[$1]="$2"
-        echo "marco: ${marco_dirs[$1]}"
+        echo "${marco_dirs[$1]}"
       else
         echo "$2 is not a directory"
       fi
