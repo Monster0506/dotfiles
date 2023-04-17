@@ -3,7 +3,6 @@ if command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
 fi
 ZDOTDIR=~/.zsh
 source <(/usr/local/bin/starship init zsh --print-full-init)
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 eval "$(pip completion --zsh)"
 
 case $- in
@@ -36,7 +35,6 @@ PATH=""
 source ~/.profile
 source ~/.zsh/zsh_aliases
 source ~/.zsh/zsh_functions
-source ~/.zsh/plugins.zsh
 . "$HOME/.cargo/env"
 
 setopt VI
