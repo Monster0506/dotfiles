@@ -1,0 +1,4 @@
+zsh-users/zsh-completions
+marlonrichert/zsh-autocomplete
+zsh-users/zsh-autosuggestions
+zdharma/fast-syntax-highlighting

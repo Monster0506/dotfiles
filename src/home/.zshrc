@@ -1,7 +1,9 @@
 if command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
   tmux attach -t default || tmux new -s default
 fi
+ZDOTDIR=~/.zsh
 source <(/usr/local/bin/starship init zsh --print-full-init)
+source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 eval "$(pip completion --zsh)"
 
 case $- in
@@ -9,10 +11,8 @@ case $- in
 *) ;;
 esac
 
-ZDOTDIR=$HOME/.zsh
-export ANTIGEN_LOG=$HOME/.zsh/antigen.log
-source ~/.zsh/antigen.zsh
-source ~/.zsh/plugins.zsh
+source ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh
+antidote load
 HISTORY_IGNORE="(&|[ ]*|exit|ls|history|clear|cd|cd..|cd ..)"
 HYPHEN_INSENSITIVE=true
 HISTFILE=~/.zsh_history
