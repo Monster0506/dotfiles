@@ -62,9 +62,9 @@ kill)
       fi
       if [[ -z $(tmux ls | cut -d: -f1 | grep $1) ]]; then
         tmux new-session -s $1
-      else
-        tmux attach-session -t $1
       fi
+      tmux attach-session -t $1
+      exit 0
       ;;
     esac
   else
