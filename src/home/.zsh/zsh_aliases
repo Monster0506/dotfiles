@@ -23,3 +23,6 @@ alias -g ga="git add"
 alias -g gc="git commit"
 alias -g gcm="git commit -m"
 alias -g lg=lazygit
+
+alias historysummary="history | awk '{a[\$2]++} END{for(i in a){printf \"%5d\t%s\n\",a[i],i}}' | sort -rn | head"
+alias stripcolors='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"'
