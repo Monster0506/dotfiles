@@ -13,4 +13,6 @@ symbol = "[ ](bold blue)"
 symbol = "[ ](bold red)"
 [package] 
 symbol = "[ ](bold 208)"
-
+[directory]
+truncation_length = 2
+fish_style_pwd_dir_length = 1
