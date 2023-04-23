@@ -297,6 +297,7 @@ doDirectory() {
 	mkdir "${INSTALLDIR}"/bin
 	mkdir "${INSTALLDIR}"/rofi
 	mkdir "${INSTALLDIR}"/konsole
+	mkdir "${INSTALLDIR}"/kitty
 
 }
 
