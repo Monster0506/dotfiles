@@ -237,6 +237,9 @@ checkFolders() {
 	if [[ ! -d "${HOME}"/.config/kitty ]]; then
 		mkdir "${HOME}"/.config/kitty
 	fi
+	if [[ ! -d "${HOME}"/.zsh ]]; then
+		mkdir "${HOME}"/.zsh
+	fi
 	# make the local bin folder
 	if [[ ! -d "${HOME}"/.local/bin ]]; then
 		mkdir -p "${HOME}"/.local/bin
@@ -422,6 +425,8 @@ main() {
 	fixPath
 	chsh -s /bin/zsh
 	sudo chsh -s /bin/zsh
+
+	git clone --depth=1 https://github.com/mattmc3/antidote.git ${HOME}/.zsh/.antidote
 	finishSteps
 	sudo pacman -R palemoon-bin --noconfirm
 	# Alert user we are finished.
