@@ -497,8 +497,8 @@ how() {
 server() {
   local port="${1:-8080}"
   echo "Starting server on port ${port}"
-  xdg-open "http://localhost:${port}/"
-  python3 -m http.server "${port}"
+  python3 -m http.server "${port}" & xdg-open "http://localhost:${port}/"
+  
 }
 
 # send a file to the trash instead of deleting it
