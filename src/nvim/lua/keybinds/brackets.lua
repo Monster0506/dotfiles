@@ -11,3 +11,5 @@ keymap("i", "[<CR>", "[<CR>]<Esc>O", opts)
 keymap("i", "[;", "[<CR>];<Esc>O", opts)
 keymap("i", "[,", "[<CR>],<Esc>O", opts)
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0

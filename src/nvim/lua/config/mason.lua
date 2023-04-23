@@ -15,3 +15,5 @@ require("mason").setup(
         -- }}}
     }
 )
+
+-- vim:foldmethod=marker foldlevel=0

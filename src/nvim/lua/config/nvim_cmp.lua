@@ -174,3 +174,5 @@ cmp.setup(
 )
 
 require("cmp_git").setup()
+
+-- vim:foldmethod=marker foldlevel=0

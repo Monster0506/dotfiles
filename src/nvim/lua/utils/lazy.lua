@@ -132,3 +132,5 @@ Plugs = {
 }
 
 return Plugs
+
+-- vim:foldmethod=marker foldlevel=0

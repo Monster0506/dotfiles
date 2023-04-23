@@ -11,3 +11,5 @@ nvim_tmux_nav.setup {
         next = "<C-Space>"
     }
 }
+
+-- vim:foldmethod=marker foldlevel=0

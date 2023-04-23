@@ -11,3 +11,5 @@ command("Noh", ":noh", opts)
 command("Nog", ":noh", opts)
 command("Ni", ":echo 'Do you demand a shrubbery?'", opts)
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0

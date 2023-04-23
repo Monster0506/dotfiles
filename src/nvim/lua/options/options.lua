@@ -40,3 +40,5 @@ for k, v in pairs(vimopts) do -- {{{
     -- }}}
 end
 --- }}}}}}
+
+-- vim:foldmethod=marker foldlevel=0

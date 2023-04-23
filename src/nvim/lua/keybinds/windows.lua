@@ -18,3 +18,5 @@ wk.register(
     {prefix = ","}
 )
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0

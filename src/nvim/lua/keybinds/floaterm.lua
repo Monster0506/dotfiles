@@ -12,3 +12,5 @@ wk.register(
     },
     {prefix = "<space>", mode = "x"}
 )
+
+-- vim:foldmethod=marker foldlevel=0

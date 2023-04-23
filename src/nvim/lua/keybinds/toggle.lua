@@ -37,3 +37,5 @@ wk.register(
         name = "toggle/tag"
     }
 )
+
+-- vim:foldmethod=marker foldlevel=0

@@ -30,3 +30,5 @@ require("statuscol").setup(
         }
     }
 )
+
+-- vim:foldmethod=marker foldlevel=0

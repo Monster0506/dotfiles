@@ -28,3 +28,5 @@ local kind_icons = {
 }
 
 return kind_icons
+
+-- vim:foldmethod=marker foldlevel=0

@@ -32,3 +32,5 @@ vim.api.nvim_create_autocmd(
 )
 -- }}}
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0

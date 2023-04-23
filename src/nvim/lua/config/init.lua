@@ -8,3 +8,5 @@ require("config.setup")
 require("config.telescope")
 require("config.treesitter")
 require("config.nvim_tmux")
+
+-- vim:foldmethod=marker foldlevel=0

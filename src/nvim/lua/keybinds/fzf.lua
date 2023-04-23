@@ -23,3 +23,5 @@ wk.register(
     {prefix = "<space>"}
 )
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0

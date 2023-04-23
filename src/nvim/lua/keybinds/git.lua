@@ -29,3 +29,5 @@ wk.register(
     {prefix = "<leader>g"}
 )
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0

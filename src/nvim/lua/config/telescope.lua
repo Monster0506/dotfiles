@@ -19,3 +19,5 @@ require("telescope").setup(
     }
 )
 require("telescope").load_extension("undo")
+
+-- vim:foldmethod=marker foldlevel=0

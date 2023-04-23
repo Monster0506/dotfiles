@@ -50,3 +50,5 @@ require("nvim-tree").setup(
         -- }}}
     }
 )
+
+-- vim:foldmethod=marker foldlevel=0

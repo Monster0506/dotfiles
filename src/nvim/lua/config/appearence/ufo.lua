@@ -48,3 +48,5 @@ require("ufo").setup(
 local bufnr = vim.api.nvim_get_current_buf()
 require("ufo").setFoldVirtTextHandler(bufnr, handler)
 -- }}}
+
+-- vim:foldmethod=marker foldlevel=0

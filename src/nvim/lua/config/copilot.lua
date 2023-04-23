@@ -21,3 +21,5 @@ require("copilot").setup(
         }
     }
 )
+
+-- vim:foldmethod=marker foldlevel=0

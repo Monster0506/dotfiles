@@ -10,3 +10,5 @@ require("keybinds.telescope")
 require("keybinds.toggle")
 require("keybinds.trouble")
 require("keybinds.windows")
+
+-- vim:foldmethod=marker foldlevel=0

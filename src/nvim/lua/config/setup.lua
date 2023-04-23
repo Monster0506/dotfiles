@@ -17,3 +17,5 @@ require("trouble").setup()
 require("colorizer").setup()
 
 require("urlview").setup()
+
+-- vim:foldmethod=marker foldlevel=0

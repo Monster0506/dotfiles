@@ -16,3 +16,5 @@ Plugs = require("utils.lazy")
 vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("utils.lazy")
 vim.notify = require("notify")
+
+-- vim:foldmethod=marker foldlevel=0

@@ -33,3 +33,5 @@ keymap("v", "j", "v:count == 0 ? 'gjzz' : 'jzz'", {silent = true, expr = true, n
 keymap("v", "k", "v:count == 0 ? 'gkzz' : 'kzz'", {silent = true, expr = true, noremap = true})
 
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0

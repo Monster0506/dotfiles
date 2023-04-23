@@ -184,3 +184,5 @@ require("mason-installer").setup(
 )
 
 --- }}}
+
+-- vim:foldmethod=marker foldlevel=0
