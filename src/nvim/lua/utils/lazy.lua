@@ -1,4 +1,5 @@
 Plugs = {
+    -- Basic Plugins {{{
     "folke/which-key.nvim",
     "BurntSushi/ripgrep",
     "norcalli/nvim-colorizer.lua",
@@ -19,6 +20,7 @@ Plugs = {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lua",
+            "rafamadriz/friendly-snippets",
             "lukas-reineke/cmp-rg",
             "hrsh7th/cmp-calc",
             "FelipeLema/cmp-async-path",
@@ -130,7 +132,6 @@ Plugs = {
     --- }}}
     --- }}}
 }
-
 return Plugs
 
 -- vim:foldmethod=marker foldlevel=0

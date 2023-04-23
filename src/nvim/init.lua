@@ -33,8 +33,6 @@ vim.cmd(
     [[
 " Colorscheme {{{
 colorscheme tokyonight-storm
-
-
 " }}}
 " Misc Settings {{{
 " Keymappings {{{
