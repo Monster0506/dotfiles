@@ -7,7 +7,7 @@ rm -rf ${HOME}/.config/picom.conf
 suffix="/script"
 temp=${SCRIPT_DIR%"${suffix}"}
 SCRIPT_DIR=${temp}
-echo "${SCRIPT_DIR}" >>"${HOME}"/.dotfiles
+echo "${SCRIPT_DIR}" >"${HOME}"/.dotfiles
 
 checker() {
 	if ! [[ -x "$(command -v "$1")" ]]; then
