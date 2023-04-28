@@ -427,7 +427,6 @@ main() {
 	chsh -s /bin/zsh
 	sudo chsh -s /bin/zsh
 
-	git clone --depth=1 https://github.com/mattmc3/antidote.git ${HOME}/.zsh/.antidote
 	systemctl enable sddm.service
 	finishSteps
 	sudo pacman -R palemoon-bin --noconfirm
