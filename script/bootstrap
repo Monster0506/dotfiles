@@ -237,9 +237,6 @@ checkFolders() {
 	if [[ ! -d "${HOME}"/.config/kitty ]]; then
 		mkdir "${HOME}"/.config/kitty
 	fi
-	if [[ ! -d "${HOME}"/.zsh ]]; then
-		mkdir "${HOME}"/.zsh
-	fi
 	# make the local bin folder
 	if [[ ! -d "${HOME}"/.local/bin ]]; then
 		mkdir -p "${HOME}"/.local/bin
@@ -427,9 +424,8 @@ main() {
 	chsh -s /bin/zsh
 	sudo chsh -s /bin/zsh
 
-	systemctl enable sddm.service
+	sudo systemctl enable sddm.service
 	finishSteps
-	sudo pacman -R palemoon-bin --noconfirm
 	# Alert user we are finished.
 	echo "# WARNING: MODIFING THIS FILE WILL MODIFY THE SYNC MAKE TARGET" >>"${HOME}"/.dotfiles
 	done_msg "Done! Enjoy your new machine!"
