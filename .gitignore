@@ -2,3 +2,4 @@ plugin/
 tags
 lazy-lock.json
 *.zwc
+.antidote
