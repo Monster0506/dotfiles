@@ -3,3 +3,4 @@ tags
 lazy-lock.json
 *.zwc
 .antidote
+.luarc.json
