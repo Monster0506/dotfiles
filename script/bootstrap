@@ -249,10 +249,6 @@ checkFolders() {
 		mkdir -p "${HOME}"/.local/share/fonts/fira
 	fi
 
-	if [ ! -d "${HOME}"/.local/share/konsole ]; then
-		mkdir -p "${HOME}/.local/share/konsole"
-	fi
-
 }
 
 doDirectory() {
@@ -293,7 +289,6 @@ doDirectory() {
 	mkdir "${INSTALLDIR}"/picom
 	mkdir "${INSTALLDIR}"/bin
 	mkdir "${INSTALLDIR}"/rofi
-	mkdir "${INSTALLDIR}"/konsole
 	mkdir "${INSTALLDIR}"/kitty
 
 }
@@ -315,7 +310,6 @@ syslink() {
 	DIR7=${SCRIPT_DIR}/src/kitty
 	ITEM1=${SCRIPT_DIR}/src/i3/config
 	ITEM2=${SCRIPT_DIR}/src/picom
-	ITEM3=${SCRIPT_DIR}/src/konsole/One\ Dark.colorscheme
 
 	for filename in $(ls -A "${DIR0}"); do
 		cp "${DIR0}"/"${filename}" "${INSTALLDIR}"/home/"${filename}" -r
@@ -379,10 +373,6 @@ syslink() {
 
 	done_msg "DONE WITH ITEM (${ITEM2})"
 
-	cp "${ITEM3}" "${INSTALLDIR}"/konsole -r
-	ln -s "${INSTALLDIR}"/konsole/One\ Dark.colorscheme "${HOME}"/.local/share/konsole/One\ Dark.colorscheme
-
-	done_msg "DONE WITH ITEM (${ITEM3})"
 }
 
 # install neovim
