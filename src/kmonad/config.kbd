@@ -1,0 +1,73 @@
+(defcfg
+  input  (device-file "/dev/input/by-id/usb-Usb_KeyBoard_Usb_KeyBoard-event-kbd")
+  output (uinput-sink "KMonad kbd")
+  fallthrough true
+allow-cmd true
+)
+#|----------------------------------
+Default source and layer
+----------------------------------|#
+(defsrc
+esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  prnt slck pause
+`    1    2    3    4    5    6    7    8    9    0    -    =    bspc ins  home  pgup nlck kp/    kp*  kp-
+tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret  del  end   pgdn kp7    kp8    kp9    kp+
+caps a    s    d    f    g    h    j    k    l    ;    '    \    kp4    kp5    kp6
+lsft z    x    c    v    b    n    m    ,    .    /    rsft up   kp1    kp2    kp3     ret
+lctl lmet lalt           spc            ralt           rctrl     left down right kp0    .
+)
+(deflayer base
+esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  prnt slck pause
+~    1    2    3    4    5    6    7    8    9    0    -    =    bspc ins  home  pgup nlck /    kp*  -
+tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret  del  end   pgdn kp7    kp8    kp9    kp+
+caps a    s    d    f    g    h    j    k    l    ;    '    \    kp4    kp5    kp6
+@l2 z    x    c    v    b    n    m    ,    .    /    rsft up   kp1    kp2    kp3     ret
+lctl lmet @num           spc            ralt           @alt1     left down right kp0    .
+)
+#|---------------------------------
+|Aliases                           |
+----------------------------------|#
+(defalias num (tap-next lctrl (layer-toggle nums)))
+(defalias alt1 (tap-next cmp (layer-toggle alt1)))
+(defalias l2 (layer-toggle level2))
+#|---------------------------------
+|Layers                           |
+----------------------------------|#
+
+(deflayer alt1
+_ _  _  _ _ _ _ _ _ _  _  _  _         _ _ _
+_ !  @  # $ % ^ & * \( \) \_ + _       _ _ _   _ _ _ _
+_ ;  '  " | › ‹ ¢ ¥ €  $  ,  . _       _ _ _   _ _ _ _
+_ \( \) < > { } [ ] '  "  ?  \ _               _ _ _
+_ _  _  _ _ _ _ _ _ _ _                  _     _ _ _ _
+_ _ _       _       _ _                _ _ _   _ _
+)
+
+(deflayer nums
+_ _ _ _ _  _  _  _ _ _ _ _ _     _     _       _
+_ _ _ _ _  _  XX _ 7 8 9 _ _ _   _     _       _         _ _ _ _
+_ _ _ _ _  _  XX 4 5 6 + _ _ _   _     _       _         _ _ _ _ 
+_ _ _ _ _  _  XX 1 2 3 * _ _                             _ _ _
+_ _ _ _ \( \) XX 0 . / _ _              M-up             _ _ _ _
+_ _ _         _        _ _       M-left M-down M-right   _ _
+)
+
+(deflayer level2
+_      _ _ _ _ _ _ _ _ _  _  _ _      _ _ _
+`      ! @ # $ % ^ & * \( \) \_ + _   _ _ _   _ _ _ _
+S-tab  Q W E R T Y U I O  P  {  } _   _ _ _   _ _ _ _
+_      A S D F G H J K L  :  "  |             _ _ _
+XX     Z X C V B N M < >  ?  _          _     _ _ _ _
+_      _ _     _          _  _        _ _ _   _ _
+)
+
+
+#|----------------------------------
+(deflayer lyer
+_ _ _ _ _ _ _ _ _ _ _ _ _     _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _   _ _ _   _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _ _   _ _ _   _ _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _ _             _ _ _
+_ _ _ _ _ _ _ _ _ _ _ _         _     _ _ _ _
+_ _ _     _         _ _       _ _ _   _ _
+)
+----------------------------------|#

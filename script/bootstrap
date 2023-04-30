@@ -1,6 +1,6 @@
 #!/bin/bash
-# Get the directory this script is placed in
 unset CDPATH
+# Get the directory this script is placed in
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 rm -rf ${HOME}/.bashrc
 rm -rf ${HOME}/.config/picom.conf
@@ -237,6 +237,9 @@ checkFolders() {
 	if [[ ! -d "${HOME}"/.config/kitty ]]; then
 		mkdir "${HOME}"/.config/kitty
 	fi
+	if [[ ! -d "${HOME}"/.config/kmonad ]]; then
+		mkdir "${HOME}"/.config/kmonad
+	fi
 	# make the local bin folder
 	if [[ ! -d "${HOME}"/.local/bin ]]; then
 		mkdir -p "${HOME}"/.local/bin
@@ -290,6 +293,7 @@ doDirectory() {
 	mkdir "${INSTALLDIR}"/bin
 	mkdir "${INSTALLDIR}"/rofi
 	mkdir "${INSTALLDIR}"/kitty
+	mkdir "${INSTALLDIR}"/kmonad
 
 }
 
@@ -308,6 +312,7 @@ syslink() {
 	DIR5=${SCRIPT_DIR}/src/bin/
 	DIR6=${SCRIPT_DIR}/src/rofi
 	DIR7=${SCRIPT_DIR}/src/kitty
+	DIR8=${SCRIPT_DIR}/src/kmonad
 	ITEM1=${SCRIPT_DIR}/src/i3/config
 	ITEM2=${SCRIPT_DIR}/src/picom
 
@@ -365,6 +370,13 @@ syslink() {
 	done
 
 	done_msg "DONE WITH DIR (${DIR7})"
+
+	for filename in $(ls -A "${DIR8}"); do
+		cp "${DIR8}"/"${filename}" "${INSTALLDIR}"/kmonad/"${filename}" -r
+		ln -s "${INSTALLDIR}"/kmonad/"${filename}" "${HOME}/.config/kmonad/"
+	done
+
+	done_msg "DONE WITH DIR (${DIR8})"
 
 	for filename in $(ls -A "${ITEM2}"); do
 		cp "${ITEM2}"/"${filename}" "${INSTALLDIR}"/picom/"${filename}" -r
