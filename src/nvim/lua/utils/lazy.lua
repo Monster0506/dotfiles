@@ -40,6 +40,7 @@ Plugs = {
     "neovim/nvim-lspconfig",
     "williamboman/mason-lspconfig.nvim",
     "williamboman/mason.nvim",
+    {"folke/neodev.nvim", opts = {}},
     "folke/trouble.nvim",
     --- }}}
     -- General Language Plugins {{{
