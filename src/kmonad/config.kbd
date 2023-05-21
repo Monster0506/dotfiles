@@ -8,38 +8,41 @@ allow-cmd true
 Default source and layer
 ----------------------------------|#
 (defsrc
-esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  prnt slck pause
-`    1    2    3    4    5    6    7    8    9    0    -    =    bspc ins  home  pgup nlck kp/    kp*  kp-
-tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret  del  end   pgdn kp7    kp8    kp9    kp+
-caps a    s    d    f    g    h    j    k    l    ;    '    \    kp4    kp5    kp6
-lsft z    x    c    v    b    n    m    ,    .    /    rsft up   kp1    kp2    kp3     ret
-lctl lmet lalt           spc            ralt           rctrl     left down right kp0    .
+esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  prnt slck pause
+`     1    2    3    4    5    6    7    8    9    0    -    =    bspc ins  home  pgup nlck kp/    kp*  kp-
+tab   q    w    e    r    t    y    u    i    o    p    [    ]    ret  del  end   pgdn kp7    kp8    kp9    kp+
+caps  a    s    d    f    g    h    j    k    l    ;    '    \    kp4    kp5    kp6
+lsft  z    x    c    v    b    n    m    ,    .    /    rsft up   kp1    kp2    kp3     ret
+lctl  lmet lalt           spc            ralt           rctrl     left down right kp0    .
 )
 (deflayer base
-esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  prnt slck pause
-~    1    2    3    4    5    6    7    8    9    0    -    =    bspc ins  home  pgup nlck /    kp*  -
-tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret  del  end   pgdn kp7    kp8    kp9    kp+
-caps a    s    d    f    g    h    j    k    l    ;    '    \    kp4    kp5    kp6
-@l2 z    x    c    v    b    n    m    ,    .    /    rsft up   kp1    kp2    kp3     ret
-lctl lmet @num           spc            ralt           @alt1     left down right kp0    .
+esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  prnt slck pause
+~     1    2    3    4    5    6    7    8    9    0    -    =    bspc ins  home  pgup nlck /    kp*  -
+tab   q    w    e    r    t    y    u    i    o    p    [    ]    ret  del  end   pgdn kp7    kp8    kp9    kp+
+@caps a    s    d    f    g    h    j    k    l    ;    '    \    kp4    kp5    kp6
+@l2   z    x    c    v    b    n    m    ,    .    /    rsft up   kp1    kp2    kp3     ret
+lctl  lmet @num           spc            ralt           @alt1     left down right kp0    .
 )
 #|---------------------------------
 |Aliases                           |
 ----------------------------------|#
 (defalias num (tap-next lctrl (layer-toggle nums)))
-(defalias alt1 (tap-next cmp (layer-toggle alt1)))
+(defalias alt1 (tap-next rctrl (layer-toggle alt1)))
 (defalias l2 (layer-toggle level2))
+
+;; caps lock. Single tap-> escape, hold+key = ctrl+key
+(defalias caps (tap-next esc (layer-toggle l2)))
 #|---------------------------------
 |Layers                           |
 ----------------------------------|#
 
 (deflayer alt1
-_ _  _  _ _ _ _ _ _ _  _  _  _         _ _ _
-_ !  @  # $ % ^ & * \( \) \_ + _       _ _ _   _ _ _ _
-_ ;  '  " | › ‹ ¢ ¥ €  $  ,  . _       _ _ _   _ _ _ _
-_ \( \) < > { } [ ] '  "  ?  \ _               _ _ _
-_ _  _  _ _ _ _ _ _ _ _                  _     _ _ _ _
-_ _ _       _       _ _                _ _ _   _ _
+_ _  _  _ _ _ _ _ _ _  _  _  _      _ _ _
+_ !  @  #  $ % ^ & * \( \) \_ + _   _ _ _                  _ _ _ _
+_ :  ;  _ | › ‹ ¢ ¥ €  $  ,  . _    _ _ _                  _ _ _ _
+_ \( \) < > { } [ ] '  "  ?  \ _                           _ _ _
+_ _  _  _ _ _ _ _ _ _ _                    C-up            _ _ _ _
+_ _ _       _       _ _             C-left C-down C-right  _ _
 )
 
 (deflayer nums
@@ -52,13 +55,24 @@ _ _ _         _        _ _       M-left M-down M-right   _ _
 )
 
 (deflayer level2
-_      _ _ _ _ _ _ _ _ _  _  _ _      _ _ _
-`      ! @ # $ % ^ & * \( \) \_ + _   _ _ _   _ _ _ _
-S-tab  Q W E R T Y U I O  P  {  } _   _ _ _   _ _ _ _
-_      A S D F G H J K L  :  "  |             _ _ _
-XX     Z X C V B N M < >  ?  _          _     _ _ _ _
-_      _ _     _          _  _        _ _ _   _ _
+S-Esc        S-f1   S-f2 S-f3 S-f4  S-f5   S-f6 S-f7 S-f8 S-f9  S-f10  S-f11 S-f12  S-prnt S-slck S-pause 
+`      !      @      #    $    %     ^      &    *    \(    \)   \_     +     S-bspc S-ins  S-home S-pgup  S-nlck S-/   S-*   S--
+S-tab  Q      W      E    R    T     Y      U    I    O     P     {     }     S-ret  S-del  S-end  S-pgdn  S-kp7  S-kp8 S-kp9 S-kp+
+@caps  A      S      D    F    G     H      J    K    L     :     "     |                                  S-kp4  S-kp5 S-kp6
+XX     Z      X      C    V    B     N      M    <    >     ?     XX                        S-up           S-kp1  S-kp2 S-kp3  S-kp+
+S-lctl S-lmet S-lalt           S-spc             S-ralt           @alt1              S-left S-down S-right S-kp0  S-kp.
 )
+
+(deflayer l2
+C-esc  C-f1   C-f2   C-f3 C-f4 C-f5 C-f6 C-f7   C-f8    C-f9 C-f10 C-f11   C-f12 C-prnt C-slck C-pause
+C-`    C-1    C-2    C-3  C-4  C-5  C-6  C-7    C-8     C-9  C-0   C--     C-=   C-bspc C-ins  C-home  C-pgup C-nlck C-/   C-*   C--
+C-tab  C-q    C-w    C-e  C-r  C-t  C-y  C-u    C-i     C-o  C-p   C-[     C-]   C-ret  C-del  C-end   C-pgdn C-kp7  C-kp8 C-kp9 C-kp+
+C-lsft C-a    C-s    C-d  C-f  C-g  C-h  C-j    C-k     C-l  C-;   C-'     C-\                                C-kp4  C-kp5  C-kp6
+@l2    C-z    C-x    C-c  C-v  C-b  C-n  C-m    C-,     C-.  C-/   C-rsft               C-up                  C-kp1  C-kp2  C-kp3   C-ret
+XX C-lmet C-lalt               C-spc            C-ralt             C-rctrl       C-left C-down C-right        C-kp0    .
+)
+
+
 
 
 #|----------------------------------
