@@ -12,7 +12,6 @@ cmp.setup.filetype(
         sources = cmp.config.sources(
             {
                 {name = "nvim_lua"},
-                {name = "rg"},
                 {name = "buffer"},
                 {name = "calc"},
                 {name = "async_path"},
@@ -49,7 +48,6 @@ cmp.setup(
                     buffer = "Buffer",
                     nvim_lsp = "LSP",
                     git = "Git",
-                    rg = "Rg",
                     luasnip = "LuaSnip",
                     nvim_lua = "Lua",
                     latex_symbols = "LaTeX",
@@ -87,8 +85,7 @@ cmp.setup(
                 {name = "nvim_lsp"},
                 {name = "buffer"},
                 {name = "async_path"},
-                {name = "calc"},
-                {name = "rg"}
+                {name = "calc"}
             }
         )
     }
@@ -116,8 +113,7 @@ cmp.setup.cmdline(
         },
         sources = cmp.config.sources(
             {
-                {name = "buffer"},
-                {name = "rg"}
+                {name = "buffer"}
             }
         ),
         mapping = cmp.mapping.preset.cmdline()

@@ -21,7 +21,6 @@ Plugs = {
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lua",
             "rafamadriz/friendly-snippets",
-            "lukas-reineke/cmp-rg",
             "hrsh7th/cmp-calc",
             "FelipeLema/cmp-async-path",
             "petertriho/cmp-git"
