@@ -1,5 +1,6 @@
-require("autocmds.mkdir")
+require("autocmds.crates")
+require("autocmds.format")
 require("autocmds.highlights")
-require("autocmds.autocmds")
+require("autocmds.mkdir")
 
 -- vim:foldmethod=marker foldlevel=0
