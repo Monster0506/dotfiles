@@ -107,8 +107,7 @@ local on_attach = function(client, bufnr)
 
     wk.register(
         {
-            K = {ShowDocumentation, "Show Documentation"},
-            ["<C-k>"] = {vim.lsp.buf.signature_help, "Signature Help"}
+            K = {ShowDocumentation, "Show Documentation"}
         }
     )
 end
