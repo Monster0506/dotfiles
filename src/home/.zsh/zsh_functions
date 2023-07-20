@@ -503,6 +503,12 @@ server() {
 
 # send a file to the trash instead of deleting it
 Trash() {
+	# if the current directory is $TRASH, then we are already in the Trash
+	if [[ $(pwd) == "${TRASH}" ]]; then
+		INTRASH=true
+	fi
+
+
   if [[ -z $1 ]]; then
     echo "Usage for rm (trash):"
     echo "rm <file> [options...]"
@@ -550,10 +556,10 @@ Trash() {
 
 # helper function for Trash
 _remove() {
-  ITEM="$1"
-  TRASHITEM=$(basename "${ITEM}")
-  if [[ -e ~/.Trash/"${TRASHITEM}" ]]; then
-    \rm -rf ~/.Trash/"${TRASHITEM}"
-  fi
-  mv "${ITEM}" ~/.Trash/"${TRASHITEM}" 2>/dev/null
+	ITEM="$1"
+	TRASHITEM=$(basename "${ITEM}")
+	if [[ $INTRASH ]]; then
+		\rm -rf "${TRASH}/${TRASHITEM}"
+	fi
+	mv "${ITEM}" "${TRASH}/${TRASHITEM}" 2>/dev/null
 }
