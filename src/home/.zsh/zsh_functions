@@ -11,9 +11,9 @@
 # fs -> filesize
 
 # better g++
-_gplusplus() {
+gplusplus() {
   if [[ -z $1 ]]; then
-    echo "Usage: gplusplus <file>"
+    echo "Usage: _gplusplus <file>"
     echo "Might be aliased to g++"
     return
   fi

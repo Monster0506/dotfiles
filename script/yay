@@ -14,6 +14,7 @@ i3exit
 kmonad-bin
 lazygit
 mplayer
+pamixer
 picom
 python-pip
 ripgrep
@@ -21,6 +22,7 @@ rofi
 rust-src
 sqlite
 w3m-imgcat
+xbindkeys
 xcape
 xclip
 xsel

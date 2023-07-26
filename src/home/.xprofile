@@ -3,6 +3,6 @@ setxkbmap -option ctrl:nocaps
 
 # make short-pressed Ctrl behave like Escape:
 xcape -e 'Control_L=Escape'
-xset r rate 250 50
+xset r rate 250 25
 
 

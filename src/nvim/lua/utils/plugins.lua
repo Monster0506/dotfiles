@@ -46,6 +46,7 @@ Plugs = {
     "liuchengxu/vista.vim",
     "ludovicchabant/vim-gutentags",
     "numToStr/Comment.nvim",
+    "kmonad/kmonad-vim",
     "sbdchd/neoformat",
     "sheerun/vim-polyglot",
     -- TreeSitter Plugins {{{
