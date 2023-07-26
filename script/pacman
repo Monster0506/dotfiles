@@ -19,7 +19,6 @@ ninja
 nodejs
 npm
 ranger
-sddm
 polybar
 tmux
 tree-sitter

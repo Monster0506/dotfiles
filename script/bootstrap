@@ -443,7 +443,7 @@ main() {
 	chsh -s /bin/zsh
 	sudo chsh -s /bin/zsh
 
-	sudo systemctl enable sddm.service
+	# sudo systemctl enable sddm.service
 	git clone --depth=1 https://github.com/mattmc3/antidote.git ${HOME}/.zsh/.antidote
 	finishSteps
 	# Alert user we are finished.
