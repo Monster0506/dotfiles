@@ -294,6 +294,7 @@ doDirectory() {
 	mkdir "${INSTALLDIR}"/rofi
 	mkdir "${INSTALLDIR}"/kitty
 	mkdir "${INSTALLDIR}"/kmonad
+	mkdir "${INSTALLDIR}"/polybar
 
 }
 
@@ -313,6 +314,7 @@ syslink() {
 	DIR6=${SCRIPT_DIR}/src/rofi
 	DIR7=${SCRIPT_DIR}/src/kitty
 	DIR8=${SCRIPT_DIR}/src/kmonad
+	DIR9=${SCRIPT_DIR}/src/polybar
 	ITEM1=${SCRIPT_DIR}/src/i3/config
 	ITEM2=${SCRIPT_DIR}/src/picom
 
@@ -377,6 +379,13 @@ syslink() {
 	done
 
 	done_msg "DONE WITH DIR (${DIR8})"
+
+	for filename in $(ls -A "${DIR9}"); do
+		cp "${DIR9}"/"${filename}" "${INSTALLDIR}"/polybar/"${filename}" -r
+		ln -s "${INSTALLDIR}"/polybar/"${filename}" "${HOME}/.config/polybar/"
+	done
+
+	done_msg "DONE WITH DIR (${DIR9})"
 
 	for filename in $(ls -A "${ITEM2}"); do
 		cp "${ITEM2}"/"${filename}" "${INSTALLDIR}"/picom/"${filename}" -r
