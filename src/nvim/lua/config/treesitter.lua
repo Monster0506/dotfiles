@@ -1,12 +1,9 @@
--- Treesitter Settings {{{
+--- Treesitter Settings {{{
 require "nvim-treesitter.configs".setup {
-    rainbow = {
-        enable = true,
-        extended_mode = true,
-        max_file_lines = nil
-    },
     ensure_installed = {
         "c",
+        "vim",
+        "vimdoc",
         "lua",
         "rust",
         "python",
@@ -19,11 +16,19 @@ require "nvim-treesitter.configs".setup {
         "regex",
         "toml"
     },
+    sync_install = false,
+    ignore_install = {},
+    modules = {},
+    auto_install = true,
     highlight = {
-        enable = true
-    },
-    matchup = {
-        enable = true
+        enable = true,
+        disable = function(lang, buf)
+            local max_filesize = 1024 * 10
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end
     },
     incremental_selection = {
         enable = true,

@@ -58,8 +58,7 @@ Plugs = {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
         dependencies = {
-            "p00f/nvim-ts-rainbow",
-            "nvim-treesitter/nvim-treesitter",
+            "HiPhish/rainbow-delimiters.nvim",
             "nvim-treesitter/nvim-treesitter-context"
         }
     },
