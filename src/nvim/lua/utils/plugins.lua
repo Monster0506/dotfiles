@@ -33,9 +33,17 @@ Plugs = {
     },
     --- }}}
     -- Snippet Plugins {{{
-    "L3MON4D3/LuaSnip",
+
+    {
+        "L3MON4D3/LuaSnip",
+        build = "make install_jsregexp",
+        version = "v2.*",
+        dependencies = "rafamadriz/friendly-snippets"
+    },
     "saadparwaiz1/cmp_luasnip",
-    "honza/vim-snippets",
+    -- "rafamadriz/friendly-snippets"
+    -- "honza/vim-snippets",
+
     --- }}}
     -- Language Server Plugins {{{
     "dense-analysis/ale",
@@ -183,5 +191,4 @@ Plugs = {
     --- }}}
 }
 return Plugs
-
 -- vim:foldmethod=marker foldlevel=0

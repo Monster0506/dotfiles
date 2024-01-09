@@ -12,12 +12,12 @@ cmp.setup.filetype(
         sources = cmp.config.sources(
             {
                 {name = "codeium"},
+                {name = "luasnip"},
                 {name = "nvim_lua"},
                 {name = "buffer"},
                 {name = "calc"},
                 {name = "async_path"},
-                {name = "git"},
-                {name = "luasnip"}
+                {name = "git"}
             }
         )
     }
@@ -83,16 +83,15 @@ cmp.setup(
             {
                 {name = "codeium"},
                 {name = "luasnip"},
-                {name = "git"},
                 {name = "nvim_lsp"},
                 {name = "buffer"},
+                {name = "git"},
                 {name = "async_path"},
                 {name = "calc"}
             }
         )
     }
 )
-
 cmp.setup(
     {
         enabled = function()
@@ -139,21 +138,26 @@ cmp.setup.cmdline(
         )
     }
 )
-
 cmp.setup(
     {
         mapping = {
             ["<Tab>"] = cmp.mapping(
                 function(fallback)
+                    if cmp.visible() then
+                        if luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        elseif cmp.visible() then
+                            local entry = cmp.get_selected_entry()
+                            if not entry then
+                                cmp.select_next_item({behavior = cmp.SelectBehavior.Insert})
+                            else
+                                cmp.confirm({select = true})
+                            end
+                        elseif has_words_before() then
+                            cmp.complete()
                         else
-                            cmp.confirm({select = true})
+                            fallback()
                         end
-                    elseif luasnip.expand_or_jumpable() then
-                        luasnip.expand_or_jump()
-                    elseif has_words_before() then
-                        cmp.complete()
-                    else
-                        fallback()
                     end
                 end,
                 {
