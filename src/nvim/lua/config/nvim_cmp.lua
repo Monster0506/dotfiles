@@ -11,6 +11,7 @@ cmp.setup.filetype(
     {
         sources = cmp.config.sources(
             {
+                {name = "codeium"},
                 {name = "nvim_lua"},
                 {name = "buffer"},
                 {name = "calc"},
@@ -80,6 +81,7 @@ cmp.setup(
         ),
         sources = cmp.config.sources(
             {
+                {name = "codeium"},
                 {name = "luasnip"},
                 {name = "git"},
                 {name = "nvim_lsp"},
@@ -143,12 +145,6 @@ cmp.setup(
         mapping = {
             ["<Tab>"] = cmp.mapping(
                 function(fallback)
-                    if require("copilot.suggestion").is_visible() then
-                        require("copilot.suggestion").accept()
-                    elseif cmp.visible() then
-                        local entry = cmp.get_selected_entry()
-                        if not entry then
-                            cmp.select_next_item({behavior = cmp.SelectBehavior.Insert})
                         else
                             cmp.confirm({select = true})
                         end

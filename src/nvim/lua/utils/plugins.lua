@@ -13,7 +13,11 @@ Plugs = {
     },
     --- }}}
     -- Completion Plugins {{{
-    "zbirenbaum/copilot.lua",
+    {
+        "exafunction/codeium.nvim",
+        opts = {},
+        event = "BufEnter"
+    },
     {
         "hrsh7th/nvim-cmp",
         dependencies = {

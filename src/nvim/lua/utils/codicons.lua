@@ -24,7 +24,8 @@ local kind_icons = {
     TypeParameter = "  ",
     Unit = "  ",
     Value = "",
-    Variable = "  "
+    Variable = "  ",
+    Codeium = "  "
 }
 
 return kind_icons

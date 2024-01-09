@@ -1,5 +1,4 @@
 require("config.appearence")
-require("config.copilot")
 require("config.crates")
 require("config.icon_picker")
 require("config.luasnip")

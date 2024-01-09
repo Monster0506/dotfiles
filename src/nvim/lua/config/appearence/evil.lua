@@ -16,8 +16,7 @@ local colors = {
     orange = "#FF8800",
     violet = "#a9a1e1",
     magenta = "#c678dd",
-    blue = "#51afef",
-    red = "#ec5f67"
+    blue = "#51afef", red = "#ec5f67"
 }
 local conditions = {
     buffer_not_empty = function()
@@ -206,6 +205,11 @@ ins_right {
         removed = {fg = colors.red}
     },
     cond = conditions.hide_in_width
+}
+ins_right {
+    function()
+        return "{..}".. vim.api.nvim_call_function("codeium#GetStatusString", {})
+    end
 }
 
 -- Now don't forget to initialize lualine

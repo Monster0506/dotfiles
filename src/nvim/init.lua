@@ -5,6 +5,7 @@ HOME = os.getenv("HOME")
 local vimg = {
     indent_blankline_show_current_context = true,
     indent_blankline_show_current_context_start = true,
+    codeium_enabled = true,
     NERDSpaceDelims = 1,
     netrw_browsex_viewer = "xdg-open",
     floaterm_position = "topleft",
