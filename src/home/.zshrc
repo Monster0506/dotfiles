@@ -1,3 +1,5 @@
+[[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && exec startx .xinitrc
+
 if command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
   tmux attach -t default || tmux new -s default
 fi
