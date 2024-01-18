@@ -15,8 +15,10 @@ Plugs = {
     -- Completion Plugins {{{
     {
         "exafunction/codeium.nvim",
-        opts = {},
-        event = "BufEnter"
+        command = "Codeium",
+        build = ":Codeium Auth",
+        event = "BufEnter",
+        opts = {}
     },
     {
         "hrsh7th/nvim-cmp",
@@ -41,9 +43,6 @@ Plugs = {
         dependencies = "rafamadriz/friendly-snippets"
     },
     "saadparwaiz1/cmp_luasnip",
-    -- "rafamadriz/friendly-snippets"
-    -- "honza/vim-snippets",
-
     --- }}}
     -- Language Server Plugins {{{
     "dense-analysis/ale",
@@ -86,7 +85,6 @@ Plugs = {
     {"ryanoasis/vim-devicons", event = "VeryLazy"},
     -- Colorschemes {{{
     {"folke/lsp-colors.nvim", lazy = true},
-    {"navarasu/onedark.nvim", lazy = true},
     --- }}}
     --- }}}
     -- Statusline {{{
