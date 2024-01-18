@@ -1,5 +1,6 @@
 require("config.appearence")
 require("config.crates")
+require("config.hipatterns")
 require("config.icon_picker")
 require("config.luasnip")
 require("config.mason")

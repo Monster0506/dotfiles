@@ -79,6 +79,7 @@ Plugs = {
     "lukas-reineke/indent-blankline.nvim",
     "luukvbaal/statuscol.nvim",
     "rcarriga/nvim-notify",
+    "echasnovski/mini.hipatterns",
     {"stevearc/dressing.nvim", event = "VeryLazy"},
     -- Devicon Plugins {{{
     {"kyazdani42/nvim-web-devicons", event = "VeryLazy"},
