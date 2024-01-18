@@ -33,16 +33,15 @@ cmp.setup(
                 scrollbar = "║"
             },
             documentation = {
-                -- no border; native-style scrollbar
                 border = nil,
-                scrollbar = ""
-                -- other options
+                scrollbar = true
             }
         },
         formatting = {
+            expandable_indicator = false,
             fields = {"kind", "abbr", "menu"},
             format = function(entry, vim_item)
-                local icon = string.format("%s %s", require("utils.codicons")[vim_item.kind], vim_item.kind)
+                local icon = string.format("%s %s", require("utils.utils").kind_icons[vim_item.kind], vim_item.kind)
                 vim_item.kind = " " .. (icon or "") .. " "
                 local menu =
                     ({
@@ -127,7 +126,6 @@ cmp.setup.cmdline(
         completion = {completeopt = "menuone"},
         view = {
             entries = {name = "wildmenu", separator = " | "}
-            -- entries = {name = "custom"}
         },
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources(

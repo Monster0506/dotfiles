@@ -1,6 +1,10 @@
--- See https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance#how-to-add-visual-studio-code-codicons-to-the-menu
-local kind_icons = {
+local M = {}
+
+M.hexChars = "0123456789abcdef"
+
+M.kind_icons = {
     Class = "  ",
+    Codeium = "  ",
     Color = "  ",
     Constant = "",
     Constructor = "",
@@ -24,10 +28,7 @@ local kind_icons = {
     TypeParameter = "  ",
     Unit = "  ",
     Value = "",
-    Variable = "  ",
-    Codeium = "  "
+    Variable = "  "
 }
 
-return kind_icons
-
--- vim:foldmethod=marker foldlevel=0
+return M
