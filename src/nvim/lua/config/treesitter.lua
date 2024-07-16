@@ -41,5 +41,4 @@ require "nvim-treesitter.configs".setup {
     }
 }
 --- }}}
-
 -- vim:foldmethod=marker foldlevel=0

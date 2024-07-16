@@ -1,14 +1,12 @@
 local wk = require("which-key")
 opts = {silent = true, noremap = true}
 
-wk.register(
+wk.add(
     {
-        {name = "Annotations"},
-        a = {"<CMD>lua require('neogen').generate()<CR>", "Generate Annotation", opts},
-        c = {"<CMD>lua require('neogen').generate({type='class'})<CR>", "Class Annotation", opts},
-        d = {"<CMD>lua require('neogen').generate({type='file'})<CR>", "Document Annotation", opts},
-        f = {"<CMD>lua require('neogen').generate({type='function'})<CR>", "Function Annotation", opts},
-        t = {"<CMD>lua require('neogen').generate({type='type'})<CR>", "Type Annotation", opts}
-    },
-    {prefix = "<leader>a"}
+        {"<leader>aa", "<CMD>lua require('neogen').generate()<CR>", desc = "Generate Annotation"},
+        {"<leader>ac", "<CMD>lua require('neogen').generate({type='class'})<CR>", desc = "Class Annotation"},
+        {"<leader>ad", "<CMD>lua require('neogen').generate({type='file'})<CR>", desc = "Document Annotation"},
+        {"<leader>af", "<CMD>lua require('neogen').generate({type='function'})<CR>", desc = "Function Annotation"},
+        {"<leader>at", "<CMD>lua require('neogen').generate({type='type'})<CR>", desc = "Type Annotation"}
+    }
 )

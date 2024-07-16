@@ -1,30 +1,16 @@
 local wk = require("which-key")
--- LSP Mappings {{{
-wk.register(
+wk.add(
     {
-        ["["] = {
-            g = {
-                vim.diagnostic.goto_prev,
-                "Previous Diagnostic"
-            }
-        },
-        ["]"] = {
-            g = {
-                vim.diagnostic.goto_next,
-                "Next Diagnostic"
-            }
-        }
+        -- LSP Mappings {{{
+        {"[g", vim.diagnostic.go, desc = "Previous Diagnostic"},
+        {"]g", vim.diagnostic.goto_next, desc = "Next Diagnostic"}
     }
 )
-wk.register(
+wk.add(
     {
-        e = {
-            vim.diagnostic.open_float,
-            "View Float"
-        },
-        q = {vim.diagnostic.setloclist, "View Diagnostics"}
-    },
-    {prefix = "<leader>"}
+        {"<leader>e", vim.diagnostic.open_float, desc = "View Float"},
+        {"<leader>e", vim.diagnostic.setloclist, desc = "View Diagnostics"}
+    }
 )
 --- }}}
 

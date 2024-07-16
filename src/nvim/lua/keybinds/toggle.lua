@@ -1,40 +1,43 @@
 local wk = require("which-key")
 
-wk.register(
+wk.add(
     {
-        v = {
+        {
+            "<leader>tb",
+            '<Cmd>lua vim.o.bg = vim.o.bg == "dark" and "light" or "dark"; print(vim.o.bg)<CR>',
+            desc = "Toggle 'background'",
+            group = "Toggle"
+        },
+        {
+            "<leader>tcc",
+            "<Cmd>setlocal cursorcolumn! cursorcolumn?<CR>",
+            desc = "Toggle 'cursorcolumn'",
+            group = "Cursor"
+        },
+        {"<leader>tcl", "<Cmd>setlocal cursorline! cursorline?<CR>", desc = "Toggle 'cursorline'", group = "Cursor"},
+        {"<leader>tdo", "<Cmd>diffoff<cr>", desc = "Diff Off", group = "Diff"},
+        {"<leader>tdt", "<Cmd>diffthis<cr>", desc = "Diff On", group = "Diff"},
+        {"<leader>tl", "<Cmd>setlocal list! list? <CR>", desc = "Toggle 'list'", group = "Toggle"},
+        {"<leader>tnn", "<Cmd>setlocal number! number? <CR>", desc = "Toggle 'number'", group = "Number"},
+        {
+            "<leader>tnr",
+            "<Cmd>setlocal relativenumber! relativenumber? <CR>",
+            desc = "Toggle 'relativenumber",
+            group = "Number"
+        },
+        {"<leader>tr", "<Cmd>setlocal ruler! ruler?<CR>", desc = "Toggle 'ruler'", group = "Toggle"},
+        {
+            "<leader>ts",
+            "<Cmd>setlocal spell! spelllang=en_us | setlocal spell? <CR> ",
+            desc = "Toggle 'spell'",
+            group = "Toggle"
+        },
+        {
+            "<leader>tv",
             ':<C-U>set <C-R>=(&virtualedit =~# "all") ? "virtualedit-=all" : "virtualedit+=all"<CR> virtualedit?<CR>',
-            "Toggle 'virtualedit'"
-        },
-        s = {"<Cmd>setlocal spell! spelllang=en_us | setlocal spell? <CR> ", "Toggle 'spell'"},
-        l = {"<Cmd>setlocal list! list? <CR>", "Toggle 'list'"},
-        b = {'<Cmd>lua vim.o.bg = vim.o.bg == "dark" and "light" or "dark"; print(vim.o.bg)<CR>', "Toggle 'background'"},
-        n = {
-            name = "Number",
-            n = {"<Cmd>setlocal number! number? <CR>", "Toggle 'number'"},
-            r = {"<Cmd>setlocal relativenumber! relativenumber? <CR>", "Toggle 'relativenumber"}
-        },
-        c = {
-            name = "Cursor",
-            c = {
-                "<Cmd>setlocal cursorcolumn! cursorcolumn?<CR>",
-                "Toggle 'cursorcolumn'"
-            },
-            l = {
-                "<Cmd>setlocal cursorline! cursorline?<CR>",
-                "Toggle 'cursorline'"
-            }
-        },
-        r = {"<Cmd>setlocal ruler! ruler?<CR>", "Toggle 'ruler'"},
-        d = {
-            name = "Diff",
-            t = {"<Cmd>diffthis<cr>", "Diff On"},
-            o = {"<Cmd>diffoff<cr>", "Diff Off"}
+            desc = "Toggle 'virtualedit'",
+            group = "Toggle"
         }
-    },
-    {
-        prefix = "<leader>t",
-        name = "toggle/tag"
     }
 )
 

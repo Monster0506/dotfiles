@@ -1,26 +1,22 @@
-local wk = require("which-key")
 local keymap = vim.api.nvim_set_keymap
+local wk = require("which-key")
 local opts = {noremap = true, silent = true}
--- FZF {{{
-wk.register(
+wk.add(
+    -- FZF {{{
     {
-        ["<C-P>"] = {"<Cmd>Files<CR>", "Files"}
-    },
-    {prefix = "<leader>"}
+        {"<leader><C-P>", "<Cmd>Files<CR>", desc = "Files"}
+    }
 )
 keymap("n", "<space>h", "<Cmd>History<CR>", opts)
-wk.register(
+wk.add(
     {
-        h = {
-            name = "History",
-            ["/"] = {"<Cmd>History/<CR>", "Search History"},
-            [":"] = {"<Cmd>History:<CR>", "Command History"}
-        },
-        b = {"<Cmd>Buffers<CR>", "Buffers"},
-        w = {"<Cmd>Windows<CR>", "Windows"},
-        l = {"<Cmd>Lines<CR>", "Lines"}
-    },
-    {prefix = "<space>"}
+        {"<space>b", "<Cmd>Buffers<CR>", desc = "Buffers"},
+        {"<space>h", group = "History"},
+        {"<space>h/", "<Cmd>History/<CR>", desc = "Search History"},
+        {"<space>h:", "<Cmd>History:<CR>", desc = "Command History"},
+        {"<space>l", "<Cmd>Lines<CR>", desc = "Lines"},
+        {"<space>w", "<Cmd>Windows<CR>", desc = "Windows"}
+    }
 )
 --- }}}
 

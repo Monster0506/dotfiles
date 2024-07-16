@@ -1,16 +1,14 @@
 local wk = require("which-key")
-wk.register(
+wk.add(
     {
-        t = {"<Cmd>FloatermToggle<CR>", "New Terminal"},
-        r = {"<Cmd>FloatermNew ranger<CR>", "Ranger"}
-    },
-    {prefix = "<space>"}
+        {"<space>r", "<Cmd>FloatermNew ranger<CR>", desc = "Ranger"},
+        {"<space>t", "<Cmd>FloatermToggle<CR>", desc = "New Terminal"}
+    }
 )
-wk.register(
+wk.add(
     {
-        t = {"<Cmd>FloatermNew<CR>", "New Terminal"}
-    },
-    {prefix = "<space>", mode = "x"}
+        {"<space>t", "<Cmd>FloatermNew<CR>", desc = "New Terminal", mode = "x"}
+    }
 )
 
 -- vim:foldmethod=marker foldlevel=0

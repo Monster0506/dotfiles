@@ -10,12 +10,11 @@ keymap("n", "<C-Right>", "<Cmd>vertical resize +2<CR>", opts)
 -- Change split orientation
 keymap("n", "<M-Right>", "<Cmd>tabnext<CR>", opts)
 keymap("n", "<M-Left>", "<Cmd>tabprevious<CR>", opts)
-wk.register(
+wk.add(
     {
-        v = {"<c-w>t<c-w>H", "Split Vertically"},
-        h = {"<c-w>t<c-w>K", "Split Horizontally"}
-    },
-    {prefix = ","}
+    { ",h", "<c-w>t<c-w>K", desc = "Split Horizontally" },
+    { ",v", "<c-w>t<c-w>H", desc = "Split Vertically" },
+    }
 )
 --- }}}
 

@@ -1,18 +1,10 @@
 local wk = require("which-key")
 -- Leap Keybindings {{{
-wk.register(
+wk.add(
     {
-        s = {"<Plug>(leap-forward)", "Forward Leap"},
-        S = {"<Plug>(leap-backward)", "Backward Leap"}
-    },
-    {prefix = "<leader><leader>"}
-)
-wk.register(
-    {
-        s = {"<Plug>(leap-forward)", "Forward Leap"},
-        S = {"<Plug>(leap-backward)", "Backward Leap"}
-    },
-    {prefix = "<leader><leader>", mode = "v"}
+        {"<leader><leader>S", "<Plug>(leap-backward)", desc = "Backward Leap"},
+        {"<leader><leader>s", "<Plug>(leap-forward)", desc = "Forward Leap"}
+    }
 )
 --- }}}
 
