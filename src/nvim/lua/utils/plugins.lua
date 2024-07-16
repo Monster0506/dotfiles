@@ -1,6 +1,13 @@
 Plugs = {
     -- Basic Plugins {{{
-    "folke/which-key.nvim",
+	    {"folke/which-key.nvim",
+	    event="VeryLazy",
+	    opts={
+		    icons= {
+			    mappings=false,
+		    }
+	    }
+    },
     "BurntSushi/ripgrep",
     "norcalli/nvim-colorizer.lua",
     {
