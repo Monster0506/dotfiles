@@ -40,5 +40,4 @@ lspconfig.lua_ls.setup({
 	on_attach = On_attach_common,
 	capabilities = Capabilities,
 })
-
 return { On_attach_common = On_attach_common, Capabilities = Capabilities }

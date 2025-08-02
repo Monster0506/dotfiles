@@ -209,6 +209,14 @@ return {
 				capabilities = capabilities,
 			})
 
+			lspconfig.gopls.setup({
+				on_attach = on_attach_common,
+				capabilities = capabilities,
+			})
+			lspconfig.ts_ls.setup({
+				on_attach = on_attach_common,
+				capabilities = capabilities,
+			})
 			-- You can also setup other LSPs here if you need to, and Mason will try to
 			-- provide the executable if it's installed.
 			-- Example for TypeScript, if you install 'tsserver' with Mason:
@@ -288,6 +296,7 @@ return {
 				"pyright",
 				"clangd",
 				"lua-language-server",
+				"gopls",
 			},
 		},
 		config = function(_, opts)
