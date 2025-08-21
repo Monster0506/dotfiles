@@ -33,6 +33,11 @@ miniclue.setup({
 		},
 		{
 			mode = "n",
+			keys = "<Leader>b",
+			desc = "Buffers",
+		},
+		{
+			mode = "n",
 			keys = "<Leader>g",
 			desc = "Git",
 		},

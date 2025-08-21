@@ -120,6 +120,9 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				python = { "isort", "black" },
+				go = { "goimports", "gofmt" },
+				cpp = { "clang-format" },
+				hpp = { "clang-format" },
 			},
 			formatters = {
 				isort = {
@@ -127,6 +130,12 @@ return {
 						"--lines-after-import",
 						"2",
 						"--quiet",
+						"-",
+					},
+				},
+				["clang-format"] = {
+					args = {
+						"-style={BasedOnStyle: google, IndentWidth: 4}",
 						"-",
 					},
 				},
@@ -147,76 +156,26 @@ return {
 		dependencies = {
 			"saghen/blink.cmp",
 		},
+
 		-- The actual setup for LSP servers will now happen below the plugin list,
 		-- after mason-lspconfig has been loaded and initialized.
 		config = function()
 			local lspconfig = require("lspconfig")
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+			local lsp_config_data = require("config.plugins.lspconfig") -- Load the new module
 
-			local on_attach_common = function(client, bufnr)
-				local navic = require("nvim-navic")
-				navic.attach(client, bufnr)
-
-				local base_opts = { noremap = true, silent = true, buffer = bufnr }
-
-				local map_with_desc = function(mode, lhs, rhs, desc)
-					vim.keymap.set(mode, lhs, rhs, vim.tbl_deep_extend("force", base_opts, { desc = desc }))
-				end
-
-				-- Common LSP Keymaps
-				map_with_desc("n", "K", vim.lsp.buf.hover, "Show hover documentation")
-				map_with_desc("n", "<C-k>", vim.lsp.buf.signature_help, "Show function signature")
-				map_with_desc("n", "gd", vim.lsp.buf.definition, "Go to definition")
-				map_with_desc("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-				map_with_desc("n", "grt", vim.lsp.buf.type_definition, "Go to type definition")
-				map_with_desc("n", "gri", vim.lsp.buf.implementation, "Go to implementation")
-				map_with_desc("n", "grn", vim.lsp.buf.rename, "Rename symbol")
-				map_with_desc("n", "gra", vim.lsp.buf.code_action, "Show code actions")
-				map_with_desc("v", "gra", vim.lsp.buf.code_action, "Show code actions (Visual)")
-				map_with_desc("n", "grr", vim.lsp.buf.references, "Show references")
-				map_with_desc("n", "gO", vim.lsp.buf.document_symbol, "Show document symbols")
-				map_with_desc("i", "<C-s>", vim.lsp.buf.signature_help, "Show signature help (Insert)")
-				map_with_desc("n", "[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
-				map_with_desc("n", "]d", vim.diagnostic.goto_next, "Go to next diagnostic")
-			end
+			local capabilities = lsp_config_data.capabilities
+			local on_attach_common = lsp_config_data.on_attach_common
+			local server_opts_data = lsp_config_data.opts.servers -- Get the servers table
 
 			-- Now, setup your LSP servers using lspconfig,
 			-- mason-lspconfig will ensure they use the Mason-installed versions.
 
-			lspconfig.pyright.setup({
-				capabilities = capabilities,
-				settings = {
-					python = {
-						analysis = {
-							autoSearchPaths = true,
-							diagnosticMode = "workspace",
-							useLibraryCodeForTypes = true,
-							typeCheckingMode = "basic", -- or "strict"
-						},
-					},
-				},
-				on_attach = on_attach_common,
-			})
-
-			lspconfig.clangd.setup({
-				capabilities = capabilities,
-				on_attach = on_attach_common,
-			})
-
-			lspconfig.lua_ls.setup({
-				on_attach = on_attach_common,
-				capabilities = capabilities,
-			})
-
-			lspconfig.gopls.setup({
-				on_attach = on_attach_common,
-				capabilities = capabilities,
-			})
-			lspconfig.ts_ls.setup({
-				on_attach = on_attach_common,
-				capabilities = capabilities,
-			})
+			for server, server_opts in pairs(server_opts_data) do
+				server_opts.capabilities =
+					vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
+				server_opts.on_attach = on_attach_common
+				lspconfig[server].setup(server_opts)
+			end
 			-- You can also setup other LSPs here if you need to, and Mason will try to
 			-- provide the executable if it's installed.
 			-- Example for TypeScript, if you install 'tsserver' with Mason:
@@ -347,17 +306,40 @@ return {
 		opts = {
 			-- You can put any global mason-lspconfig options here
 			-- For example, to automatically ensure all mason-installed LSPs have a default setup:
-			automatic_installation = true,
+			automatic_installation = false,
+			automatic_setup = false,
+			automatic_enable = false,
+			handlers = nil,
 		},
 		dependencies = {
 			{ "mason-org/mason.nvim", opts = {} },
 			"neovim/nvim-lspconfig",
 		},
-		config = function(_, opts)
-			require("mason-lspconfig").setup(opts)
-			-- No need for setup_handlers here.
-			-- The direct lspconfig.server.setup calls in the nvim-lspconfig
-			-- config function will now correctly use mason's installed servers.
+	},
+	{
+		"ray-x/go.nvim",
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			-- lsp_keymaps = false,
+			-- other options
+		},
+		config = function(lp, opts)
+			require("go").setup(opts)
+			local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				pattern = "*.go",
+				callback = function()
+					require("go.format").goimports()
+				end,
+				group = format_sync_grp,
+			})
 		end,
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
 }

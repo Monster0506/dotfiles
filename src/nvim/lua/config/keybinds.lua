@@ -139,3 +139,10 @@ map({ "n", "v" }, "<leader>sr", function()
 		},
 	})
 end, { desc = "Search and Replace" })
+
+map({ "t" }, "<Esc>", "<C-\\><C-n>")
+map({ "n" }, "<leader>t", "<cmd>vs | term <CR>")
+
+map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Previous Buffer" })
+map("n", "<leader>bb", telescope.buffers, { desc = "Explore Buffers" })

@@ -66,4 +66,5 @@ opt.smoothscroll = true
 opt.foldexpr = foldexpr()
 opt.foldmethod = "expr"
 opt.foldtext = ""
-vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+opt.shell = "powershell"
+opt.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
