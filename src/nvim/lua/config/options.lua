@@ -1,5 +1,5 @@
 vim.diagnostic.config({ signs = true, virtual_lines = false, underline = { current_line = true } })
-opt = vim.o
+local opt = vim.o
 
 local function foldtext()
 	return vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1]
@@ -63,8 +63,12 @@ opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
 opt.smoothscroll = true
-opt.foldexpr = foldexpr()
+opt.foldexpr = "v:lua.foldexpr()"
 opt.foldmethod = "expr"
 opt.foldtext = ""
-opt.shell = "powershell"
+if vim.fn.has("win32") == 1 then
+	opt.shell = "powershell"
+else
+	opt.shell = "bash"
+end
 opt.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"

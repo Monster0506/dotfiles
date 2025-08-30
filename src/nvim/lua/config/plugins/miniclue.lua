@@ -46,5 +46,25 @@ miniclue.setup({
 			keys = "<Leader>gh",
 			desc = "Hunks",
 		},
+		{
+			mode = "n",
+			keys = "<Leader>S",
+			desc = "Swap",
+		},
+		{
+			mode = "n",
+			keys = "<Leader>Sn",
+			desc = "Swap Next",
+		},
+		{
+			mode = "n",
+			keys = "<Leader>Sp",
+			desc = "Swap Previous",
+		},
+		{
+			mode = "n",
+			keys = "grp",
+			desc = "Peek",
+		},
 	},
 })

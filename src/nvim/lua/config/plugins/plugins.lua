@@ -1,4 +1,9 @@
 return {
+
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+	},
+
 	{
 		"xzbdmw/colorful-menu.nvim",
 		opts = {},
@@ -15,19 +20,19 @@ return {
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			signs = {
-				add = { text = "▎" },
-				change = { text = "▎" },
-				delete = { text = "" },
-				topdelete = { text = "" },
-				changedelete = { text = "▎" },
-				untracked = { text = "▎" },
+				add = { text = "|" },
+				change = { text = "|" },
+				delete = { text = "_" },
+				topdelete = { text = "-" },
+				changedelete = { text = "~" },
+				untracked = { text = "?" },
 			},
 			signs_staged = {
-				add = { text = "▎" },
-				change = { text = "▎" },
-				delete = { text = "" },
-				topdelete = { text = "" },
-				changedelete = { text = "▎" },
+				add = { text = "|" },
+				change = { text = "|" },
+				delete = { text = ">" },
+				topdelete = { text = ">" },
+				changedelete = { text = "|" },
 			},
 			on_attach = function(buffer)
 				local gs = package.loaded.gitsigns
@@ -150,6 +155,7 @@ return {
 			"nvim-telescope/telescope-fzf-native.nvim",
 		},
 	},
+
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
@@ -157,32 +163,22 @@ return {
 			"saghen/blink.cmp",
 		},
 
-		-- The actual setup for LSP servers will now happen below the plugin list,
-		-- after mason-lspconfig has been loaded and initialized.
 		config = function()
 			local lspconfig = require("lspconfig")
-			local lsp_config_data = require("config.plugins.lspconfig") -- Load the new module
+			local configs = require("lspconfig.configs")
+			local lsp_config_data = require("config.plugins.lspconfig")
 
 			local capabilities = lsp_config_data.capabilities
 			local on_attach_common = lsp_config_data.on_attach_common
-			local server_opts_data = lsp_config_data.opts.servers -- Get the servers table
+			local server_opts_data = lsp_config_data.opts.servers
 
-			-- Now, setup your LSP servers using lspconfig,
-			-- mason-lspconfig will ensure they use the Mason-installed versions.
-
+			-- Setup all normal servers
 			for server, server_opts in pairs(server_opts_data) do
 				server_opts.capabilities =
 					vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
 				server_opts.on_attach = on_attach_common
 				lspconfig[server].setup(server_opts)
 			end
-			-- You can also setup other LSPs here if you need to, and Mason will try to
-			-- provide the executable if it's installed.
-			-- Example for TypeScript, if you install 'tsserver' with Mason:
-			-- lspconfig.tsserver.setup({
-			--     capabilities = capabilities,
-			--     on_attach = on_attach_common,
-			-- })
 		end,
 	},
 	{
@@ -191,18 +187,25 @@ return {
 		dependencies = "rafamadriz/friendly-snippets",
 		version = "1.*",
 		opts = {
-			enabled = function()
-				return not vim.tbl_contains({ "lua", "markdown" }, vim.bo.filetype)
+			enabled = function(ftype)
+				return true
 			end,
+			sources = {
+				default = function()
+					if vim.bo.filetype == "markdown" then
+						return { "path", "snippets", "buffer" }
+					elseif vim.bo.filetype == "lua" then
+						return { "path", "snippets", "buffer" }
+					else
+						return { "lsp", "path", "snippets", "buffer" }
+					end
+				end,
+			},
 			cmdline = { enabled = false },
 			keymap = { preset = "super-tab" },
 			appearance = {
 				use_nvim_cmp_as_default = true,
 				nerd_font_variant = "mono",
-			},
-
-			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
 			},
 
 			completion = {
@@ -287,6 +290,12 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
 	},
 	{
 		"Dan7h3x/signup.nvim",
