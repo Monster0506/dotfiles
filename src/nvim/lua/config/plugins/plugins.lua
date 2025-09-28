@@ -164,8 +164,6 @@ return {
 		},
 
 		config = function()
-			local lspconfig = require("lspconfig")
-			local configs = require("lspconfig.configs")
 			local lsp_config_data = require("config.plugins.lspconfig")
 
 			local capabilities = lsp_config_data.capabilities
@@ -177,8 +175,48 @@ return {
 				server_opts.capabilities =
 					vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
 				server_opts.on_attach = on_attach_common
-				lspconfig[server].setup(server_opts)
+				vim.lsp.config(server, server_opts) -- ✅ new API
 			end
+			vim.lsp.enable(vim.tbl_keys(server_opts_data))
+
+			-- Special setup for emmet_language_server
+			vim.lsp.config("emmet_language_server", {
+				filetypes = {
+					"css",
+					"eruby",
+					"html",
+					"javascript",
+					"javascriptreact",
+					"less",
+					"sass",
+					"scss",
+					"pug",
+					"typescriptreact",
+				},
+				init_options = {
+					---@type table<string, string>
+					includeLanguages = {},
+					---@type string[]
+					excludeLanguages = {},
+					---@type string[]
+					extensionsPath = {},
+					---@type table<string, any>
+					preferences = {},
+					---@type boolean Defaults to `true`
+					showAbbreviationSuggestions = true,
+					---@type "always" | "never"
+					showExpandedAbbreviation = "always",
+					---@type boolean Defaults to `false`
+					showSuggestionsAsSnippets = false,
+					---@type table<string, any>
+					syntaxProfiles = {},
+					---@type table<string, string>
+					variables = {},
+				},
+				capabilities = capabilities,
+				on_attach = on_attach_common,
+			})
+			vim.lsp.enable("emmet_language_server")
 		end,
 	},
 	{
@@ -313,8 +351,6 @@ return {
 	{
 		"mason-org/mason-lspconfig.nvim",
 		opts = {
-			-- You can put any global mason-lspconfig options here
-			-- For example, to automatically ensure all mason-installed LSPs have a default setup:
 			automatic_installation = false,
 			automatic_setup = false,
 			automatic_enable = false,
@@ -350,5 +386,12 @@ return {
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+	},
+	{
+		"olimorris/codecompanion.nvim",
+		opts = {},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
 	},
 }

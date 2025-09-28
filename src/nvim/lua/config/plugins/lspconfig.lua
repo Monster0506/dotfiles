@@ -32,6 +32,8 @@ end
 
 M.opts = {
 	servers = {
+		rust_analyzer = {},
+		emmet_language_server = {},
 		pyright = {
 			settings = {
 				python = {

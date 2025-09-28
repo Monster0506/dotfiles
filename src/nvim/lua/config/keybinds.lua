@@ -95,10 +95,21 @@ create_cmd_variants("nwqa", function(opts)
 	end
 end, { desc = "Write all buffers and quit without autocommands", bang = true })
 
+create_cmd_variants("q", function(opts)
+	if opts.bang then
+		vim.cmd("noau q!")
+	else
+		vim.cmd("noau q")
+	end
+end, { desc = "Write all buffers and quit without autocommands", bang = true })
+
 map("n", "<leader>e", function()
 	require("oil").toggle_float()
 end, { desc = "Explore Files" })
 
+map("n", "<leader>E", function()
+	require("oil").toggle_float()
+end, { desc = "Explore Files" })
 -- Telescope bindings
 local telescope = require("telescope.builtin")
 map("n", "<leader>sg", telescope.live_grep, { desc = "Grep all files" })
@@ -123,11 +134,6 @@ map({ "n", "x" }, "G", "Gzz", { desc = "Bottom", silent = true })
 map({ "n", "x" }, "gg", "ggzz", { desc = "Top", silent = true })
 map({ "n", "x" }, "<C-d>", "<C-d>zz", { desc = "Down", silent = true })
 map({ "n", "x" }, "<C-u>", "<C-u>zz", { desc = "Up", silent = true })
-
-map("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
 map({ "n", "v" }, "<leader>sr", function()
 	local grug = require("grug-far")

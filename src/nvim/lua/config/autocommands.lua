@@ -66,3 +66,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end
 	end,
 })
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "todo.txt",
+	callback = function()
+		require("config.plugins.todo").setup()
+	end,
+})
