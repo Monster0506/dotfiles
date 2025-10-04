@@ -1,9 +1,12 @@
 return {
 
 	{
-		"MeanderingProgrammer/render-markdown.nvim",
+		-- "MeanderingProgrammer/render-markdown.nvim",
 	},
 
+	{
+		"OXY2DEV/markview.nvim",
+	},
 	{
 		"xzbdmw/colorful-menu.nvim",
 		opts = {},

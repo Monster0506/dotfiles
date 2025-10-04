@@ -284,9 +284,9 @@ local default_config = {
 		search = { enable = true, name = "TodoSearch" },
 	},
 	keymaps = {
-		agenda = { lhs = "<leader>ta", rhs = ":TodoAgenda<CR>", desc = "Open Agenda" },
-		today = { lhs = "<leader>tt", rhs = ":TodoToday<CR>", desc = "Jump to today" },
-		search = { lhs = "<leader>ts", rhs = ":TodoSearch ", desc = "Search task" },
+		agenda = { lhs = "<leader>ra", rhs = ":TodoAgenda<CR>", desc = "Open Agenda" },
+		today = { lhs = "<leader>rt", rhs = ":TodoToday<CR>", desc = "Jump to today" },
+		search = { lhs = "<leader>rs", rhs = ":TodoSearch ", desc = "Search task" },
 	},
 	autocmds = {
 		enable = true,
