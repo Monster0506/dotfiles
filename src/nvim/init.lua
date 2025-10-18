@@ -3,4 +3,4 @@ vim.g.maplocalleader = "\\"
 
 require("config")
 
-vim.cmd([[colorscheme catppuccin]])
+vim.cmd([[colorscheme ashen]])

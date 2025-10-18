@@ -67,7 +67,10 @@ opt.foldexpr = "v:lua.foldexpr()"
 opt.foldmethod = "expr"
 opt.foldtext = ""
 if vim.fn.has("win32") == 1 then
-	opt.shell = "powershell"
+	opt.shell = "pwsh"
+	vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+	vim.opt.shellquote = ""
+	vim.opt.shellxquote = ""
 else
 	opt.shell = "bash"
 end

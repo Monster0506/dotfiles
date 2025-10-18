@@ -12,8 +12,8 @@ return {
 		opts = {},
 	},
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
+		"ficcdaf/ashen.nvim",
+		name = "ashen",
 		priority = 1000,
 	},
 	{
@@ -178,29 +178,26 @@ return {
 				server_opts.capabilities =
 					vim.tbl_deep_extend("force", {}, capabilities, server_opts.capabilities or {})
 				server_opts.on_attach = on_attach_common
-				vim.lsp.config(server, server_opts) -- ✅ new API
+				vim.lsp.config(server, server_opts)
 			end
 			vim.lsp.enable(vim.tbl_keys(server_opts_data))
 
 			-- Special setup for emmet_language_server
 			vim.lsp.config("emmet_language_server", {
 				filetypes = {
-					"css",
 					"eruby",
 					"html",
 					"javascript",
-					"javascriptreact",
 					"less",
 					"sass",
 					"scss",
 					"pug",
-					"typescriptreact",
 				},
 				init_options = {
 					---@type table<string, string>
 					includeLanguages = {},
 					---@type string[]
-					excludeLanguages = {},
+					excludeLanguages = { "tsx", "jsx" },
 					---@type string[]
 					extensionsPath = {},
 					---@type table<string, any>
@@ -397,4 +394,24 @@ return {
 			"nvim-lua/plenary.nvim",
 		},
 	},
+	{
+		"harenome/vim-mipssyntax",
+	},
+	{
+		"eero-lehtinen/oklch-color-picker.nvim",
+		event = "VeryLazy",
+		version = "*",
+		keys = {
+			{
+				"<leader>v",
+				function()
+					require("oklch-color-picker").pick_under_cursor()
+				end,
+				desc = "Color pick under cursor",
+			},
+		},
+		---@type oklch.Opts
+		opts = {},
+	},
+	{ "wakatime/vim-wakatime", lazy = false },
 }
