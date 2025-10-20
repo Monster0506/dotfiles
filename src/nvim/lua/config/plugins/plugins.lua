@@ -414,4 +414,20 @@ return {
 		opts = {},
 	},
 	{ "wakatime/vim-wakatime", lazy = false },
+	{
+		"Monster0506/universal_runner.nvim",
+		opts = {
+			runners = {
+				asm = {
+					run = "java -jar C:\\Users\\TJ\\.vscode\\extensions\\ahmz1833.mars-mips-1.0.4\\mars.jar nc me %file%",
+					filetypes = { "asm", "mars", "mips" },
+					run_command = "MarsRun",
+				},
+				python = {
+					run = "uv run %file%",
+					filetypes = { "python" },
+				},
+			},
+		},
+	},
 }

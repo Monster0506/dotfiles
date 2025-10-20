@@ -1,4 +1,4 @@
--- runner.nvim
+-- universal_runner.nvim
 local M = {}
 
 -----------------------------------------------------
