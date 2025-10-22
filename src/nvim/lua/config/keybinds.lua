@@ -1,6 +1,6 @@
 local map = vim.keymap.set
 if vim.fn.has("gui_running") == 1 or vim.g.neovide then
-	map({ "c" }, "<RightMouse>", '<C-r>"')
+	map({ "c", "i" }, "<RightMouse>", '<C-r>"')
 end
 
 local function variants(str)
@@ -152,3 +152,25 @@ map({ "n" }, "<leader>t", "<cmd>vs | term <CR>")
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Previous Buffer" })
 map("n", "<leader>bb", telescope.buffers, { desc = "Explore Buffers" })
+
+local function peek_fold()
+	local winid = ufo.peekFoldedLinesUnderCursor()
+	if not winid then
+		vim.lsp.buf.hover()
+	end
+end
+
+local ufo = require("ufo")
+map("n", "zR", ufo.openAllFolds, { desc = "Open all folds" })
+map("n", "zM", ufo.closeAllFolds, { desc = "Close all folds" })
+map("n", "zr", ufo.openFoldsExceptKinds, { desc = "Open folds except certain kinds" })
+map("n", "zm", ufo.closeFoldsWith, { desc = "Close folds with higher level" })
+map("n", "zp", peek_fold, { desc = "Peek folded lines under cursor" })
+map("n", "[z", function()
+	ufo.goPreviousClosedFold()
+	ufo.peekFoldedLinesUnderCursor()
+end, { desc = "Previous closed fold and preview" })
+map("n", "]z", function()
+	ufo.goNextClosedFold()
+	ufo.peekFoldedLinesUnderCursor()
+end, { desc = "Next closed fold and preview" })

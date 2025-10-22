@@ -1,38 +1,22 @@
-vim.diagnostic.config({ signs = true, virtual_lines = false, underline = { current_line = true } })
 local opt = vim.o
+local g = vim.g
 
-local function foldtext()
-	return vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1]
-end
-
-local function foldexpr()
-	local buf = vim.api.nvim_get_current_buf()
-	if vim.b[buf].ts_folds == nil then
-		if vim.bo[buf].filetype == "" then
-			return "0"
-		end
-		if vim.bo[buf].filetype:find("dashboard") then
-			vim.b[buf].ts_folds = false
-		else
-			vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
-		end
-	end
-	return vim.b[buf].ts_folds and vim.treesitter.foldexpr() or "0"
-end
-
-if vim.g.neovide then
+if g.neovide then
 	opt.guifont = "FiraCode Nerd Font Mono:h14:w1"
-
 	opt.termguicolors = true
-	vim.g.neovide_cursor_animation_length = 0.150
-	vim.g.neovide_cursor_trail_size = 0.15
-	vim.g.neovide_scale_factor = 1.0
+
+	g.neovide_cursor_animation_length = 0.15
+	g.neovide_cursor_trail_size = 0.05
+	g.neovide_scale_factor = 1.0
+
 	local change_scale_factor = function(delta)
-		vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+		g.neovide_scale_factor = g.neovide_scale_factor * delta
 	end
+
 	vim.keymap.set("n", "<C-=>", function()
 		change_scale_factor(1.05)
 	end)
+
 	vim.keymap.set("n", "<C-->", function()
 		change_scale_factor(1 / 1.05)
 	end)
@@ -57,21 +41,40 @@ opt.splitkeep = "screen"
 opt.splitright = true
 opt.tabstop = 4
 opt.virtualedit = "block"
-opt.foldlevel = 99
 opt.formatexpr = 'v:lua.require("conform").formatexpr()'
 opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
 opt.smoothscroll = true
-opt.foldexpr = "v:lua.foldexpr()"
-opt.foldmethod = "expr"
-opt.foldtext = ""
+
+opt.foldcolumn = "1"
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
+
+vim.fn.sign_define("FoldedIconOpen", { text = "- ", texthl = "FoldColumn" }) -- down arrow
+vim.fn.sign_define("FoldedIconClosed", { text = "+ ", texthl = "FoldColumn" }) -- right arrow
+
+opt.fillchars = table.concat({
+	"eob:~",
+	"foldopen:-",
+	"foldclose:+",
+	"foldsep:|",
+	"fold: ",
+}, ",")
+
 if vim.fn.has("win32") == 1 then
 	opt.shell = "pwsh"
-	vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
-	vim.opt.shellquote = ""
-	vim.opt.shellxquote = ""
+	opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+	opt.shellquote = ""
+	opt.shellxquote = ""
 else
 	opt.shell = "bash"
 end
+
 opt.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+vim.diagnostic.config({
+	signs = true,
+	virtual_lines = false,
+	underline = { current_line = true },
+})
