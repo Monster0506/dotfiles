@@ -151,6 +151,8 @@ map({ "n" }, "<leader>t", "<cmd>vs | term <CR>")
 
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Previous Buffer" })
+map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Previous Buffer" })
+map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete Buffer" })
 map("n", "<leader>bb", telescope.buffers, { desc = "Explore Buffers" })
 
 local function peek_fold()
@@ -174,3 +176,31 @@ map("n", "]z", function()
 	ufo.goNextClosedFold()
 	ufo.peekFoldedLinesUnderCursor()
 end, { desc = "Next closed fold and preview" })
+
+local function is_quickfix_open()
+	print("checking")
+	for _, winid in ipairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winid), "buftype") == "quickfix" then
+			print("true")
+			return true
+		end
+	end
+	print("false")
+	return false
+end
+
+vim.keymap.set("n", "n", function()
+	if is_quickfix_open() then
+		vim.cmd("cnext")
+	else
+		vim.cmd("normal! n")
+	end
+end)
+
+vim.keymap.set("n", "N", function()
+	if is_quickfix_open() then
+		vim.cmd("cprev")
+	else
+		vim.cmd("normal! N")
+	end
+end)
