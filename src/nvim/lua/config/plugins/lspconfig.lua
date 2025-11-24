@@ -37,18 +37,7 @@ end
 M.opts = {
 	servers = {
 		rust_analyzer = {},
-		pyright = {
-			settings = {
-				python = {
-					analysis = {
-						autoSearchPaths = true,
-						diagnosticMode = "workspace",
-						useLibraryCodeForTypes = true,
-						typeCheckingMode = "basic", -- or "strict"
-					},
-				},
-			},
-		},
+		pyrefly = {},
 		clangd = {},
 		lua_ls = {},
 		ts_ls = {},
