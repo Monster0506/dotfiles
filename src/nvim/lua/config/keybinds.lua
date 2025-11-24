@@ -1,3 +1,4 @@
+local utils = require("config.utils")
 local map = vim.keymap.set
 if vim.fn.has("gui_running") == 1 or vim.g.neovide then
 	map({ "c", "i" }, "<RightMouse>", '<C-r>"')
@@ -121,13 +122,6 @@ map("n", "<leader>d", telescope.diagnostics, { desc = "Diagnostics" })
 map("n", "<leader>so", telescope.lsp_outgoing_calls, { desc = "Outgoing Calls" })
 map("n", "<leader>si", telescope.lsp_incoming_calls, { desc = "Incoming Calls" })
 
-map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })
-map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
-map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
-map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })
-map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
-map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
-
 map({ "n", "x" }, "j", "v:count == 0 ? 'gjzz' : 'jzz'", { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count == 0 ? 'gkzz' : 'kzz'", { desc = "Up", expr = true, silent = true })
 map({ "n", "x" }, "G", "Gzz", { desc = "Bottom", silent = true })
@@ -150,7 +144,6 @@ map({ "t" }, "<Esc><Esc>", "<C-\\><C-n>")
 map({ "n" }, "<leader>t", "<cmd>vs | term <CR>")
 
 map("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Previous Buffer" })
 map("n", "<leader>bp", "<cmd>bprev<cr>", { desc = "Previous Buffer" })
 map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete Buffer" })
 map("n", "<leader>bb", telescope.buffers, { desc = "Explore Buffers" })
@@ -177,30 +170,35 @@ map("n", "]z", function()
 	ufo.peekFoldedLinesUnderCursor()
 end, { desc = "Next closed fold and preview" })
 
-local function is_quickfix_open()
-	print("checking")
-	for _, winid in ipairs(vim.api.nvim_list_wins()) do
-		if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winid), "buftype") == "quickfix" then
-			print("true")
-			return true
+map("n", "n", function()
+	if utils.is_quickfix_open() then
+		utils.cnext_wrap()
+	else
+		local direction = vim.v.searchforward == 1 and "n" or "N"
+		local ok = pcall(function()
+			vim.cmd("normal! " .. direction .. "zv")
+		end)
+		if not ok then
+			vim.notify("No search pattern active", vim.log.levels.WARN)
 		end
 	end
-	print("false")
-	return false
-end
+end, { desc = "Next Search Result or Quickfix" })
 
-vim.keymap.set("n", "n", function()
-	if is_quickfix_open() then
-		vim.cmd("cnext")
+map("n", "N", function()
+	if utils.is_quickfix_open() then
+		utils.cprev_wrap()
 	else
-		vim.cmd("normal! n")
+		local direction = vim.v.searchforward == 1 and "N" or "n"
+		local ok = pcall(function()
+			vim.cmd("normal! " .. direction .. "zv")
+		end)
+		if not ok then
+			vim.notify("No search pattern active", vim.log.levels.WARN)
+		end
 	end
-end)
+end, { desc = "Prev Search Result or Quickfix" })
 
-vim.keymap.set("n", "N", function()
-	if is_quickfix_open() then
-		vim.cmd("cprev")
-	else
-		vim.cmd("normal! N")
-	end
-end)
+map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
+map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
